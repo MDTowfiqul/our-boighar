@@ -1,0 +1,87 @@
+---
+layout: default
+title: "আমার তাক"
+permalink: /shelf/
+---
+<main class="max-w-4xl mx-auto px-3 sm:px-4 mt-6">
+  <h1 class="serif text-2xl sm:text-3xl font-extrabold" data-bn="★ আমার তাক" data-en="★ My Shelf">★ আমার তাক</h1>
+  <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1"><span id="shelf-count">0</span> <span data-bn="টি বই তাকে রাখা আছে" data-en="books saved on your shelf">টি বই তাকে রাখা আছে</span></p>
+
+  <div id="shelf-list" class="flex flex-col gap-3 mt-6"></div>
+
+  <div id="shelf-empty" class="hidden bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl text-center py-14 px-4 mt-6">
+    <p class="text-5xl mb-3">📚</p>
+    <p class="text-lg font-bold" data-bn="আপনার তাক এখনো খালি" data-en="Your shelf is empty">আপনার তাক এখনো খালি</p>
+    <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1" data-bn="যেকোনো বইয়ের পেজে গিয়ে “তাকে রাখুন” চাপলেই বইটি এখানে দেখা যাবে।" data-en="Open any book and tap “Add to Shelf” — it will appear here.">যেকোনো বইয়ের পেজে গিয়ে “তাকে রাখুন” চাপলেই বইটি এখানে দেখা যাবে।</p>
+    <a href="{{ '/browse/' | relative_url }}" class="accent-bg inline-block mt-5 text-white font-bold text-sm px-6 py-2.5 rounded-lg" data-bn="বই ব্রাউজ করুন" data-en="Browse Books">বই ব্রাউজ করুন</a>
+  </div>
+</main>
+
+<script>
+var OB_BOOKS = [{% for b in site.books %}{
+  "id": {{ b.book_id | jsonify }},
+  "title": {{ b.title | jsonify }},
+  "title_en": {{ b.title_en | jsonify }},
+  "author": {{ b.author | jsonify }},
+  "cover": "{{ b.cover | relative_url }}",
+  "url": "{{ b.url | relative_url }}",
+  "langlabel": {{ b.language_label | jsonify }},
+  "category": {{ b.category | jsonify }},
+  "file": {% if b.file %}"{{ b.file | relative_url }}"{% else %}null{% endif %},
+  "gumroad": {% if b.gumroad %}{{ b.gumroad | jsonify }}{% else %}null{% endif %}
+}{% unless forloop.last %},{% endunless %}{% endfor %}];
+</script>
+<script>
+(function(){
+  var BM = 'ourboighar-bookmarks';
+  var READER = "{{ '/reader.html' | relative_url }}";
+  function get(){ try{ return JSON.parse(localStorage.getItem(BM)||'[]'); }catch(e){ return []; } }
+  function set(l){ try{ localStorage.setItem(BM, JSON.stringify(l)); }catch(e){} }
+  function lang(){ return window.__obLang || 'bn'; }
+  var T = {
+    bn: { open:'খুলুন', read:'📖 পড়ুন', remove:'সরান', gumroad:'🛒 Gumroad' },
+    en: { open:'Open', read:'📖 Read', remove:'Remove', gumroad:'🛒 Gumroad' }
+  };
+  var byId = {};
+  OB_BOOKS.forEach(function(b){ byId[b.id] = b; });
+  var listEl = document.getElementById('shelf-list');
+  var emptyEl = document.getElementById('shelf-empty');
+  var countEl = document.getElementById('shelf-count');
+
+  function esc(s){ return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+
+  function render(){
+    var ids = get(), t = T[lang()];
+    var mine = ids.map(function(id){ return byId[id]; }).filter(Boolean);
+    countEl.textContent = mine.length;
+    emptyEl.classList.toggle('hidden', mine.length > 0);
+    listEl.innerHTML = mine.map(function(b){
+      var title = lang() === 'en' ? (b.title_en || b.title) : b.title;
+      var action = '';
+      if (b.file) action = '<a href="' + READER + '?file=' + encodeURIComponent(b.file) + '&title=' + encodeURIComponent(b.title) + '" class="border border-neutral-300 dark:border-neutral-600 font-bold rounded-lg px-4 py-2 text-sm">' + t.read + '</a>';
+      else if (b.gumroad) action = '<a href="' + b.gumroad + '" target="_blank" rel="noopener" class="border border-neutral-300 dark:border-neutral-600 font-bold rounded-lg px-4 py-2 text-sm">' + t.gumroad + '</a>';
+      return '<div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-3.5 flex gap-4 items-center shadow-sm">' +
+        '<a href="' + b.url + '" class="shrink-0"><img src="' + b.cover + '" alt="" class="w-14 h-[84px] object-cover rounded-md shadow"></a>' +
+        '<div class="flex-1 min-w-0">' +
+          '<a href="' + b.url + '" class="font-bold leading-snug line-clamp-2 hover:text-emerald-700 dark:hover:text-emerald-400">' + esc(title) + '</a>' +
+          '<p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1">✍️ ' + esc(b.author) + '</p>' +
+          '<p class="text-[11px] font-bold text-neutral-400 mt-1">' + esc(b.category) + ' · ' + esc(b.langlabel) + '</p>' +
+          '<div class="flex flex-wrap gap-2 mt-2.5">' +
+            '<a href="' + b.url + '" class="accent-bg text-white font-bold rounded-lg px-4 py-2 text-sm">' + t.open + '</a>' +
+            action +
+            '<button data-remove="' + b.id + '" class="font-bold rounded-lg px-4 py-2 text-sm text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900/60">' + t.remove + '</button>' +
+          '</div>' +
+        '</div></div>';
+    }).join('');
+    listEl.querySelectorAll('[data-remove]').forEach(function(btn){
+      btn.onclick = function(){
+        var id = btn.getAttribute('data-remove');
+        set(get().filter(function(x){ return x !== id; }));
+        render();
+      };
+    });
+  }
+  window.addEventListener('ob-lang', render);
+  render();
+})();
+</script>

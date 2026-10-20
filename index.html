@@ -8,7 +8,7 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
 
 <!-- HERO (BDeBooks style) -->
 <div class="max-w-6xl mx-auto px-3 sm:px-4">
-  <section class="hero-bg text-white rounded-[1.8rem] mt-4 px-5 py-8 sm:p-10 shadow-xl relative overflow-hidden">
+  <section class="hero-bg text-white rounded-[1.8rem] mt-4 px-5 py-8 sm:p-10 shadow-xl relative">
     <span class="inline-flex items-center gap-2 bg-white/12 border border-white/20 text-amber-200 text-xs sm:text-sm font-bold px-3.5 py-1.5 rounded-full" style="background:rgba(255,255,255,.12)">
       <span class="w-2 h-2 rounded-full hero-accent" style="background:var(--accent-bright)"></span>
       {{ site.books.size }} <span data-bn="টি বই, সব বিনামূল্যে" data-en="books, all free">টি বই, সব বিনামূল্যে</span>
@@ -19,13 +19,16 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
     </h1>
     <p class="text-white/75 mt-2 text-sm sm:text-base" data-bn="বাংলা ও ইংরেজি ইসলামিক বই — অনলাইনে পড়ুন, ফ্রি ডাউনলোড করুন" data-en="Bengali & English Islamic books — read online, download free">বাংলা ও ইংরেজি ইসলামিক বই — অনলাইনে পড়ুন, ফ্রি ডাউনলোড করুন</p>
 
-    <div id="searchbox" class="max-w-2xl mt-6 flex items-center bg-white rounded-2xl shadow-lg p-1.5 gap-1">
+    <div class="relative max-w-2xl mt-6">
+    <div id="searchbox" class="flex items-center bg-white rounded-2xl shadow-lg p-1.5 gap-1">
       <span class="pl-2.5 text-neutral-400">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20.5 20.5L16.7 16.7"/></svg>
       </span>
       <input id="f-search" type="search" class="flex-1 px-2 py-2.5 text-neutral-800 outline-none text-base min-w-0"
         placeholder="বইয়ের নাম, লেখক বা ধরন" data-bn-ph="বইয়ের নাম, লেখক বা ধরন" data-en-ph="Book name, author or category">
       <button id="go-search" class="accent-bg text-white px-6 py-2.5 rounded-xl font-bold transition" data-bn="খুঁজুন" data-en="Search">খুঁজুন</button>
+    </div>
+    <div id="suggest" class="hidden absolute left-0 right-0 top-full mt-2 bg-white dark:bg-neutral-800 text-neutral-800 dark:text-neutral-100 rounded-2xl shadow-2xl overflow-hidden z-20"></div>
     </div>
 
     <div class="mt-5 inline-flex bg-white/10 rounded-full p-1 gap-1 text-sm sm:text-[15px] font-bold" style="background:rgba(255,255,255,.1)">
@@ -47,7 +50,7 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
       <img src="{{ f.cover | relative_url }}" alt="{{ f.title }}" class="w-14 sm:w-16 rounded-md shadow flex-shrink-0">
       <span class="min-w-0">
         <span class="block accent-text text-[13px] font-extrabold" data-bn="এখান থেকে শুরু করুন" data-en="Start here">এখান থেকে শুরু করুন</span>
-        <span class="block serif text-lg sm:text-xl font-bold leading-snug truncate" data-bn="{{ f.title }}" data-en="{{ f.title_en | default: f.title }}">{{ f.title }}</span>
+        <span class="block serif text-lg sm:text-xl font-bold leading-snug line-clamp-2" data-bn="{{ f.title }}" data-en="{{ f.title_en | default: f.title }}">{{ f.title }}</span>
         <span class="block text-sm text-neutral-500 dark:text-neutral-400 truncate">{{ f.author }}</span>
       </span>
       <span class="flex-1"></span>
@@ -58,36 +61,6 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
 </div>
 
 <main class="max-w-6xl mx-auto px-3 sm:px-4 mt-6">
-
-  <!-- FILTERS -->
-  <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-4 sm:p-5 shadow-sm">
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
-      <h2 class="text-base sm:text-lg font-bold flex items-center gap-2 text-emerald-900 dark:text-emerald-300">
-        <span>🔤</span> <span data-bn="বর্ণমালা ও বিষয় অনুযায়ী বই খুঁজুন" data-en="Find books by letter & subject">বর্ণমালা ও বিষয় অনুযায়ী বই খুঁজুন</span>
-      </h2>
-      <button id="reset-filters" class="text-xs font-bold text-rose-600 dark:text-rose-400 hover:underline self-start sm:self-auto hidden" data-bn="✕ ফিল্টার মুছুন (সব দেখুন)" data-en="✕ Clear filters (show all)">✕ ফিল্টার মুছুন (সব দেখুন)</button>
-    </div>
-    <div class="flex flex-wrap gap-1.5 pb-3 border-b border-neutral-100 dark:border-neutral-700" id="alpha-bar">
-      <button class="alpha on rounded-lg px-3 py-1 font-bold text-xs sm:text-sm transition" data-a="" data-bn="সব" data-en="All">সব</button>
-      {% assign all_alphas = "অ,আ,ই,ঈ,উ,এ,ও,ক,খ,গ,ঘ,চ,ছ,জ,ত,দ,ধ,ন,প,ফ,ব,ভ,ম,য,র,ল,শ,স,হ,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z" | split: "," %}
-      {% assign existing_alphas = site.books | map: 'alphabet' | uniq %}
-      {% for a in all_alphas %}
-        {% if existing_alphas contains a %}
-          <button class="alpha bg-neutral-100 dark:bg-neutral-700 hover:bg-emerald-600 hover:text-white text-neutral-800 dark:text-neutral-100 rounded-lg px-2.5 py-1 font-bold text-xs sm:text-sm transition" data-a="{{ a }}">{{ a }}</button>
-        {% else %}
-          <button class="alpha alpha-off bg-neutral-50 dark:bg-neutral-800/60 text-neutral-400 dark:text-neutral-500 border border-neutral-200/60 dark:border-neutral-700 rounded-lg px-2.5 py-1 font-semibold text-xs sm:text-sm" data-a="{{ a }}" title="No books yet" disabled>{{ a }}</button>
-        {% endif %}
-      {% endfor %}
-    </div>
-    <div class="flex flex-wrap items-center gap-2 pt-3" id="cat-bar">
-      <span class="text-xs font-bold text-neutral-500 dark:text-neutral-400 mr-1" data-bn="বিষয়:" data-en="Subject:">বিষয়:</span>
-      <button class="catpill on rounded-full px-3.5 py-1 font-bold text-xs sm:text-sm transition" data-c=""><span data-bn="সব বিষয়" data-en="All Subjects">সব বিষয়</span> ({{ site.books.size }})</button>
-      {% for c in cats %}
-      <button class="catpill bg-neutral-100 dark:bg-neutral-700 hover:bg-emerald-50 dark:hover:bg-neutral-600 border border-neutral-200 dark:border-neutral-600 rounded-full px-3.5 py-1 font-bold text-xs sm:text-sm transition" data-c="{{ c }}">{{ c }}</button>
-      {% endfor %}
-      <button class="catpill bg-amber-50 dark:bg-neutral-700 border border-amber-300 dark:border-neutral-600 text-amber-900 dark:text-amber-300 rounded-full px-3.5 py-1 font-bold text-xs sm:text-sm transition" data-c="__shelf" data-bn="★ আমার তাক" data-en="★ My Shelf">★ আমার তাক</button>
-    </div>
-  </section>
 
   <!-- POPULAR NOW — swipeable row, filters apply here -->
   <section class="mt-9" id="popular">
@@ -117,7 +90,7 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
     <div id="no-match" class="hidden bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl text-center py-12 px-4 mt-2">
       <p class="text-lg font-bold text-neutral-700 dark:text-neutral-200" data-bn="দুঃখিত, এই ফিল্টারে কোনো বই পাওয়া যায়নি।" data-en="Sorry, no books match this filter.">দুঃখিত, এই ফিল্টারে কোনো বই পাওয়া যায়নি।</p>
       <p class="text-sm text-neutral-500 mt-1" data-bn="অন্য কোনো বর্ণ, বিষয় বা নাম দিয়ে চেষ্টা করুন।" data-en="Try another letter, subject or name.">অন্য কোনো বর্ণ, বিষয় বা নাম দিয়ে চেষ্টা করুন।</p>
-      <button onclick="document.getElementById('reset-filters').click()" class="accent-bg mt-4 text-white font-bold text-sm px-5 py-2 rounded-lg" data-bn="সব বই দেখুন" data-en="Show All Books">সব বই দেখুন</button>
+      <button onclick="window.__obResetAll()" class="accent-bg mt-4 text-white font-bold text-sm px-5 py-2 rounded-lg" data-bn="সব বই দেখুন" data-en="Show All Books">সব বই দেখুন</button>
     </div>
   </section>
 
@@ -218,24 +191,16 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   function bookmarks(){ try{ return JSON.parse(localStorage.getItem(BM)||'[]'); }catch(e){ return []; } }
   function lang(){ return window.__obLang || 'bn'; }
   var H = {
-    bn: { all:'জনপ্রিয় এখন', shelf:'★ আমার তাকে রাখা বই', cat:'বিষয়: ', alpha:'বর্ণমালা: ', search:'অনুসন্ধান: ', books:'টি বই' },
-    en: { all:'Popular Now', shelf:'★ Books on My Shelf', cat:'Subject: ', alpha:'Letter: ', search:'Search: ', books:'books' }
+    bn: { all:'জনপ্রিয় এখন', shelf:'★ আমার তাকে রাখা বই', cat:'বিষয়: ', alpha:'বর্ণমালা: ', search:'অনুসন্ধান: ', books:'টি বই', rec:'সুপারিশকৃত বই', res:'খোঁজার ফলাফল', none:'কোনো বই মেলেনি' },
+    en: { all:'Popular Now', shelf:'★ Books on My Shelf', cat:'Subject: ', alpha:'Letter: ', search:'Search: ', books:'books', rec:'Recommended Books', res:'Search Results', none:'No matching books' }
   };
   var cards = Array.prototype.slice.call(document.querySelectorAll('#row-popular .book-card'));
   var state = { q:'', alpha:'', cat:'' };
-  var resetBtn = document.getElementById('reset-filters');
   var headingEl = document.getElementById('grid-heading');
   var countEl = document.getElementById('result-count');
   var search = document.getElementById('f-search');
 
-  function syncPills(){
-    Array.prototype.forEach.call(document.querySelectorAll('#alpha-bar button'), function(b){
-      b.classList.toggle('on', (b.getAttribute('data-a') || '') === state.alpha);
-    });
-    Array.prototype.forEach.call(document.querySelectorAll('#cat-bar button'), function(b){
-      b.classList.toggle('on', (b.getAttribute('data-c') || '') === state.cat);
-    });
-  }
+  function syncPills(){ /* filter pills moved to the Browse page; hero pills stay visual */ }
 
   function apply(){
     var visible = 0;
@@ -251,9 +216,6 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
     document.getElementById('no-match').classList.toggle('hidden', visible > 0);
     var t = H[lang()];
     countEl.innerHTML = visible + ' ' + t.books;
-    var hasFilter = !!(state.q || state.alpha || state.cat);
-    resetBtn.classList.toggle('hidden', !hasFilter);
-    /* remove data-bn so the language switcher does not overwrite dynamic headings */
     headingEl.removeAttribute('data-bn'); headingEl.removeAttribute('data-en');
     if (state.cat === '__shelf') headingEl.textContent = t.shelf;
     else if (state.cat) headingEl.textContent = t.cat + state.cat;
@@ -265,30 +227,13 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
 
   function scrollPopular(){ document.getElementById('popular').scrollIntoView({behavior:'smooth'}); }
   function doSearch(){ state.q = search.value.trim().toLowerCase(); apply(); }
-  search.addEventListener('input', doSearch);
-  document.getElementById('go-search').onclick = function(){ doSearch(); scrollPopular(); };
+  function resetAll(){ state.q = ''; state.alpha = ''; state.cat = ''; search.value = ''; apply(); }
+  window.__obResetAll = resetAll;
+  search.addEventListener('input', function(){ doSearch(); renderSuggest(); });
+  document.getElementById('go-search').onclick = function(){ doSearch(); hideSuggest(); scrollPopular(); };
+  var viewAll = document.getElementById('view-all');
+  if (viewAll) viewAll.onclick = function(){ resetAll(); scrollPopular(); };
 
-  function resetAll(){
-    state.q = ''; state.alpha = ''; state.cat = '';
-    search.value = '';
-    apply();
-  }
-  resetBtn.onclick = resetAll;
-  document.getElementById('view-all').onclick = function(){ resetAll(); scrollPopular(); };
-
-  Array.prototype.forEach.call(document.querySelectorAll('#alpha-bar button'), function(btn){
-    btn.onclick = function(){
-      if (btn.disabled || btn.classList.contains('alpha-off')) return;
-      state.alpha = btn.getAttribute('data-a') || '';
-      apply(); scrollPopular();
-    };
-  });
-  Array.prototype.forEach.call(document.querySelectorAll('#cat-bar button'), function(btn){
-    btn.onclick = function(){
-      state.cat = btn.getAttribute('data-c') || '';
-      apply(); scrollPopular();
-    };
-  });
   Array.prototype.forEach.call(document.querySelectorAll('.pop-cat'), function(a){
     a.addEventListener('click', function(e){
       e.preventDefault();
@@ -325,20 +270,58 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
     tb.addEventListener('click', function(){
       var k = tb.getAttribute('data-tab');
       paintTabs(k);
-      if (k === 'all'){ resetAll(); scrollPopular(); }
-      else if (k === 'discover'){ document.getElementById('categories').scrollIntoView({behavior:'smooth'}); }
-      else if (k === 'top'){ resetAll(); scrollPopular(); }
+      if (k === 'discover'){ document.getElementById('categories').scrollIntoView({behavior:'smooth'}); }
+      else { resetAll(); scrollPopular(); }
     });
   });
 
-  window.addEventListener('ob-lang', apply);
+  /* ---------- live recommendations under the search box ---------- */
+  var BOOKS = [{% for b in site.books %}{"title":{{ b.title | jsonify }},"title_en":{{ b.title_en | jsonify }},"author":{{ b.author | jsonify }},"category":{{ b.category | jsonify }},"cover":"{{ b.cover | relative_url }}","url":"{{ b.url | relative_url }}"}{% unless forloop.last %},{% endunless %}{% endfor %}];
+  var suggestEl = document.getElementById('suggest');
+  function esc(s){ return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+  function matches(b, q){
+    if (!q) return true;
+    return (b.title + ' ' + (b.title_en||'') + ' ' + b.author + ' ' + b.category).toLowerCase().indexOf(q) >= 0;
+  }
+  function renderSuggest(){
+    var q = search.value.trim().toLowerCase(), t = H[lang()];
+    var list = BOOKS.filter(function(b){ return matches(b, q); }).slice(0, 6);
+    if (!list.length){
+      suggestEl.innerHTML = '<p class="px-4 py-3.5 text-sm font-semibold text-neutral-500">' + t.none + '</p>';
+    } else {
+      var head = '<p class="px-4 pt-3 pb-1 text-[11px] font-extrabold tracking-wide text-neutral-400">' + (q ? t.res : t.rec) + '</p>';
+      suggestEl.innerHTML = head + list.map(function(b){
+        var title = lang() === 'en' ? (b.title_en || b.title) : b.title;
+        return '<a href="' + b.url + '" class="flex items-center gap-3 px-3 py-2 hover:bg-neutral-50 dark:hover:bg-neutral-700/60">' +
+          '<img src="' + b.cover + '" alt="" class="w-9 h-[52px] object-cover rounded shadow-sm">' +
+          '<span class="min-w-0"><span class="block font-bold text-sm leading-snug line-clamp-1">' + esc(title) + '</span>' +
+          '<span class="block text-xs text-neutral-500 dark:text-neutral-400 line-clamp-1">✍️ ' + esc(b.author) + '</span></span>' +
+          '<span class="flex-1"></span><span class="text-[10px] font-bold bg-neutral-100 dark:bg-neutral-700 rounded px-2 py-0.5">' + esc(b.category) + '</span></a>';
+      }).join('') + '<div class="pb-1.5"></div>';
+    }
+    suggestEl.classList.remove('hidden');
+  }
+  function hideSuggest(){ suggestEl.classList.add('hidden'); }
+  search.addEventListener('focus', renderSuggest);
+  search.addEventListener('blur', function(){ setTimeout(hideSuggest, 180); });
+  search.addEventListener('keydown', function(e){ if (e.key === 'Escape') hideSuggest(); });
+
+  /* ---------- খুঁজুন button: open hero + focus search ---------- */
+  function focusSearch(){
+    document.getElementById('searchbox').scrollIntoView({behavior:'smooth', block:'center'});
+    setTimeout(function(){ search.focus({preventScroll:true}); renderSuggest(); }, 380);
+  }
+  if (location.hash === '#searchbox') setTimeout(focusSearch, 350);
+  window.addEventListener('hashchange', function(){ if (location.hash === '#searchbox') focusSearch(); });
+  document.addEventListener('click', function(e){
+    var a = e.target.closest ? e.target.closest('a') : null;
+    if (a && (a.getAttribute('href') || '').indexOf('#searchbox') >= 0 && location.pathname.replace(/\/$/, '') .endsWith('our-boighar')) setTimeout(focusSearch, 60);
+    if (a && (a.getAttribute('href') || '').endsWith('/#searchbox')) setTimeout(focusSearch, 60);
+  });
+
+  window.addEventListener('ob-lang', function(){ apply(); if (!suggestEl.classList.contains('hidden')) renderSuggest(); });
 
   var q = new URLSearchParams(location.search).get('q');
   if (q){ search.value = q; doSearch(); }
-  function checkShelfHash(){
-    if (location.hash === '#shelf'){ state.cat = '__shelf'; apply(); scrollPopular(); }
-  }
-  checkShelfHash();
-  window.addEventListener('hashchange', checkShelfHash);
 })();
 </script>
