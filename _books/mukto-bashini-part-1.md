@@ -13,6 +13,9 @@ cover: "/img/cover-mukto-bashini-part-1.jpg"
 file: "/books/mukto-bashini-part-1.epub"
 format: "EPUB"
 file_size: "0.24 MB"
+series: "মুক্তবাসিনী"
+series_en: "Muktobasini"
+series_order: 1
 ---
 
 মুক্তবাসিনী (১ম খণ্ড) — আবু বকর সিরাজীর ইসলামিক গল্প-সংকলন; সম্পাদনা: আলী হাসান তৈয়ব। হৃদয় ছোঁয়া কাহিনির মধ্য দিয়ে ঈমান ও আমলের শিক্ষা।
