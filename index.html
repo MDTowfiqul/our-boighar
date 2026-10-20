@@ -62,6 +62,27 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
 
 <main class="max-w-6xl mx-auto px-3 sm:px-4 mt-6">
 
+  <!-- RECENTLY UPLOADED -->
+  <section class="mt-9">
+    <div class="flex items-baseline justify-between mb-3 px-0.5">
+      <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="🆕 সম্প্রতি আপলোড" data-en="🆕 Recently Uploaded">🆕 সম্প্রতি আপলোড</h2>
+    </div>
+    <div class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-3 px-3 sm:mx-0 sm:px-0">
+      {% for rid in site.data.recent limit: 18 %}
+      {% assign b = site.books | where: "book_id", rid | first %}
+      {% if b %}
+      <a href="{{ b.url | relative_url }}" class="snap-start shrink-0 w-[150px] sm:w-[172px] group">
+        <div class="rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]">
+          <img src="{{ b.cover | relative_url }}" alt="{{ b.title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+        </div>
+        <h3 class="font-bold text-sm sm:text-[15px] leading-snug mt-2 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400" data-bn="{{ b.title }}" data-en="{{ b.title_en | default: b.title }}">{{ b.title }}</h3>
+        <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1">✍️ {{ b.author }}</p>
+      </a>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+
   <!-- POPULAR NOW — swipeable row, filters apply here -->
   <section class="mt-9" id="popular">
     <div class="flex items-baseline justify-between mb-3 px-0.5">
@@ -94,41 +115,28 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
     </div>
   </section>
 
-  <!-- AUTHORS & SERIES -->
-  <section id="writers" class="mt-10">
-    <h2 class="serif text-xl sm:text-2xl font-extrabold mb-3 px-0.5" data-bn="জনপ্রিয় লেখক ও সিরিজ" data-en="Popular Authors & Series">জনপ্রিয় লেখক ও সিরিজ</h2>
-    <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1 -mx-3 px-3 sm:mx-0 sm:px-0">
-      {% assign groups = site.books | group_by: "author" | sort: "name" %}
-      {% for g in groups %}
-      <button class="writer-chip shrink-0 bg-white dark:bg-neutral-800 hover:bg-emerald-50 dark:hover:bg-neutral-700 border border-neutral-200 dark:border-neutral-600 rounded-full px-4 py-2 font-bold text-sm transition whitespace-nowrap" data-w="{{ g.name }}">✍️ {{ g.name }} · {{ g.size }}</button>
-      {% endfor %}
-    </div>
-  </section>
-
-  <!-- BOOK SERIES -->
+  <!-- BOOK SERIES — one sliding row; each series is a single stacked-books card -->
   {% assign series_groups = site.books | group_by: "series" | sort: "name" %}
   <section id="series" class="mt-10">
-    <h2 class="serif text-xl sm:text-2xl font-extrabold mb-1 px-0.5" data-bn="📚 বইয়ের সিরিজ" data-en="📚 Book Series">📚 বইয়ের সিরিজ</h2>
-    {% for g in series_groups %}{% if g.name and g.name != "" and g.size > 1 %}
-    {% assign sbooks = g.items | sort: "series_order" %}
-    <div class="mt-5">
-      <div class="flex items-baseline justify-between mb-3 px-0.5">
-        <h3 class="font-extrabold" data-bn="{{ g.name }}" data-en="{{ g.items.first.series_en | default: g.name }}">{{ g.name }}</h3>
-        <span class="text-sm font-bold text-neutral-500 dark:text-neutral-400">{{ g.size }} <span data-bn="টি বই" data-en="books">টি বই</span></span>
-      </div>
-      <div class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-3 px-3 sm:mx-0 sm:px-0">
-        {% for b in sbooks %}
-        <a href="{{ b.url | relative_url }}" class="snap-start shrink-0 w-[150px] sm:w-[172px] group">
-          <div class="rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]">
-            <img src="{{ b.cover | relative_url }}" alt="{{ b.title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-          </div>
-          <h3 class="font-bold text-sm sm:text-[15px] leading-snug mt-2 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400" data-bn="{{ b.title }}" data-en="{{ b.title_en | default: b.title }}">{{ b.title }}</h3>
-          <p class="text-xs font-bold accent-text mt-0.5" data-bn="অংশ {{ b.series_order }}" data-en="Part {{ b.series_order }}">অংশ {{ b.series_order }}</p>
-        </a>
-        {% endfor %}
-      </div>
+    <div class="flex items-baseline justify-between mb-3 px-0.5">
+      <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="📚 বইয়ের সিরিজ" data-en="📚 Book Series">📚 বইয়ের সিরিজ</h2>
     </div>
-    {% endif %}{% endfor %}
+    <div class="flex gap-5 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-3 pt-1 -mx-3 px-3 sm:mx-0 sm:px-0">
+      {% for g in series_groups %}{% if g.name and g.name != "" and g.size > 1 %}
+      {% assign sbooks = g.items | sort: "series_order" %}
+      {% assign first = sbooks | first %}
+      <a href="{{ first.url | relative_url }}" class="snap-start shrink-0 w-[150px] sm:w-[172px] group">
+        <div class="relative aspect-[2/3] mx-2">
+          {% if sbooks.size > 2 %}{% assign third = sbooks[2] %}<img src="{{ third.cover | relative_url }}" alt="" class="absolute inset-0 w-full h-full object-cover rounded-xl shadow rotate-[6deg] translate-x-2">{% endif %}
+          {% if sbooks.size > 1 %}{% assign second = sbooks[1] %}<img src="{{ second.cover | relative_url }}" alt="" class="absolute inset-0 w-full h-full object-cover rounded-xl shadow rotate-[-5deg] -translate-x-1.5">{% endif %}
+          <img src="{{ first.cover | relative_url }}" alt="{{ g.name }}" class="absolute inset-0 w-full h-full object-cover rounded-xl shadow-lg">
+          <span class="absolute -bottom-2 right-0 accent-bg text-white text-[11px] font-bold rounded-full px-2 py-0.5 shadow">{{ g.size }} <span data-bn="টি বই" data-en="books">টি বই</span></span>
+        </div>
+        <h3 class="font-bold text-sm sm:text-[15px] leading-snug mt-3.5 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400" data-bn="{{ g.name }}" data-en="{{ first.series_en | default: g.name }}">{{ g.name }}</h3>
+        <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1">✍️ {{ first.author }}</p>
+      </a>
+      {% endif %}{% endfor %}
+    </div>
   </section>
 
   <!-- BENGALI BOOKS ROW -->
