@@ -69,6 +69,7 @@ book page exactly as written, in both site languages.
 | `cover` | path to the cover in `img/` |
 | `file` | path to the EPUB in `books/` — omit for paid books; then set `gumroad:` + `price:` instead |
 | `file_size`, `year` | optional — shown on the book page when present |
+| `series` / `series_en` / `series_order` | optional — for books that belong to a series (a multi-part work): the series name in the book's language / in English, and this book's part number (1, 2, 3…). Every book of the same series must use the exact same `series` name. Series with 2+ books on the site automatically get a "📚 এই সিরিজের বই" section on each book's page and a series row on the homepage |
 | `toc` | optional list of contents entries; renders a সূচিপত্র (table of contents) section |
 
 **Category names:** categories are stored in English in the book file.
