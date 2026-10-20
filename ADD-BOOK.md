@@ -13,7 +13,8 @@ The website reads its catalogue from **books.json**. To add a book:
 | `id` | short unique slug, e.g. `my-book-bn` |
 | `title` | book title (Bengali titles fine) |
 | `titleEn` | English version of the title |
-| `credit` | author / translator line |
+| `writer` | the original author of the book, e.g. `Dr. Zakir Naik (lectures)` |
+| `creator` | who made this ebook edition (EPUB/PDF), e.g. `MD. Towfiqul Islam (Bengali EPUB edition)` |
 | `description` | 2–3 sentence short description |
 | `language` | `bn` or `en` |
 | `languageLabel` | shown on the card, e.g. `Bengali` |

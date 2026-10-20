@@ -41,7 +41,8 @@
   .book img{width:138px;border-radius:7px;box-shadow:0 6px 18px rgba(0,0,0,.18);align-self:flex-start}
   .book .meta{min-width:0}
   .book h3{font-size:19.5px;line-height:1.45;font-weight:700}
-  .book .credit{color:var(--muted);font-size:13px;margin:5px 0 9px}
+  .book .credit{color:var(--muted);font-size:13.5px;margin:5px 0 2px}
+  .book .credit b{color:var(--ink)}
   .tags{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
   .tag{background:#eef6f1;color:var(--green-dark);border:1px solid #cfe3d6;border-radius:999px;font-size:11.5px;font-weight:700;padding:2px 10px}
   .tag.lang{background:#fdf3dd;color:#8a6414;border-color:#ecd9a8}
@@ -171,7 +172,7 @@
       if(cat && (b.categories || []).indexOf(cat) < 0) return false;
       if(onlyBm && bm.indexOf(b.id) < 0) return false;
       if(q){
-        var hay = (b.title+' '+(b.titleEn||'')+' '+b.credit+' '+(b.categories||[]).join(' ')).toLowerCase();
+        var hay = (b.title+' '+(b.titleEn||'')+' '+(b.writer||'')+' '+(b.creator||'')+' '+(b.categories||[]).join(' ')).toLowerCase();
         if(hay.indexOf(q) < 0) return false;
       }
       return true;
@@ -183,7 +184,8 @@
       return '<article class="book">'+
         '<img src="'+esc(b.cover)+'" alt="Cover of '+esc(b.titleEn || b.title)+'">'+
         '<div class="meta"><h3 class="bn">'+esc(b.title)+'</h3>'+
-        '<p class="credit">'+esc(b.credit)+'</p>'+
+        '<p class="credit">✍️ <b>Writer:</b> '+esc(b.writer || '—')+'</p>'+
+        '<p class="credit">📘 <b>Ebook creator:</b> '+esc(b.creator || '—')+'</p>'+
         '<div class="tags">'+tags+'</div>'+
         '<p class="desc">'+esc(b.description)+'</p>'+
         '<div class="btns">'+buttons(b)+'</div>'+
