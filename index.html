@@ -6,204 +6,205 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
 {% for b in site.books %}{% for c in b.categories %}{% unless cats contains c %}{% assign cats = cats | push: c %}{% endunless %}{% endfor %}{% endfor %}
 {% assign cats = cats | sort %}
 
-<!-- BDeBooks Style Hero Search Banner -->
-<section class="bg-gradient-to-r from-emerald-800 via-emerald-700 to-teal-900 text-white py-10 px-4 shadow-inner">
-  <div class="max-w-4xl mx-auto text-center">
-    <span class="inline-block bg-emerald-950/60 border border-emerald-400/30 text-amber-300 text-xs sm:text-sm font-bold px-3.5 py-1 rounded-full mb-3">
-      📖 {{ site.books.size }} টি বই উপলব্ধ · অনলাইনে পড়ুন অথবা ডাউনলোড করুন
+<!-- HERO (BDeBooks style) -->
+<div class="max-w-6xl mx-auto px-3 sm:px-4">
+  <section class="hero-bg text-white rounded-[1.8rem] mt-4 px-5 py-8 sm:p-10 shadow-xl relative overflow-hidden">
+    <span class="inline-flex items-center gap-2 bg-white/12 border border-white/20 text-amber-200 text-xs sm:text-sm font-bold px-3.5 py-1.5 rounded-full" style="background:rgba(255,255,255,.12)">
+      <span class="w-2 h-2 rounded-full hero-accent" style="background:var(--accent-bright)"></span>
+      {{ site.books.size }} <span data-bn="টি বই, সব বিনামূল্যে" data-en="books, all free">টি বই, সব বিনামূল্যে</span>
     </span>
-    <h1 class="serif text-2xl sm:text-4xl font-extrabold leading-tight">বাংলা ও ইংরেজি ইসলামিক ইবুক লাইব্রেরি</h1>
-    <p class="text-emerald-100 text-sm sm:text-base mt-2">আপনার পছন্দের বই অথবা লেখকের নাম দিয়ে সহজেই খুঁজে নিন</p>
+    <h1 class="serif text-[32px] sm:text-5xl font-extrabold leading-tight mt-4">
+      <span class="hero-accent" data-bn="আজ" data-en="Today,">আজ</span>
+      <span data-bn="কোন বইয়ে ডুব দেবেন?" data-en="which book will you dive into?">কোন বইয়ে ডুব দেবেন?</span>
+    </h1>
+    <p class="text-white/75 mt-2 text-sm sm:text-base" data-bn="বাংলা ও ইংরেজি ইসলামিক বই — অনলাইনে পড়ুন, ফ্রি ডাউনলোড করুন" data-en="Bengali & English Islamic books — read online, download free">বাংলা ও ইংরেজি ইসলামিক বই — অনলাইনে পড়ুন, ফ্রি ডাউনলোড করুন</p>
 
-    <div id="searchbox" class="max-w-2xl mx-auto mt-6 flex bg-white rounded-xl overflow-hidden shadow-lg p-1">
-      <input id="f-search" type="search" placeholder="বই বা লেখকের নাম দিয়ে খুঁজুন... (যেমন: তাফসীর, হাদীস, ডা. জাকির নায়েক)" class="flex-1 px-4 py-2.5 text-neutral-800 outline-none text-base min-w-0">
-      <button id="go-search" class="bg-emerald-700 hover:bg-emerald-800 text-white px-6 py-2.5 rounded-lg font-bold transition">খুঁজুন</button>
+    <div id="searchbox" class="max-w-2xl mt-6 flex items-center bg-white rounded-2xl shadow-lg p-1.5 gap-1">
+      <span class="pl-2.5 text-neutral-400">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20.5 20.5L16.7 16.7"/></svg>
+      </span>
+      <input id="f-search" type="search" class="flex-1 px-2 py-2.5 text-neutral-800 outline-none text-base min-w-0"
+        placeholder="বইয়ের নাম, লেখক বা ধরন" data-bn-ph="বইয়ের নাম, লেখক বা ধরন" data-en-ph="Book name, author or category">
+      <button id="go-search" class="accent-bg text-white px-6 py-2.5 rounded-xl font-bold transition" data-bn="খুঁজুন" data-en="Search">খুঁজুন</button>
     </div>
 
-    <!-- Quick Category Links in Hero -->
-    <div class="mt-4 flex flex-wrap justify-center items-center gap-2 text-xs sm:text-sm text-emerald-100">
-      <span class="font-semibold">জনপ্রিয় বিষয়:</span>
+    <div class="mt-5 inline-flex bg-white/10 rounded-full p-1 gap-1 text-sm sm:text-[15px] font-bold" style="background:rgba(255,255,255,.1)">
+      <button class="hero-tab bg-white text-neutral-900 rounded-full px-4 sm:px-5 py-1.5 transition" data-tab="all" data-bn="সব বই" data-en="All Books">সব বই</button>
+      <button class="hero-tab text-white/85 rounded-full px-4 sm:px-5 py-1.5 transition" data-tab="discover" data-bn="আবিষ্কার" data-en="Discover">আবিষ্কার</button>
+      <button class="hero-tab text-white/85 rounded-full px-4 sm:px-5 py-1.5 transition" data-tab="top" data-bn="সেরা বই" data-en="Top Books">সেরা বই</button>
+    </div>
+
+    <div class="mt-4 flex flex-wrap items-center gap-2 text-sm">
+      <span class="text-white/70 font-semibold" data-bn="জনপ্রিয়:" data-en="Popular:">জনপ্রিয়:</span>
       {% for c in cats %}
-      <a href="#books-grid" class="bg-white/15 hover:bg-white/25 text-white px-3 py-1 rounded-full font-semibold transition pop-cat" data-cat="{{ c }}">{{ c }}</a>
+      <a href="#popular" class="pop-cat border border-white/35 hover:bg-white/15 text-white px-3.5 py-1 rounded-full font-semibold transition" data-cat="{{ c }}">{{ c }}</a>
       {% endfor %}
     </div>
-  </div>
-</section>
 
-<main class="max-w-6xl mx-auto px-4 mt-8">
+    {% assign f = site.books | where: "book_id", "islam-objections-bn" | first %}
+    {% if f %}
+    <a href="{{ f.url | relative_url }}" class="mt-7 bg-white dark:bg-neutral-800 text-neutral-800 dark:text-neutral-100 rounded-2xl p-4 flex items-center gap-4 max-w-xl shadow-lg">
+      <img src="{{ f.cover | relative_url }}" alt="{{ f.title }}" class="w-14 sm:w-16 rounded-md shadow flex-shrink-0">
+      <span class="min-w-0">
+        <span class="block accent-text text-[13px] font-extrabold" data-bn="এখান থেকে শুরু করুন" data-en="Start here">এখান থেকে শুরু করুন</span>
+        <span class="block serif text-lg sm:text-xl font-bold leading-snug truncate" data-bn="{{ f.title }}" data-en="{{ f.title_en | default: f.title }}">{{ f.title }}</span>
+        <span class="block text-sm text-neutral-500 dark:text-neutral-400 truncate">{{ f.author }}</span>
+      </span>
+      <span class="flex-1"></span>
+      <span class="accent-text font-extrabold flex-shrink-0" data-bn="খুলুন" data-en="Open">খুলুন</span>
+    </a>
+    {% endif %}
+  </section>
+</div>
 
-  <!-- BDeBooks Style Alphabetical Index Bar (বর্ণমালা অনুযায়ী বই) -->
+<main class="max-w-6xl mx-auto px-3 sm:px-4 mt-6">
+
+  <!-- FILTERS -->
   <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-4 sm:p-5 shadow-sm">
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
       <h2 class="text-base sm:text-lg font-bold flex items-center gap-2 text-emerald-900 dark:text-emerald-300">
-        <span>🔤</span> বর্ণমালা ও বিষয় অনুযায়ী বই খুঁজুন
+        <span>🔤</span> <span data-bn="বর্ণমালা ও বিষয় অনুযায়ী বই খুঁজুন" data-en="Find books by letter & subject">বর্ণমালা ও বিষয় অনুযায়ী বই খুঁজুন</span>
       </h2>
-      <button id="reset-filters" class="text-xs font-bold text-rose-600 dark:text-rose-400 hover:underline self-start sm:self-auto hidden">✕ ফিল্টার মুছুন (সব দেখুন)</button>
+      <button id="reset-filters" class="text-xs font-bold text-rose-600 dark:text-rose-400 hover:underline self-start sm:self-auto hidden" data-bn="✕ ফিল্টার মুছুন (সব দেখুন)" data-en="✕ Clear filters (show all)">✕ ফিল্টার মুছুন (সব দেখুন)</button>
     </div>
-
-    <!-- Full Bangla & English Alphabet Filter -->
     <div class="flex flex-wrap gap-1.5 pb-3 border-b border-neutral-100 dark:border-neutral-700" id="alpha-bar">
-      <button class="alpha on rounded-lg px-3 py-1 font-bold text-xs sm:text-sm transition" data-a="">সব</button>
+      <button class="alpha on rounded-lg px-3 py-1 font-bold text-xs sm:text-sm transition" data-a="" data-bn="সব" data-en="All">সব</button>
       {% assign all_alphas = "অ,আ,ই,ঈ,উ,এ,ও,ক,খ,গ,ঘ,চ,ছ,জ,ত,দ,ধ,ন,প,ফ,ব,ভ,ম,য,র,ল,শ,স,হ,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z" | split: "," %}
       {% assign existing_alphas = site.books | map: 'alphabet' | uniq %}
       {% for a in all_alphas %}
         {% if existing_alphas contains a %}
           <button class="alpha bg-neutral-100 dark:bg-neutral-700 hover:bg-emerald-600 hover:text-white text-neutral-800 dark:text-neutral-100 rounded-lg px-2.5 py-1 font-bold text-xs sm:text-sm transition" data-a="{{ a }}">{{ a }}</button>
         {% else %}
-          <button class="alpha alpha-off bg-neutral-50 dark:bg-neutral-800/60 text-neutral-400 dark:text-neutral-500 border border-neutral-200/60 dark:border-neutral-700 rounded-lg px-2.5 py-1 font-semibold text-xs sm:text-sm" data-a="{{ a }}" title="এই বর্ণে এখনো বই যুক্ত হয়নি" disabled>{{ a }}</button>
+          <button class="alpha alpha-off bg-neutral-50 dark:bg-neutral-800/60 text-neutral-400 dark:text-neutral-500 border border-neutral-200/60 dark:border-neutral-700 rounded-lg px-2.5 py-1 font-semibold text-xs sm:text-sm" data-a="{{ a }}" title="No books yet" disabled>{{ a }}</button>
         {% endif %}
       {% endfor %}
     </div>
-
-    <!-- Category Filter Pills -->
     <div class="flex flex-wrap items-center gap-2 pt-3" id="cat-bar">
-      <span class="text-xs font-bold text-neutral-500 dark:text-neutral-400 mr-1">বিষয়:</span>
-      <button class="catpill on rounded-full px-3.5 py-1 font-bold text-xs sm:text-sm transition" data-c="">সব বিষয় ({{ site.books.size }})</button>
+      <span class="text-xs font-bold text-neutral-500 dark:text-neutral-400 mr-1" data-bn="বিষয়:" data-en="Subject:">বিষয়:</span>
+      <button class="catpill on rounded-full px-3.5 py-1 font-bold text-xs sm:text-sm transition" data-c=""><span data-bn="সব বিষয়" data-en="All Subjects">সব বিষয়</span> ({{ site.books.size }})</button>
       {% for c in cats %}
       <button class="catpill bg-neutral-100 dark:bg-neutral-700 hover:bg-emerald-50 dark:hover:bg-neutral-600 border border-neutral-200 dark:border-neutral-600 rounded-full px-3.5 py-1 font-bold text-xs sm:text-sm transition" data-c="{{ c }}">{{ c }}</button>
       {% endfor %}
-      <button class="catpill bg-amber-50 dark:bg-neutral-700 border border-amber-300 dark:border-neutral-600 text-amber-900 dark:text-amber-300 rounded-full px-3.5 py-1 font-bold text-xs sm:text-sm transition" data-c="__shelf">★ আমার তাক</button>
+      <button class="catpill bg-amber-50 dark:bg-neutral-700 border border-amber-300 dark:border-neutral-600 text-amber-900 dark:text-amber-300 rounded-full px-3.5 py-1 font-bold text-xs sm:text-sm transition" data-c="__shelf" data-bn="★ আমার তাক" data-en="★ My Shelf">★ আমার তাক</button>
     </div>
   </section>
 
-  <!-- MAIN BOOKS GRID (BDeBooks Card Style) -->
-  <section class="mt-8" id="books-grid">
-    <div class="flex items-center justify-between mb-4">
-      <h2 class="text-xl font-extrabold flex items-center gap-2">
-        <span>📚</span> <span id="grid-heading">সকল বইসমূহ</span>
-      </h2>
-      <span id="result-count" class="text-sm font-bold text-neutral-500 dark:text-neutral-400">{{ site.books.size }} টি বই</span>
+  <!-- POPULAR NOW — swipeable row, filters apply here -->
+  <section class="mt-9" id="popular">
+    <div class="flex items-baseline justify-between mb-3 px-0.5">
+      <h2 class="serif text-xl sm:text-2xl font-extrabold" id="grid-heading" data-bn="জনপ্রিয় এখন" data-en="Popular Now">জনপ্রিয় এখন</h2>
+      <span class="flex items-center gap-3">
+        <span id="result-count" class="text-sm font-bold text-neutral-500 dark:text-neutral-400">{{ site.books.size }} <span data-bn="টি বই" data-en="books">টি বই</span></span>
+        <button id="view-all" class="accent-text text-sm font-extrabold hover:underline" data-bn="সব দেখুন" data-en="View All">সব দেখুন</button>
+      </span>
     </div>
-
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-5" id="grid">
+    <div id="row-popular" class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-3 px-3 sm:mx-0 sm:px-0">
       {% for b in site.books %}
-      <div class="book-card group bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between"
-           data-id="{{ b.book_id }}" data-alpha="{{ b.alphabet }}" data-cats="{{ b.categories | join: '|' }}"
-           data-hay="{{ b.title }} {{ b.title_en }} {{ b.author }} {{ b.creator }} {{ b.category }}">
-        
-        <a href="{{ b.url | relative_url }}" class="block flex-1 flex flex-col">
-          <!-- Book Cover Container -->
-          <div class="relative bg-neutral-100 dark:bg-neutral-700/60 p-3 flex items-center justify-center aspect-[3/4] overflow-hidden">
-            <img src="{{ b.cover | relative_url }}" alt="{{ b.title }}" class="h-full w-auto object-contain rounded shadow group-hover:scale-105 transition duration-300">
-            <span class="absolute top-2 right-2 bg-emerald-800/90 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow">
-              {{ b.language_label }}
-            </span>
-            {% if b.price %}
-            <span class="absolute top-2 left-2 bg-amber-600 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow">
-              প্রিমিয়াম
-            </span>
-            {% else %}
-            <span class="absolute top-2 left-2 bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow">
-              ফ্রি
-            </span>
-            {% endif %}
+      <div class="book-card snap-start shrink-0 w-[150px] sm:w-[172px]" data-id="{{ b.book_id }}" data-alpha="{{ b.alphabet }}" data-cats="{{ b.categories | join: '|' }}" data-hay="{{ b.title }} {{ b.title_en }} {{ b.author }} {{ b.creator }} {{ b.category }}">
+        <a href="{{ b.url | relative_url }}" class="block group">
+          <div class="relative rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]">
+            <img src="{{ b.cover | relative_url }}" alt="{{ b.title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            {% if b.price %}<span class="absolute top-2 left-2 bg-amber-600 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow" data-bn="প্রিমিয়াম" data-en="Premium">প্রিমিয়াম</span>{% else %}<span class="absolute top-2 left-2 bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow" data-bn="ফ্রি" data-en="Free">ফ্রি</span>{% endif %}
+            <span class="absolute top-2 right-2 bg-black/55 text-white text-[10px] font-bold px-2 py-0.5 rounded">{{ b.language_label }}</span>
           </div>
-
-          <!-- Book Title & Author -->
-          <div class="p-3 flex-1 flex flex-col justify-between">
-            <div>
-              <span class="inline-block text-[11px] font-bold text-emerald-700 dark:text-emerald-400 mb-1">{{ b.category }}</span>
-              <h3 class="font-bold text-sm sm:text-[15px] leading-snug text-neutral-900 dark:text-white group-hover:text-emerald-700 dark:group-hover:text-emerald-400 line-clamp-2">{{ b.title }}</h3>
-              <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-1 line-clamp-1">✍️ {{ b.author }}</p>
-            </div>
-          </div>
+          <h3 class="font-bold text-sm sm:text-[15px] leading-snug mt-2 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400" data-bn="{{ b.title }}" data-en="{{ b.title_en | default: b.title }}">{{ b.title }}</h3>
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1">✍️ {{ b.author }}</p>
         </a>
-
-        <!-- BDeBooks Style Action Button at Bottom of Card -->
-        <div class="px-3 pb-3 pt-1">
-          <a href="{{ b.url | relative_url }}" class="block w-full text-center bg-emerald-700 hover:bg-emerald-800 text-white text-xs sm:text-sm font-bold py-2 rounded-lg transition">
-            {% if b.file %}📖 পড়ুন / ডাউনলোড{% else %}🛒 বিস্তারিত দেখুন{% endif %}
-          </a>
-        </div>
+        <a href="{{ b.url | relative_url }}" class="accent-bg block text-center text-white text-xs sm:text-sm font-bold py-2 rounded-lg mt-2 transition" {% if b.file %}data-bn="📖 পড়ুন / ডাউনলোড" data-en="📖 Read / Download"{% else %}data-bn="🛒 বিস্তারিত দেখুন" data-en="🛒 View Details"{% endif %}>{% if b.file %}📖 পড়ুন / ডাউনলোড{% else %}🛒 বিস্তারিত দেখুন{% endif %}</a>
       </div>
       {% endfor %}
     </div>
-
-    <div id="no-match" class="hidden bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl text-center py-12 px-4 mt-4">
-      <p class="text-lg font-bold text-neutral-700 dark:text-neutral-200">দুঃখিত, এই ফিল্টারে কোনো বই পাওয়া যায়নি।</p>
-      <p class="text-sm text-neutral-500 mt-1">অন্য কোনো বর্ণ, বিষয় বা নাম দিয়ে চেষ্টা করুন।</p>
-      <button onclick="document.getElementById('reset-filters').click()" class="mt-4 bg-emerald-700 text-white font-bold text-sm px-5 py-2 rounded-lg">সব বই দেখুন</button>
+    <div id="no-match" class="hidden bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl text-center py-12 px-4 mt-2">
+      <p class="text-lg font-bold text-neutral-700 dark:text-neutral-200" data-bn="দুঃখিত, এই ফিল্টারে কোনো বই পাওয়া যায়নি।" data-en="Sorry, no books match this filter.">দুঃখিত, এই ফিল্টারে কোনো বই পাওয়া যায়নি।</p>
+      <p class="text-sm text-neutral-500 mt-1" data-bn="অন্য কোনো বর্ণ, বিষয় বা নাম দিয়ে চেষ্টা করুন।" data-en="Try another letter, subject or name.">অন্য কোনো বর্ণ, বিষয় বা নাম দিয়ে চেষ্টা করুন।</p>
+      <button onclick="document.getElementById('reset-filters').click()" class="accent-bg mt-4 text-white font-bold text-sm px-5 py-2 rounded-lg" data-bn="সব বই দেখুন" data-en="Show All Books">সব বই দেখুন</button>
     </div>
   </section>
 
-  <!-- FEATURED BOOK BANNER -->
-  {% assign f = site.books | where: "book_id", "islam-objections-bn" | first %}
-  {% if f %}
-  <section class="mt-12" id="popular">
-    <div class="flex items-baseline justify-between mb-3">
-      <h2 class="text-xl font-extrabold">🌟 বিশেষ নির্বাচিত বই</h2>
+  <!-- AUTHORS & SERIES -->
+  <section id="writers" class="mt-10">
+    <h2 class="serif text-xl sm:text-2xl font-extrabold mb-3 px-0.5" data-bn="জনপ্রিয় লেখক ও সিরিজ" data-en="Popular Authors & Series">জনপ্রিয় লেখক ও সিরিজ</h2>
+    <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1 -mx-3 px-3 sm:mx-0 sm:px-0">
+      {% assign groups = site.books | group_by: "author" | sort: "name" %}
+      {% for g in groups %}
+      <button class="writer-chip shrink-0 bg-white dark:bg-neutral-800 hover:bg-emerald-50 dark:hover:bg-neutral-700 border border-neutral-200 dark:border-neutral-600 rounded-full px-4 py-2 font-bold text-sm transition whitespace-nowrap" data-w="{{ g.name }}">✍️ {{ g.name }} · {{ g.size }}</button>
+      {% endfor %}
     </div>
-    <div class="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-neutral-800 dark:to-neutral-800 border border-amber-200/80 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row gap-6 items-center sm:items-start shadow-sm">
-      <img src="{{ f.cover | relative_url }}" alt="{{ f.title }}" class="w-32 sm:w-36 rounded-lg shadow-md flex-shrink-0">
-      <div class="text-center sm:text-left">
-        <span class="inline-block bg-[#c8501b] text-white text-xs font-bold px-3 py-0.5 rounded-full">বেস্টসেলার ইবুক</span>
-        <h3 class="serif text-xl sm:text-2xl font-bold mt-2">{{ f.title }}</h3>
-        <p class="text-neutral-600 dark:text-neutral-400 text-sm mt-1">✍️ লেখক: <strong>{{ f.author }}</strong> · ইবুক সংস্করণ: {{ f.creator }}</p>
-        <p class="text-sm sm:text-[15px] mt-2.5 text-neutral-700 dark:text-neutral-200 leading-relaxed">{{ f.content | strip_html | truncate: 240 }}</p>
-        <div class="mt-4 flex flex-wrap justify-center sm:justify-start gap-3">
-          <a href="{{ f.url | relative_url }}" class="bg-[#c8501b] hover:brightness-110 text-white font-bold rounded-lg px-5 py-2 text-sm transition">বিস্তারিত দেখুন →</a>
-          {% if f.gumroad %}
-          <a href="{{ f.gumroad }}" target="_blank" rel="noopener" class="bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-lg px-5 py-2 text-sm transition">🛒 Gumroad থেকে সংগ্রহ করুন</a>
-          {% endif %}
+  </section>
+
+  <!-- BENGALI BOOKS ROW -->
+  {% assign bnbooks = site.books | where: "language", "bn" %}
+  {% if bnbooks.size > 0 %}
+  <section class="mt-10">
+    <div class="flex items-baseline justify-between mb-3 px-0.5">
+      <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="জনপ্রিয় বাংলা বই" data-en="Popular Bengali Books">জনপ্রিয় বাংলা বই</h2>
+      <a href="#popular" class="accent-text text-sm font-extrabold hover:underline" data-bn="সব দেখুন" data-en="View All">সব দেখুন</a>
+    </div>
+    <div class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-3 px-3 sm:mx-0 sm:px-0">
+      {% for b in bnbooks %}
+      <a href="{{ b.url | relative_url }}" class="snap-start shrink-0 w-[150px] sm:w-[172px] group">
+        <div class="rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]">
+          <img src="{{ b.cover | relative_url }}" alt="{{ b.title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
         </div>
-      </div>
+        <h3 class="font-bold text-sm sm:text-[15px] leading-snug mt-2 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400" data-bn="{{ b.title }}" data-en="{{ b.title_en | default: b.title }}">{{ b.title }}</h3>
+        <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1">✍️ {{ b.author }}</p>
+      </a>
+      {% endfor %}
     </div>
   </section>
   {% endif %}
 
-  <!-- BDeBooks Style Two-Column Directory: Categories & Authors -->
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12">
-    <!-- CATEGORIES DIRECTORY -->
-    <section id="categories" class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm">
-      <h2 class="text-lg font-extrabold mb-4 pb-2 border-b border-neutral-100 dark:border-neutral-700 flex items-center gap-2">
-        <span>📂</span> বিষয়ভিত্তিক বই (Categories)
-      </h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-        {% assign cg = site.books | group_by: "category" | sort: "name" %}
-        {% for g in cg %}
-        <button class="catgrid-btn bg-neutral-50 dark:bg-neutral-700/60 hover:bg-emerald-50 dark:hover:bg-neutral-700 border border-neutral-200 dark:border-neutral-600 rounded-xl px-4 py-2.5 font-bold text-left flex justify-between items-center transition" data-c="{{ g.name }}">
-          <span class="text-sm">{{ g.name }}</span>
-          <span class="bg-emerald-100 dark:bg-neutral-600 text-emerald-800 dark:text-emerald-300 font-bold text-xs px-2.5 py-0.5 rounded-full">{{ g.size }} টি</span>
-        </button>
-        {% endfor %}
-      </div>
-    </section>
+  <!-- ENGLISH BOOKS ROW -->
+  {% assign enbooks = site.books | where: "language", "en" %}
+  {% if enbooks.size > 0 %}
+  <section class="mt-10">
+    <div class="flex items-baseline justify-between mb-3 px-0.5">
+      <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="জনপ্রিয় ইংরেজি বই" data-en="Popular English Books">জনপ্রিয় ইংরেজি বই</h2>
+      <a href="#popular" class="accent-text text-sm font-extrabold hover:underline" data-bn="সব দেখুন" data-en="View All">সব দেখুন</a>
+    </div>
+    <div class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-3 px-3 sm:mx-0 sm:px-0">
+      {% for b in enbooks %}
+      <a href="{{ b.url | relative_url }}" class="snap-start shrink-0 w-[150px] sm:w-[172px] group">
+        <div class="rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]">
+          <img src="{{ b.cover | relative_url }}" alt="{{ b.title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+        </div>
+        <h3 class="font-bold text-sm sm:text-[15px] leading-snug mt-2 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400" data-bn="{{ b.title }}" data-en="{{ b.title_en | default: b.title }}">{{ b.title }}</h3>
+        <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1">✍️ {{ b.author }}</p>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
 
-    <!-- AUTHORS DIRECTORY -->
-    <section id="writers" class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm">
-      <h2 class="text-lg font-extrabold mb-4 pb-2 border-b border-neutral-100 dark:border-neutral-700 flex items-center gap-2">
-        <span>✍️</span> লেখক তালিকা (Authors)
-      </h2>
-      <div class="flex flex-col gap-2">
-        {% assign groups = site.books | group_by: "author" | sort: "name" %}
-        {% for g in groups %}
-        <button class="writer-chip bg-neutral-50 dark:bg-neutral-700/60 hover:bg-emerald-50 dark:hover:bg-neutral-700 border border-neutral-200 dark:border-neutral-600 rounded-xl px-4 py-2.5 font-bold text-left flex justify-between items-center transition" data-w="{{ g.name }}">
-          <span class="text-sm truncate pr-2">✍️ {{ g.name }}</span>
-          <span class="bg-amber-100 dark:bg-neutral-600 text-amber-900 dark:text-amber-300 font-bold text-xs px-2.5 py-0.5 rounded-full flex-shrink-0">{{ g.size }} টি বই</span>
-        </button>
-        {% endfor %}
-      </div>
-    </section>
-  </div>
+  <!-- CATEGORIES DIRECTORY -->
+  <section id="categories" class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm mt-12">
+    <h2 class="text-lg font-extrabold mb-4 pb-2 border-b border-neutral-100 dark:border-neutral-700 flex items-center gap-2">
+      <span>📂</span> <span data-bn="বিষয়ভিত্তিক বই (Categories)" data-en="Books by Category">বিষয়ভিত্তিক বই (Categories)</span>
+    </h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+      {% assign cg = site.books | group_by: "category" | sort: "name" %}
+      {% for g in cg %}
+      <button class="catgrid-btn bg-neutral-50 dark:bg-neutral-700/60 hover:bg-emerald-50 dark:hover:bg-neutral-700 border border-neutral-200 dark:border-neutral-600 rounded-xl px-4 py-2.5 font-bold text-left flex justify-between items-center transition" data-c="{{ g.name }}">
+        <span class="text-sm">{{ g.name }}</span>
+        <span class="bg-emerald-100 dark:bg-neutral-600 text-emerald-800 dark:text-emerald-300 font-bold text-xs px-2.5 py-0.5 rounded-full">{{ g.size }}</span>
+      </button>
+      {% endfor %}
+    </div>
+  </section>
 
   <!-- ABOUT & PUBLISH -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
-    <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm">
-      <h2 class="text-lg font-bold mb-2">📖 আমাদের বইঘর (Our Boighar) সম্পর্কে</h2>
-      <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">
-        <strong>Our Boighar (আমাদের বইঘর)</strong> হলো <strong>মোঃ তৌফিকুল ইসলাম</strong>-এর তৈরি একটি উন্মুক্ত ডিজিটাল লাইব্রেরি — যেখানে বাংলা ও ইংরেজি ইসলামিক বই, অনুবাদ ও ইপাব সংস্করণ সংরক্ষিত রয়েছে। ফ্রি বইগুলো সরাসরি ব্রাউজারেই পড়া বা ডাউনলোড করা যায়।
-      </p>
+    <section id="about" class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm">
+      <h2 class="text-lg font-bold mb-2" data-bn="📖 আমাদের বইঘর (Our Boighar) সম্পর্কে" data-en="📖 About Our Boighar">📖 আমাদের বইঘর (Our Boighar) সম্পর্কে</h2>
+      <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-300" data-bn="Our Boighar (আমাদের বইঘর) হলো মোঃ তৌফিকুল ইসলাম-এর তৈরি একটি উন্মুক্ত ডিজিটাল লাইব্রেরি — যেখানে বাংলা ও ইংরেজি ইসলামিক বই, অনুবাদ ও ইপাব সংস্করণ সংরক্ষিত রয়েছে। ফ্রি বইগুলো সরাসরি ব্রাউজারেই পড়া বা ডাউনলোড করা যায়।" data-en="Our Boighar is an open digital library created by Md. Towfiqul Islam — Bengali & English Islamic books, translations and EPUB editions. Free books can be read in the browser or downloaded.">Our Boighar (আমাদের বইঘর) হলো মোঃ তৌফিকুল ইসলাম-এর তৈরি একটি উন্মুক্ত ডিজিটাল লাইব্রেরি — যেখানে বাংলা ও ইংরেজি ইসলামিক বই, অনুবাদ ও ইপাব সংস্করণ সংরক্ষিত রয়েছে। ফ্রি বইগুলো সরাসরি ব্রাউজারেই পড়া বা ডাউনলোড করা যায়।</p>
     </section>
-
-    <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm flex flex-col justify-between">
+    <section id="publish" class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm flex flex-col justify-between">
       <div>
-        <h2 class="text-lg font-bold mb-2">✒️ আপনার বই যুক্ত করুন</h2>
-        <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-300 mb-4">
-          আপনার অনুবাদকৃত বা রচিত কোনো ইসলামিক বই এই লাইব্রেরিতে বিনামূল্যে পাঠকদের জন্য উন্মুক্ত করতে চাইলে আমাদের GitHub রিপোজিটরিতে পাঠাতে পারেন।
-        </p>
+        <h2 class="text-lg font-bold mb-2" data-bn="✒️ আপনার বই যুক্ত করুন" data-en="✒️ Add Your Book">✒️ আপনার বই যুক্ত করুন</h2>
+        <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-300 mb-4" data-bn="আপনার অনুবাদকৃত বা রচিত কোনো ইসলামিক বই এই লাইব্রেরিতে বিনামূল্যে পাঠকদের জন্য উন্মুক্ত করতে চাইলে আমাদের GitHub রিপোজিটরিতে পাঠাতে পারেন।" data-en="Want to share your translated or authored Islamic book with readers for free? Send it via our GitHub repository.">আপনার অনুবাদকৃত বা রচিত কোনো ইসলামিক বই এই লাইব্রেরিতে বিনামূল্যে পাঠকদের জন্য উন্মুক্ত করতে চাইলে আমাদের GitHub রিপোজিটরিতে পাঠাতে পারেন।</p>
       </div>
       <div>
-        <a class="inline-block bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-bold rounded-lg px-5 py-2.5 transition" href="https://github.com/MDTowfiqul/our-boighar" target="_blank" rel="noopener">GitHub-এ যোগাযোগ করুন →</a>
+        <a class="accent-bg inline-block text-white text-sm font-bold rounded-lg px-5 py-2.5 transition" href="https://github.com/MDTowfiqul/our-boighar" target="_blank" rel="noopener" data-bn="GitHub-এ যোগাযোগ করুন →" data-en="Contact on GitHub →">GitHub-এ যোগাযোগ করুন →</a>
       </div>
     </section>
   </div>
@@ -215,9 +216,13 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
 (function(){
   var BM = 'ourboighar-bookmarks';
   function bookmarks(){ try{ return JSON.parse(localStorage.getItem(BM)||'[]'); }catch(e){ return []; } }
-  var cards = Array.prototype.slice.call(document.querySelectorAll('.book-card'));
+  function lang(){ return window.__obLang || 'bn'; }
+  var H = {
+    bn: { all:'জনপ্রিয় এখন', shelf:'★ আমার তাকে রাখা বই', cat:'বিষয়: ', alpha:'বর্ণমালা: ', search:'অনুসন্ধান: ', books:'টি বই' },
+    en: { all:'Popular Now', shelf:'★ Books on My Shelf', cat:'Subject: ', alpha:'Letter: ', search:'Search: ', books:'books' }
+  };
+  var cards = Array.prototype.slice.call(document.querySelectorAll('#row-popular .book-card'));
   var state = { q:'', alpha:'', cat:'' };
-
   var resetBtn = document.getElementById('reset-filters');
   var headingEl = document.getElementById('grid-heading');
   var countEl = document.getElementById('result-count');
@@ -243,82 +248,97 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
       card.style.display = ok ? '' : 'none';
       if (ok) visible++;
     });
-
     document.getElementById('no-match').classList.toggle('hidden', visible > 0);
-    countEl.textContent = visible + ' টি বই';
-
+    var t = H[lang()];
+    countEl.innerHTML = visible + ' ' + t.books;
     var hasFilter = !!(state.q || state.alpha || state.cat);
     resetBtn.classList.toggle('hidden', !hasFilter);
-
-    if (state.cat === '__shelf') headingEl.textContent = '★ আমার তাকে রাখা বই';
-    else if (state.cat) headingEl.textContent = 'বিষয়: ' + state.cat;
-    else if (state.alpha) headingEl.textContent = 'বর্ণমালা: ' + state.alpha;
-    else if (state.q) headingEl.textContent = 'অনুসন্ধানের ফলাফল: "' + search.value + '"';
-    else headingEl.textContent = 'সকল বইসমূহ';
-
+    /* remove data-bn so the language switcher does not overwrite dynamic headings */
+    headingEl.removeAttribute('data-bn'); headingEl.removeAttribute('data-en');
+    if (state.cat === '__shelf') headingEl.textContent = t.shelf;
+    else if (state.cat) headingEl.textContent = t.cat + state.cat;
+    else if (state.alpha) headingEl.textContent = t.alpha + state.alpha;
+    else if (state.q) headingEl.textContent = t.search + '"' + search.value + '"';
+    else headingEl.textContent = t.all;
     syncPills();
   }
 
-  function scrollGrid(){ document.getElementById('books-grid').scrollIntoView({behavior:'smooth'}); }
-
+  function scrollPopular(){ document.getElementById('popular').scrollIntoView({behavior:'smooth'}); }
   function doSearch(){ state.q = search.value.trim().toLowerCase(); apply(); }
   search.addEventListener('input', doSearch);
-  document.getElementById('go-search').onclick = function(){ doSearch(); scrollGrid(); };
+  document.getElementById('go-search').onclick = function(){ doSearch(); scrollPopular(); };
 
-  resetBtn.onclick = function(){
+  function resetAll(){
     state.q = ''; state.alpha = ''; state.cat = '';
     search.value = '';
     apply();
-  };
+  }
+  resetBtn.onclick = resetAll;
+  document.getElementById('view-all').onclick = function(){ resetAll(); scrollPopular(); };
 
   Array.prototype.forEach.call(document.querySelectorAll('#alpha-bar button'), function(btn){
     btn.onclick = function(){
       if (btn.disabled || btn.classList.contains('alpha-off')) return;
       state.alpha = btn.getAttribute('data-a') || '';
-      apply(); scrollGrid();
+      apply(); scrollPopular();
     };
   });
-
   Array.prototype.forEach.call(document.querySelectorAll('#cat-bar button'), function(btn){
     btn.onclick = function(){
       state.cat = btn.getAttribute('data-c') || '';
-      apply(); scrollGrid();
+      apply(); scrollPopular();
     };
   });
-
   Array.prototype.forEach.call(document.querySelectorAll('.pop-cat'), function(a){
     a.addEventListener('click', function(e){
       e.preventDefault();
       state.cat = a.getAttribute('data-cat');
-      apply(); scrollGrid();
+      apply(); scrollPopular();
     });
   });
-
   Array.prototype.forEach.call(document.querySelectorAll('.writer-chip'), function(ch){
     ch.addEventListener('click', function(){
       state.alpha = ''; state.cat = '';
       search.value = ch.getAttribute('data-w');
-      doSearch(); scrollGrid();
+      doSearch(); scrollPopular();
     });
   });
-
   Array.prototype.forEach.call(document.querySelectorAll('.catgrid-btn'), function(b2){
     b2.addEventListener('click', function(){
       state.q = ''; state.alpha = ''; search.value = '';
       state.cat = b2.getAttribute('data-c');
-      apply(); scrollGrid();
+      apply(); scrollPopular();
     });
   });
 
-  var q = new URLSearchParams(location.search).get('q');
-  if (q){ search.value = q; doSearch(); scrollGrid(); }
-  if (location.hash === '#shelf'){
-    state.cat = '__shelf'; apply(); scrollGrid();
+  /* hero tabs */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.hero-tab'));
+  function paintTabs(active){
+    tabs.forEach(function(tb){
+      var on = tb.getAttribute('data-tab') === active;
+      tb.classList.toggle('bg-white', on);
+      tb.classList.toggle('text-neutral-900', on);
+      tb.classList.toggle('text-white/85', !on);
+    });
   }
-  window.addEventListener('hashchange', function(){
-    if (location.hash === '#shelf'){
-      state.cat = '__shelf'; apply(); scrollGrid();
-    }
+  tabs.forEach(function(tb){
+    tb.addEventListener('click', function(){
+      var k = tb.getAttribute('data-tab');
+      paintTabs(k);
+      if (k === 'all'){ resetAll(); scrollPopular(); }
+      else if (k === 'discover'){ document.getElementById('categories').scrollIntoView({behavior:'smooth'}); }
+      else if (k === 'top'){ resetAll(); scrollPopular(); }
+    });
   });
+
+  window.addEventListener('ob-lang', apply);
+
+  var q = new URLSearchParams(location.search).get('q');
+  if (q){ search.value = q; doSearch(); }
+  function checkShelfHash(){
+    if (location.hash === '#shelf'){ state.cat = '__shelf'; apply(); scrollPopular(); }
+  }
+  checkShelfHash();
+  window.addEventListener('hashchange', checkShelfHash);
 })();
 </script>
