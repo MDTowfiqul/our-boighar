@@ -14,6 +14,10 @@
   if (localStorage.getItem('ob-theme') === 'dark') document.documentElement.classList.add('dark');
   document.documentElement.setAttribute('data-color', localStorage.getItem('ob-color') || 'purple');
   document.documentElement.lang = localStorage.getItem('ob-lang') || 'bn';
+  /* Category display names: categories are stored in English in each book's
+     file; this map gives their Bengali names. Add new categories here. */
+  window.__obCatBn = {"Dawah":"দাওয়াহ","Hadith":"হাদীস","Health":"স্বাস্থ্য","Islamic Q&A":"ইসলামিক প্রশ্নোত্তর","Manners & Character":"আদব ও চরিত্র","Prophetic Medicine":"তিব্বে নববী","Qur'an":"কুরআন","Spirituality":"আধ্যাত্মিকতা","Tafsir":"তাফসীর"};
+  window.__obCatName = function(c){ var l = localStorage.getItem('ob-lang') || 'bn'; return l === 'en' ? c : (window.__obCatBn[c] || c); };
 </script>
 <style>
   body{font-family:'Hind Siliguri',system-ui,sans-serif}
@@ -179,6 +183,11 @@
 
   /* language bn / en */
   window.__obLang = localStorage.getItem('ob-lang') || 'bn';
+  function paintCats(){
+    document.querySelectorAll('[data-cat]').forEach(function(el){
+      el.textContent = window.__obCatName(el.getAttribute('data-cat'));
+    });
+  }
   function setLang(l){
     window.__obLang = l;
     localStorage.setItem('ob-lang', l);
@@ -193,6 +202,7 @@
     });
     document.getElementById('lang-label').textContent = l === 'en' ? 'EN' : 'BN';
     document.getElementById('drawer-lang-label').textContent = l === 'en' ? 'English' : 'বাংলা';
+    paintCats();
     window.dispatchEvent(new Event('ob-lang'));
   }
   window.__obSetLang = setLang;
@@ -203,6 +213,7 @@
     setLang(window.__obLang === 'en' ? 'bn' : 'en');
   });
   if (window.__obLang === 'en') setLang('en');
+  paintCats();
 
   /* drawer */
   var drawer = document.getElementById('drawer'), overlay = document.getElementById('drawer-overlay');

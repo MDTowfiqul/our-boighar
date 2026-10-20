@@ -6,7 +6,7 @@ layout: default
   <p class="text-[13px] text-neutral-500 dark:text-neutral-400 mb-3">
     <a href="{{ '/' | relative_url }}" class="hover:underline" data-bn="হোম" data-en="Home">হোম</a> /
     <a href="{{ '/browse/' | relative_url }}" class="hover:underline" data-bn="সব বই" data-en="All Books">সব বই</a> /
-    <a href="{{ '/browse/' | relative_url }}?cat={{ page.category | url_encode }}" class="hover:underline">{{ page.category }}</a> /
+    <a href="{{ '/browse/' | relative_url }}?cat={{ page.category | url_encode }}" class="hover:underline" data-cat="{{ page.category }}">{{ page.category }}</a> /
     <span class="font-semibold text-neutral-700 dark:text-neutral-200">{{ page.title_en | default: page.title }}</span>
   </p>
 
@@ -18,7 +18,7 @@ layout: default
       </div>
       <div class="flex-1 min-w-0">
         <div class="flex flex-wrap gap-2 mb-3">
-          {% for c in page.categories %}<a href="{{ '/browse/' | relative_url }}?cat={{ c | url_encode }}" class="bg-white dark:bg-neutral-700 border border-neutral-200 dark:border-neutral-600 accent-text rounded-full text-xs font-bold px-3 py-1">{{ c }}</a>{% endfor %}
+          {% for c in page.categories %}<a href="{{ '/browse/' | relative_url }}?cat={{ c | url_encode }}" class="bg-white dark:bg-neutral-700 border border-neutral-200 dark:border-neutral-600 accent-text rounded-full text-xs font-bold px-3 py-1" data-cat="{{ c }}">{{ c }}</a>{% endfor %}
           <span class="bg-white dark:bg-neutral-700 border border-neutral-200 dark:border-neutral-600 text-emerald-800 dark:text-emerald-300 rounded-full text-xs font-bold px-3 py-1">{{ page.format }}</span>
           <span class="bg-white dark:bg-neutral-700 border border-neutral-200 dark:border-neutral-600 text-neutral-600 dark:text-neutral-300 rounded-full text-xs font-bold px-3 py-1">{{ page.language_label }}</span>
         </div>
@@ -93,7 +93,7 @@ layout: default
       <tr class="border-b border-neutral-200 dark:border-neutral-700"><td class="py-2 pr-3 text-neutral-500 dark:text-neutral-400 w-36 font-medium" data-bn="লেখক" data-en="Writer">লেখক</td><td class="py-2 font-semibold">{{ page.author }}</td></tr>
       <tr class="border-b border-neutral-200 dark:border-neutral-700"><td class="py-2 pr-3 text-neutral-500 dark:text-neutral-400 font-medium" data-bn="ইবুক নির্মাতা" data-en="Ebook Creator">ইবুক নির্মাতা</td><td class="py-2 font-semibold">{{ page.creator }}</td></tr>
       <tr class="border-b border-neutral-200 dark:border-neutral-700"><td class="py-2 pr-3 text-neutral-500 dark:text-neutral-400 font-medium" data-bn="ভাষা" data-en="Language">ভাষা</td><td class="py-2 font-semibold">{{ page.language_label }}</td></tr>
-      <tr class="border-b border-neutral-200 dark:border-neutral-700"><td class="py-2 pr-3 text-neutral-500 dark:text-neutral-400 font-medium" data-bn="বিষয়" data-en="Subject">বিষয়</td><td class="py-2 font-semibold">{{ page.categories | join: ", " }}</td></tr>
+      <tr class="border-b border-neutral-200 dark:border-neutral-700"><td class="py-2 pr-3 text-neutral-500 dark:text-neutral-400 font-medium" data-bn="বিষয়" data-en="Subject">বিষয়</td><td class="py-2 font-semibold">{% for c in page.categories %}<span data-cat="{{ c }}">{{ c }}</span>{% unless forloop.last %}, {% endunless %}{% endfor %}</td></tr>
       <tr class="border-b border-neutral-200 dark:border-neutral-700"><td class="py-2 pr-3 text-neutral-500 dark:text-neutral-400 font-medium" data-bn="ফরম্যাট" data-en="Format">ফরম্যাট</td><td class="py-2 font-semibold">{{ page.format }}{% if page.file %} · <span data-bn="অনলাইন পড়া ও ডাউনলোড" data-en="Read online & download">অনলাইন পড়া ও ডাউনলোড</span>{% else %} · Gumroad{% endif %}</td></tr>
       {% if page.file_size %}<tr class="border-b border-neutral-200 dark:border-neutral-700"><td class="py-2 pr-3 text-neutral-500 dark:text-neutral-400 font-medium" data-bn="ফাইলের আকার" data-en="File Size">ফাইলের আকার</td><td class="py-2 font-semibold">{{ page.file_size }}</td></tr>{% endif %}
       {% if page.year %}<tr><td class="py-2 pr-3 text-neutral-500 dark:text-neutral-400 font-medium" data-bn="প্রথম প্রকাশ" data-en="First Published">প্রথম প্রকাশ</td><td class="py-2 font-semibold">{{ page.year }}</td></tr>{% endif %}
