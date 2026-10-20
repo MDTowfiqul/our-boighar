@@ -14,4 +14,4 @@ format: "EPUB"
 gumroad: "https://towfiqulislam.gumroad.com/l/vvcbp"
 price: "$100"
 ---
-Simple, logical and evidence-based answers to the common questions and objections non-Muslims raise about Islam — women's rights, the Oneness of Allah, science debates and more — drawn from the Qur'an and Hadith, in clear Bengali. Proof-read with AI assistance.
+ইসলাম সম্পর্কে অমুসলিমদের সাধারণ প্রশ্ন ও আপত্তিসমূহের সহজ, যুক্তিসম্মত ও প্রমাণভিত্তিক জবাব — নারীর অধিকার, আল্লাহর একত্ববাদ, বিজ্ঞান নিয়ে বিতর্কসহ আরও অনেক বিষয়ে — কুরআন ও হাদীসের আলোকে, সহজ ও স্পষ্ট বাংলায়। এআই-এর সহায়তায় প্রুফরিডকৃত।

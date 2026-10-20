@@ -14,4 +14,4 @@ file: "/books/risa-riyadus-saliheen-bn.epub"
 format: "EPUB"
 file_size: "0.1 MB"
 ---
-A Bengali 'essence' compilation of Imam an-Nawawi's Riyad as-Salihin — its themes and spirit gathered in a short, easy form by Shamim Rezayi for daily reading and reflection.
+ইমাম নববী (রহ.)-এর বিশ্ববিখ্যাত গ্রন্থ রিয়াদুস সালেহীনের ভাব-সংকলন — বইটির মূল বিষয়বস্তু ও মর্ম শামীম রেজায়ীর সংকলনে সংক্ষিপ্ত ও সহজ আকারে সাজানো, প্রতিদিনের পাঠ ও আত্মচিন্তার জন্য।

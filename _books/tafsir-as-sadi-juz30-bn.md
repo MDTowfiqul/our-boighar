@@ -15,4 +15,4 @@ format: "EPUB"
 file_size: "3.2 MB"
 year: "2023"
 ---
-Bengali translation of As-Sa'di's clear and trusted tafsir for the 30th juz — Surah An-Naba to An-Nas — with the Arabic text, translation and easy verse-by-verse explanation. Print edition: Maktabatussunnah, 2023.
+শায়খ আস-সা‘দী (রহ.)-এর সহজ ও নির্ভরযোগ্য তাফসীরের বাংলা অনুবাদ — ৩০তম পাড়া (সূরা আন-নাবা থেকে আন-নাস পর্যন্ত), আরবি পাঠ, বাংলা অনুবাদ ও সহজ আয়াত-ভিত্তিক ব্যাখ্যাসহ। ছাপা সংস্করণ: মাকতাবাতুস সুন্নাহ, ২০২৩।
