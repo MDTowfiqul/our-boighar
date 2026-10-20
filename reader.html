@@ -5,39 +5,152 @@ layout: null
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>অনলাইন রিডার — Our Boighar</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@400;600&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@400;600&family=Noto+Serif:ital@0;1&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/epubjs@0.3.93/dist/epub.min.js"></script>
 <style>
-  :root{--green:#0d5c3f;--green-dark:#083f2b;--cream:#faf6ec;--ink:#1d241f;--muted:#5c665e}
+  :root{--bar-h:54px;--bot-h:64px}
+  body[data-theme="light"]{--bg:#e9e2cf;--surface:#ffffff;--ink:#1d241f;--muted:#5c665e;--bar:#0d5c3f;--bar-ink:#ffffff;--panel:#ffffff;--line:#e0d7bd;--accent:#0d5c3f}
+  body[data-theme="sepia"]{--bg:#e7d9bd;--surface:#f7ecd7;--ink:#43331f;--muted:#7a6748;--bar:#6d4c2f;--bar-ink:#fdf6e9;--panel:#faf0dc;--line:#dcc9a3;--accent:#8a5a2b}
+  body[data-theme="dark"]{--bg:#0c0c0c;--surface:#1b1b1b;--ink:#e9e5da;--muted:#9b968a;--bar:#101010;--bar-ink:#f0ead8;--panel:#1f1f1f;--line:#3a3a3a;--accent:#d8b25c}
   *{margin:0;padding:0;box-sizing:border-box}
-  body{font-family:"Hind Siliguri",system-ui,sans-serif;background:var(--cream);color:var(--ink)}
-  header.bar{display:flex;align-items:center;gap:12px;background:linear-gradient(160deg,#0d5c3f,#083f2b);color:#fff;padding:12px 16px;position:sticky;top:0;z-index:5}
-  header.bar a{color:#fff;text-decoration:none;font-weight:700;background:rgba(255,255,255,0.15);padding:6px 12px;border-radius:8px}
-  header.bar .title{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:16px;font-weight:700}
-  .nav{display:flex;justify-content:center;align-items:center;gap:10px;padding:10px;background:#fff;border-bottom:1px solid #e7dfc9;position:sticky;top:52px;z-index:4}
-  .nav button{border:1px solid #d9cfb4;background:#fff;border-radius:999px;padding:7px 18px;font-weight:700;cursor:pointer;font-family:inherit}
-  .nav button:hover{background:#0d5c3f;color:#fff;border-color:#0d5c3f}
-  #viewer{max-width:800px;margin:0 auto;padding:20px 16px 60px}
-  #epub-area{font-family:"Noto Serif Bengali",serif;line-height:2;font-size:19px;min-height:70vh;background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.06);padding:12px}
+  html,body{height:100%}
+  body{font-family:"Hind Siliguri",system-ui,sans-serif;background:var(--bg);color:var(--ink);overflow:hidden}
+  #viewer{position:fixed;left:0;right:0;top:var(--bar-h);bottom:var(--bot-h);background:var(--surface);transition:top .25s,bottom .25s}
+  body.chrome-off #viewer{top:0;bottom:0}
+  #epub-area{width:100%;height:100%}
   #epub-area img{max-width:100%}
-  #pdf-frame{width:100%;height:calc(100vh - 130px);border:0;background:#fff;border-radius:12px}
+  #pdf-frame{width:100%;height:100%;border:0;background:#fff}
   .msg{text-align:center;color:var(--muted);padding:80px 20px;font-size:16px}
+  .bar{position:fixed;left:0;right:0;z-index:20;background:var(--bar);color:var(--bar-ink);display:flex;align-items:center;gap:6px;padding:0 8px;transition:transform .25s}
+  #topbar{top:0;height:var(--bar-h)}
+  #botbar{bottom:0;height:var(--bot-h);background:var(--panel);color:var(--ink);border-top:1px solid var(--line);gap:10px;padding:0 12px}
+  body.chrome-off #topbar{transform:translateY(-100%)}
+  body.chrome-off #botbar{transform:translateY(100%)}
+  .tbtn{flex:0 0 auto;border:0;background:rgba(255,255,255,.14);color:inherit;font-family:inherit;font-weight:700;font-size:15px;border-radius:9px;padding:8px 11px;cursor:pointer;text-decoration:none;line-height:1}
+  .tbtn:active{transform:scale(.96)}
+  #btn-settings{font-family:"Noto Serif Bengali",serif}
+  .ttitles{flex:1;min-width:0;padding:0 4px}
+  #book-title{font-weight:700;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #chapter-title{font-size:11.5px;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .nbtn{flex:0 0 auto;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:9px 16px;font-weight:700;cursor:pointer;font-family:inherit;font-size:14px}
+  .nbtn:active{background:var(--accent);color:#fff}
+  .progwrap{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+  #prog{width:100%;accent-color:var(--accent);height:22px;cursor:pointer}
+  #prog:disabled{opacity:.35;cursor:wait}
+  #progtext{font-size:11.5px;color:var(--muted);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #scrim{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:30;opacity:0;pointer-events:none;transition:opacity .25s}
+  #scrim.on{opacity:1;pointer-events:auto}
+  .panel{position:fixed;z-index:31;background:var(--panel);color:var(--ink);transition:transform .28s;display:flex;flex-direction:column}
+  #drawer{top:0;bottom:0;left:0;width:min(84vw,340px);transform:translateX(-105%);box-shadow:2px 0 18px rgba(0,0,0,.25)}
+  #drawer.on{transform:none}
+  #sheet{left:0;right:0;bottom:0;max-height:82vh;border-radius:18px 18px 0 0;transform:translateY(105%);box-shadow:0 -4px 24px rgba(0,0,0,.3);padding-bottom:env(safe-area-inset-bottom)}
+  #sheet.on{transform:none}
+  .phead{display:flex;align-items:center;gap:8px;padding:14px 16px;border-bottom:1px solid var(--line)}
+  .phead h3{flex:1;font-size:16px}
+  .phead button{border:0;background:transparent;font-size:20px;cursor:pointer;color:inherit;padding:4px 8px}
+  .tabs{display:flex;gap:8px}
+  .tabs button{border:1px solid var(--line);background:transparent;color:inherit;border-radius:999px;padding:6px 14px;font-family:inherit;font-weight:700;font-size:13px;cursor:pointer}
+  .tabs button.sel{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .plist{overflow-y:auto;padding:8px 0}
+  .titem{display:block;width:100%;text-align:left;border:0;background:transparent;color:inherit;font-family:inherit;font-size:14.5px;padding:10px 16px;cursor:pointer;border-bottom:1px solid var(--line)}
+  .titem:active{background:rgba(127,127,127,.15)}
+  .titem small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+  .bitem{display:flex;gap:8px;align-items:flex-start;padding:10px 16px;border-bottom:1px solid var(--line)}
+  .bitem .go{flex:1;border:0;background:transparent;color:inherit;font-family:inherit;text-align:left;cursor:pointer;font-size:14.5px}
+  .bitem .del{border:0;background:transparent;color:#c0392b;font-size:16px;cursor:pointer;padding:2px 6px}
+  .empty{padding:26px 16px;text-align:center;color:var(--muted);font-size:14px}
+  .srow{padding:13px 16px;border-bottom:1px solid var(--line)}
+  .srow label{display:block;font-size:12.5px;font-weight:700;color:var(--muted);margin-bottom:8px}
+  .seg{display:flex;gap:8px;flex-wrap:wrap}
+  .seg button{border:1px solid var(--line);background:transparent;color:inherit;border-radius:10px;padding:8px 14px;font-family:inherit;font-weight:700;font-size:14px;cursor:pointer}
+  .seg button.sel{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .swatch{width:52px;height:38px;border-radius:10px;border:2px solid var(--line);cursor:pointer;font-family:inherit;font-weight:700;font-size:13px}
+  .swatch.sel{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+  #toast{position:fixed;left:50%;bottom:calc(var(--bot-h) + 16px);transform:translateX(-50%) translateY(20px);background:#222;color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;z-index:40;opacity:0;pointer-events:none;transition:.3s;max-width:88vw;text-align:center}
+  #toast.on{opacity:1;transform:translateX(-50%)}
 </style>
 </head>
-<body>
-<header class="bar">
-  <a href="{{ '/' | relative_url }}">← বইঘরে ফিরুন</a>
-  <span class="title" id="book-title">অনলাইন রিডার</span>
+<body data-theme="light">
+<header class="bar" id="topbar">
+  <a class="tbtn" href="{{ '/' | relative_url }}" title="বইঘরে ফিরুন">←</a>
+  <div class="ttitles"><div id="book-title">অনলাইন রিডার</div><div id="chapter-title"></div></div>
+  <button class="tbtn" id="btn-toc" title="সূচিপত্র ও বুকমার্ক">☰</button>
+  <button class="tbtn" id="btn-bm" title="এই পৃষ্ঠায় বুকমার্ক">🔖</button>
+  <button class="tbtn" id="btn-settings" title="পড়ার সেটিংস">Aa</button>
+  <button class="tbtn" id="btn-fs" title="ফুলস্ক্রিন">⛶</button>
 </header>
-<div class="nav" id="epub-nav" style="display:none">
-  <button id="prev">← আগের পৃষ্ঠা</button>
-  <button id="next">পরের পৃষ্ঠা →</button>
-</div>
+
 <div id="viewer"></div>
+
+<footer class="bar" id="botbar">
+  <button class="nbtn" id="prev">← আগের</button>
+  <div class="progwrap">
+    <input type="range" id="prog" min="0" max="1000" value="0" disabled>
+    <div id="progtext">লোড হচ্ছে…</div>
+  </div>
+  <button class="nbtn" id="next">পরের →</button>
+</footer>
+
+<div id="scrim"></div>
+
+<aside class="panel" id="drawer">
+  <div class="phead">
+    <div class="tabs">
+      <button id="tab-toc" class="sel">সূচিপত্র</button>
+      <button id="tab-bm">বুকমার্ক</button>
+    </div>
+    <h3></h3>
+    <button id="drawer-x">✕</button>
+  </div>
+  <div class="plist" id="toc-list"></div>
+  <div class="plist" id="bm-list" style="display:none"></div>
+</aside>
+
+<aside class="panel" id="sheet">
+  <div class="phead"><h3>পড়ার সেটিংস</h3><button id="sheet-x">✕</button></div>
+  <div style="overflow-y:auto">
+    <div class="srow"><label>থিম</label>
+      <div class="seg">
+        <button class="swatch" data-set-theme="light" style="background:#ffffff;color:#1d241f">দিন</button>
+        <button class="swatch" data-set-theme="sepia" style="background:#f7ecd7;color:#43331f">সেপিয়া</button>
+        <button class="swatch" data-set-theme="dark" style="background:#1b1b1b;color:#e9e5da">রাত</button>
+      </div>
+    </div>
+    <div class="srow"><label>ফন্ট</label>
+      <div class="seg">
+        <button data-set-font="serifbn" style="font-family:'Noto Serif Bengali',serif">নোটো সেরিফ</button>
+        <button data-set-font="sansbn" style="font-family:'Hind Siliguri',sans-serif">হিন্দ শিলিগুড়ি</button>
+        <button data-set-font="serifen" style="font-family:'Noto Serif',serif">Serif (EN)</button>
+      </div>
+    </div>
+    <div class="srow"><label>হরফের আকার</label>
+      <div class="seg" style="align-items:center">
+        <button id="fs-minus" style="min-width:52px">A−</button>
+        <span id="fs-label" style="font-weight:700;min-width:64px;text-align:center">19px</span>
+        <button id="fs-plus" style="min-width:52px">A+</button>
+      </div>
+    </div>
+    <div class="srow"><label>লাইন ব্যবধান</label>
+      <div class="seg">
+        <button data-set-lh="1.7">কম</button>
+        <button data-set-lh="2">মাঝারি</button>
+        <button data-set-lh="2.3">বেশি</button>
+      </div>
+    </div>
+    <div class="srow"><label>পড়ার ধরন</label>
+      <div class="seg">
+        <button data-set-flow="paginated">📄 পৃষ্ঠা উল্টে</button>
+        <button data-set-flow="scrolled-doc">📜 স্ক্রল করে</button>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<div id="toast"></div>
 
 <script>
 (function(){
@@ -45,32 +158,250 @@ layout: null
   var file = q.get('file'), drive = q.get('drive_id'), title = q.get('title') || 'Reader';
   document.getElementById('book-title').textContent = title;
   var viewer = document.getElementById('viewer');
+  var BN = {'0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯'};
+  function bn(n){ return String(n).replace(/[0-9]/g, function(d){ return BN[d]; }); }
+  function lsGet(k, d){ try{ var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }catch(e){ return d; } }
+  function lsSet(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+  var toastT = null;
+  function toast(msg){ var t = document.getElementById('toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(function(){ t.classList.remove('on'); }, 2200); }
 
   if(drive){
-    viewer.innerHTML = '<iframe id="pdf-frame" src="https://drive.google.com/file/d/'+encodeURIComponent(drive)+'/preview" allow="autoplay"></iframe>';
+    document.getElementById('botbar').style.display = 'none';
+    viewer.style.bottom = '0';
+    viewer.innerHTML = '<iframe id="pdf-frame" src="https://drive.google.com/file/d/' + encodeURIComponent(drive) + '/preview" allow="autoplay"></iframe>';
+    return;
+  }
+  if(!file){ viewer.innerHTML = '<div class="msg">কোনো বইয়ের ফাইল পাওয়া যায়নি।</div>'; return; }
+  if(/\.pdf(\?|$)/i.test(file)){
+    document.getElementById('botbar').style.display = 'none';
+    viewer.style.bottom = '0';
+    viewer.innerHTML = '<iframe id="pdf-frame" src="' + encodeURI(file) + '"></iframe>';
+    return;
+  }
+  if(!/\.(epub|opf)(\?|$)/i.test(file)){
+    viewer.innerHTML = '<div class="msg">এই ফাইলটি ব্রাউজারে প্রিভিউ করা যাচ্ছে না। অনুগ্রহ করে ডাউনলোড করে পড়ুন।</div>';
     return;
   }
 
-  if(!file){ viewer.innerHTML = '<div class="msg">কোনো বইয়ের ফাইল পাওয়া যায়নি।</div>'; return; }
+  /* ---------- settings ---------- */
+  var SETKEY = 'ob-reader-settings';
+  var S = Object.assign({ theme:'light', font:'serifbn', size:19, lh:2, flow:'paginated' }, lsGet(SETKEY, {}));
+  var FONTS = { serifbn:"'Noto Serif Bengali',serif", sansbn:"'Hind Siliguri',sans-serif", serifen:"'Noto Serif',Georgia,serif" };
+  var PAGE = { light:{bg:'#ffffff',ink:'#1d241f',link:'#0d5c3f'}, sepia:{bg:'#f7ecd7',ink:'#43331f',link:'#8a5a2b'}, dark:{bg:'#1b1b1b',ink:'#e9e5da',link:'#d8b25c'} };
+  function saveSettings(){ lsSet(SETKEY, S); }
+  function markSeg(attr, val){ document.querySelectorAll('[data-' + attr + ']').forEach(function(b){ b.classList.toggle('sel', b.getAttribute('data-' + attr) === String(val)); }); }
 
-  if(/\.pdf(\?|$)/i.test(file)){
-    viewer.innerHTML = '<iframe id="pdf-frame" src="'+encodeURI(file)+'"></iframe>';
-  } else if(/\.(epub|opf)(\?|$)/i.test(file)){
-    document.getElementById('epub-nav').style.display = 'flex';
-    viewer.innerHTML = '<div id="epub-area"></div>';
-    try{
-      var book = ePub(file);
-      var rendition = book.renderTo('epub-area',{width:'100%',height:650,flow:'paginated'});
-      rendition.themes.fontSize('19px');
-      rendition.display().catch(function(){});
-      document.getElementById('prev').onclick = function(){ rendition.prev(); };
-      document.getElementById('next').onclick = function(){ rendition.next(); };
-    }catch(e){
-      viewer.innerHTML = '<div class="msg">ইপাব ফাইলটি খোলা সম্ভব হয়নি। অনুগ্রহ করে ডাউনলোড করে পড়ুন।</div>';
-    }
-  } else {
-    viewer.innerHTML = '<div class="msg">এই ফাইলটি ব্রাউজারে প্রিভিউ করা যাচ্ছে না। অনুগ্রহ করে ডাউনলোড করে পড়ুন।</div>';
+  /* ---------- per-book state ---------- */
+  var PROGKEY = 'ob-reader-progress', BMKEY = 'ob-reader-bookmarks';
+  var progress = lsGet(PROGKEY, {});
+  var bookmarks = lsGet(BMKEY, {});
+  var myBm = bookmarks[file] || [];
+  var cur = { cfi:null, href:null, chapter:'', pct:null };
+
+  function saveProgress(){
+    if(!cur.cfi) return;
+    progress[file] = { t:title, f:file, cfi:cur.cfi, chapter:cur.chapter, pct:cur.pct, ts:Date.now() };
+    var keys = Object.keys(progress).sort(function(a,b){ return (progress[b].ts||0) - (progress[a].ts||0); });
+    keys.slice(30).forEach(function(k){ delete progress[k]; });
+    lsSet(PROGKEY, progress);
   }
+
+  /* ---------- epub.js ---------- */
+  var book, rendition = null, tocFlat = [], locationsReady = false;
+  try{ book = ePub(file); }catch(e){ viewer.innerHTML = '<div class="msg">ইপাব ফাইলটি খোলা সম্ভব হয়নি। অনুগ্রহ করে ডাউনলোড করে পড়ুন।</div>'; return; }
+  viewer.innerHTML = '<div id="epub-area"></div>';
+
+  function themeRules(){
+    var p = PAGE[S.theme] || PAGE.light;
+    var r = {};
+    r['body'] = { 'background': p.bg + ' !important', 'color': p.ink + ' !important', 'font-family': FONTS[S.font] + ' !important', 'line-height': String(S.lh) + ' !important' };
+    ['p','div','span','li','td','blockquote','h1','h2','h3','h4','h5','h6'].forEach(function(sel){ r[sel] = { 'font-family': FONTS[S.font] + ' !important', 'line-height': String(S.lh) + ' !important', 'color': p.ink + ' !important' }; });
+    r['a'] = { 'color': p.link + ' !important' };
+    return r;
+  }
+  function applyLook(){
+    document.body.setAttribute('data-theme', S.theme);
+    document.getElementById('fs-label').textContent = bn(S.size) + 'px';
+    markSeg('set-theme', S.theme); markSeg('set-font', S.font); markSeg('set-lh', S.lh); markSeg('set-flow', S.flow);
+    if(rendition){
+      rendition.themes.register('ob', themeRules());
+      rendition.themes.select('ob');
+      rendition.themes.fontSize(S.size + 'px');
+    }
+  }
+
+  function chapterFor(href){
+    if(!href) return '';
+    var file1 = href.split('#')[0];
+    var name = '';
+    tocFlat.forEach(function(it){ if(it.href.split('#')[0] === file1) name = it.label; });
+    return name;
+  }
+
+  var progEl = document.getElementById('prog'), progText = document.getElementById('progtext');
+  function onRelocated(loc){
+    if(!loc || !loc.start) return;
+    cur.cfi = loc.start.cfi; cur.href = loc.start.href;
+    cur.chapter = chapterFor(loc.start.href);
+    document.getElementById('chapter-title').textContent = cur.chapter || '';
+    if(locationsReady && book.locations){
+      var p = book.locations.percentageFromCfi(loc.start.cfi);
+      if(typeof p === 'number' && isFinite(p)){
+        cur.pct = Math.round(p * 100);
+        progEl.value = Math.round(p * 1000);
+        progText.textContent = (cur.chapter ? cur.chapter + ' • ' : '') + 'মোট ' + bn(cur.pct) + '% পড়া হয়েছে';
+      }
+    } else if(loc.start.displayed){
+      progText.textContent = (cur.chapter ? cur.chapter + ' • ' : '') + 'পৃষ্ঠা ' + bn(loc.start.displayed.page) + '/' + bn(loc.start.displayed.total) + ' • সূচি তৈরি হচ্ছে…';
+    }
+    saveProgress();
+  }
+
+  function buildRendition(startCfi){
+    if(rendition){ try{ rendition.destroy(); }catch(e){} }
+    viewer.innerHTML = '<div id="epub-area"></div>';
+    var opts = { width:'100%', height:'100%', flow: S.flow, manager: S.flow === 'scrolled-doc' ? 'continuous' : 'default' };
+    rendition = book.renderTo('epub-area', opts);
+    applyLook();
+    rendition.on('relocated', onRelocated);
+    wireContent();
+    var d = startCfi ? rendition.display(startCfi) : rendition.display();
+    if(d && d.catch) d.catch(function(){});
+  }
+  function currentCfi(){ return cur.cfi; }
+
+  /* tap zones + swipe inside the book pages */
+  function wireContent(){
+    rendition.hooks.content.register(function(contents){
+      var doc = contents.document, win = contents.window;
+      var sx = 0, sy = 0, st = 0;
+      doc.addEventListener('touchstart', function(e){ var t = e.changedTouches[0]; sx = t.clientX; sy = t.clientY; st = Date.now(); }, { passive:true });
+      doc.addEventListener('touchend', function(e){
+        if(S.flow !== 'paginated') return;
+        var t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
+        if(Date.now() - st < 600 && Math.abs(dx) > 48 && Math.abs(dy) < 60){ if(dx < 0) rendition.next(); else rendition.prev(); }
+      }, { passive:true });
+      doc.addEventListener('click', function(e){
+        if(S.flow !== 'paginated') return;
+        var sel = win.getSelection && win.getSelection();
+        if(sel && String(sel).length) return;
+        var w = win.innerWidth, x = e.clientX;
+        if(x < w * 0.28) rendition.prev();
+        else if(x > w * 0.72) rendition.next();
+        else document.body.classList.toggle('chrome-off');
+      });
+      doc.addEventListener('keydown', function(e){
+        if(e.key === 'ArrowLeft') rendition.prev();
+        else if(e.key === 'ArrowRight' || e.key === ' ') rendition.next();
+      });
+    });
+  }
+
+  /* TOC */
+  book.loaded.navigation.then(function(nav){
+    (function walk(items, depth){
+      (items || []).forEach(function(it){
+        tocFlat.push({ label:(it.label || '').trim(), href:it.href, depth:depth });
+        if(it.subitems && it.subitems.length) walk(it.subitems, depth + 1);
+      });
+    })(nav.toc, 0);
+    var el = document.getElementById('toc-list');
+    if(!tocFlat.length){ el.innerHTML = '<div class="empty">এই বইয়ে সূচিপত্র পাওয়া যায়নি।</div>'; return; }
+    el.innerHTML = tocFlat.map(function(it, i){
+      return '<button class="titem" data-toc="' + i + '" style="padding-left:' + (16 + it.depth * 18) + 'px">' + it.label.replace(/</g,'&lt;') + '</button>';
+    }).join('');
+    el.querySelectorAll('[data-toc]').forEach(function(b){
+      b.onclick = function(){ closePanels(); rendition.display(tocFlat[+b.getAttribute('data-toc')].href).catch(function(){}); };
+    });
+    if(cur.href){ cur.chapter = chapterFor(cur.href); document.getElementById('chapter-title').textContent = cur.chapter || ''; }
+  }).catch(function(){ document.getElementById('toc-list').innerHTML = '<div class="empty">সূচিপত্র লোড করা যায়নি।</div>'; });
+
+  /* Locations (for % + slider), cached per book */
+  var locCacheKey = 'ob-loc-' + file.length + '-' + file.split('/').pop();
+  book.ready.then(function(){
+    var cached = null;
+    try{ cached = localStorage.getItem(locCacheKey); }catch(e){}
+    var gen = cached ? book.locations.load(cached) : book.locations.generate(2048);
+    return gen;
+  }).then(function(){
+    locationsReady = true;
+    progEl.disabled = false;
+    try{ var s = book.locations.save(); if(s && s.length < 900000) localStorage.setItem(locCacheKey, s); }catch(e){}
+    if(cur.cfi) onRelocated({ start:{ cfi:cur.cfi, href:cur.href, displayed:null } });
+  }).catch(function(){ progText.textContent = cur.chapter || 'পড়ুন'; });
+
+  progEl.addEventListener('input', function(){
+    if(!locationsReady) return;
+    var cfi = book.locations.cfiFromPercentage(progEl.value / 1000);
+    if(cfi) rendition.display(cfi).catch(function(){});
+  });
+
+  /* bookmarks */
+  function renderBookmarks(){
+    var el = document.getElementById('bm-list');
+    myBm = (lsGet(BMKEY, {}))[file] || [];
+    if(!myBm.length){ el.innerHTML = '<div class="empty">এখনো কোনো বুকমার্ক নেই।<br>পড়ার সময় উপরের 🔖 চাপলেই এই পৃষ্ঠা বুকমার্ক হবে।</div>'; return; }
+    el.innerHTML = myBm.map(function(b, i){
+      return '<div class="bitem"><button class="go" data-bm="' + i + '">' + (b.chapter || 'বুকমার্ক').replace(/</g,'&lt;') + '<small style="display:block;color:var(--muted)">' + (b.pct != null ? 'মোট ' + bn(b.pct) + '% • ' : '') + b.when + '</small></button><button class="del" data-del="' + i + '" title="মুছুন">✕</button></div>';
+    }).join('');
+    el.querySelectorAll('[data-bm]').forEach(function(btn){ btn.onclick = function(){ closePanels(); rendition.display(myBm[+btn.getAttribute('data-bm')].cfi).catch(function(){}); }; });
+    el.querySelectorAll('[data-del]').forEach(function(btn){ btn.onclick = function(){ myBm.splice(+btn.getAttribute('data-del'), 1); var all = lsGet(BMKEY, {}); all[file] = myBm; lsSet(BMKEY, all); renderBookmarks(); }; });
+  }
+  document.getElementById('btn-bm').onclick = function(){
+    if(!cur.cfi){ toast('পৃষ্ঠা লোড হোক আগে'); return; }
+    if(myBm.some(function(b){ return b.cfi === cur.cfi; })){ toast('এই পৃষ্ঠা আগেই বুকমার্ক করা আছে'); return; }
+    myBm.push({ cfi:cur.cfi, chapter:cur.chapter, pct:cur.pct, when:new Date().toLocaleDateString('bn-BD') });
+    var all = lsGet(BMKEY, {}); all[file] = myBm; lsSet(BMKEY, all);
+    renderBookmarks();
+    toast('🔖 বুকমার্ক যোগ হয়েছে');
+  };
+
+  /* panels */
+  var scrim = document.getElementById('scrim'), drawer = document.getElementById('drawer'), sheet = document.getElementById('sheet');
+  function openPanel(p){ closePanels(); p.classList.add('on'); scrim.classList.add('on'); }
+  function closePanels(){ drawer.classList.remove('on'); sheet.classList.remove('on'); scrim.classList.remove('on'); }
+  scrim.onclick = closePanels;
+  document.getElementById('drawer-x').onclick = closePanels;
+  document.getElementById('sheet-x').onclick = closePanels;
+  document.getElementById('btn-toc').onclick = function(){ openPanel(drawer); };
+  document.getElementById('btn-settings').onclick = function(){ openPanel(sheet); };
+  document.getElementById('tab-toc').onclick = function(){ this.classList.add('sel'); document.getElementById('tab-bm').classList.remove('sel'); document.getElementById('toc-list').style.display = ''; document.getElementById('bm-list').style.display = 'none'; };
+  document.getElementById('tab-bm').onclick = function(){ this.classList.add('sel'); document.getElementById('tab-toc').classList.remove('sel'); document.getElementById('toc-list').style.display = 'none'; document.getElementById('bm-list').style.display = ''; renderBookmarks(); };
+
+  /* nav buttons + keys */
+  document.getElementById('prev').onclick = function(){ if(rendition) rendition.prev(); };
+  document.getElementById('next').onclick = function(){ if(rendition) rendition.next(); };
+  document.addEventListener('keydown', function(e){
+    if(!rendition) return;
+    if(e.key === 'ArrowLeft') rendition.prev();
+    else if(e.key === 'ArrowRight' || e.key === ' ') rendition.next();
+    else if(e.key === 'Escape') closePanels();
+  });
+
+  /* fullscreen + wake lock */
+  var wakeLock = null;
+  function keepAwake(){ if('wakeLock' in navigator){ navigator.wakeLock.request('screen').then(function(w){ wakeLock = w; }).catch(function(){}); } }
+  document.addEventListener('visibilitychange', function(){ if(document.visibilityState === 'visible') keepAwake(); });
+  document.getElementById('btn-fs').onclick = function(){
+    keepAwake();
+    if(document.fullscreenElement) document.exitFullscreen().catch(function(){});
+    else document.documentElement.requestFullscreen().catch(function(){});
+  };
+
+  /* settings wiring */
+  document.querySelectorAll('[data-set-theme]').forEach(function(b){ b.onclick = function(){ S.theme = b.getAttribute('data-set-theme'); saveSettings(); applyLook(); }; });
+  document.querySelectorAll('[data-set-font]').forEach(function(b){ b.onclick = function(){ S.font = b.getAttribute('data-set-font'); saveSettings(); applyLook(); if(cur.cfi) rendition.display(cur.cfi).catch(function(){}); }; });
+  document.querySelectorAll('[data-set-lh]').forEach(function(b){ b.onclick = function(){ S.lh = parseFloat(b.getAttribute('data-set-lh')); saveSettings(); applyLook(); if(cur.cfi) rendition.display(cur.cfi).catch(function(){}); }; });
+  document.querySelectorAll('[data-set-flow]').forEach(function(b){ b.onclick = function(){ if(S.flow === b.getAttribute('data-set-flow')) return; S.flow = b.getAttribute('data-set-flow'); saveSettings(); markSeg('set-flow', S.flow); buildRendition(currentCfi()); toast(S.flow === 'scrolled-doc' ? 'স্ক্রল মোড চালু' : 'পৃষ্ঠা মোড চালু'); }; });
+  document.getElementById('fs-minus').onclick = function(){ if(S.size > 13){ S.size -= 1; saveSettings(); applyLook(); } };
+  document.getElementById('fs-plus').onclick = function(){ if(S.size < 30){ S.size += 1; saveSettings(); applyLook(); } };
+
+  /* start: resume where the reader left off */
+  var saved = progress[file];
+  buildRendition(saved && saved.cfi ? saved.cfi : null);
+  if(saved && saved.cfi) setTimeout(function(){ toast('আগের জায়গা থেকে শুরু হচ্ছে'); }, 600);
+  renderBookmarks();
+  keepAwake();
 })();
 </script>
 </body>

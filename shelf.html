@@ -7,6 +7,11 @@ permalink: /shelf/
   <h1 class="serif text-2xl sm:text-3xl font-extrabold" data-bn="★ আমার তাক" data-en="★ My Shelf">★ আমার তাক</h1>
   <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1"><span id="shelf-count">0</span> <span data-bn="টি বই তাকে রাখা আছে" data-en="books saved on your shelf">টি বই তাকে রাখা আছে</span></p>
 
+  <section id="continue-wrap" class="hidden mt-8">
+    <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="📖 পড়া চলছে" data-en="📖 Continue Reading">📖 পড়া চলছে</h2>
+    <div id="continue-list" class="flex flex-col gap-3 mt-4"></div>
+  </section>
+
   <div id="shelf-list" class="flex flex-col gap-3 mt-6"></div>
 
   <div id="shelf-empty" class="hidden bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl text-center py-14 px-4 mt-6">
@@ -39,18 +44,59 @@ var OB_BOOKS = [{% for b in site.books %}{
   function set(l){ try{ localStorage.setItem(BM, JSON.stringify(l)); }catch(e){} }
   function lang(){ return window.__obLang || 'bn'; }
   var T = {
-    bn: { open:'খুলুন', read:'📖 পড়ুন', remove:'সরান', gumroad:'🛒 Gumroad' },
-    en: { open:'Open', read:'📖 Read', remove:'Remove', gumroad:'🛒 Gumroad' }
+    bn: { open:'খুলুন', read:'📖 পড়ুন', remove:'সরান', gumroad:'🛒 Gumroad', resume:'📖 পড়া চালিয়ে যান', done:'% পড়া হয়েছে' },
+    en: { open:'Open', read:'📖 Read', remove:'Remove', gumroad:'🛒 Gumroad', resume:'📖 Continue Reading', done:'% read' }
   };
   var byId = {};
-  OB_BOOKS.forEach(function(b){ byId[b.id] = b; });
+  var byFile = {};
+  OB_BOOKS.forEach(function(b){ byId[b.id] = b; if(b.file) byFile[b.file] = b; });
   var listEl = document.getElementById('shelf-list');
   var emptyEl = document.getElementById('shelf-empty');
   var countEl = document.getElementById('shelf-count');
 
   function esc(s){ return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
 
+  var PROG = 'ob-reader-progress';
+  function getProg(){ try{ return JSON.parse(localStorage.getItem(PROG)||'{}'); }catch(e){ return {}; } }
+  function renderContinue(){
+    var wrap = document.getElementById('continue-wrap');
+    var list = document.getElementById('continue-list');
+    var t = T[lang()];
+    var prog = getProg();
+    var items = Object.keys(prog).map(function(k){ return prog[k]; })
+      .filter(function(p){ return p && p.f && byFile[p.f]; })
+      .sort(function(a,b){ return (b.ts||0) - (a.ts||0); })
+      .slice(0, 10);
+    wrap.classList.toggle('hidden', items.length === 0);
+    list.innerHTML = items.map(function(p){
+      var b = byFile[p.f];
+      var title = lang() === 'en' ? (b.title_en || b.title) : b.title;
+      var pct = (typeof p.pct === 'number') ? p.pct : 0;
+      return '<div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-3.5 flex gap-4 items-center shadow-sm">' +
+        '<a href="' + b.url + '" class="shrink-0"><img src="' + b.cover + '" alt="" class="w-14 h-[84px] object-cover rounded-md shadow"></a>' +
+        '<div class="flex-1 min-w-0">' +
+          '<a href="' + b.url + '" class="font-bold leading-snug line-clamp-2 hover:text-emerald-700 dark:hover:text-emerald-400">' + esc(title) + '</a>' +
+          (p.chapter ? '<p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1">' + esc(p.chapter) + '</p>' : '') +
+          '<div class="h-2 rounded-full bg-neutral-200 dark:bg-neutral-700 mt-2 overflow-hidden"><div class="h-full accent-bg rounded-full" style="width:' + pct + '%"></div></div>' +
+          '<p class="text-[11px] font-bold text-neutral-400 mt-1">' + pct + t.done + '</p>' +
+          '<div class="flex flex-wrap gap-2 mt-2.5">' +
+            '<a href="' + READER + '?file=' + encodeURIComponent(p.f) + '&title=' + encodeURIComponent(b.title) + '" class="accent-bg text-white font-bold rounded-lg px-4 py-2 text-sm">' + t.resume + '</a>' +
+            '<button data-drop="' + esc(p.f) + '" class="font-bold rounded-lg px-4 py-2 text-sm text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900/60">' + t.remove + '</button>' +
+          '</div>' +
+        '</div></div>';
+    }).join('');
+    list.querySelectorAll('[data-drop]').forEach(function(btn){
+      btn.onclick = function(){
+        var all = getProg();
+        delete all[btn.getAttribute('data-drop')];
+        try{ localStorage.setItem(PROG, JSON.stringify(all)); }catch(e){}
+        renderContinue();
+      };
+    });
+  }
+
   function render(){
+    renderContinue();
     var ids = get(), t = T[lang()];
     var mine = ids.map(function(id){ return byId[id]; }).filter(Boolean);
     countEl.textContent = mine.length;
