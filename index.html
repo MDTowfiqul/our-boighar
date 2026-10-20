@@ -4,218 +4,175 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Our Boighar — Books by MD. Towfiqul Islam</title>
-<meta name="description" content="Our Boighar is the book shelf of MD. Towfiqul Islam — Bengali Islamic books, translations and EPUB editions.">
+<meta name="description" content="Our Boighar — the book shelf of MD. Towfiqul Islam. Bengali & English Islamic books: read online or download.">
 <meta property="og:title" content="Our Boighar">
-<meta property="og:description" content="Books by MD. Towfiqul Islam — Bengali Islamic books & EPUB editions.">
+<meta property="og:description" content="Books by MD. Towfiqul Islam — read online or download.">
 <meta property="og:image" content="img/cover.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;800&family=Noto+Serif+Bengali:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700;800&family=Noto+Serif+Bengali:wght@500;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --green:#0d5c3f; --green-dark:#083f2b; --gold:#d4a24c; --cream:#faf6ec;
-    --ink:#1d241f; --muted:#5c665e; --card:#ffffff; --line:#e7dfc9;
-  }
+  :root{--green:#0d5c3f;--green-dark:#083f2b;--gold:#d4a24c;--cream:#faf3e7;--peach:#fdeee0;--ink:#26221c;--muted:#7a7264;--card:#fff;--line:#eee2cd}
   *{margin:0;padding:0;box-sizing:border-box}
-  body{font-family:"Noto Sans",system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6}
+  body{font-family:"Noto Sans",system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.55;padding-bottom:84px}
   .bn{font-family:"Noto Serif Bengali","Noto Sans",serif}
-  a{color:var(--green)}
-  header.site{background:linear-gradient(160deg,var(--green) 0%,var(--green-dark) 100%);color:#fff;text-align:center;padding:64px 20px 56px}
-  header.site .mark{font-size:44px}
-  header.site h1{font-size:42px;font-weight:800;letter-spacing:.5px}
-  header.site h1 .bn{display:block;font-size:30px;font-weight:700;color:var(--gold);margin-top:6px}
-  header.site p{max-width:560px;margin:14px auto 0;color:#dcebe2;font-size:17px}
-  nav.top{display:flex;justify-content:center;gap:26px;padding:14px;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
-  nav.top a{text-decoration:none;font-weight:600;color:var(--ink)}
-  nav.top a:hover{color:var(--green)}
-  main{max-width:980px;margin:0 auto;padding:40px 20px 60px}
-  h2.section{font-size:26px;font-weight:800;margin:34px 0 18px;color:var(--green-dark)}
-  /* filter bar */
-  .filters{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:22px}
-  .filters input[type=search],.filters select{padding:9px 12px;border:1.5px solid var(--line);border-radius:9px;font:inherit;font-size:14.5px;background:#fff}
-  .filters input[type=search]{flex:1;min-width:180px}
-  .filters label.only-bm{display:flex;gap:7px;align-items:center;font-weight:600;font-size:14px;cursor:pointer}
-  /* book cards */
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:20px}
-  .book{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;display:flex;gap:20px;box-shadow:0 4px 18px rgba(13,92,63,.07)}
-  .book img{width:138px;border-radius:7px;box-shadow:0 6px 18px rgba(0,0,0,.18);align-self:flex-start}
-  .book .meta{min-width:0}
-  .book h3{font-size:19.5px;line-height:1.45;font-weight:700}
-  .book .credit{color:var(--muted);font-size:13.5px;margin:5px 0 2px}
-  .book .credit b{color:var(--ink)}
-  .tags{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
-  .tag{background:#eef6f1;color:var(--green-dark);border:1px solid #cfe3d6;border-radius:999px;font-size:11.5px;font-weight:700;padding:2px 10px}
-  .tag.lang{background:#fdf3dd;color:#8a6414;border-color:#ecd9a8}
-  .book .desc{font-size:14.5px;margin-bottom:10px}
-  .book .price{font-weight:800;color:var(--green-dark);font-size:15px}
-  .btns{display:flex;flex-wrap:wrap;gap:9px;margin-top:12px}
-  .btn{display:inline-block;padding:9px 18px;border-radius:999px;text-decoration:none;font-weight:700;font-size:14px;border:0;cursor:pointer}
-  .btn.primary{background:var(--green);color:#fff}
-  .btn.primary:hover{background:var(--green-dark)}
-  .btn.ghost{border:2px solid var(--gold);color:#8a6414;background:transparent}
-  .btn.bm{background:#f3ead2;color:#6d5310;border:2px solid transparent}
-  .btn.bm.on{background:var(--gold);color:#fff}
-  .empty{color:var(--muted);padding:30px;text-align:center}
-  .about,.comments{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px}
-  .about p{margin-bottom:10px;font-size:15.5px}
-  .comments p{color:var(--muted);font-size:15px}
-  footer{text-align:center;color:var(--muted);font-size:14px;padding:34px 20px 44px;border-top:1px solid var(--line)}
-  footer a{text-decoration:none;font-weight:600}
-  @media (max-width:760px){.grid{grid-template-columns:1fr}}
-  @media (max-width:520px){
-    .book{flex-direction:column;align-items:center}
-    header.site h1{font-size:34px}
-  }
+  a{color:var(--green);text-decoration:none}
+  /* top bar */
+  .topbar{position:sticky;top:0;z-index:10;background:#fffdf8;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;padding:12px 16px}
+  .topbar .logo{font-weight:800;font-size:20px;color:var(--green-dark)}
+  .topbar .logo .mark{color:#c8501b}
+  .topbar .sp{flex:1}
+  .badge{border:1.5px solid var(--line);border-radius:999px;padding:4px 12px;font-weight:700;font-size:13px;color:var(--muted)}
+  main{max-width:1060px;margin:0 auto;padding:18px 16px 30px}
+  .crumbs{color:var(--muted);font-size:13.5px;margin:4px 2px 14px}
+  /* search + filters */
+  .search{display:flex;gap:10px;margin-bottom:14px}
+  .search input{flex:1;padding:13px 16px;border:1.5px solid var(--line);border-radius:12px;font:inherit;font-size:15px;background:#fff}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+  .chip{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:7px 15px;font-weight:700;font-size:13.5px;cursor:pointer;color:var(--ink)}
+  .chip.on{background:var(--green);border-color:var(--green);color:#fff}
+  .chip.lang.on{background:#b06f14;border-color:#b06f14}
+  h2.sec{font-size:21px;font-weight:800;margin:8px 2px 14px}
+  /* grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(60,40,10,.05);display:flex;flex-direction:column;transition:transform .12s}
+  .card:hover{transform:translateY(-3px)}
+  .card .cov{background:var(--peach);padding:14px;display:flex;justify-content:center}
+  .card .cov img{height:190px;width:auto;max-width:100%;border-radius:5px;box-shadow:0 5px 14px rgba(0,0,0,.22)}
+  .card .info{padding:11px 13px 14px;display:flex;flex-direction:column;gap:3px;flex:1}
+  .card .t{font-weight:700;font-size:15px;line-height:1.4}
+  .card .w{color:var(--muted);font-size:12.5px}
+  .card .meta{margin-top:auto;padding-top:7px;display:flex;gap:6px;flex-wrap:wrap}
+  .pill{font-size:11px;font-weight:700;border-radius:999px;padding:2px 9px;background:#eef6f1;color:var(--green-dark)}
+  .pill.lang{background:#fdf3dd;color:#8a6414}
+  .empty{color:var(--muted);padding:34px;text-align:center;grid-column:1/-1}
+  /* about */
+  .about{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;margin-top:30px}
+  .about h3{font-size:17px;margin-bottom:8px}
+  .about p{font-size:14.5px;margin-bottom:8px;color:#3c372e}
+  footer{text-align:center;color:var(--muted);font-size:13px;padding:26px 16px 6px}
+  /* bottom nav */
+  .bnav{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 4px calc(8px + env(safe-area-inset-bottom));z-index:10}
+  .bnav button{background:none;border:0;font:inherit;font-size:12px;font-weight:600;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:2px 10px}
+  .bnav button .ic{font-size:20px}
+  .bnav button.on{color:var(--green)}
+  @media (max-width:480px){.grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}.card .cov img{height:165px}}
 </style>
 </head>
 <body>
 
-<nav class="top">
-  <a href="#books">Books</a>
-  <a href="#about">About</a>
-  <a href="#comments">Comments</a>
-</nav>
-
-<header class="site">
-  <div class="mark">📚</div>
-  <h1>Our Boighar <span class="bn">আমাদের বইঘর</span></h1>
-  <p>The book shelf of MD. Towfiqul Islam — Bengali Islamic books, translations and EPUB editions, made with care for readers and for dawah.</p>
+<header class="topbar">
+  <span class="logo"><span class="mark">📚</span> Our Boighar</span>
+  <span class="sp"></span>
+  <span class="badge">আমাদের বইঘর</span>
 </header>
 
 <main>
-  <h2 class="section" id="books">Books</h2>
+  <p class="crumbs">Home / Books — read online or download, free</p>
 
-  <div class="filters">
-    <input type="search" id="f-search" placeholder="Search books…">
-    <select id="f-lang">
-      <option value="">All languages</option>
-      <option value="bn">Bengali</option>
-      <option value="en">English</option>
-    </select>
-    <select id="f-cat"><option value="">All categories</option></select>
-    <label class="only-bm"><input type="checkbox" id="f-bm"> ★ Bookmarked only</label>
+  <div class="search">
+    <input type="search" id="f-search" placeholder="🔍 Search by title, writer…">
+  </div>
+  <div class="chips" id="cat-chips"></div>
+  <div class="chips" id="lang-chips">
+    <button class="chip lang on" data-lang="">All languages</button>
+    <button class="chip lang" data-lang="bn">বাংলা · Bengali</button>
+    <button class="chip lang" data-lang="en">English</button>
+    <button class="chip" id="bm-toggle">★ My shelf</button>
   </div>
 
+  <h2 class="sec">All books</h2>
   <div class="grid" id="book-grid"><p class="empty">Loading books…</p></div>
 
-  <h2 class="section" id="about">About the translator</h2>
   <section class="about">
-    <p><strong>MD. Towfiqul Islam</strong> is a medical student and developer from Bangladesh. Alongside his studies he builds open-source software (including the <a href="https://mdtowfiqul.github.io/Our-Days/">Our Days</a> app) and prepares Bengali EPUB editions of Islamic lectures so that valuable knowledge reaches Bengali readers in a clean, readable form.</p>
-    <p>The first title here was prepared from the "answers to non-Muslims' common questions" part of the Dr. Zakir Naik lecture collection. The full collection is being converted to EPUB as well.</p>
+    <h3>About Our Boighar</h3>
+    <p><strong>Our Boighar</strong> is the personal book shelf of <strong>MD. Towfiqul Islam</strong> — Bengali &amp; English Islamic books, translations and EPUB editions, shared for readers and for dawah. Free books can be read online or downloaded right here; the paid title is sold on Gumroad.</p>
+    <p>Towfiqul is a medical student and developer from Bangladesh, and also builds the <a href="https://mdtowfiqul.github.io/Our-Days/">Our Days</a> app.</p>
   </section>
 
-  <h2 class="section" id="comments">Comments</h2>
-  <section class="comments">
-    <p style="margin-bottom:16px">💬 Share your thoughts on the books below — you just need a free GitHub account to comment.</p>
-    <script src="https://giscus.app/client.js"
-            data-repo="MDTowfiqul/our-boighar"
-            data-repo-id="R_kgDOVQa34Q"
-            data-category="General"
-            data-category-id="DIC_kwDOVQa34c4DJF-s"
-            data-mapping="pathname"
-            data-strict="0"
-            data-reactions-enabled="1"
-            data-emit-metadata="0"
-            data-input-position="bottom"
-            data-theme="preferred_color_scheme"
-            data-lang="en"
-            crossorigin="anonymous"
-            async>
-    </script>
-  </section>
+  <footer>© MD. Towfiqul Islam · <a href="https://towfiqulislam.gumroad.com/l/vvcbp">Gumroad</a> · <a href="https://github.com/MDTowfiqul">GitHub</a></footer>
 </main>
 
-<footer>
-  <p>© MD. Towfiqul Islam · <a href="https://towfiqulislam.gumroad.com/l/vvcbp">Gumroad store</a> · <a href="https://mdtowfiqul.github.io/Our-Days/">Our Days app</a> · <a href="https://github.com/MDTowfiqul">GitHub</a></p>
-</footer>
+<nav class="bnav">
+  <button class="on" id="nav-home"><span class="ic">🏠</span>Home</button>
+  <button id="nav-cat"><span class="ic">▦</span>Categories</button>
+  <button id="nav-search"><span class="ic">🔍</span>Search</button>
+  <button id="nav-shelf"><span class="ic">📖</span>My shelf</button>
+</nav>
 
 <script>
 (function(){
   var grid = document.getElementById('book-grid');
   var fSearch = document.getElementById('f-search');
-  var fLang = document.getElementById('f-lang');
-  var fCat = document.getElementById('f-cat');
-  var fBm = document.getElementById('f-bm');
-  var books = [];
+  var catChips = document.getElementById('cat-chips');
+  var bmToggle = document.getElementById('bm-toggle');
+  var books = [], activeCat = '', activeLang = '', onlyBm = false;
   var BM_KEY = 'ourboighar-bookmarks';
 
-  function getBookmarks(){
-    try{ return JSON.parse(localStorage.getItem(BM_KEY) || '[]'); }catch(e){ return []; }
-  }
-  function setBookmarks(list){ try{ localStorage.setItem(BM_KEY, JSON.stringify(list)); }catch(e){} }
-  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
-
-  function buttons(b){
-    var out = [];
-    var bm = getBookmarks();
-    if(b.file){
-      out.push('<a class="btn primary" href="'+esc(b.file)+'" download>⬇ Download '+esc(b.format||'file')+'</a>');
-      out.push('<a class="btn ghost" href="reader.html?file='+encodeURIComponent(b.file)+'&title='+encodeURIComponent(b.title)+'">📖 Read online</a>');
-    }
-    if(b.gumroad){
-      out.push('<a class="btn primary" href="'+esc(b.gumroad)+'" target="_blank" rel="noopener">Get it on Gumroad'+(b.price ? ' · '+esc(b.price) : '')+'</a>');
-    }
-    if(!b.file && b.gumroad){
-      out.push('<span class="btn ghost" style="border-color:var(--line);color:var(--muted)">Full copy via Gumroad</span>');
-    }
-    var on = bm.indexOf(b.id) >= 0;
-    out.push('<button class="btn bm'+(on?' on':'')+'" data-bm="'+esc(b.id)+'">'+(on?'★ Bookmarked':'☆ Bookmark')+'</button>');
-    return out.join('');
-  }
+  function getBookmarks(){ try{ return JSON.parse(localStorage.getItem(BM_KEY)||'[]'); }catch(e){ return []; } }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 
   function render(){
-    var q = (fSearch.value || '').toLowerCase();
-    var lang = fLang.value, cat = fCat.value, onlyBm = fBm.checked;
-    var bm = getBookmarks();
+    var q = (fSearch.value||'').toLowerCase(), bm = getBookmarks();
     var shown = books.filter(function(b){
-      if(lang && b.language !== lang) return false;
-      if(cat && (b.categories || []).indexOf(cat) < 0) return false;
+      if(activeLang && b.language !== activeLang) return false;
+      if(activeCat && (b.categories||[]).indexOf(activeCat) < 0) return false;
       if(onlyBm && bm.indexOf(b.id) < 0) return false;
-      if(q){
-        var hay = (b.title+' '+(b.titleEn||'')+' '+(b.writer||'')+' '+(b.creator||'')+' '+(b.categories||[]).join(' ')).toLowerCase();
-        if(hay.indexOf(q) < 0) return false;
-      }
+      if(q){ var hay = (b.title+' '+(b.titleEn||'')+' '+(b.writer||'')+' '+(b.creator||'')).toLowerCase(); if(hay.indexOf(q) < 0) return false; }
       return true;
     });
     if(!shown.length){ grid.innerHTML = '<p class="empty">No books match.</p>'; return; }
     grid.innerHTML = shown.map(function(b){
-      var tags = '<span class="tag lang">'+esc(b.languageLabel || b.language)+'</span>' +
-        (b.categories||[]).map(function(c){ return '<span class="tag">'+esc(c)+'</span>'; }).join('');
-      return '<article class="book">'+
-        '<img src="'+esc(b.cover)+'" alt="Cover of '+esc(b.titleEn || b.title)+'">'+
-        '<div class="meta"><h3 class="bn">'+esc(b.title)+'</h3>'+
-        '<p class="credit">✍️ <b>Writer:</b> '+esc(b.writer || '—')+'</p>'+
-        '<p class="credit">📘 <b>Ebook creator:</b> '+esc(b.creator || '—')+'</p>'+
-        '<div class="tags">'+tags+'</div>'+
-        '<p class="desc">'+esc(b.description)+'</p>'+
-        '<div class="btns">'+buttons(b)+'</div>'+
-        '</div></article>';
+      var star = bm.indexOf(b.id) >= 0 ? ' ★' : '';
+      return '<a class="card" href="book.html?id='+encodeURIComponent(b.id)+'">'+
+        '<span class="cov"><img src="'+esc(b.cover)+'" alt="Cover of '+esc(b.titleEn||b.title)+'"></span>'+
+        '<span class="info"><span class="t bn">'+esc(b.title)+'</span>'+
+        '<span class="w">✍️ '+esc(b.writer||'')+star+'</span>'+
+        '<span class="meta"><span class="pill lang">'+esc(b.languageLabel||b.language)+'</span>'+
+        (b.categories||[]).slice(0,2).map(function(c){ return '<span class="pill">'+esc(c)+'</span>'; }).join('')+
+        '</span></span></a>';
     }).join('');
-    Array.prototype.forEach.call(grid.querySelectorAll('[data-bm]'), function(btn){
-      btn.onclick = function(){
-        var id = btn.getAttribute('data-bm');
-        var list = getBookmarks();
-        var i = list.indexOf(id);
-        if(i >= 0) list.splice(i,1); else list.push(id);
-        setBookmarks(list);
+  }
+
+  function buildChips(){
+    var cats = {};
+    books.forEach(function(b){ (b.categories||[]).forEach(function(c){ cats[c]=1; }); });
+    var html = '<button class="chip on" data-cat="">All</button>';
+    Object.keys(cats).sort().forEach(function(c){ html += '<button class="chip" data-cat="'+esc(c)+'">'+esc(c)+'</button>'; });
+    catChips.innerHTML = html;
+    Array.prototype.forEach.call(catChips.querySelectorAll('[data-cat]'), function(ch){
+      ch.onclick = function(){
+        activeCat = ch.getAttribute('data-cat');
+        Array.prototype.forEach.call(catChips.querySelectorAll('[data-cat]'), function(x){ x.classList.toggle('on', x===ch); });
         render();
       };
     });
   }
 
-  [fSearch, fLang, fCat, fBm].forEach(function(el){ el.addEventListener('input', render); el.addEventListener('change', render); });
+  Array.prototype.forEach.call(document.querySelectorAll('#lang-chips [data-lang]'), function(ch){
+    ch.onclick = function(){
+      activeLang = ch.getAttribute('data-lang');
+      Array.prototype.forEach.call(document.querySelectorAll('#lang-chips [data-lang]'), function(x){ x.classList.toggle('on', x===ch); });
+      render();
+    };
+  });
+  function toggleShelf(){
+    onlyBm = !onlyBm;
+    bmToggle.classList.toggle('on', onlyBm);
+    document.getElementById('nav-shelf').classList.toggle('on', onlyBm);
+    render();
+  }
+  bmToggle.onclick = toggleShelf;
+  document.getElementById('nav-shelf').onclick = toggleShelf;
+  document.getElementById('nav-search').onclick = function(){ fSearch.focus(); window.scrollTo({top:0,behavior:'smooth'}); };
+  document.getElementById('nav-cat').onclick = function(){ catChips.scrollIntoView({behavior:'smooth'}); };
+  document.getElementById('nav-home').onclick = function(){ window.scrollTo({top:0,behavior:'smooth'}); };
+  fSearch.addEventListener('input', render);
 
   fetch('books.json').then(function(r){ return r.json(); }).then(function(data){
-    books = data;
-    var cats = {};
-    books.forEach(function(b){ (b.categories||[]).forEach(function(c){ cats[c] = 1; }); });
-    Object.keys(cats).sort().forEach(function(c){
-      var o = document.createElement('option'); o.value = c; o.textContent = c; fCat.appendChild(o);
-    });
-    render();
+    books = data; buildChips(); render();
   }).catch(function(){ grid.innerHTML = '<p class="empty">Could not load the book list.</p>'; });
 })();
 </script>
-
 </body>
 </html>
