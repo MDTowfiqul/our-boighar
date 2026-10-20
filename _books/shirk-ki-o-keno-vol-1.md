@@ -13,6 +13,9 @@ cover: "/img/cover-shirk-ki-o-keno-vol-1.jpg"
 file: "/books/shirk-ki-o-keno-vol-1.epub"
 format: "EPUB"
 file_size: "0.45 MB"
+series: "শির্ক কী ও কেন?"
+series_en: "Shirk Ki O Keno"
+series_order: 1
 ---
 
 শির্ক কী ও কেন? (১ম খণ্ড) — ড. মুহাম্মদ মুয্‌যাম্মিল আলীর গবেষণাগ্রন্থ; শির্কের সংজ্ঞা, প্রকারভেদ ও মুসলিম সমাজে এর অনুপ্রবেশের কারণ বিশ্লেষণ।
