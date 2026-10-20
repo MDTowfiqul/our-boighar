@@ -1,14 +1,14 @@
 ---
 book_id: "kobira-gunah"
-title: "Kobira Gunah"
+title: "কবীরা গুনাহ"
 title_en: "Kobira Gunah"
-author: "ইমাম আয-যাহাবী (Imam Adh-Dhahabi)"
+author: "ইমাম আয-যাহাবী"
 creator: "Not credited in the ebook file"
 category: "Spirituality"
 categories: ["Spirituality", "Manners & Character"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "K"
+alphabet: "ক"
 cover: "/img/cover-kobira-gunah.jpg"
 file: "/books/kobira-gunah.epub"
 format: "EPUB"

@@ -1,14 +1,14 @@
 ---
 book_id: "bharat-ovhijan-5"
-title: "Bharat Ovhijan 5"
-title_en: "Bharat Ovhijan 5"
-author: "Anayetullah"
+title: "ভারত অভিযান (৫ম খণ্ড)"
+title_en: "Bharat Ovhijan (Part 5)"
+author: "এনায়েতুল্লাহ"
 creator: "Not credited in the ebook file"
 category: "History"
 categories: ["History"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "B"
+alphabet: "ভ"
 cover: "/img/cover-bharat-ovhijan-5.jpg"
 file: "/books/bharat-ovhijan-5.epub"
 format: "EPUB"

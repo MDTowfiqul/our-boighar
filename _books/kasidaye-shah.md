@@ -1,14 +1,14 @@
 ---
 book_id: "kasidaye-shah"
-title: "Kasidaye Shah"
+title: "কাসীদায়ে শাহ"
 title_en: "Kasidaye Shah"
-author: "সংকলিত (Compiled)"
+author: "সংকলিত"
 creator: "Not credited in the ebook file"
 category: "Spirituality"
 categories: ["Spirituality"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "K"
+alphabet: "ক"
 cover: "/img/cover-kasidaye-shah.jpg"
 file: "/books/kasidaye-shah.epub"
 format: "EPUB"

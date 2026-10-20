@@ -1,14 +1,14 @@
 ---
 book_id: "kashmir-history-pilitics"
-title: "Kashmir History & Pilitics"
-title_en: "Kashmir History & Pilitics"
-author: "Zakaria Polash"
+title: "কাশ্মীরের ইতিহাস ও রাজনীতি"
+title_en: "Kashmir: History & Politics"
+author: "জাকারিয়া পলাশ"
 creator: "Not credited in the ebook file"
 category: "History"
 categories: ["History"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "K"
+alphabet: "ক"
 cover: "/img/cover-kashmir-history-pilitics.jpg"
 file: "/books/kashmir-history-pilitics.epub"
 format: "EPUB"

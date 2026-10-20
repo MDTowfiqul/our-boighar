@@ -1,14 +1,14 @@
 ---
 book_id: "bavichar-somokamitar-voyaboho-poritoti"
-title: "Bavichar & Somokamitar voyaboho poritoti"
-title_en: "Bavichar & Somokamitar voyaboho poritoti"
-author: "Dormo palone akjon musolmanal ja zana proyojon - Mustafijur Rahman ibn Abdul Ajij Al-madhanea"
+title: "ব্যভিচার ও সমকামিতার ভয়াবহ পরিণতি"
+title_en: "The Terrible Consequences of Adultery & Homosexuality"
+author: "মুস্তাফিজুর রহমান ইবনে আব্দুল আজিজ আল-মাদানী"
 creator: "Not credited in the ebook file"
 category: "Manners & Character"
 categories: ["Manners & Character", "Family"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "B"
+alphabet: "ব"
 cover: "/img/cover-bavichar-somokamitar-voyaboho-poritoti.jpg"
 file: "/books/bavichar-somokamitar-voyaboho-poritoti.epub"
 format: "EPUB"

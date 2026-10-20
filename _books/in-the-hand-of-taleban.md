@@ -1,14 +1,14 @@
 ---
 book_id: "in-the-hand-of-taleban"
-title: "In The Hand Of Taleban"
-title_en: "In The Hand Of Taleban"
-author: "Yvonne Ridley"
+title: "ইন দ্য হ্যান্ড অব তালেবান"
+title_en: "In the Hand of Taliban"
+author: "ইভন রিডলি · অনুবাদ: আবরার হামীম"
 creator: "Not credited in the ebook file"
 category: "History"
 categories: ["History"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "I"
+alphabet: "ই"
 cover: "/img/cover-in-the-hand-of-taleban.jpg"
 file: "/books/in-the-hand-of-taleban.epub"
 format: "EPUB"

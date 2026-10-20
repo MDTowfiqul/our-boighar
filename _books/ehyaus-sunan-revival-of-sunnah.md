@@ -1,14 +1,14 @@
 ---
 book_id: "ehyaus-sunan-revival-of-sunnah"
-title: "Ehyaus Sunan (Revival of Sunnah)"
-title_en: "Ehyaus Sunan (Revival of Sunnah)"
-author: "Dr. Khandaker Abdullah Jahangir"
+title: "এহইয়াউস সুনান"
+title_en: "Ehyaus Sunan (Revival of the Sunnah)"
+author: "ড. খন্দকার আব্দুল্লাহ জাহাঙ্গীর"
 creator: "Not credited in the ebook file"
 category: "Hadith"
 categories: ["Hadith", "Spirituality"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "E"
+alphabet: "এ"
 cover: "/img/cover-ehyaus-sunan-revival-of-sunnah.jpg"
 file: "/books/ehyaus-sunan-revival-of-sunnah.epub"
 format: "EPUB"

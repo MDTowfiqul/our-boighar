@@ -1,14 +1,14 @@
 ---
 book_id: "ilme-gayeb"
-title: "Ilme Gayeb"
+title: "ইলমে গায়েব"
 title_en: "Ilme Gayeb"
-author: "Oddapok Abdun Nur Salafi"
+author: "অধ্যাপক আবদুন নূর সালাফী"
 creator: "Not credited in the ebook file"
 category: "Aqeedah"
 categories: ["Aqeedah"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "I"
+alphabet: "ই"
 cover: "/img/cover-ilme-gayeb.jpg"
 file: "/books/ilme-gayeb.epub"
 format: "EPUB"

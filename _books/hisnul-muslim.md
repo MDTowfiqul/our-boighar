@@ -1,14 +1,14 @@
 ---
 book_id: "hisnul-muslim"
-title: "Hisnul Muslim - হিসনুল মুসলিম"
-title_en: "Hisnul Muslim - হিসনুল মুসলিম"
-author: "সাঈদ ইবনে আলী আল কাহতানী"
+title: "হিসনুল মুসলিম"
+title_en: "Hisnul Muslim"
+author: "সাঈদ ইবনে আলী আল-কাহতানী"
 creator: "Not credited in the ebook file"
 category: "Dua"
 categories: ["Dua"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "H"
+alphabet: "হ"
 cover: "/img/cover-hisnul-muslim.jpg"
 file: "/books/hisnul-muslim.epub"
 format: "EPUB"

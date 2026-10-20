@@ -1,14 +1,14 @@
 ---
 book_id: "adhorsh-muslim-poribar"
-title: "Adhorsh muslim poribar"
-title_en: "Adhorsh muslim poribar"
-author: "Jakerullah Abul Khayer"
+title: "আদর্শ মুসলিম পরিবার"
+title_en: "The Ideal Muslim Family"
+author: "জাকেরুল্লাহ আবুল খায়ের"
 creator: "Not credited in the ebook file"
 category: "Family"
 categories: ["Family", "Manners & Character"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "A"
+alphabet: "আ"
 cover: "/img/cover-adhorsh-muslim-poribar.jpg"
 file: "/books/adhorsh-muslim-poribar.epub"
 format: "EPUB"

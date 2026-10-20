@@ -1,14 +1,14 @@
 ---
 book_id: "bharat-ovhijan-1"
-title: "Bharat Ovhijan 1"
-title_en: "Bharat Ovhijan 1"
-author: "Anayetullah"
+title: "ভারত অভিযান (১ম খণ্ড)"
+title_en: "Bharat Ovhijan (Part 1)"
+author: "এনায়েতুল্লাহ"
 creator: "Not credited in the ebook file"
 category: "History"
 categories: ["History"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "B"
+alphabet: "ভ"
 cover: "/img/cover-bharat-ovhijan-1.jpg"
 file: "/books/bharat-ovhijan-1.epub"
 format: "EPUB"

@@ -1,14 +1,14 @@
 ---
 book_id: "al-fitan"
-title: "Al Fitan"
-title_en: "Al Fitan"
-author: "Imam Nu'aym ibn Hammad"
+title: "কিতাবুল ফিতান"
+title_en: "Kitabul Fitan"
+author: "ইমাম নুআইম ইবনে হাম্মাদ"
 creator: "Not credited in the ebook file"
 category: "Aqeedah"
 categories: ["Aqeedah"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "A"
+alphabet: "ক"
 cover: "/img/cover-al-fitan.jpg"
 file: "/books/al-fitan.epub"
 format: "EPUB"

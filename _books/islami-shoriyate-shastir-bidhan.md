@@ -1,14 +1,14 @@
 ---
 book_id: "islami-shoriyate-shastir-bidhan"
-title: "Islami shoriyate shastir bidhan"
-title_en: "Islami shoriyate shastir bidhan"
-author: "Dr. Abdul Karim Zaidhan"
+title: "ইসলামী শরীয়তে শাস্তির বিধান"
+title_en: "Islami Shoriyate Shastir Bidhan"
+author: "ড. আব্দুল করীম যায়দান"
 creator: "Not credited in the ebook file"
 category: "Fiqh"
 categories: ["Fiqh"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "I"
+alphabet: "ই"
 cover: "/img/cover-islami-shoriyate-shastir-bidhan.jpg"
 file: "/books/islami-shoriyate-shastir-bidhan.epub"
 format: "EPUB"

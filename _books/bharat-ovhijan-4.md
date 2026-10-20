@@ -1,14 +1,14 @@
 ---
 book_id: "bharat-ovhijan-4"
-title: "Bharat Ovhijan 4"
-title_en: "Bharat Ovhijan 4"
-author: "Anayetullah"
+title: "ভারত অভিযান (৪র্থ খণ্ড)"
+title_en: "Bharat Ovhijan (Part 4)"
+author: "এনায়েতুল্লাহ"
 creator: "Not credited in the ebook file"
 category: "History"
 categories: ["History"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "B"
+alphabet: "ভ"
 cover: "/img/cover-bharat-ovhijan-4.jpg"
 file: "/books/bharat-ovhijan-4.epub"
 format: "EPUB"

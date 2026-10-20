@@ -1,14 +1,14 @@
 ---
 book_id: "al-aqss-masjider-itikatha"
-title: "Al Aqss Masjider Itikatha"
-title_en: "Al Aqss Masjider Itikatha"
-author: "A.N.M Sirajul Islam"
+title: "আল-আকসা মসজিদের ইতিকথা"
+title_en: "Al-Aqsa Masjider Itikatha"
+author: "এ.এন.এম. সিরাজুল ইসলাম"
 creator: "Not credited in the ebook file"
 category: "History"
 categories: ["History"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "A"
+alphabet: "আ"
 cover: "/img/cover-al-aqss-masjider-itikatha.jpg"
 file: "/books/al-aqss-masjider-itikatha.epub"
 format: "EPUB"

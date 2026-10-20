@@ -2,7 +2,7 @@
 book_id: "maru-jharna-life-sketch-of-hazrat-khadija-ra"
 title: "মরু ঝরনা"
 title_en: "Maru Jharna — Life-sketch of Hazrat Khadija (Ra.)"
-author: "Husne Ara Shahed"
+author: "হোসনে আরা শাহেদ"
 creator: "যুবাইর আহমেদ (ইসলামিক ইপাব ও মোবি ক্রিয়েটর টিম)"
 category: "Biography"
 categories: ["Biography", "Women"]

@@ -1,14 +1,14 @@
 ---
 book_id: "chepe-rakha-ityhash"
-title: "Chepe Rakha Ityhash"
-title_en: "Chepe Rakha Ityhash"
-author: "Allama Golam Ahmad Mortaza"
+title: "চেপে রাখা ইতিহাস"
+title_en: "Chepe Rakha Itihash"
+author: "আল্লামা গোলাম আহমদ মোর্তজা"
 creator: "Not credited in the ebook file"
 category: "History"
 categories: ["History"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "C"
+alphabet: "চ"
 cover: "/img/cover-chepe-rakha-ityhash.jpg"
 file: "/books/chepe-rakha-ityhash.epub"
 format: "EPUB"

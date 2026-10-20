@@ -1,14 +1,14 @@
 ---
 book_id: "bharat-ovhijan-2"
-title: "Bharat Ovhijan 2"
-title_en: "Bharat Ovhijan 2"
-author: "Anayetullah"
+title: "ভারত অভিযান (২য় খণ্ড)"
+title_en: "Bharat Ovhijan (Part 2)"
+author: "এনায়েতুল্লাহ"
 creator: "Not credited in the ebook file"
 category: "History"
 categories: ["History"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "B"
+alphabet: "ভ"
 cover: "/img/cover-bharat-ovhijan-2.jpg"
 file: "/books/bharat-ovhijan-2.epub"
 format: "EPUB"

@@ -1,14 +1,14 @@
 ---
 book_id: "akabirder-jihadi-jibon"
-title: "Akabirder Jihadi Jibon"
+title: "আকাবিরদের জিহাদী জীবন"
 title_en: "Akabirder Jihadi Jibon"
-author: "Maolana Shahid Jiaur Rahman"
+author: "মাওলানা শহীদ জিয়াউর রহমান"
 creator: "Not credited in the ebook file"
 category: "History"
 categories: ["History", "Biography"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "A"
+alphabet: "আ"
 cover: "/img/cover-akabirder-jihadi-jibon.jpg"
 file: "/books/akabirder-jihadi-jibon.epub"
 format: "EPUB"

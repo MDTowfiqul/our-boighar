@@ -1,14 +1,14 @@
 ---
 book_id: "kudristi-kusomporker-voyaboha-khoti-o-protikar"
-title: "Kudristi-Kusomporker Voyaboha Khoti O Protikar"
-title_en: "Kudristi-Kusomporker Voyaboha Khoti O Protikar"
-author: "Mowlana Shah Hakeem Muhammad Akhtar Sb. Translated by Mowlana Abdul Matin bin Husain."
+title: "কুদৃষ্টি ও কুসম্পর্কের ভয়াবহ ক্ষতি ও প্রতিকার"
+title_en: "Kudristi O Kusomporker Voyaboho Khoti O Protikar"
+author: "মাওলানা শাহ হাকীম মুহাম্মদ আখতার · অনুবাদ: মাওলানা আব্দুল মতিন বিন হুসাইন"
 creator: "Not credited in the ebook file"
 category: "Manners & Character"
 categories: ["Manners & Character"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "K"
+alphabet: "ক"
 cover: "/img/cover-kudristi-kusomporker-voyaboha-khoti-o-protikar.jpg"
 file: "/books/kudristi-kusomporker-voyaboha-khoti-o-protikar.epub"
 format: "EPUB"

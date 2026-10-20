@@ -1,8 +1,8 @@
 ---
 book_id: "la-tahzan-dont-be-sad"
-title: "লা তাহযান (Don't Be Sad)"
-title_en: "La Tahzan — Don't Be Sad"
-author: "ড. আয়েয আল-কারনী (Dr. Aaidh al-Qarni)"
+title: "লা তাহযান"
+title_en: "La Tahzan (Don't Be Sad)"
+author: "ড. আয়েয আল-কারনী"
 creator: "Not credited in the ebook file"
 category: "Spirituality"
 categories: ["Spirituality"]

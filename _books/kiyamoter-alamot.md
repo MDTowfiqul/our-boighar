@@ -1,14 +1,14 @@
 ---
 book_id: "kiyamoter-alamot"
-title: "Kiyamoter Alamot"
+title: "কিয়ামতের আলামত"
 title_en: "Kiyamoter Alamot"
-author: "Abdullah Shahed Al-Madhani"
+author: "আব্দুল্লাহ শাহেদ আল-মাদানী"
 creator: "Not credited in the ebook file"
 category: "Aqeedah"
 categories: ["Aqeedah"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "K"
+alphabet: "ক"
 cover: "/img/cover-kiyamoter-alamot.jpg"
 file: "/books/kiyamoter-alamot.epub"
 format: "EPUB"

@@ -1,14 +1,14 @@
 ---
 book_id: "bharat-ovhijan-3"
-title: "Bharat Ovhijan 3"
-title_en: "Bharat Ovhijan 3"
-author: "Anayetullah"
+title: "ভারত অভিযান (৩য় খণ্ড)"
+title_en: "Bharat Ovhijan (Part 3)"
+author: "এনায়েতুল্লাহ"
 creator: "Not credited in the ebook file"
 category: "History"
 categories: ["History"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "B"
+alphabet: "ভ"
 cover: "/img/cover-bharat-ovhijan-3.jpg"
 file: "/books/bharat-ovhijan-3.epub"
 format: "EPUB"

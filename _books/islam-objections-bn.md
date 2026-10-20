@@ -2,8 +2,8 @@
 book_id: "islam-objections-bn"
 title: "ইসলাম সম্পর্কে অমুসলিমদের আপত্তিসমূহের জবাব"
 title_en: "Answers to Non-Muslims' Objections About Islam"
-author: "Dr. Zakir Naik (lectures)"
-creator: "MD. Towfiqul Islam (Bengali EPUB edition)"
+author: "ড. জাকির নায়েক (বক্তৃতা সংকলন)"
+creator: "মোঃ তৌফিকুল ইসলাম (বাংলা ইপাব সংস্করণ)"
 category: "Dawah"
 categories: ["Dawah", "Islamic Q&A"]
 language: "bn"
