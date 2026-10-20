@@ -16,36 +16,48 @@
 <style>
   body{font-family:'Hind Siliguri',system-ui,sans-serif}
   .serif{font-family:'Noto Serif Bengali',serif}
+  #alpha-bar button.on, #cat-bar button.on{background-color:#047857;color:#fff;border-color:#047857}
+  #alpha-bar button.alpha-off{cursor:not-allowed;opacity:.55}
 </style>
 </head>
-<body class="bg-[#faf3e7] text-[#26221c] dark:bg-neutral-900 dark:text-neutral-100 min-h-screen pb-24">
+<body class="bg-[#f8f9fa] text-[#212529] dark:bg-neutral-900 dark:text-neutral-100 min-h-screen pb-24">
 
-<header class="sticky top-0 z-20 bg-[#fffdf8]/95 dark:bg-neutral-900/95 backdrop-blur border-b border-[#eee2cd] dark:border-neutral-700">
-  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center gap-4">
-    <a href="{{ '/' | relative_url }}" class="font-bold text-xl text-emerald-900 dark:text-emerald-300">📚 Our Boighar</a>
-    <nav class="hidden sm:flex gap-5 text-[15px] font-semibold ml-2">
-      <a href="{{ '/' | relative_url }}" class="hover:text-emerald-700">হোম</a>
-      <a href="{{ '/' | relative_url }}#writers" class="hover:text-emerald-700">লেখক</a>
-      <a href="{{ '/' | relative_url }}#categories" class="hover:text-emerald-700">বিষয়</a>
-      <a href="{{ '/' | relative_url }}#popular" class="hover:text-emerald-700">জনপ্রিয় বই</a>
+<!-- TOP NAVBAR (BDeBooks Style) -->
+<header class="sticky top-0 z-30 bg-white/95 dark:bg-neutral-900/95 backdrop-blur shadow-sm border-b border-neutral-200 dark:border-neutral-800">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+    <a href="{{ '/' | relative_url }}" class="font-extrabold text-xl sm:text-2xl text-emerald-800 dark:text-emerald-400 flex items-center gap-2">
+      <span>📚</span>
+      <span>আমাদের বইঘর <span class="text-xs font-semibold text-neutral-500 dark:text-neutral-400 hidden sm:inline">| Our Boighar</span></span>
+    </a>
+    <nav class="hidden md:flex items-center gap-6 text-[15px] font-bold text-neutral-700 dark:text-neutral-200">
+      <a href="{{ '/' | relative_url }}" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition">হোম</a>
+      <a href="{{ '/' | relative_url }}#books-grid" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition">সব বই</a>
+      <a href="{{ '/' | relative_url }}#writers" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition">লেখক</a>
+      <a href="{{ '/' | relative_url }}#categories" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition">বিষয়সমূহ</a>
+      <a href="{{ '/' | relative_url }}#popular" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition">জনপ্রিয় বই</a>
     </nav>
-    <span class="flex-1"></span>
-    <button id="theme-toggle" class="border border-[#e7dcc2] dark:border-neutral-600 rounded-full px-3 py-1 text-sm font-semibold" title="Dark mode">🌙</button>
-    <span class="border border-[#e7dcc2] dark:border-neutral-600 rounded-full px-3 py-1 text-sm font-semibold text-neutral-500 dark:text-neutral-300">বাংলা</span>
+    <div class="flex items-center gap-2">
+      <a href="{{ '/' | relative_url }}#shelf" class="hidden sm:inline-flex items-center gap-1 bg-amber-50 dark:bg-neutral-800 border border-amber-200 dark:border-neutral-700 text-amber-800 dark:text-amber-300 rounded-full px-3.5 py-1 text-sm font-bold hover:bg-amber-100 transition">★ আমার তাক</a>
+      <button id="theme-toggle" class="border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 rounded-full px-3 py-1 text-sm font-semibold hover:bg-neutral-100 dark:hover:bg-neutral-700 transition" title="Dark mode">🌙</button>
+    </div>
   </div>
 </header>
 
 {{ content }}
 
-<footer class="max-w-6xl mx-auto px-4 mt-14 pb-4 text-center text-sm text-neutral-500 dark:text-neutral-400">
-  <p>© মোঃ তৌফিকুল ইসলাম · <a class="text-emerald-700 dark:text-emerald-400 font-semibold" href="https://towfiqulislam.gumroad.com/l/vvcbp">Gumroad</a> · <a class="text-emerald-700 dark:text-emerald-400 font-semibold" href="https://mdtowfiqul.github.io/Our-Days/">Our Days</a> · <a class="text-emerald-700 dark:text-emerald-400 font-semibold" href="https://github.com/MDTowfiqul">GitHub</a></p>
+<footer class="bg-white dark:bg-neutral-950 border-t border-neutral-200 dark:border-neutral-800 mt-14 py-8 text-center text-sm text-neutral-500 dark:text-neutral-400">
+  <div class="max-w-6xl mx-auto px-4">
+    <p class="font-bold text-neutral-700 dark:text-neutral-200 mb-2">📚 আমাদের বইঘর (Our Boighar) — বাংলা ও ইংরেজি ইসলামিক বইয়ের উন্মুক্ত লাইব্রেরি</p>
+    <p>© মোঃ তৌফিকুল ইসলাম · <a class="text-emerald-700 dark:text-emerald-400 font-semibold hover:underline" href="https://towfiqulislam.gumroad.com/l/vvcbp">Gumroad</a> · <a class="text-emerald-700 dark:text-emerald-400 font-semibold hover:underline" href="https://mdtowfiqul.github.io/Our-Days/">Our Days</a> · <a class="text-emerald-700 dark:text-emerald-400 font-semibold hover:underline" href="https://github.com/MDTowfiqul">GitHub</a></p>
+  </div>
 </footer>
 
-<nav class="fixed bottom-0 left-0 right-0 z-20 bg-white dark:bg-neutral-900 border-t border-[#eee2cd] dark:border-neutral-700 flex justify-around py-2 text-xs font-semibold text-neutral-500 dark:text-neutral-400">
-  <a href="{{ '/' | relative_url }}" class="flex flex-col items-center gap-0.5 px-3"><span class="text-xl">🏠</span>হোম</a>
-  <a href="{{ '/' | relative_url }}#categories" class="flex flex-col items-center gap-0.5 px-3"><span class="text-xl">▦</span>বিষয়</a>
-  <a href="{{ '/' | relative_url }}#searchbox" class="flex flex-col items-center gap-0.5 px-3"><span class="text-xl">🔍</span>খুঁজুন</a>
-  <a href="{{ '/' | relative_url }}#shelf" class="flex flex-col items-center gap-0.5 px-3"><span class="text-xl">📖</span>আমার তাক</a>
+<nav class="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-800 flex justify-around py-2 text-xs font-semibold text-neutral-600 dark:text-neutral-400">
+  <a href="{{ '/' | relative_url }}" class="flex flex-col items-center gap-0.5 px-3"><span class="text-lg">🏠</span>হোম</a>
+  <a href="{{ '/' | relative_url }}#categories" class="flex flex-col items-center gap-0.5 px-3"><span class="text-lg">📂</span>বিষয়</a>
+  <a href="{{ '/' | relative_url }}#writers" class="flex flex-col items-center gap-0.5 px-3"><span class="text-lg">✍️</span>লেখক</a>
+  <a href="{{ '/' | relative_url }}#searchbox" class="flex flex-col items-center gap-0.5 px-3"><span class="text-lg">🔍</span>খুঁজুন</a>
+  <a href="{{ '/' | relative_url }}#shelf" class="flex flex-col items-center gap-0.5 px-3"><span class="text-lg">★</span>আমার তাক</a>
 </nav>
 
 <script>
