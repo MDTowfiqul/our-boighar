@@ -1,6 +1,7 @@
 ---
 layout: default
 ---
+{% assign bookfile = page.file %}{% if bookfile %}{% unless bookfile contains '://' %}{% assign bookfile = bookfile | relative_url %}{% endunless %}{% endif %}
 <main class="max-w-4xl mx-auto px-3 sm:px-4 py-5">
   <p class="text-[13px] text-neutral-500 dark:text-neutral-400 mb-3">
     <a href="{{ '/' | relative_url }}" class="hover:underline" data-bn="হোম" data-en="Home">হোম</a> /
@@ -41,8 +42,8 @@ layout: default
 
         <div class="grid grid-cols-2 gap-2.5 mt-5">
           {% if page.file %}
-          <a href="{{ '/reader.html' | relative_url }}?file={{ page.file | relative_url | url_encode }}&title={{ page.title | url_encode }}" class="accent-bg col-span-2 flex items-center justify-center gap-2 text-white font-bold rounded-xl py-3 px-4" data-bn="📖 অনলাইনে পড়ুন" data-en="📖 Read Online">📖 অনলাইনে পড়ুন</a>
-          <a href="{{ page.file | relative_url }}" download class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl py-3 px-4" data-bn="⬇ ডাউনলোড" data-en="⬇ Download">⬇ ডাউনলোড</a>
+          <a href="{{ '/reader.html' | relative_url }}?file={{ bookfile | url_encode }}&title={{ page.title | url_encode }}" class="accent-bg col-span-2 flex items-center justify-center gap-2 text-white font-bold rounded-xl py-3 px-4" data-bn="📖 অনলাইনে পড়ুন" data-en="📖 Read Online">📖 অনলাইনে পড়ুন</a>
+          <a href="{{ bookfile }}" download class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl py-3 px-4" data-bn="⬇ ডাউনলোড" data-en="⬇ Download">⬇ ডাউনলোড</a>
           {% elsif page.gumroad %}
           <a href="{{ page.gumroad }}" target="_blank" rel="noopener" class="accent-bg col-span-2 flex items-center justify-center gap-2 text-white font-bold rounded-xl py-3 px-4">🛒 Gumroad থেকে নিন{% if page.price %} · {{ page.price }}{% endif %}</a>
           {% endif %}
@@ -67,13 +68,13 @@ layout: default
       <span class="accent-soft-bg accent-text font-extrabold rounded-lg px-3 py-2 text-sm">{{ page.format }}</span>
       <span class="flex-1 text-sm"><strong>{{ page.file_size }}</strong><br>
       <span class="text-neutral-500 dark:text-neutral-400" data-bn="Our Boighar থেকে সরাসরি ডাউনলোড" data-en="Direct download from Our Boighar">Our Boighar থেকে সরাসরি ডাউনলোড</span></span>
-      <a href="{{ page.file | relative_url }}" download class="accent-bg text-white font-bold rounded-lg px-4 py-2 text-sm" data-bn="ডাউনলোড" data-en="Download">ডাউনলোড</a>
+      <a href="{{ bookfile }}" download class="accent-bg text-white font-bold rounded-lg px-4 py-2 text-sm" data-bn="ডাউনলোড" data-en="Download">ডাউনলোড</a>
     </div>
     <div class="flex items-center gap-3 border border-neutral-200 dark:border-neutral-600 rounded-xl p-3 mt-2">
       <span class="accent-soft-bg accent-text font-extrabold rounded-lg px-3 py-2 text-sm">WEB</span>
       <span class="flex-1 text-sm"><strong data-bn="অনলাইন রিডার" data-en="Online Reader">অনলাইন রিডার</strong><br>
       <span class="text-neutral-500 dark:text-neutral-400" data-bn="ডাউনলোড ছাড়াই ব্রাউজারে পড়ুন" data-en="Read in your browser, no download needed">ডাউনলোড ছাড়াই ব্রাউজারে পড়ুন</span></span>
-      <a href="{{ '/reader.html' | relative_url }}?file={{ page.file | relative_url | url_encode }}&title={{ page.title | url_encode }}" class="accent-bg text-white font-bold rounded-lg px-4 py-2 text-sm" data-bn="পড়ুন" data-en="Read">পড়ুন</a>
+      <a href="{{ '/reader.html' | relative_url }}?file={{ bookfile | url_encode }}&title={{ page.title | url_encode }}" class="accent-bg text-white font-bold rounded-lg px-4 py-2 text-sm" data-bn="পড়ুন" data-en="Read">পড়ুন</a>
     </div>
     <p class="text-[13px] text-neutral-500 dark:text-neutral-400 mt-3">✔ <span data-bn="ফ্রি বই — অনলাইনে পড়ুন, ডাউনলোড করুন, শেয়ার করুন।" data-en="Free book — read online, download, share.">ফ্রি বই — অনলাইনে পড়ুন, ডাউনলোড করুন, শেয়ার করুন।</span>
     · <a class="accent-text font-semibold hover:underline" href="https://github.com/MDTowfiqul/our-boighar/issues" target="_blank" rel="noopener" data-bn="তথ্যে ভুল থাকলে জানান" data-en="Report an error">তথ্যে ভুল থাকলে জানান</a></p>
