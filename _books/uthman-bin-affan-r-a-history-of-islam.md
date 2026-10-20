@@ -13,6 +13,9 @@ cover: "/img/cover-uthman-bin-affan-r-a-history-of-islam.jpg"
 file: "/books/uthman-bin-affan-r-a-history-of-islam.epub"
 format: "EPUB"
 file_size: "0.27 MB"
+series: "History of Islam"
+series_en: "History of Islam"
+series_order: 3
 ---
 
 Uthman bin Affan (R.A) — the life and caliphate of the third caliph, Dhu'n-Noorayn, from the History of Islam series.

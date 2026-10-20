@@ -13,6 +13,9 @@ cover: "/img/cover-omar-ra-somporke-150-shikkhaniyo-ghotona.jpg"
 file: "/books/omar-ra-somporke-150-shikkhaniyo-ghotona.epub"
 format: "EPUB"
 file_size: "0.13 MB"
+series: "১৫০টি শিক্ষণীয় ঘটনা"
+series_en: "150 Shikkhaniyo Ghatona"
+series_order: 2
 ---
 
 ওমর (রা.) সম্পর্কে ১৫০টি শিক্ষণীয় ঘটনা — আহমদ আবদুল আলী তাহতাভীর সংকলন; ফারুকে আযমের জীবনের শিক্ষণীয় ঘটনাবলি।
