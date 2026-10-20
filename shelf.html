@@ -65,7 +65,7 @@ var OB_BOOKS = [{% for b in site.books %}{
         '<div class="flex-1 min-w-0">' +
           '<a href="' + b.url + '" class="font-bold leading-snug line-clamp-2 hover:text-emerald-700 dark:hover:text-emerald-400">' + esc(title) + '</a>' +
           '<p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1">✍️ ' + esc(b.author) + '</p>' +
-          '<p class="text-[11px] font-bold text-neutral-400 mt-1">' + esc(b.category) + ' · ' + esc(b.langlabel) + '</p>' +
+          '<p class="text-[11px] font-bold text-neutral-400 mt-1">' + esc(window.__obCatName(b.category)) + ' · ' + esc(b.langlabel) + '</p>' +
           '<div class="flex flex-wrap gap-2 mt-2.5">' +
             '<a href="' + b.url + '" class="accent-bg text-white font-bold rounded-lg px-4 py-2 text-sm">' + t.open + '</a>' +
             action +

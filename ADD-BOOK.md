@@ -71,6 +71,13 @@ book page exactly as written, in both site languages.
 | `file_size`, `year` | optional — shown on the book page when present |
 | `toc` | optional list of contents entries; renders a সূচিপত্র (table of contents) section |
 
+**Category names:** categories are stored in English in the book file.
+Their Bengali display names live in one map near the top of
+`_layouts/default.html` (`window.__obCatBn`) — the site shows the Bengali
+name in বাংলা mode and the English name in English mode. If you use a
+brand-new category, it will appear in English everywhere until its Bengali
+name is added to that map — ask Muse to add it.
+
 ---
 
 ## 2. Change a book's details

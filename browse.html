@@ -30,7 +30,7 @@ permalink: /browse/
       <span class="text-xs font-bold text-neutral-500 dark:text-neutral-400 mr-1" data-bn="বিষয়:" data-en="Subject:">বিষয়:</span>
       <button class="catpill on rounded-full px-3.5 py-1 font-bold text-xs sm:text-sm transition" data-c=""><span data-bn="সব বিষয়" data-en="All Subjects">সব বিষয়</span> ({{ site.books.size }})</button>
       {% for c in cats %}
-      <button class="catpill bg-neutral-100 dark:bg-neutral-700 hover:bg-emerald-50 dark:hover:bg-neutral-600 border border-neutral-200 dark:border-neutral-600 rounded-full px-3.5 py-1 font-bold text-xs sm:text-sm transition" data-c="{{ c }}">{{ c }}</button>
+      <button class="catpill bg-neutral-100 dark:bg-neutral-700 hover:bg-emerald-50 dark:hover:bg-neutral-600 border border-neutral-200 dark:border-neutral-600 rounded-full px-3.5 py-1 font-bold text-xs sm:text-sm transition" data-c="{{ c }}"><span data-cat="{{ c }}">{{ c }}</span></button>
       {% endfor %}
       <button class="catpill bg-amber-50 dark:bg-neutral-700 border border-amber-300 dark:border-neutral-600 text-amber-900 dark:text-amber-300 rounded-full px-3.5 py-1 font-bold text-xs sm:text-sm transition" data-c="__shelf" data-bn="★ আমার তাক" data-en="★ My Shelf">★ আমার তাক</button>
     </div>
@@ -50,7 +50,7 @@ permalink: /browse/
           {% if b.price %}<span class="absolute top-2 left-2 bg-amber-600 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow" data-bn="প্রিমিয়াম" data-en="Premium">প্রিমিয়াম</span>{% else %}<span class="absolute top-2 left-2 bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow" data-bn="ফ্রি" data-en="Free">ফ্রি</span>{% endif %}
           <span class="absolute top-2 right-2 bg-black/55 text-white text-[10px] font-bold px-2 py-0.5 rounded">{{ b.language_label }}</span>
         </div>
-        <span class="block text-[11px] font-bold text-emerald-700 dark:text-emerald-400 mt-2">{{ b.category }}</span>
+        <span class="block text-[11px] font-bold text-emerald-700 dark:text-emerald-400 mt-2" data-cat="{{ b.category }}">{{ b.category }}</span>
         <h3 class="font-bold text-sm sm:text-[15px] leading-snug line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400" data-bn="{{ b.title }}" data-en="{{ b.title_en | default: b.title }}">{{ b.title }}</h3>
         <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1">✍️ {{ b.author }}</p>
       </a>
@@ -98,7 +98,7 @@ permalink: /browse/
     resetBtn.classList.toggle('hidden', !(state.q || state.cat));
     headingEl.removeAttribute('data-bn'); headingEl.removeAttribute('data-en');
     if (state.cat === '__shelf') headingEl.textContent = t.shelf;
-    else if (state.cat) headingEl.textContent = t.cat + state.cat;
+    else if (state.cat) headingEl.textContent = t.cat + window.__obCatName(state.cat);
     else if (state.q) headingEl.textContent = t.search + '"' + search.value + '"';
     else headingEl.textContent = t.all;
     syncPills();
