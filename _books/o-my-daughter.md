@@ -1,14 +1,14 @@
 ---
 book_id: "o-my-daughter"
-title: "O my daughter"
-title_en: "O my daughter"
-author: "Dr. Ali Tantawi"
+title: "হে আমার মেয়ে"
+title_en: "O My Daughter"
+author: "ড. আলী তানতাবী"
 creator: "Not credited in the ebook file"
 category: "Family"
 categories: ["Family", "Women"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "O"
+alphabet: "হ"
 cover: "/img/cover-o-my-daughter.jpg"
 file: "/books/o-my-daughter.epub"
 format: "EPUB"

@@ -1,14 +1,14 @@
 ---
 book_id: "quran-vocabulary"
-title: "Quran Vocabulary - কুরআন ভোকাবুলারি"
-title_en: "Quran Vocabulary - কুরআন ভোকাবুলারি"
-author: "ZilSoft"
+title: "কুরআন ভোকাবুলারি"
+title_en: "Quran Vocabulary"
+author: "জিলসফট"
 creator: "Not credited in the ebook file"
 category: "Qur'an"
 categories: ["Qur'an"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "Q"
+alphabet: "ক"
 cover: "/img/cover-quran-vocabulary.jpg"
 file: "/books/quran-vocabulary.epub"
 format: "EPUB"

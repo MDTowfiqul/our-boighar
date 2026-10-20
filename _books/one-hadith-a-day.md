@@ -1,14 +1,14 @@
 ---
 book_id: "one-hadith-a-day"
-title: "One Hadith a Day (সহীহ বুখারী থেকে ৩৬৫টি হাদীস ও শিক্ষা)"
-title_en: "One Hadith a Day (সহীহ বুখারী থেকে ৩৬৫টি হাদীস ও শিক্ষা)"
-author: "Imran"
+title: "প্রতিদিন একটি হাদীস"
+title_en: "One Hadith a Day"
+author: "ইমরান"
 creator: "ইসলামিক ইপাব ও মোবি ক্রিয়েটর টিম (Islamic EPUB & Mobi Creator Team)"
 category: "Hadith"
 categories: ["Hadith"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "O"
+alphabet: "প"
 cover: "/img/cover-one-hadith-a-day.jpg"
 file: "/books/one-hadith-a-day.epub"
 format: "EPUB"

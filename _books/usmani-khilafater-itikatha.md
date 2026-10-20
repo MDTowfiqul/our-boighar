@@ -1,14 +1,14 @@
 ---
 book_id: "usmani-khilafater-itikatha"
-title: "Usmani Khilafater Itikatha"
+title: "উসমানী খিলাফতের ইতিকথা"
 title_en: "Usmani Khilafater Itikatha"
-author: "AKM Nazir Ahmad"
+author: "এ.কে.এম. নাজির আহমদ"
 creator: "Not credited in the ebook file"
 category: "History"
 categories: ["History"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "U"
+alphabet: "উ"
 cover: "/img/cover-usmani-khilafater-itikatha.jpg"
 file: "/books/usmani-khilafater-itikatha.epub"
 format: "EPUB"

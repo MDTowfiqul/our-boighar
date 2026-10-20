@@ -1,14 +1,14 @@
 ---
 book_id: "shesh-ghonta"
-title: "Shesh Ghonta"
+title: "শেষ ঘণ্টা"
 title_en: "Shesh Ghonta"
-author: "Sayeed Shah Abdul Mugne"
-creator: "Adhunik Prokashoni"
+author: "সাঈদ শাহ আব্দুল মুগনী"
+creator: "আধুনিক প্রকাশনী"
 category: "Spirituality"
 categories: ["Spirituality"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "S"
+alphabet: "শ"
 cover: "/img/cover-shesh-ghonta.jpg"
 file: "/books/shesh-ghonta.epub"
 format: "EPUB"

@@ -1,14 +1,14 @@
 ---
 book_id: "muslim-spaner-rajnoitik-etihas"
-title: "Muslim spaner rajnoitik etihas"
-title_en: "Muslim spaner rajnoitik etihas"
-author: "S.M. Imamuddin"
+title: "মুসলিম স্পেনের রাজনৈতিক ইতিহাস"
+title_en: "Muslim Spaner Rajnoitik Itihas"
+author: "এস.এম. ইমামউদ্দীন"
 creator: "Not credited in the ebook file"
 category: "History"
 categories: ["History"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "M"
+alphabet: "ম"
 cover: "/img/cover-muslim-spaner-rajnoitik-etihas.jpg"
 file: "/books/muslim-spaner-rajnoitik-etihas.epub"
 format: "EPUB"

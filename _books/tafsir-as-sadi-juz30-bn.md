@@ -2,8 +2,8 @@
 book_id: "tafsir-as-sadi-juz30-bn"
 title: "তাফসীর আস-সা‘দী (৩০তম পাড়া)"
 title_en: "Tafsir As-Sa'di — Juz 30 (Bengali)"
-author: "Shaykh Abdur Rahman Nasir as-Sa'di · Bengali translation: মোঃ তরিকুল ইসলাম"
-creator: "MD. Towfiqul Islam (Islamic EPUB & Mobi Creator Team)"
+author: "শাইখ আব্দুর রহমান নাসির আস-সা'দী · বাংলা অনুবাদ: মোঃ তরিকুল ইসলাম"
+creator: "মোঃ তৌফিকুল ইসলাম (ইসলামিক ইপাব ও মোবি ক্রিয়েটর টিম)"
 category: "Tafsir"
 categories: ["Tafsir", "Qur'an"]
 language: "bn"

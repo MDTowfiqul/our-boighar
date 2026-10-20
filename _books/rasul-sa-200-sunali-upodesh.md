@@ -1,14 +1,14 @@
 ---
 book_id: "rasul-sa-200-sunali-upodesh"
-title: "Rasul (Sa) 200 sunali upodesh"
-title_en: "Rasul (Sa) 200 sunali upodesh"
-author: "Abdul Malik Mujahid"
+title: "রাসূল (সা.)-এর ২০০ সোনালি উপদেশ"
+title_en: "Rasul (SAW): 200 Golden Advices"
+author: "আব্দুল মালিক মুজাহিদ"
 creator: "Not credited in the ebook file"
 category: "Hadith"
 categories: ["Hadith", "Seerah"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "R"
+alphabet: "র"
 cover: "/img/cover-rasul-sa-200-sunali-upodesh.jpg"
 file: "/books/rasul-sa-200-sunali-upodesh.epub"
 format: "EPUB"

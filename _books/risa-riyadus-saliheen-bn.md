@@ -2,7 +2,7 @@
 book_id: "risa-riyadus-saliheen-bn"
 title: "রিসা – রিয়াদুস সালেহীনের ভাব সংকলন"
 title_en: "Risa — The Essence of Riyad as-Salihin (Bengali)"
-author: "শামীম রেজায়ী (Shamim Rezayi), from Riyad as-Salihin by Imam an-Nawawi"
+author: "শামীম রেজায়ী · মূল গ্রন্থ: রিয়াদুস সালেহীন — ইমাম নববী"
 creator: "Not credited in the ebook file"
 category: "Hadith"
 categories: ["Hadith", "Spirituality"]

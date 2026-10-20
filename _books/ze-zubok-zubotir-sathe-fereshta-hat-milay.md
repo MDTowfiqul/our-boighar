@@ -1,14 +1,14 @@
 ---
 book_id: "ze-zubok-zubotir-sathe-fereshta-hat-milay"
-title: "Ze Zubok Zubotir Sathe Fereshta Hat Milay"
+title: "যে যুবক-যুবতীর সাথে ফেরেশতা হাত মিলায়"
 title_en: "Ze Zubok Zubotir Sathe Fereshta Hat Milay"
-author: "A.N. M. Sirajul Islam"
-creator: "Adhunik Pablication"
+author: "এ.এন.এম. সিরাজুল ইসলাম"
+creator: "আধুনিক পাবলিকেশন"
 category: "Spirituality"
 categories: ["Spirituality"]
 language: "bn"
 language_label: "Bengali"
-alphabet: "Z"
+alphabet: "য"
 cover: "/img/cover-ze-zubok-zubotir-sathe-fereshta-hat-milay.jpg"
 file: "/books/ze-zubok-zubotir-sathe-fereshta-hat-milay.epub"
 format: "EPUB"

@@ -2,7 +2,7 @@
 book_id: "mukto-bashini-part-1"
 title: "মুক্তবাসিনী-১"
 title_en: "Mukto Bashini — Part 1"
-author: "Abubakar Sirajee"
+author: "আবু বকর সিরাজী"
 creator: "ইসলামিক ইপাব ও মোবি ক্রিয়েটর টিম (Islamic EPUB & Mobi Creator Team)"
 category: "Spirituality"
 categories: ["Spirituality", "Manners & Character"]
