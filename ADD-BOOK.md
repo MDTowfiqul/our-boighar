@@ -46,6 +46,11 @@ Two or three sentences describing the book go here — this becomes the
 "About this book" text on its page.
 ```
 
+**Description language rule:** the description text (below the second
+`---`) must be written in the book's own language — a Bengali book gets a
+Bengali description, an English book an English one. It is shown on the
+book page exactly as written, in both site languages.
+
 4. Wait 1–2 minutes, then check the live page:
    `https://mdtowfiqul.github.io/our-boighar/books/my-book/`
 
