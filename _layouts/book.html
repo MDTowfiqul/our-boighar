@@ -117,7 +117,14 @@ layout: default
       <span class="accent-bg w-14 h-14 rounded-full flex items-center justify-center text-white text-2xl font-extrabold flex-shrink-0">{{ page.author | slice: 0 }}</span>
       <div class="min-w-0">
         <p class="font-bold text-[16px]">{{ page.author }}</p>
-        <p class="text-sm text-neutral-600 dark:text-neutral-300 mt-1" data-bn="এই লেখকের বই ও অনুবাদ Our Boighar লাইব্রেরিতে সংগৃহীত রয়েছে — অনলাইনে পড়ুন বা ফ্রি ডাউনলোড করুন।" data-en="Books and translations by this author are collected in the Our Boighar library — read online or download free.">এই লেখকের বই ও অনুবাদ Our Boighar লাইব্রেরিতে সংগৃহীত রয়েছে — অনলাইনে পড়ুন বা ফ্রি ডাউনলোড করুন।</p>
+        {% assign akey = page.author | strip %}
+        {% assign abio = site.data.authors[akey] %}
+        {% if abio %}
+        <p class="text-sm text-neutral-600 dark:text-neutral-300 mt-1" data-bn="{{ abio.bn }}" data-en="{{ abio.en }}">{{ abio.bn }}</p>
+        {% else %}
+        {% assign author_books = site.books | where: "author", page.author %}
+        <p class="text-sm text-neutral-600 dark:text-neutral-300 mt-1" data-bn="এই লাইব্রেরিতে এই লেখকের {{ author_books.size }}টি বই সংগৃহীত রয়েছে — অনলাইনে পড়ুন বা ফ্রি ডাউনলোড করুন।" data-en="{{ author_books.size }} book(s) by this author are collected in the Our Boighar library — read online or download free.">এই লাইব্রেরিতে এই লেখকের {{ author_books.size }}টি বই সংগৃহীত রয়েছে — অনলাইনে পড়ুন বা ফ্রি ডাউনলোড করুন।</p>
+        {% endif %}
         <a href="{{ '/' | relative_url }}?q={{ page.author | url_encode }}" class="accent-text text-sm font-bold hover:underline inline-block mt-2" data-bn="লেখকের সব বই দেখুন →" data-en="See all books by this author →">লেখকের সব বই দেখুন →</a>
       </div>
     </div>
@@ -148,6 +155,7 @@ layout: default
     <h2 class="text-lg font-bold mb-1" data-bn="💬 পাঠকের মন্তব্য ও রিঅ্যাকশন" data-en="💬 Reader Comments & Reactions">💬 পাঠকের মন্তব্য ও রিঅ্যাকশন</h2>
     <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-4" data-bn="এই বই নিয়ে আপনার মতামত জানান — আপনার Facebook অ্যাকাউন্ট দিয়ে মন্তব্য করুন।" data-en="Share your thoughts on this book — comment with your Facebook account.">এই বই নিয়ে আপনার মতামত জানান — আপনার Facebook অ্যাকাউন্ট দিয়ে মন্তব্য করুন।</p>
     <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v21.0"></script>
     <div class="fb-comments" data-href="{{ page.url | absolute_url }}" data-width="100%" data-numposts="5"></div>
   </section>
 
@@ -227,9 +235,6 @@ layout: default
   paintRating();
   window.addEventListener('ob-lang', function(){ paint(); paintRating(); });
 
-  var fs = document.createElement('script');
-  fs.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v21.0';
-  fs.async = true; fs.defer = true; fs.crossOrigin = 'anonymous';
-  document.body.appendChild(fs);
+  window.addEventListener('load', function(){ if (window.FB && FB.XFBML && FB.XFBML.parse) FB.XFBML.parse(); });
 })();
 </script>
