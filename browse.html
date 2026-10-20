@@ -9,7 +9,7 @@ permalink: /browse/
 
 <main class="max-w-6xl mx-auto px-3 sm:px-4 mt-6">
   <h1 class="serif text-2xl sm:text-3xl font-extrabold" data-bn="📚 সব বই ব্রাউজ করুন" data-en="📚 Browse All Books">📚 সব বই ব্রাউজ করুন</h1>
-  <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1" data-bn="বর্ণ, বিষয় বা নাম দিয়ে ফিল্টার করুন" data-en="Filter by letter, subject or name">বর্ণ, বিষয় বা নাম দিয়ে ফিল্টার করুন</p>
+  <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1" data-bn="বিষয় বা নাম দিয়ে ফিল্টার করুন" data-en="Filter by subject or name">বিষয় বা নাম দিয়ে ফিল্টার করুন</p>
 
   <div class="mt-5 flex items-center bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl shadow-sm p-1.5 gap-1 max-w-2xl">
     <span class="pl-2.5 text-neutral-400">
@@ -22,23 +22,11 @@ permalink: /browse/
   <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-4 sm:p-5 shadow-sm mt-5">
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
       <h2 class="text-base sm:text-lg font-bold flex items-center gap-2 text-emerald-900 dark:text-emerald-300">
-        <span>🔤</span> <span data-bn="বর্ণমালা ও বিষয় অনুযায়ী বই খুঁজুন" data-en="Find books by letter & subject">বর্ণমালা ও বিষয় অনুযায়ী বই খুঁজুন</span>
+        <span>🏷️</span> <span data-bn="বিষয় অনুযায়ী বই খুঁজুন" data-en="Find books by subject">বিষয় অনুযায়ী বই খুঁজুন</span>
       </h2>
       <button id="b-reset" class="text-xs font-bold text-rose-600 dark:text-rose-400 hover:underline self-start sm:self-auto hidden" data-bn="✕ ফিল্টার মুছুন (সব দেখুন)" data-en="✕ Clear filters (show all)">✕ ফিল্টার মুছুন (সব দেখুন)</button>
     </div>
-    <div class="flex flex-wrap gap-1.5 pb-3 border-b border-neutral-100 dark:border-neutral-700" id="alpha-bar">
-      <button class="alpha on rounded-lg px-3 py-1 font-bold text-xs sm:text-sm transition" data-a="" data-bn="সব" data-en="All">সব</button>
-      {% assign all_alphas = "অ,আ,ই,ঈ,উ,এ,ও,ক,খ,গ,ঘ,চ,ছ,জ,ত,দ,ধ,ন,প,ফ,ব,ভ,ম,য,র,ল,শ,স,হ,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z" | split: "," %}
-      {% assign existing_alphas = site.books | map: 'alphabet' | uniq %}
-      {% for a in all_alphas %}
-        {% if existing_alphas contains a %}
-          <button class="alpha bg-neutral-100 dark:bg-neutral-700 hover:bg-emerald-600 hover:text-white text-neutral-800 dark:text-neutral-100 rounded-lg px-2.5 py-1 font-bold text-xs sm:text-sm transition" data-a="{{ a }}">{{ a }}</button>
-        {% else %}
-          <button class="alpha alpha-off bg-neutral-50 dark:bg-neutral-800/60 text-neutral-400 dark:text-neutral-500 border border-neutral-200/60 dark:border-neutral-700 rounded-lg px-2.5 py-1 font-semibold text-xs sm:text-sm" data-a="{{ a }}" disabled>{{ a }}</button>
-        {% endif %}
-      {% endfor %}
-    </div>
-    <div class="flex flex-wrap items-center gap-2 pt-3" id="cat-bar">
+    <div class="flex flex-wrap items-center gap-2" id="cat-bar">
       <span class="text-xs font-bold text-neutral-500 dark:text-neutral-400 mr-1" data-bn="বিষয়:" data-en="Subject:">বিষয়:</span>
       <button class="catpill on rounded-full px-3.5 py-1 font-bold text-xs sm:text-sm transition" data-c=""><span data-bn="সব বিষয়" data-en="All Subjects">সব বিষয়</span> ({{ site.books.size }})</button>
       {% for c in cats %}
@@ -82,17 +70,16 @@ permalink: /browse/
   var BM = 'ourboighar-bookmarks';
   function bookmarks(){ try{ return JSON.parse(localStorage.getItem(BM)||'[]'); }catch(e){ return []; } }
   function lang(){ return window.__obLang || 'bn'; }
-  var H = { bn:{all:'সকল বইসমূহ', shelf:'★ আমার তাকে রাখা বই', cat:'বিষয়: ', alpha:'বর্ণমালা: ', search:'অনুসন্ধান: ', books:'টি বই'},
-            en:{all:'All Books', shelf:'★ Books on My Shelf', cat:'Subject: ', alpha:'Letter: ', search:'Search: ', books:'books'} };
+  var H = { bn:{all:'সকল বইসমূহ', shelf:'★ আমার তাকে রাখা বই', cat:'বিষয়: ', search:'অনুসন্ধান: ', books:'টি বই'},
+            en:{all:'All Books', shelf:'★ Books on My Shelf', cat:'Subject: ', search:'Search: ', books:'books'} };
   var cards = Array.prototype.slice.call(document.querySelectorAll('#browse-grid .book-card'));
-  var state = { q:'', alpha:'', cat:'' };
+  var state = { q:'', cat:'' };
   var search = document.getElementById('b-search');
   var headingEl = document.getElementById('b-heading');
   var countEl = document.getElementById('b-count');
   var resetBtn = document.getElementById('b-reset');
 
   function syncPills(){
-    document.querySelectorAll('#alpha-bar button').forEach(function(b){ b.classList.toggle('on', (b.getAttribute('data-a')||'') === state.alpha); });
     document.querySelectorAll('#cat-bar button').forEach(function(b){ b.classList.toggle('on', (b.getAttribute('data-c')||'') === state.cat); });
   }
   function apply(){
@@ -100,7 +87,6 @@ permalink: /browse/
     cards.forEach(function(card){
       var ok = true;
       if (state.q && card.getAttribute('data-hay').toLowerCase().indexOf(state.q) < 0) ok = false;
-      if (state.alpha && card.getAttribute('data-alpha') !== state.alpha) ok = false;
       if (state.cat === '__shelf'){ if (bookmarks().indexOf(card.getAttribute('data-id')) < 0) ok = false; }
       else if (state.cat && (card.getAttribute('data-cats')||'').split('|').indexOf(state.cat) < 0) ok = false;
       card.style.display = ok ? '' : 'none';
@@ -109,22 +95,18 @@ permalink: /browse/
     document.getElementById('b-nomatch').classList.toggle('hidden', visible > 0);
     var t = H[lang()];
     countEl.textContent = visible + ' ' + t.books;
-    resetBtn.classList.toggle('hidden', !(state.q || state.alpha || state.cat));
+    resetBtn.classList.toggle('hidden', !(state.q || state.cat));
     headingEl.removeAttribute('data-bn'); headingEl.removeAttribute('data-en');
     if (state.cat === '__shelf') headingEl.textContent = t.shelf;
     else if (state.cat) headingEl.textContent = t.cat + state.cat;
-    else if (state.alpha) headingEl.textContent = t.alpha + state.alpha;
     else if (state.q) headingEl.textContent = t.search + '"' + search.value + '"';
     else headingEl.textContent = t.all;
     syncPills();
   }
-  function resetAll(){ state.q=''; state.alpha=''; state.cat=''; search.value=''; apply(); }
+  function resetAll(){ state.q=''; state.cat=''; search.value=''; apply(); }
   window.__obBrowseReset = resetAll;
   resetBtn.onclick = resetAll;
   search.addEventListener('input', function(){ state.q = search.value.trim().toLowerCase(); apply(); });
-  document.querySelectorAll('#alpha-bar button').forEach(function(btn){
-    btn.onclick = function(){ if (btn.disabled || btn.classList.contains('alpha-off')) return; state.alpha = btn.getAttribute('data-a') || ''; apply(); };
-  });
   document.querySelectorAll('#cat-bar button').forEach(function(btn){
     btn.onclick = function(){ state.cat = btn.getAttribute('data-c') || ''; apply(); };
   });
