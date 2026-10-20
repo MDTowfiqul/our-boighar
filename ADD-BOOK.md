@@ -1,33 +1,50 @@
-# How to add a book to Our Boighar
+# How to add a book to Our Boighar (Jekyll)
 
-The website reads its catalogue from **books.json**. To add a book:
+The site is a Jekyll site. **Every book is one small Markdown file** in the
+`_books/` folder — Jekyll builds its page automatically at
+`/books/<filename>/`. You never edit HTML or JSON.
 
-1. **Upload the file** (optional, only for free books): put the `.epub` or `.pdf`
-   in the `books/` folder of this repo. Limit: 100 MB per file.
+## Steps
+
+1. **Upload the ebook file** (free books only) into the `books/` folder,
+   e.g. `books/my-book.epub` (max 100 MB per file).
    *Paid books stay on Gumroad — do not put the full paid file here.*
-2. **Add the cover** to `img/` (e.g. `img/cover-mybook.jpg`).
-3. **Add an entry** to `books.json` — copy an existing entry and change the fields:
+2. **Add the cover** to `img/`, e.g. `img/cover-my-book.jpg`.
+3. **Create `_books/my-book.md`** — copy the template below and fill it in.
 
-| Field | Meaning |
+```markdown
+---
+book_id: "my-book"
+title: "বইয়ের নাম"
+title_en: "English title"
+author: "Writer name"
+creator: "Who made this ebook edition"
+category: "Hadith"
+categories: ["Hadith", "Spirituality"]
+language: "bn"
+language_label: "Bengali"
+alphabet: "ব"
+cover: "/img/cover-my-book.jpg"
+file: "/books/my-book.epub"
+format: "EPUB"
+file_size: "1.2 MB"
+year: "2023"
+---
+
+Two or three sentences describing the book go here — this becomes the
+"About this book" text on its page.
+```
+
+## Field notes
+
+| Field | Notes |
 |---|---|
-| `id` | short unique slug, e.g. `my-book-bn` |
-| `title` | book title (Bengali titles fine) |
-| `titleEn` | English version of the title |
-| `writer` | the original author of the book, e.g. `Dr. Zakir Naik (lectures)` |
-| `creator` | who made this ebook edition (EPUB/PDF), e.g. `MD. Towfiqul Islam (Bengali EPUB edition)` |
-| `description` | 2–3 sentence short description |
-| `language` | `bn` or `en` |
-| `languageLabel` | shown on the card, e.g. `Bengali` |
-| `categories` | tags, e.g. `["Dawah", "Islamic Q&A"]` |
-| `cover` | path to the cover, e.g. `img/cover-mybook.jpg` |
-| `format` | `EPUB` or `PDF` |
-| `file` | path to the book file for free downloads, e.g. `books/my-book.epub`, or `null` for paid books |
-| `gumroad` | Gumroad product URL, or `null` |
-| `price` | e.g. `$100`, or `null` |
+| `book_id` | unique slug; also used for bookmarks & comments |
+| `category` | the main category (used for "related books") |
+| `categories` | all tags |
+| `alphabet` | first letter of the title — Bengali letter for Bengali titles (ই, ত, র…), capital letter for English ones (A, H…) |
+| `file` | omit for paid books; then set `gumroad:` + `price:` instead |
+| `file_size`, `year` | optional — shown on the book page when present |
 
-That's it — the site rebuilds itself from the list automatically: cards,
-language filter, category filter, search, bookmark buttons, the direct
-download button, and the online reader (works for EPUB and PDF files).
-
-Tip: the easiest way is to give the book file and cover to Muse and ask for
-the description + the `books.json` entry.
+Easiest path: send the ebook file and cover to Muse and ask for the
+`_books/*.md` entry — description, tags and alphabet included.

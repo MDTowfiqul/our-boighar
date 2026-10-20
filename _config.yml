@@ -1,0 +1,17 @@
+title: "আমাদের বইঘর | Our Boighar"
+description: "বাংলা ও ইংরেজি ইসলামিক বইয়ের উন্মুক্ত লাইব্রেরি — অনলাইনে পড়ুন, ফ্রি ডাউনলোড করুন"
+baseurl: "/our-boighar"
+url: "https://mdtowfiqul.github.io"
+markdown: kramdown
+
+collections:
+  books:
+    output: true
+    permalink: /books/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: "books"
+    values:
+      layout: "book"

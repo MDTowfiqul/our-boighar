@@ -1,0 +1,14 @@
+---
+---
+[{% for book in site.books %}{
+  "title": {{ book.title | jsonify }},
+  "title_en": {{ book.title_en | jsonify }},
+  "author": {{ book.author | jsonify }},
+  "creator": {{ book.creator | jsonify }},
+  "category": {{ book.category | jsonify }},
+  "categories": {{ book.categories | jsonify }},
+  "alphabet": {{ book.alphabet | jsonify }},
+  "language": {{ book.language | jsonify }},
+  "cover": {{ book.cover | relative_url | jsonify }},
+  "url": {{ book.url | relative_url | jsonify }}
+}{% unless forloop.last %},{% endunless %}{% endfor %}]
