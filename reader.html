@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Boighar — Reader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@400;600&family=Noto+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/epubjs@0.3.93/dist/epub.min.js"></script>
+<style>
+  :root{--green:#0d5c3f;--green-dark:#083f2b;--cream:#faf6ec;--ink:#1d241f;--muted:#5c665e}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"Noto Sans",system-ui,sans-serif;background:var(--cream);color:var(--ink)}
+  header.bar{display:flex;align-items:center;gap:12px;background:linear-gradient(160deg,#0d5c3f,#083f2b);color:#fff;padding:12px 16px;position:sticky;top:0;z-index:5}
+  header.bar a{color:#fff;text-decoration:none;font-weight:700}
+  header.bar .title{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:15px;font-weight:600}
+  .nav{display:flex;justify-content:center;gap:10px;padding:10px;background:#fff;border-bottom:1px solid #e7dfc9;position:sticky;top:52px;z-index:4}
+  .nav button{border:1px solid #d9cfb4;background:#fff;border-radius:999px;padding:7px 18px;font-weight:700;cursor:pointer}
+  .nav button:hover{background:#0d5c3f;color:#fff;border-color:#0d5c3f}
+  #viewer{max-width:720px;margin:0 auto;padding:26px 22px 60px}
+  #epub-area{font-family:"Noto Serif Bengali",serif;line-height:2;font-size:19px;min-height:60vh}
+  #epub-area img{max-width:100%}
+  #pdf-frame{width:100%;height:calc(100vh - 130px);border:0;background:#fff}
+  .msg{text-align:center;color:var(--muted);padding:80px 20px}
+</style>
+</head>
+<body>
+<header class="bar">
+  <a href="index.html">← Our Boighar</a>
+  <span class="title" id="book-title">Reader</span>
+</header>
+<div class="nav" id="epub-nav" style="display:none">
+  <button id="prev">← Previous</button>
+  <button id="next">Next →</button>
+</div>
+<div id="viewer"></div>
+
+<script>
+(function(){
+  var q = new URLSearchParams(location.search);
+  var file = q.get('file'), title = q.get('title') || 'Reader';
+  document.getElementById('book-title').textContent = title;
+  var viewer = document.getElementById('viewer');
+
+  if(!file){ viewer.innerHTML = '<div class="msg">No book file specified.</div>'; return; }
+
+  if(/\.pdf(\?|$)/i.test(file)){
+    viewer.innerHTML = '<iframe id="pdf-frame" src="'+encodeURI(file)+'"></iframe>';
+  } else if(/\.(epub|opf)(\?|$)/i.test(file)){
+    document.getElementById('epub-nav').style.display = 'flex';
+    viewer.innerHTML = '<div id="epub-area"></div>';
+    try{
+      var book = ePub(file);
+      var rendition = book.renderTo('epub-area',{width:'100%',height:600,flow:'paginated'});
+      rendition.themes.fontSize('19px');
+      rendition.display().catch(function(){});
+      document.getElementById('prev').onclick = function(){ rendition.prev(); };
+      document.getElementById('next').onclick = function(){ rendition.next(); };
+    }catch(e){
+      viewer.innerHTML = '<div class="msg">Could not open this EPUB.</div>';
+    }
+  } else {
+    viewer.innerHTML = '<div class="msg">This file type cannot be previewed online. Please download it instead.</div>';
+  }
+})();
+</script>
+</body>
+</html>

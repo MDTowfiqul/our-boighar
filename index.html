@@ -28,28 +28,41 @@
   nav.top{display:flex;justify-content:center;gap:26px;padding:14px;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
   nav.top a{text-decoration:none;font-weight:600;color:var(--ink)}
   nav.top a:hover{color:var(--green)}
-  main{max-width:880px;margin:0 auto;padding:40px 20px 60px}
+  main{max-width:980px;margin:0 auto;padding:40px 20px 60px}
   h2.section{font-size:26px;font-weight:800;margin:34px 0 18px;color:var(--green-dark)}
-  .book{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px;display:flex;gap:26px;box-shadow:0 4px 18px rgba(13,92,63,.07)}
-  .book img{width:210px;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,.18);align-self:flex-start}
-  .book .meta h3{font-size:24px;line-height:1.45;font-weight:700}
-  .book .byline{color:var(--muted);font-size:14px;margin:6px 0 12px}
-  .book .desc p{margin-bottom:10px;font-size:15.5px}
-  .book ul{margin:0 0 12px 20px;font-size:15.5px}
-  .book .note{font-size:13.5px;color:var(--muted);font-style:italic}
-  .btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
-  .btn{display:inline-block;padding:11px 22px;border-radius:999px;text-decoration:none;font-weight:700;font-size:15px}
+  /* filter bar */
+  .filters{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:22px}
+  .filters input[type=search],.filters select{padding:9px 12px;border:1.5px solid var(--line);border-radius:9px;font:inherit;font-size:14.5px;background:#fff}
+  .filters input[type=search]{flex:1;min-width:180px}
+  .filters label.only-bm{display:flex;gap:7px;align-items:center;font-weight:600;font-size:14px;cursor:pointer}
+  /* book cards */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:20px}
+  .book{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;display:flex;gap:20px;box-shadow:0 4px 18px rgba(13,92,63,.07)}
+  .book img{width:138px;border-radius:7px;box-shadow:0 6px 18px rgba(0,0,0,.18);align-self:flex-start}
+  .book .meta{min-width:0}
+  .book h3{font-size:19.5px;line-height:1.45;font-weight:700}
+  .book .credit{color:var(--muted);font-size:13px;margin:5px 0 9px}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+  .tag{background:#eef6f1;color:var(--green-dark);border:1px solid #cfe3d6;border-radius:999px;font-size:11.5px;font-weight:700;padding:2px 10px}
+  .tag.lang{background:#fdf3dd;color:#8a6414;border-color:#ecd9a8}
+  .book .desc{font-size:14.5px;margin-bottom:10px}
+  .book .price{font-weight:800;color:var(--green-dark);font-size:15px}
+  .btns{display:flex;flex-wrap:wrap;gap:9px;margin-top:12px}
+  .btn{display:inline-block;padding:9px 18px;border-radius:999px;text-decoration:none;font-weight:700;font-size:14px;border:0;cursor:pointer}
   .btn.primary{background:var(--green);color:#fff}
   .btn.primary:hover{background:var(--green-dark)}
   .btn.ghost{border:2px solid var(--gold);color:#8a6414;background:transparent}
+  .btn.bm{background:#f3ead2;color:#6d5310;border:2px solid transparent}
+  .btn.bm.on{background:var(--gold);color:#fff}
+  .empty{color:var(--muted);padding:30px;text-align:center}
   .about,.comments{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px}
   .about p{margin-bottom:10px;font-size:15.5px}
   .comments p{color:var(--muted);font-size:15px}
   footer{text-align:center;color:var(--muted);font-size:14px;padding:34px 20px 44px;border-top:1px solid var(--line)}
   footer a{text-decoration:none;font-weight:600}
-  @media (max-width:640px){
-    .book{flex-direction:column;align-items:center;text-align:left}
-    .book img{width:180px}
+  @media (max-width:760px){.grid{grid-template-columns:1fr}}
+  @media (max-width:520px){
+    .book{flex-direction:column;align-items:center}
     header.site h1{font-size:34px}
   }
 </style>
@@ -71,43 +84,27 @@
 <main>
   <h2 class="section" id="books">Books</h2>
 
-  <article class="book">
-    <img src="img/cover.jpg" alt="Book cover: ইসলাম সম্পর্কে অমুসলিমদের আপত্তিসমূহের জবাব">
-    <div class="meta">
-      <h3 class="bn">ইসলাম সম্পর্কে অমুসলিমদের আপত্তিসমূহের জবাব</h3>
-      <p class="byline">Answers to non-Muslims' common questions &amp; objections about Islam · Bengali EPUB edition by MD. Towfiqul Islam, from the lectures of Dr. Zakir Naik</p>
-      <div class="desc bn">
-        <p>"অমুসলিমদের মনে ইসলামের বিভিন্ন সাধারণ প্রশ্ন ও আপত্তির সহজ, যৌক্তিক ও তথ্যনির্ভর জবাব সংবলিত একটি বিশেষ ই-বুক।"</p>
-        <p>মুসলিম হিসেবে আমরা প্রায়ই অমুসলিম বন্ধু, সহকর্মী ও পরিচিতদের ইসলাম নিয়ে নানা প্রশ্নের মুখোমুখি হই। সঠিক তথ্য ও যুক্তির অভাবে অনেক সময় গুছিয়ে উত্তর দেওয়া যায় না — এই বইটি সেই ঘাটতি পূরণে সাহায্য করবে।</p>
-        <ul>
-          <li><strong>সাধারণ কিন্তু গুরুত্বপূর্ণ প্রশ্ন:</strong> নারীর অধিকার, আল্লাহর একত্ববাদ, সমসাময়িক বিজ্ঞান নিয়ে বিতর্ক — সহজ ও যৌক্তিক উত্তর।</li>
-          <li><strong>সহজবোধ্য ভাষা:</strong> কঠিন বিষয় সাবলীল ভাষায় উপস্থাপন।</li>
-          <li><strong>তথ্যনির্ভর:</strong> কুরআন ও হাদিসের প্রামাণ্য তথ্যের ভিত্তিতে সাজানো।</li>
-        </ul>
-        <p class="note">বইটি AI-এর মাধ্যমে প্রুফ রিড করা হয়েছে; কোনো ভুল থাকলে ক্ষমাসুন্দর দৃষ্টিতে দেখার অনুরোধ।</p>
-      </div>
-      <div class="btns">
-        <a class="btn primary" href="https://towfiqulislam.gumroad.com/l/vvcbp">Get it on Gumroad</a>
-        <a class="btn ghost" href="#comments">Reader comments</a>
-      </div>
-    </div>
-  </article>
+  <div class="filters">
+    <input type="search" id="f-search" placeholder="Search books…">
+    <select id="f-lang">
+      <option value="">All languages</option>
+      <option value="bn">Bengali</option>
+      <option value="en">English</option>
+    </select>
+    <select id="f-cat"><option value="">All categories</option></select>
+    <label class="only-bm"><input type="checkbox" id="f-bm"> ★ Bookmarked only</label>
+  </div>
+
+  <div class="grid" id="book-grid"><p class="empty">Loading books…</p></div>
 
   <h2 class="section" id="about">About the translator</h2>
   <section class="about">
     <p><strong>MD. Towfiqul Islam</strong> is a medical student and developer from Bangladesh. Alongside his studies he builds open-source software (including the <a href="https://mdtowfiqul.github.io/Our-Days/">Our Days</a> app) and prepares Bengali EPUB editions of Islamic lectures so that valuable knowledge reaches Bengali readers in a clean, readable form.</p>
-    <p>This EPUB was prepared from the "answers to non-Muslims' common questions" part of the Dr. Zakir Naik lecture collection. The full collection is being converted to EPUB as well.</p>
+    <p>The first title here was prepared from the "answers to non-Muslims' common questions" part of the Dr. Zakir Naik lecture collection. The full collection is being converted to EPUB as well.</p>
   </section>
 
   <h2 class="section" id="comments">Comments</h2>
   <section class="comments">
-    <!--
-      Comments via Giscus (GitHub Discussions). To enable:
-      1. In the our-boighar repo: Settings → General → Features → check "Discussions".
-      2. Install the Giscus app: https://github.com/apps/giscus (grant it access to this repo).
-      3. Go to https://giscus.app, pick repo MDTowfiqul/our-boighar, category "Book comments",
-         copy the generated <script> and paste it here, replacing this note.
-    -->
     <p style="margin-bottom:16px">💬 Share your thoughts on the books below — you just need a free GitHub account to comment.</p>
     <script src="https://giscus.app/client.js"
             data-repo="MDTowfiqul/our-boighar"
@@ -130,6 +127,93 @@
 <footer>
   <p>© MD. Towfiqul Islam · <a href="https://towfiqulislam.gumroad.com/l/vvcbp">Gumroad store</a> · <a href="https://mdtowfiqul.github.io/Our-Days/">Our Days app</a> · <a href="https://github.com/MDTowfiqul">GitHub</a></p>
 </footer>
+
+<script>
+(function(){
+  var grid = document.getElementById('book-grid');
+  var fSearch = document.getElementById('f-search');
+  var fLang = document.getElementById('f-lang');
+  var fCat = document.getElementById('f-cat');
+  var fBm = document.getElementById('f-bm');
+  var books = [];
+  var BM_KEY = 'ourboighar-bookmarks';
+
+  function getBookmarks(){
+    try{ return JSON.parse(localStorage.getItem(BM_KEY) || '[]'); }catch(e){ return []; }
+  }
+  function setBookmarks(list){ try{ localStorage.setItem(BM_KEY, JSON.stringify(list)); }catch(e){} }
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+  function buttons(b){
+    var out = [];
+    var bm = getBookmarks();
+    if(b.file){
+      out.push('<a class="btn primary" href="'+esc(b.file)+'" download>⬇ Download '+esc(b.format||'file')+'</a>');
+      out.push('<a class="btn ghost" href="reader.html?file='+encodeURIComponent(b.file)+'&title='+encodeURIComponent(b.title)+'">📖 Read online</a>');
+    }
+    if(b.gumroad){
+      out.push('<a class="btn primary" href="'+esc(b.gumroad)+'" target="_blank" rel="noopener">Get it on Gumroad'+(b.price ? ' · '+esc(b.price) : '')+'</a>');
+    }
+    if(!b.file && b.gumroad){
+      out.push('<span class="btn ghost" style="border-color:var(--line);color:var(--muted)">Full copy via Gumroad</span>');
+    }
+    var on = bm.indexOf(b.id) >= 0;
+    out.push('<button class="btn bm'+(on?' on':'')+'" data-bm="'+esc(b.id)+'">'+(on?'★ Bookmarked':'☆ Bookmark')+'</button>');
+    return out.join('');
+  }
+
+  function render(){
+    var q = (fSearch.value || '').toLowerCase();
+    var lang = fLang.value, cat = fCat.value, onlyBm = fBm.checked;
+    var bm = getBookmarks();
+    var shown = books.filter(function(b){
+      if(lang && b.language !== lang) return false;
+      if(cat && (b.categories || []).indexOf(cat) < 0) return false;
+      if(onlyBm && bm.indexOf(b.id) < 0) return false;
+      if(q){
+        var hay = (b.title+' '+(b.titleEn||'')+' '+b.credit+' '+(b.categories||[]).join(' ')).toLowerCase();
+        if(hay.indexOf(q) < 0) return false;
+      }
+      return true;
+    });
+    if(!shown.length){ grid.innerHTML = '<p class="empty">No books match.</p>'; return; }
+    grid.innerHTML = shown.map(function(b){
+      var tags = '<span class="tag lang">'+esc(b.languageLabel || b.language)+'</span>' +
+        (b.categories||[]).map(function(c){ return '<span class="tag">'+esc(c)+'</span>'; }).join('');
+      return '<article class="book">'+
+        '<img src="'+esc(b.cover)+'" alt="Cover of '+esc(b.titleEn || b.title)+'">'+
+        '<div class="meta"><h3 class="bn">'+esc(b.title)+'</h3>'+
+        '<p class="credit">'+esc(b.credit)+'</p>'+
+        '<div class="tags">'+tags+'</div>'+
+        '<p class="desc">'+esc(b.description)+'</p>'+
+        '<div class="btns">'+buttons(b)+'</div>'+
+        '</div></article>';
+    }).join('');
+    Array.prototype.forEach.call(grid.querySelectorAll('[data-bm]'), function(btn){
+      btn.onclick = function(){
+        var id = btn.getAttribute('data-bm');
+        var list = getBookmarks();
+        var i = list.indexOf(id);
+        if(i >= 0) list.splice(i,1); else list.push(id);
+        setBookmarks(list);
+        render();
+      };
+    });
+  }
+
+  [fSearch, fLang, fCat, fBm].forEach(function(el){ el.addEventListener('input', render); el.addEventListener('change', render); });
+
+  fetch('books.json').then(function(r){ return r.json(); }).then(function(data){
+    books = data;
+    var cats = {};
+    books.forEach(function(b){ (b.categories||[]).forEach(function(c){ cats[c] = 1; }); });
+    Object.keys(cats).sort().forEach(function(c){
+      var o = document.createElement('option'); o.value = c; o.textContent = c; fCat.appendChild(o);
+    });
+    render();
+  }).catch(function(){ grid.innerHTML = '<p class="empty">Could not load the book list.</p>'; });
+})();
+</script>
 
 </body>
 </html>
