@@ -37,13 +37,6 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
       <button class="hero-tab text-white/85 rounded-full px-4 sm:px-5 py-1.5 transition" data-tab="top" data-bn="সেরা বই" data-en="Top Books">সেরা বই</button>
     </div>
 
-    <div class="mt-4 flex flex-wrap items-center gap-2 text-sm">
-      <span class="text-white/70 font-semibold" data-bn="জনপ্রিয়:" data-en="Popular:">জনপ্রিয়:</span>
-      {% for c in cats %}
-      <a href="#popular" class="pop-cat border border-white/35 hover:bg-white/15 text-white px-3.5 py-1 rounded-full font-semibold transition" data-cat="{{ c }}">{{ c }}</a>
-      {% endfor %}
-    </div>
-
     {% assign f = site.books | where: "book_id", "islam-objections-bn" | first %}
     {% if f %}
     <a href="{{ f.url | relative_url }}" class="mt-7 bg-white dark:bg-neutral-800 text-neutral-800 dark:text-neutral-100 rounded-2xl p-4 flex items-center gap-4 max-w-xl shadow-lg">
@@ -268,13 +261,6 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   var viewAll = document.getElementById('view-all');
   if (viewAll) viewAll.onclick = function(){ resetAll(); scrollPopular(); };
 
-  Array.prototype.forEach.call(document.querySelectorAll('.pop-cat'), function(a){
-    a.addEventListener('click', function(e){
-      e.preventDefault();
-      state.cat = a.getAttribute('data-cat');
-      apply(); scrollPopular();
-    });
-  });
   Array.prototype.forEach.call(document.querySelectorAll('.writer-chip'), function(ch){
     ch.addEventListener('click', function(){
       state.alpha = ''; state.cat = '';
