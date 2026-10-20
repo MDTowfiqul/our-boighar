@@ -123,6 +123,26 @@ layout: default
     </div>
   </section>
 
+  {% if page.series %}
+  {% assign series_books = site.books | where: "series", page.series | sort: "series_order" %}
+  {% if series_books.size > 1 %}
+  <!-- SERIES -->
+  <section class="mt-8">
+    <h2 class="serif text-xl font-extrabold mb-1" data-bn="📚 এই সিরিজের বই" data-en="📚 Books in This Series">📚 এই সিরিজের বই</h2>
+    <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-3"><strong data-bn="{{ page.series }}" data-en="{{ page.series_en | default: page.series }}">{{ page.series }}</strong> · <span data-bn="অংশ {{ page.series_order }} / {{ series_books.size }}" data-en="Part {{ page.series_order }} of {{ series_books.size }}">অংশ {{ page.series_order }} / {{ series_books.size }}</span></p>
+    <div class="flex gap-4 overflow-x-auto no-scrollbar snap-x pb-2 -mx-3 px-3 sm:mx-0 sm:px-0">
+      {% for r in series_books %}
+      <a href="{{ r.url | relative_url }}" class="snap-start shrink-0 w-[132px] sm:w-[150px] group">
+        <div class="rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]{% if r.url == page.url %} ring-4 ring-emerald-500{% endif %}"><img src="{{ r.cover | relative_url }}" alt="" class="w-full h-full object-cover group-hover:scale-105 transition duration-300"></div>
+        <span class="block text-[13px] font-bold mt-2 leading-snug line-clamp-2">{{ r.title }}</span>
+        <span class="block text-[11px] font-bold accent-text mt-0.5" data-bn="অংশ {{ r.series_order }}" data-en="Part {{ r.series_order }}">অংশ {{ r.series_order }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+  {% endif %}
+
   <!-- COMMENTS -->
   <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 mt-4">
     <h2 class="text-lg font-bold mb-1" data-bn="💬 পাঠকের মন্তব্য ও রিঅ্যাকশন" data-en="💬 Reader Comments & Reactions">💬 পাঠকের মন্তব্য ও রিঅ্যাকশন</h2>
