@@ -20,6 +20,16 @@ permalink: /shelf/
     <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1" data-bn="যেকোনো বইয়ের পেজে গিয়ে “তাকে রাখুন” চাপলেই বইটি এখানে দেখা যাবে।" data-en="Open any book and tap “Add to Shelf” — it will appear here.">যেকোনো বইয়ের পেজে গিয়ে “তাকে রাখুন” চাপলেই বইটি এখানে দেখা যাবে।</p>
     <a href="{{ '/browse/' | relative_url }}" class="accent-bg inline-block mt-5 text-white font-bold text-sm px-6 py-2.5 rounded-lg" data-bn="বই ব্রাউজ করুন" data-en="Browse Books">বই ব্রাউজ করুন</a>
   </div>
+
+  <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 mt-10 shadow-sm">
+    <h2 class="serif text-lg sm:text-xl font-extrabold" data-bn="💾 আমার তথ্যের ব্যাকআপ" data-en="💾 Back Up My Data">💾 আমার তথ্যের ব্যাকআপ</h2>
+    <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1.5 leading-relaxed" data-bn="আপনার তাকের বই, স্টার রেটিং, পড়ার অগ্রগতি, বুকমার্ক ও সেটিংস এই ব্রাউজারেই সংরক্ষিত থাকে। ফোন বদলালে বা ব্রাউজারের ডেটা মুছে গেলে ব্যাকআপ ফাইল দিয়ে সব ফিরিয়ে আনতে পারবেন।" data-en="Your shelf, star ratings, reading progress, bookmarks and settings are stored in this browser. Download a backup file and restore it anytime — on a new phone or after clearing browser data.">আপনার তাকের বই, স্টার রেটিং, পড়ার অগ্রগতি, বুকমার্ক ও সেটিংস এই ব্রাউজারেই সংরক্ষিত থাকে। ফোন বদলালে বা ব্রাউজারের ডেটা মুছে গেলে ব্যাকআপ ফাইল দিয়ে সব ফিরিয়ে আনতে পারবেন।</p>
+    <div class="flex flex-wrap gap-2 mt-4">
+      <button id="bk-dl" class="accent-bg text-white font-bold rounded-lg px-5 py-2.5 text-sm" data-bn="⬇ ব্যাকআপ ডাউনলোড" data-en="⬇ Download Backup">⬇ ব্যাকআপ ডাউনলোড</button>
+      <label for="bk-file" class="font-bold rounded-lg px-5 py-2.5 text-sm border border-neutral-300 dark:border-neutral-600 cursor-pointer" data-bn="⬆ ব্যাকআপ রিস্টোর" data-en="⬆ Restore Backup">⬆ ব্যাকআপ রিস্টোর</label>
+      <input type="file" id="bk-file" accept=".json,application/json" class="hidden">
+    </div>
+  </section>
 </main>
 
 <script>
@@ -44,8 +54,8 @@ var OB_BOOKS = [{% for b in site.books %}{
   function set(l){ try{ localStorage.setItem(BM, JSON.stringify(l)); }catch(e){} }
   function lang(){ return window.__obLang || 'bn'; }
   var T = {
-    bn: { open:'খুলুন', read:'📖 পড়ুন', remove:'সরান', gumroad:'🛒 Gumroad', resume:'📖 পড়া চালিয়ে যান', done:'% পড়া হয়েছে' },
-    en: { open:'Open', read:'📖 Read', remove:'Remove', gumroad:'🛒 Gumroad', resume:'📖 Continue Reading', done:'% read' }
+    bn: { open:'খুলুন', read:'📖 পড়ুন', remove:'সরান', gumroad:'🛒 Gumroad', resume:'📖 পড়া চালিয়ে যান', done:'% পড়া হয়েছে', bkConfirm:'ব্যাকআপ রিস্টোর করলে এই ব্রাউজারের বর্তমান তাক, রেটিং ও পড়ার অগ্রগতি ব্যাকআপের তথ্য দিয়ে বদলে যাবে। এগিয়ে যাবেন?', bkOk:'✅ ব্যাকআপ রিস্টোর হয়েছে। পেজটি আবার লোড হচ্ছে…', bkBad:'❌ এটি সঠিক Our Boighar ব্যাকআপ ফাইল নয়।' },
+    en: { open:'Open', read:'📖 Read', remove:'Remove', gumroad:'🛒 Gumroad', resume:'📖 Continue Reading', done:'% read', bkConfirm:'Restoring will replace this browser’s current shelf, ratings and reading progress with the backup. Continue?', bkOk:'✅ Backup restored. Reloading…', bkBad:'❌ This is not a valid Our Boighar backup file.' }
   };
   var byId = {};
   var byFile = {};
@@ -127,6 +137,45 @@ var OB_BOOKS = [{% for b in site.books %}{
       };
     });
   }
+  /* ---------- per-user backup / restore ---------- */
+  var BK_KEYS = ['ourboighar-bookmarks', 'ourboighar-ratings', 'ob-reader-progress', 'ob-reader-bookmarks', 'ob-reader-settings', 'ob-lang', 'ob-theme', 'ob-color'];
+  var dlBtn = document.getElementById('bk-dl');
+  if(dlBtn) dlBtn.onclick = function(){
+    var data = {};
+    BK_KEYS.forEach(function(k){ var v = null; try{ v = localStorage.getItem(k); }catch(e){} if(v !== null) data[k] = v; });
+    var payload = { app:'our-boighar', version:1, exported:new Date().toISOString(), data:data };
+    var blob = new Blob([JSON.stringify(payload, null, 2)], { type:'application/json' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'our-boighar-backup.json';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 4000);
+  };
+  var fileInput = document.getElementById('bk-file');
+  if(fileInput) fileInput.addEventListener('change', function(){
+    var f = fileInput.files && fileInput.files[0];
+    if(!f) return;
+    var reader = new FileReader();
+    reader.onload = function(){
+      var t = T[lang()];
+      try{
+        var payload = JSON.parse(String(reader.result || ''));
+        if(!payload || payload.app !== 'our-boighar' || !payload.data || typeof payload.data !== 'object') throw new Error('bad');
+        if(!window.confirm(t.bkConfirm)) return;
+        BK_KEYS.forEach(function(k){
+          if(Object.prototype.hasOwnProperty.call(payload.data, k)){
+            var v = payload.data[k];
+            try{ localStorage.setItem(k, typeof v === 'string' ? v : JSON.stringify(v)); }catch(e){}
+          }
+        });
+        alert(t.bkOk);
+        location.reload();
+      }catch(e){ alert(t.bkBad); }
+      fileInput.value = '';
+    };
+    reader.readAsText(f);
+  });
+
   window.addEventListener('ob-lang', render);
   render();
 })();
