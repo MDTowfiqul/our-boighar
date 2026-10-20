@@ -48,3 +48,26 @@ Two or three sentences describing the book go here — this becomes the
 
 Easiest path: send the ebook file and cover to Muse and ask for the
 `_books/*.md` entry — description, tags and alphabet included.
+
+## Overflow storage (when the main repo fills up)
+
+GitHub Pages caps a site at ~1 GB. Book files can overflow into the
+companion storage repos — each another free 1 GB with Pages enabled. Two
+exist so far, used in this order (more numbered ones can be created the
+same way whenever needed):
+
+1. **MDTowfiqul/our-boighar-files** → https://mdtowfiqul.github.io/our-boighar-files/
+2. **MDTowfiqul/our-boighar-files-1** → https://mdtowfiqul.github.io/our-boighar-files-1/
+
+To host a book's file in one of them:
+
+1. Upload the ebook to `books/` **in that storage repo**.
+2. In this repo's `_books/<slug>.md`, set the full URL as `file:`:
+
+```yaml
+file: "https://mdtowfiqul.github.io/our-boighar-files-1/books/<filename>.epub"
+```
+
+The templates accept a full URL in `file:` (anything containing `://` is used
+as-is; plain `/books/...` paths stay local). Covers and metadata always stay
+in the main repo.

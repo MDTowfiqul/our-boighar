@@ -27,7 +27,7 @@ var OB_BOOKS = [{% for b in site.books %}{
   "url": "{{ b.url | relative_url }}",
   "langlabel": {{ b.language_label | jsonify }},
   "category": {{ b.category | jsonify }},
-  "file": {% if b.file %}"{{ b.file | relative_url }}"{% else %}null{% endif %},
+  "file": {% if b.file %}{% if b.file contains '://' %}{{ b.file | jsonify }}{% else %}"{{ b.file | relative_url }}"{% endif %}{% else %}null{% endif %},
   "gumroad": {% if b.gumroad %}{{ b.gumroad | jsonify }}{% else %}null{% endif %}
 }{% unless forloop.last %},{% endunless %}{% endfor %}];
 </script>
