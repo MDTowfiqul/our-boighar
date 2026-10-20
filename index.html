@@ -67,7 +67,7 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
     <div class="flex items-baseline justify-between mb-3 px-0.5">
       <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="🆕 সম্প্রতি আপলোড" data-en="🆕 Recently Uploaded">🆕 সম্প্রতি আপলোড</h2>
     </div>
-    <div class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-3 px-3 sm:mx-0 sm:px-0">
+    <div class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-3 px-5 scroll-pl-5 scroll-pr-5 sm:mx-0 sm:px-0 sm:scroll-pl-0 sm:scroll-pr-0">
       {% for rid in site.data.recent limit: 18 %}
       {% assign b = site.books | where: "book_id", rid | first %}
       {% if b %}
@@ -92,7 +92,7 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
         <button id="view-all" class="accent-text text-sm font-extrabold hover:underline" data-bn="সব দেখুন" data-en="View All">সব দেখুন</button>
       </span>
     </div>
-    <div id="row-popular" class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-3 px-3 sm:mx-0 sm:px-0">
+    <div id="row-popular" class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-3 px-5 scroll-pl-5 scroll-pr-5 sm:mx-0 sm:px-0 sm:scroll-pl-0 sm:scroll-pr-0">
       {% for b in site.books %}
       <div class="book-card snap-start shrink-0 w-[150px] sm:w-[172px]" data-id="{{ b.book_id }}" data-alpha="{{ b.alphabet }}" data-cats="{{ b.categories | join: '|' }}" data-hay="{{ b.title }} {{ b.title_en }} {{ b.author }} {{ b.creator }} {{ b.category }}">
         <a href="{{ b.url | relative_url }}" class="block group">
@@ -121,7 +121,7 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
     <div class="flex items-baseline justify-between mb-3 px-0.5">
       <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="📚 বইয়ের সিরিজ" data-en="📚 Book Series">📚 বইয়ের সিরিজ</h2>
     </div>
-    <div class="flex gap-5 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-3 pt-1 -mx-3 px-3 sm:mx-0 sm:px-0">
+    <div class="flex gap-5 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-3 pt-1 -mx-3 px-5 scroll-pl-5 scroll-pr-5 sm:mx-0 sm:px-0 sm:scroll-pl-0 sm:scroll-pr-0">
       {% for g in series_groups %}{% if g.name and g.name != "" and g.size > 1 %}
       {% assign sbooks = g.items | sort: "series_order" %}
       {% assign first = sbooks | first %}
@@ -147,7 +147,7 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
       <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="জনপ্রিয় বাংলা বই" data-en="Popular Bengali Books">জনপ্রিয় বাংলা বই</h2>
       <a href="#popular" class="accent-text text-sm font-extrabold hover:underline" data-bn="সব দেখুন" data-en="View All">সব দেখুন</a>
     </div>
-    <div class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-3 px-3 sm:mx-0 sm:px-0">
+    <div class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-3 px-5 scroll-pl-5 scroll-pr-5 sm:mx-0 sm:px-0 sm:scroll-pl-0 sm:scroll-pr-0">
       {% for b in bnbooks %}
       <a href="{{ b.url | relative_url }}" class="snap-start shrink-0 w-[150px] sm:w-[172px] group">
         <div class="rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]">
@@ -169,7 +169,7 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
       <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="জনপ্রিয় ইংরেজি বই" data-en="Popular English Books">জনপ্রিয় ইংরেজি বই</h2>
       <a href="#popular" class="accent-text text-sm font-extrabold hover:underline" data-bn="সব দেখুন" data-en="View All">সব দেখুন</a>
     </div>
-    <div class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-3 px-3 sm:mx-0 sm:px-0">
+    <div class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-3 px-5 scroll-pl-5 scroll-pr-5 sm:mx-0 sm:px-0 sm:scroll-pl-0 sm:scroll-pr-0">
       {% for b in enbooks %}
       <a href="{{ b.url | relative_url }}" class="snap-start shrink-0 w-[150px] sm:w-[172px] group">
         <div class="rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]">
