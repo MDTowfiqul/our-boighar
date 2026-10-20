@@ -1,16 +1,27 @@
-# How to add a book to Our Boighar (Jekyll)
+# Managing books on Our Boighar — full guide
 
 The site is a Jekyll site. **Every book is one small Markdown file** in the
 `_books/` folder — Jekyll builds its page automatically at
-`/books/<filename>/`. You never edit HTML or JSON.
+`/books/<filename>/`. If that file exists, the book is on the site. If it is
+deleted, the book is gone. You never edit HTML or JSON.
 
-## Steps
+Everything below can be done from your phone with the GitHub app or
+github.com in the browser, in the repo **MDTowfiqul/our-boighar**.
 
-1. **Upload the ebook file** (free books only) into the `books/` folder,
-   e.g. `books/my-book.epub` (max 100 MB per file).
-   *Paid books stay on Gumroad — do not put the full paid file here.*
-2. **Add the cover** to `img/`, e.g. `img/cover-my-book.jpg`.
-3. **Create `_books/my-book.md`** — copy the template below and fill it in.
+---
+
+## 1. Add a book
+
+1. **Upload the ebook file** (free books only): open the `books/` folder →
+   **Add file → Upload files** → choose the EPUB → **Commit**.
+   Max 100 MB per file. Use a simple filename: lowercase, dashes, no spaces
+   (e.g. `my-book.epub`).
+   *Paid books: skip this step — the file stays on Gumroad only.*
+2. **Upload the cover**: open the `img/` folder → **Add file → Upload files**
+   → choose the cover image → **Commit**.
+3. **Create the book entry**: open the `_books/` folder → **Add file →
+   Create new file** → name it `my-book.md` (same name as the EPUB) → paste
+   the template below, fill it in → **Commit**.
 
 ```markdown
 ---
@@ -35,19 +46,89 @@ Two or three sentences describing the book go here — this becomes the
 "About this book" text on its page.
 ```
 
-## Field notes
+4. Wait 1–2 minutes, then check the live page:
+   `https://mdtowfiqul.github.io/our-boighar/books/my-book/`
+
+**Field notes**
 
 | Field | Notes |
 |---|---|
-| `book_id` | unique slug; also used for bookmarks & comments |
+| `book_id` | unique slug, same as the filename; also used for bookmarks & comments |
+| `title` / `title_en` | Bengali title / English title (shown when visitors switch to EN) |
+| `author` | the writer |
+| `creator` | who made this ebook edition (translator, publisher, scanner…) |
 | `category` | the main category (used for "related books") |
-| `categories` | all tags |
+| `categories` | all tags, e.g. `["Hadith", "Spirituality"]` |
+| `language` / `language_label` | `bn`/`Bengali` or `en`/`English` |
 | `alphabet` | first letter of the title — Bengali letter for Bengali titles (ই, ত, র…), capital letter for English ones (A, H…) |
-| `file` | omit for paid books; then set `gumroad:` + `price:` instead |
+| `cover` | path to the cover in `img/` |
+| `file` | path to the EPUB in `books/` — omit for paid books; then set `gumroad:` + `price:` instead |
 | `file_size`, `year` | optional — shown on the book page when present |
+| `toc` | optional list of contents entries; renders a সূচিপত্র (table of contents) section |
 
-Easiest path: send the ebook file and cover to Muse and ask for the
-`_books/*.md` entry — description, tags and alphabet included.
+---
+
+## 2. Change a book's details
+
+Title, author, category, description, year — all of it lives in the book's
+`_books/<slug>.md` file.
+
+1. Open `_books/` → tap the book's `.md` file → tap the **pencil (Edit)**
+   icon.
+2. Change the field you want (the lines between the two `---` lines), or the
+   description text below them.
+3. **Commit changes**. The site updates in about a minute.
+
+**Change the cover**: upload the new image into `img/` with the **exact same
+filename** (it overwrites), or upload a new name and update `cover:` in the
+`.md` file.
+
+---
+
+## 3. Replace a book's file (new edition / fixed EPUB)
+
+1. Open the `books/` folder → **Add file → Upload files** → upload the new
+   EPUB with the **exact same filename** → it overwrites the old one.
+2. If the size changed, also update `file_size:` in the book's `_books/*.md`
+   (see section 2).
+
+For a book stored in an overflow repo (its `file:` is a full URL), do the
+same thing inside that repo's `books/` folder.
+
+---
+
+## 4. Remove a book
+
+1. **Delete its entry**: open `_books/<slug>.md` → **⋯ menu (or trash icon)
+   → Delete file** → **Commit**. The book's page, listings and search entry
+   disappear on the next build (~1 minute).
+2. **Free the space** (optional but recommended): delete the EPUB from
+   `books/` and the cover from `img/` the same way. If you skip this, the
+   files just sit unused — the book is still gone from the site.
+3. Note: the book's comments stay stored in GitHub Discussions (invisible,
+   harmless). If you ever re-add a book with the same slug, its old comments
+   come back.
+
+---
+
+## 5. If something looks wrong
+
+- **Book not showing**: the `.md` filename must end in `.md`; the two `---`
+  lines must be intact; no missing quotes.
+- **Download / reader says 404**: the `file:` path must match the uploaded
+  EPUB's name *exactly* (capital letters matter), and the file must be in
+  the same repo the path points to.
+- **Book under the wrong letter**: fix the `alphabet:` field.
+- **Change didn't appear**: wait 1–2 minutes and refresh — GitHub Pages
+  rebuilds are not instant.
+
+## 6. What to leave for Muse
+
+Design/layout changes, editing *inside* an EPUB (fixing chapters or text),
+bulk changes across many books, and creating new storage repos — send those
+to Muse instead of doing them by hand.
+
+---
 
 ## Overflow storage (when the main repo fills up)
 
