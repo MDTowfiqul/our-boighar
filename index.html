@@ -109,7 +109,7 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   {% assign series_groups = site.books | group_by: "series" | sort: "name" %}
   <section id="series" class="mt-10">
     <h2 class="serif text-xl sm:text-2xl font-extrabold mb-1 px-0.5" data-bn="📚 বইয়ের সিরিজ" data-en="📚 Book Series">📚 বইয়ের সিরিজ</h2>
-    {% for g in series_groups %}{% if g.name and g.size > 1 %}
+    {% for g in series_groups %}{% if g.name and g.name != "" and g.size > 1 %}
     {% assign sbooks = g.items | sort: "series_order" %}
     <div class="mt-5">
       <div class="flex items-baseline justify-between mb-3 px-0.5">
