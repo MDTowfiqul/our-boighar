@@ -1,177 +1,281 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Our Boighar — Books by MD. Towfiqul Islam</title>
-<meta name="description" content="Our Boighar — the book shelf of MD. Towfiqul Islam. Bengali & English Islamic books: read online or download.">
+<title>Our Boighar — বাংলায় ও ইংরেজিতে ইসলামিক বই, ফ্রি ডাউনলোড</title>
+<meta name="description" content="Our Boighar — ইসলামিক বইয়ের তাক। অনলাইনে পড়ুন অথবা ইপাব ডাউনলোড করুন, সম্পূর্ণ বিনামূল্যে।">
 <meta property="og:title" content="Our Boighar">
-<meta property="og:description" content="Books by MD. Towfiqul Islam — read online or download.">
+<meta property="og:description" content="ইসলামিক বই — অনলাইনে পড়ুন, ফ্রি ডাউনলোড করুন।">
 <meta property="og:image" content="img/cover.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700;800&family=Noto+Serif+Bengali:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700;800&family=Noto+Serif+Bengali:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
-  :root{--green:#0d5c3f;--green-dark:#083f2b;--gold:#d4a24c;--cream:#faf3e7;--peach:#fdeee0;--ink:#26221c;--muted:#7a7264;--card:#fff;--line:#eee2cd}
+  :root{--green:#0d5c3f;--green-dark:#083f2b;--accent:#c8501b;--cream:#faf3e7;--peach:#fdeee0;--ink:#26221c;--muted:#7a7264;--card:#fff;--line:#eee2cd}
   *{margin:0;padding:0;box-sizing:border-box}
-  body{font-family:"Noto Sans",system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.55;padding-bottom:84px}
-  .bn{font-family:"Noto Serif Bengali","Noto Sans",serif}
+  body{font-family:"Noto Serif Bengali","Noto Sans",serif;background:var(--cream);color:var(--ink);line-height:1.6;padding-bottom:84px}
   a{color:var(--green);text-decoration:none}
-  /* top bar */
   .topbar{position:sticky;top:0;z-index:10;background:#fffdf8;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;padding:12px 16px}
   .topbar .logo{font-weight:800;font-size:20px;color:var(--green-dark)}
-  .topbar .logo .mark{color:#c8501b}
   .topbar .sp{flex:1}
   .badge{border:1.5px solid var(--line);border-radius:999px;padding:4px 12px;font-weight:700;font-size:13px;color:var(--muted)}
-  main{max-width:1060px;margin:0 auto;padding:18px 16px 30px}
-  .crumbs{color:var(--muted);font-size:13.5px;margin:4px 2px 14px}
-  /* search + filters */
-  .search{display:flex;gap:10px;margin-bottom:14px}
-  .search input{flex:1;padding:13px 16px;border:1.5px solid var(--line);border-radius:12px;font:inherit;font-size:15px;background:#fff}
-  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
-  .chip{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:7px 15px;font-weight:700;font-size:13.5px;cursor:pointer;color:var(--ink)}
-  .chip.on{background:var(--green);border-color:var(--green);color:#fff}
-  .chip.lang.on{background:#b06f14;border-color:#b06f14}
-  h2.sec{font-size:21px;font-weight:800;margin:8px 2px 14px}
-  /* grid */
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:18px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(60,40,10,.05);display:flex;flex-direction:column;transition:transform .12s}
-  .card:hover{transform:translateY(-3px)}
-  .card .cov{background:var(--peach);padding:14px;display:flex;justify-content:center}
-  .card .cov img{height:190px;width:auto;max-width:100%;border-radius:5px;box-shadow:0 5px 14px rgba(0,0,0,.22)}
-  .card .info{padding:11px 13px 14px;display:flex;flex-direction:column;gap:3px;flex:1}
-  .card .t{font-weight:700;font-size:15px;line-height:1.4}
-  .card .w{color:var(--muted);font-size:12.5px}
-  .card .meta{margin-top:auto;padding-top:7px;display:flex;gap:6px;flex-wrap:wrap}
-  .pill{font-size:11px;font-weight:700;border-radius:999px;padding:2px 9px;background:#eef6f1;color:var(--green-dark)}
-  .pill.lang{background:#fdf3dd;color:#8a6414}
-  .empty{color:var(--muted);padding:34px;text-align:center;grid-column:1/-1}
-  /* about */
-  .about{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;margin-top:30px}
-  .about h3{font-size:17px;margin-bottom:8px}
-  .about p{font-size:14.5px;margin-bottom:8px;color:#3c372e}
+  main{max-width:1060px;margin:0 auto;padding:0 16px 30px}
+  /* hero */
+  .hero{background:linear-gradient(160deg,var(--green) 0%,var(--green-dark) 100%);color:#fff;border-radius:0 0 22px 22px;margin:0 -16px;padding:38px 20px 30px;text-align:center}
+  .hero .count{font-size:15px;font-weight:700;color:#f6d78b}
+  .hero h1{font-size:31px;font-weight:800;margin:8px 0 6px;line-height:1.45}
+  .hero .tagline{font-size:17px;color:#dcebe2}
+  .hero .search{max-width:520px;margin:18px auto 0;display:flex;background:#fff;border-radius:12px;overflow:hidden}
+  .hero .search input{flex:1;border:0;padding:13px 16px;font:inherit;font-size:15px}
+  .hero .search button{border:0;background:var(--accent);color:#fff;padding:0 22px;font-size:17px;cursor:pointer}
+  .poplink{margin-top:12px;font-size:14px;color:#dbe8dd}
+  .poplink a{color:#fff;font-weight:700;text-decoration:underline;margin:0 5px}
+  /* sections */
+  section.block{margin-top:34px}
+  .sec-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px}
+  .sec-head h2{font-size:21px;font-weight:800}
+  .sec-head a{font-weight:700;font-size:14px}
+  .hscroll{display:flex;gap:16px;overflow-x:auto;padding-bottom:10px;scroll-snap-type:x mandatory}
+  .hscroll::-webkit-scrollbar{height:6px}
+  .hscroll::-webkit-scrollbar-thumb{background:#d9c9a8;border-radius:3px}
+  .mini{background:var(--card);border:1px solid var(--line);border-radius:13px;min-width:150px;max-width:150px;scroll-snap-align:start;overflow:hidden}
+  .mini .cov{background:var(--peach);padding:12px;display:flex;justify-content:center}
+  .mini img{height:150px;width:auto;max-width:100%;border-radius:4px;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+  .mini .mt{padding:9px 11px 12px}
+  .mini .mt b{display:block;font-size:14px;line-height:1.4}
+  .mini .mt span{font-size:12px;color:var(--muted)}
+  /* featured */
+  .feature{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;gap:20px;align-items:center}
+  .feature img{width:130px;border-radius:7px;box-shadow:0 6px 16px rgba(0,0,0,.22)}
+  .feature .kicker{color:var(--accent);font-weight:800;font-size:13px}
+  .feature h3{font-size:22px;margin:4px 0}
+  .feature .w{color:var(--muted);font-size:14px;margin-bottom:8px}
+  .feature .d{font-size:14.5px;color:#3c372e;margin-bottom:12px}
+  .btn{display:inline-block;background:var(--accent);color:#fff;font-weight:700;border-radius:10px;padding:11px 26px;border:0;cursor:pointer;font:inherit;font-size:15px}
+  .btn:hover{filter:brightness(1.07)}
+  /* chips / cats */
+  .chiplist{display:flex;flex-wrap:wrap;gap:10px}
+  .wchip{background:var(--card);border:1.5px solid var(--line);border-radius:999px;padding:9px 18px;font-weight:700;font-size:14.5px;cursor:pointer}
+  .wchip:hover{border-color:var(--green)}
+  .wchip.on{background:var(--green);border-color:var(--green);color:#fff}
+  .wchip .n{color:var(--muted);font-weight:600}
+  .catgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+  .catgrid button{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:12px 15px;font:inherit;font-size:15px;font-weight:700;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+  .catgrid button:hover{border-color:var(--green)}
+  .catgrid .n{color:var(--muted);font-weight:600;font-size:13.5px}
+  .writer-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+  .writer{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center}
+  .writer .av{width:52px;height:52px;border-radius:50%;background:var(--green);color:#fff;font-size:23px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 8px}
+  .writer b{display:block;font-size:14.5px;line-height:1.4}
+  .writer span{font-size:12.5px;color:var(--muted)}
+  /* help panels */
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
+  .panel h2{font-size:19px;margin-bottom:10px}
+  .panel ul{margin:0 0 6px 20px;font-size:15px}
+  .panel li{margin-bottom:6px}
+  .panel p{font-size:15px;margin-bottom:8px}
+  .about p{font-size:15px;margin-bottom:8px}
   footer{text-align:center;color:var(--muted);font-size:13px;padding:26px 16px 6px}
   /* bottom nav */
   .bnav{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 4px calc(8px + env(safe-area-inset-bottom));z-index:10}
-  .bnav button{background:none;border:0;font:inherit;font-size:12px;font-weight:600;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:2px 10px}
-  .bnav button .ic{font-size:20px}
-  .bnav button.on{color:var(--green)}
-  @media (max-width:480px){.grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}.card .cov img{height:165px}}
+  .bnav button,.bnav a{background:none;border:0;font:inherit;font-size:12px;font-weight:600;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:2px 10px}
+  .bnav .ic{font-size:20px}
+  .bnav .on{color:var(--green)}
+  .empty{color:var(--muted);padding:24px;text-align:center}
+  @media (max-width:560px){.hero h1{font-size:25px}.feature{flex-direction:column;text-align:left;align-items:flex-start}.feature img{width:110px}}
 </style>
 </head>
 <body>
 
 <header class="topbar">
-  <span class="logo"><span class="mark">📚</span> Our Boighar</span>
+  <span class="logo">📚 Our Boighar</span>
   <span class="sp"></span>
-  <span class="badge">আমাদের বইঘর</span>
+  <span class="badge">বাংলা</span>
 </header>
 
 <main>
-  <p class="crumbs">Home / Books — read online or download, free</p>
-
-  <div class="search">
-    <input type="search" id="f-search" placeholder="🔍 Search by title, writer…">
-  </div>
-  <div class="chips" id="cat-chips"></div>
-  <div class="chips" id="lang-chips">
-    <button class="chip lang on" data-lang="">All languages</button>
-    <button class="chip lang" data-lang="bn">বাংলা · Bengali</button>
-    <button class="chip lang" data-lang="en">English</button>
-    <button class="chip" id="bm-toggle">★ My shelf</button>
+  <div class="hero">
+    <p class="count" id="hero-count">বই লোড হচ্ছে…</p>
+    <h1 id="hero-h1">ইসলামিক বই, ফ্রি ডাউনলোড</h1>
+    <p class="tagline">আজ কোন বই পড়বেন?</p>
+    <div class="search">
+      <input type="search" id="f-search" placeholder="🔍 বই বা লেখকের নামে খুঁজুন…">
+      <button id="go-search" aria-label="খুঁজুন">➜</button>
+    </div>
+    <p class="poplink">জনপ্রিয়: <span id="pop-links"></span></p>
   </div>
 
-  <h2 class="sec">All books</h2>
-  <div class="grid" id="book-grid"><p class="empty">Loading books…</p></div>
-
-  <section class="about">
-    <h3>About Our Boighar</h3>
-    <p><strong>Our Boighar</strong> is the personal book shelf of <strong>MD. Towfiqul Islam</strong> — Bengali &amp; English Islamic books, translations and EPUB editions, shared for readers and for dawah. Free books can be read online or downloaded right here; the paid title is sold on Gumroad.</p>
-    <p>Towfiqul is a medical student and developer from Bangladesh, and also builds the <a href="https://mdtowfiqul.github.io/Our-Days/">Our Days</a> app.</p>
+  <section class="block" id="featured-sec">
+    <div class="sec-head"><h2>🚀 এখান থেকে শুরু করুন</h2></div>
+    <div class="feature" id="feature"></div>
   </section>
 
-  <footer>© MD. Towfiqul Islam · <a href="https://towfiqulislam.gumroad.com/l/vvcbp">Gumroad</a> · <a href="https://github.com/MDTowfiqul">GitHub</a></footer>
+  <section class="block">
+    <div class="sec-head"><h2>🔥 জনপ্রিয় বই</h2><a href="#" id="see-all">সব দেখুন →</a></div>
+    <div class="hscroll" id="pop-row"></div>
+  </section>
+
+  <section class="block">
+    <div class="sec-head"><h2>✍️ জনপ্রিয় লেখক</h2></div>
+    <div class="chiplist" id="writers"></div>
+  </section>
+
+  <section class="block">
+    <div class="sec-head"><h2>📚 সব বই</h2></div>
+    <div class="chiplist" id="cat-chips" style="margin-bottom:14px"></div>
+    <div class="hscroll" id="all-row"></div>
+  </section>
+
+  <section class="block">
+    <div class="sec-head"><h2>📂 ধরন অনুযায়ী দেখুন</h2></div>
+    <div class="catgrid" id="cat-grid"></div>
+  </section>
+
+  <section class="block panel">
+    <h2>📥 পড়ুন বা ডাউনলোড করুন</h2>
+    <ul>
+      <li><strong>অনলাইনে পড়ুন</strong> — ব্রাউজারেই খুলবে, কিছু ইনস্টল করতে হয় না।</li>
+      <li><strong>ইপাব / পিডিএফ ডাউনলোড</strong> — ফোন ও ই-রিডারের জন্য ইপাব, কম্পিউটার ও প্রিন্টের জন্য পিডিএফ।</li>
+    </ul>
+    <p style="color:var(--muted);font-size:14px">কোনো অ্যাকাউন্ট লাগবে না। বুকমার্ক রাখতে চাইলে বইয়ের পাতায় “Add to shelf” চাপুন — আপনার ব্রাউজারেই সেভ থাকে।</p>
+  </section>
+
+  <section class="block panel about">
+    <h2>📖 Our Boighar সম্পর্কে</h2>
+    <p><strong>Our Boighar (আমাদের বইঘর)</strong> হলো <strong>মোঃ তৌফিকুল ইসলাম</strong>-এর বইয়ের তাক — বাংলা ও ইংরেজি ইসলামিক বই, অনুবাদ ও ইপাব সংস্করণ, পাঠকদের জন্য ও দাওয়াহর নিয়তে। ফ্রি বইগুলো এখানেই পড়া বা ডাউনলোড করা যায়; পেইড বইটি Gumroad-এ বিক্রি হয়।</p>
+    <p>তিনি বাংলাদেশের একজন মেডিকেল ছাত্র ও ডেভেলপার — <a href="https://mdtowfiqul.github.io/Our-Days/">Our Days</a> অ্যাপটিও তাঁরই তৈরি।</p>
+  </section>
+
+  <section class="block panel">
+    <h2>✒️ আপনার বই এখানে প্রকাশ করুন</h2>
+    <p>যে বইয়ের স্বত্ব আপনার, সেটি পাঠান — যাচাইয়ের পর পাঠকেরা বিনামূল্যে পড়তে ও ডাউনলোড করতে পারবেন।</p>
+    <a class="btn" href="https://github.com/MDTowfiqul/our-boighar" target="_blank" rel="noopener">যোগাযোগ করুন</a>
+  </section>
+
+  <footer>© মোঃ তৌফিকুল ইসলাম · <a href="https://towfiqulislam.gumroad.com/l/vvcbp">Gumroad</a> · <a href="https://github.com/MDTowfiqul">GitHub</a></footer>
 </main>
 
 <nav class="bnav">
-  <button class="on" id="nav-home"><span class="ic">🏠</span>Home</button>
-  <button id="nav-cat"><span class="ic">▦</span>Categories</button>
-  <button id="nav-search"><span class="ic">🔍</span>Search</button>
-  <button id="nav-shelf"><span class="ic">📖</span>My shelf</button>
+  <a href="index.html" class="on"><span class="ic">🏠</span>হোম</a>
+  <a href="#" id="nav-cat"><span class="ic">▦</span>ধরন</a>
+  <button id="nav-search"><span class="ic">🔍</span>খুঁজুন</button>
+  <button id="nav-shelf"><span class="ic">📖</span>আমার তাক</button>
 </nav>
 
 <script>
 (function(){
-  var grid = document.getElementById('book-grid');
-  var fSearch = document.getElementById('f-search');
-  var catChips = document.getElementById('cat-chips');
-  var bmToggle = document.getElementById('bm-toggle');
-  var books = [], activeCat = '', activeLang = '', onlyBm = false;
   var BM_KEY = 'ourboighar-bookmarks';
-
   function getBookmarks(){ try{ return JSON.parse(localStorage.getItem(BM_KEY)||'[]'); }catch(e){ return []; } }
   function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function bnNum(n){ return String(n).replace(/[0-9]/g,function(d){ return '০১২৩৪৫৬৭৮৯'[d]; }); }
 
-  function render(){
-    var q = (fSearch.value||'').toLowerCase(), bm = getBookmarks();
-    var shown = books.filter(function(b){
-      if(activeLang && b.language !== activeLang) return false;
-      if(activeCat && (b.categories||[]).indexOf(activeCat) < 0) return false;
-      if(onlyBm && bm.indexOf(b.id) < 0) return false;
-      if(q){ var hay = (b.title+' '+(b.titleEn||'')+' '+(b.writer||'')+' '+(b.creator||'')).toLowerCase(); if(hay.indexOf(q) < 0) return false; }
-      return true;
+  var books = [], activeCat = '';
+
+  function card(b){
+    return '<a class="mini" href="book.html?id='+encodeURIComponent(b.id)+'">'+
+      '<span class="cov"><img src="'+esc(b.cover)+'" alt=""></span>'+
+      '<span class="mt"><b>'+esc(b.title)+'</b><span>'+esc(b.writer||'')+'</span></span></a>';
+  }
+
+  function renderRows(scroll){
+    var row = books.filter(function(b){ return !activeCat || (b.categories||[]).indexOf(activeCat) >= 0; });
+    document.getElementById('all-row').innerHTML = row.length ? row.map(card).join('') : '<p class="empty">কোনো বই পাওয়া যায়নি।</p>';
+    Array.prototype.forEach.call(document.querySelectorAll('#cat-chips .wchip'), function(ch){
+      ch.classList.toggle('on', ch.getAttribute('data-cat') === activeCat);
     });
-    if(!shown.length){ grid.innerHTML = '<p class="empty">No books match.</p>'; return; }
-    grid.innerHTML = shown.map(function(b){
-      var star = bm.indexOf(b.id) >= 0 ? ' ★' : '';
-      return '<a class="card" href="book.html?id='+encodeURIComponent(b.id)+'">'+
-        '<span class="cov"><img src="'+esc(b.cover)+'" alt="Cover of '+esc(b.titleEn||b.title)+'"></span>'+
-        '<span class="info"><span class="t bn">'+esc(b.title)+'</span>'+
-        '<span class="w">✍️ '+esc(b.writer||'')+star+'</span>'+
-        '<span class="meta"><span class="pill lang">'+esc(b.languageLabel||b.language)+'</span>'+
-        (b.categories||[]).slice(0,2).map(function(c){ return '<span class="pill">'+esc(c)+'</span>'; }).join('')+
-        '</span></span></a>';
-    }).join('');
+    if(scroll) document.getElementById('all-row').scrollIntoView({behavior:'smooth', block:'nearest'});
   }
 
-  function buildChips(){
-    var cats = {};
-    books.forEach(function(b){ (b.categories||[]).forEach(function(c){ cats[c]=1; }); });
-    var html = '<button class="chip on" data-cat="">All</button>';
-    Object.keys(cats).sort().forEach(function(c){ html += '<button class="chip" data-cat="'+esc(c)+'">'+esc(c)+'</button>'; });
-    catChips.innerHTML = html;
-    Array.prototype.forEach.call(catChips.querySelectorAll('[data-cat]'), function(ch){
-      ch.onclick = function(){
-        activeCat = ch.getAttribute('data-cat');
-        Array.prototype.forEach.call(catChips.querySelectorAll('[data-cat]'), function(x){ x.classList.toggle('on', x===ch); });
-        render();
-      };
-    });
-  }
-
-  Array.prototype.forEach.call(document.querySelectorAll('#lang-chips [data-lang]'), function(ch){
-    ch.onclick = function(){
-      activeLang = ch.getAttribute('data-lang');
-      Array.prototype.forEach.call(document.querySelectorAll('#lang-chips [data-lang]'), function(x){ x.classList.toggle('on', x===ch); });
-      render();
-    };
-  });
-  function toggleShelf(){
-    onlyBm = !onlyBm;
-    bmToggle.classList.toggle('on', onlyBm);
-    document.getElementById('nav-shelf').classList.toggle('on', onlyBm);
-    render();
-  }
-  bmToggle.onclick = toggleShelf;
-  document.getElementById('nav-shelf').onclick = toggleShelf;
-  document.getElementById('nav-search').onclick = function(){ fSearch.focus(); window.scrollTo({top:0,behavior:'smooth'}); };
-  document.getElementById('nav-cat').onclick = function(){ catChips.scrollIntoView({behavior:'smooth'}); };
-  document.getElementById('nav-home').onclick = function(){ window.scrollTo({top:0,behavior:'smooth'}); };
-  fSearch.addEventListener('input', render);
+  function setCat(c){ activeCat = (activeCat === c) ? '' : c; renderRows(true); }
 
   fetch('books.json').then(function(r){ return r.json(); }).then(function(data){
-    books = data; buildChips(); render();
-  }).catch(function(){ grid.innerHTML = '<p class="empty">Could not load the book list.</p>'; });
+    books = data;
+    var n = books.length;
+    document.getElementById('hero-count').textContent = bnNum(n) + ' টি ইসলামিক বই, সব বিনামূল্যে';
+    document.getElementById('hero-h1').textContent = bnNum(n) + ' টি ইসলামিক বই, ফ্রি ডাউনলোড';
+
+    // popular links (first 4 categories)
+    var cats = {}, writers = {};
+    books.forEach(function(b){
+      (b.categories||[]).forEach(function(c){ cats[c] = (cats[c]||0)+1; });
+      if(b.writer) writers[b.writer] = (writers[b.writer]||0)+1;
+    });
+    var catList = Object.keys(cats).sort();
+    document.getElementById('pop-links').innerHTML = catList.slice(0,5).map(function(c,i){
+      return (i?', ':'')+'<a href="#" data-cat="'+esc(c)+'">'+esc(c)+'</a>';
+    }).join('');
+    Array.prototype.forEach.call(document.querySelectorAll('#pop-links [data-cat]'), function(a){
+      a.onclick = function(e){ e.preventDefault(); activeCat = a.getAttribute('data-cat'); renderRows(true); };
+    });
+
+    // featured: first book (newest added = islam-objections-bn) — use index 0
+    var f = books[0];
+    document.getElementById('feature').innerHTML =
+      '<img src="'+esc(f.cover)+'" alt="">'+
+      '<div><p class="kicker">এখান থেকে শুরু করুন</p><h3>'+esc(f.title)+'</h3>'+
+      '<p class="w">✍️ '+esc(f.writer||'')+'</p><p class="d">'+esc(f.description)+'</p>'+
+      '<a class="btn" href="book.html?id='+encodeURIComponent(f.id)+'">খুলুন →</a></div>';
+
+    // popular row = all books
+    document.getElementById('pop-row').innerHTML = books.map(card).join('');
+    document.getElementById('see-all').onclick = function(e){ e.preventDefault(); activeCat=''; renderRows(true); };
+
+    // writers chips
+    var wNames = Object.keys(writers).sort();
+    document.getElementById('writers').innerHTML = wNames.map(function(w){
+      return '<span class="wchip" data-w="'+esc(w)+'">'+esc(w)+' <span class="n">'+bnNum(writers[w])+'টি</span></span>';
+    }).join('');
+    Array.prototype.forEach.call(document.querySelectorAll('#writers .wchip'), function(ch){
+      ch.onclick = function(){
+        var w = ch.getAttribute('data-w');
+        document.getElementById('f-search').value = w;
+        doSearch();
+      };
+    });
+
+    // category grid with counts
+    document.getElementById('cat-grid').innerHTML = catList.map(function(c){
+      return '<button data-cat="'+esc(c)+'">'+esc(c)+' <span class="n">'+bnNum(cats[c])+'টি বই</span></button>';
+    }).join('');
+    Array.prototype.forEach.call(document.querySelectorAll('#cat-grid [data-cat]'), function(b2){
+      b2.onclick = function(){ activeCat = b2.getAttribute('data-cat'); renderRows(true); };
+    });
+
+    // filter chips row
+    document.getElementById('cat-chips').innerHTML = '<button class="wchip on" data-cat="">সব</button>' +
+      catList.map(function(c){ return '<button class="wchip" data-cat="'+esc(c)+'">'+esc(c)+'</button>'; }).join('');
+    Array.prototype.forEach.call(document.querySelectorAll('#cat-chips .wchip'), function(ch){
+      ch.onclick = function(){ setCat(ch.getAttribute('data-cat')); };
+    });
+
+    renderRows();
+  }).catch(function(){
+    document.getElementById('hero-count').textContent = 'বই লোড করা যায়নি';
+  });
+
+  function doSearch(){
+    var q = (document.getElementById('f-search').value||'').toLowerCase();
+    var row = books.filter(function(b){
+      var hay = (b.title+' '+(b.titleEn||'')+' '+(b.writer||'')+' '+(b.creator||'')).toLowerCase();
+      return !q || hay.indexOf(q) >= 0;
+    });
+    activeCat = '';
+    document.getElementById('all-row').innerHTML = row.length ? row.map(card).join('') : '<p class="empty">কোনো বই পাওয়া যায়নি।</p>';
+    document.getElementById('all-row').scrollIntoView({behavior:'smooth', block:'nearest'});
+  }
+  document.getElementById('f-search').addEventListener('input', doSearch);
+  document.getElementById('go-search').onclick = doSearch;
+
+  document.getElementById('nav-search').onclick = function(){ document.getElementById('f-search').focus(); window.scrollTo({top:0,behavior:'smooth'}); };
+  document.getElementById('nav-cat').onclick = function(e){ e.preventDefault(); document.getElementById('cat-grid').scrollIntoView({behavior:'smooth'}); };
+  document.getElementById('nav-shelf').onclick = function(){
+    var bm = getBookmarks();
+    var row = books.filter(function(b){ return bm.indexOf(b.id) >= 0; });
+    activeCat = '';
+    document.getElementById('all-row').innerHTML = row.length ? row.map(card).join('') : '<p class="empty">আপনার তাকে এখনো কোনো বই নেই। বইয়ের পাতায় “Add to shelf” চাপুন।</p>';
+    document.getElementById('all-row').scrollIntoView({behavior:'smooth', block:'nearest'});
+  };
 })();
 </script>
 </body>
