@@ -12,61 +12,214 @@
 <script>
   tailwind.config = { darkMode: 'class' };
   if (localStorage.getItem('ob-theme') === 'dark') document.documentElement.classList.add('dark');
+  document.documentElement.setAttribute('data-color', localStorage.getItem('ob-color') || 'purple');
+  document.documentElement.lang = localStorage.getItem('ob-lang') || 'bn';
 </script>
 <style>
   body{font-family:'Hind Siliguri',system-ui,sans-serif}
   .serif{font-family:'Noto Serif Bengali',serif}
-  #alpha-bar button.on, #cat-bar button.on{background-color:#047857;color:#fff;border-color:#047857}
+  :root, [data-color="purple"]{--hero1:#33248f;--hero2:#171233;--accent:#e0521f;--accent-bright:#ff9e6e;--accent-soft:#fdeee6}
+  [data-color="emerald"]{--hero1:#065f46;--hero2:#022c22;--accent:#c8501b;--accent-bright:#ffb37a;--accent-soft:#fdf0e4}
+  [data-color="ocean"]{--hero1:#0c4a6e;--hero2:#082f49;--accent:#0284c7;--accent-bright:#7dd3fc;--accent-soft:#e0f2fe}
+  [data-color="crimson"]{--hero1:#881337;--hero2:#1f0a12;--accent:#e11d48;--accent-bright:#fda4af;--accent-soft:#ffe4e6}
+  [data-color="amber"]{--hero1:#713f12;--hero2:#1c1005;--accent:#d97706;--accent-bright:#fcd34d;--accent-soft:#fef3c7}
+  .hero-bg{background:linear-gradient(150deg,var(--hero1),var(--hero2))}
+  .accent-bg{background-color:var(--accent)}
+  .accent-bg:hover{filter:brightness(1.08)}
+  .accent-text{color:var(--accent)}
+  .hero-accent{color:var(--accent-bright)}
+  .accent-soft-bg{background-color:var(--accent-soft)}
+  .dark .accent-soft-bg{background-color:rgba(255,255,255,.09)}
+  #alpha-bar button.on, #cat-bar button.on{background-color:var(--accent);color:#fff;border-color:var(--accent)}
   #alpha-bar button.alpha-off{cursor:not-allowed;opacity:.55}
+  .no-scrollbar::-webkit-scrollbar{display:none}
+  .no-scrollbar{scrollbar-width:none;-ms-overflow-style:none}
+  #drawer{transition:transform .3s ease}
+  #drawer-overlay{transition:opacity .3s ease}
+  .swatch.on{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--accent)}
 </style>
 </head>
-<body class="bg-[#f8f9fa] text-[#212529] dark:bg-neutral-900 dark:text-neutral-100 min-h-screen pb-24">
+<body class="bg-[#f8f9fa] text-[#212529] dark:bg-neutral-900 dark:text-neutral-100 min-h-screen pb-28">
 
-<!-- TOP NAVBAR (BDeBooks Style) -->
+<!-- TOP BAR -->
 <header class="sticky top-0 z-30 bg-white/95 dark:bg-neutral-900/95 backdrop-blur shadow-sm border-b border-neutral-200 dark:border-neutral-800">
-  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-    <a href="{{ '/' | relative_url }}" class="font-extrabold text-xl sm:text-2xl text-emerald-800 dark:text-emerald-400 flex items-center gap-2">
+  <div class="max-w-6xl mx-auto px-3 sm:px-4 py-2.5 flex items-center gap-2 sm:gap-3">
+    <button id="menu-btn" class="p-2 -ml-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <a href="{{ '/' | relative_url }}" class="font-extrabold text-lg sm:text-2xl text-emerald-800 dark:text-emerald-400 flex items-center gap-2">
       <span>📚</span>
-      <span>আমাদের বইঘর <span class="text-xs font-semibold text-neutral-500 dark:text-neutral-400 hidden sm:inline">| Our Boighar</span></span>
+      <span data-bn="আমাদের বইঘর" data-en="Our Boighar">আমাদের বইঘর</span>
     </a>
-    <nav class="hidden md:flex items-center gap-6 text-[15px] font-bold text-neutral-700 dark:text-neutral-200">
-      <a href="{{ '/' | relative_url }}" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition">হোম</a>
-      <a href="{{ '/' | relative_url }}#books-grid" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition">সব বই</a>
-      <a href="{{ '/' | relative_url }}#writers" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition">লেখক</a>
-      <a href="{{ '/' | relative_url }}#categories" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition">বিষয়সমূহ</a>
-      <a href="{{ '/' | relative_url }}#popular" class="hover:text-emerald-700 dark:hover:text-emerald-400 transition">জনপ্রিয় বই</a>
+    <nav class="hidden lg:flex items-center gap-6 text-[15px] font-bold text-neutral-700 dark:text-neutral-200 ml-4">
+      <a href="{{ '/' | relative_url }}" class="hover:text-emerald-700 dark:hover:text-emerald-400" data-bn="হোম" data-en="Home">হোম</a>
+      <a href="{{ '/' | relative_url }}#popular" class="hover:text-emerald-700 dark:hover:text-emerald-400" data-bn="সব বই" data-en="All Books">সব বই</a>
+      <a href="{{ '/' | relative_url }}#writers" class="hover:text-emerald-700 dark:hover:text-emerald-400" data-bn="লেখক" data-en="Authors">লেখক</a>
+      <a href="{{ '/' | relative_url }}#categories" class="hover:text-emerald-700 dark:hover:text-emerald-400" data-bn="বিষয়" data-en="Categories">বিষয়</a>
+      <a href="{{ '/' | relative_url }}#shelf" class="hover:text-emerald-700 dark:hover:text-emerald-400" data-bn="আমার তাক" data-en="My Shelf">আমার তাক</a>
     </nav>
-    <div class="flex items-center gap-2">
-      <a href="{{ '/' | relative_url }}#shelf" class="hidden sm:inline-flex items-center gap-1 bg-amber-50 dark:bg-neutral-800 border border-amber-200 dark:border-neutral-700 text-amber-800 dark:text-amber-300 rounded-full px-3.5 py-1 text-sm font-bold hover:bg-amber-100 transition">★ আমার তাক</a>
-      <button id="theme-toggle" class="border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 rounded-full px-3 py-1 text-sm font-semibold hover:bg-neutral-100 dark:hover:bg-neutral-700 transition" title="Dark mode">🌙</button>
-    </div>
+    <span class="flex-1"></span>
+    <button id="theme-toggle" class="border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 rounded-full w-10 h-10 text-base hover:bg-neutral-100 dark:hover:bg-neutral-700 transition" title="Dark / Light">🌙</button>
+    <button id="lang-toggle" class="flex items-center gap-1.5 bg-[#fdf3e7] dark:bg-neutral-800 border border-orange-100 dark:border-neutral-700 rounded-full px-3.5 h-10 text-sm font-extrabold text-neutral-800 dark:text-neutral-100 hover:brightness-95 transition" title="Language / ভাষা">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z"/></svg>
+      <span id="lang-label">BN</span>
+    </button>
   </div>
 </header>
 
+<!-- SIDE MENU DRAWER -->
+<div id="drawer-overlay" class="fixed inset-0 bg-black/45 z-40 opacity-0 pointer-events-none"></div>
+<aside id="drawer" class="fixed inset-y-0 left-0 w-[86%] max-w-sm bg-white dark:bg-neutral-900 z-50 -translate-x-full flex flex-col shadow-2xl">
+  <div class="flex items-center justify-between px-5 py-4 border-b border-neutral-100 dark:border-neutral-800">
+    <span class="serif text-xl font-bold" data-bn="মেনু" data-en="Menu">মেনু</span>
+    <button id="drawer-close" class="w-10 h-10 rounded-xl bg-[#fdf3e7] dark:bg-neutral-800 text-lg font-bold" aria-label="Close">✕</button>
+  </div>
+  <div class="flex-1 overflow-y-auto px-5 py-4">
+    <nav class="flex flex-col text-[17px] font-bold">
+      <a href="{{ '/' | relative_url }}" class="drawer-link accent-soft-bg accent-text rounded-xl px-4 py-3 mb-1" data-bn="হোম" data-en="Home">হোম</a>
+      <a href="{{ '/' | relative_url }}#popular" class="drawer-link rounded-xl px-4 py-3 hover:bg-neutral-50 dark:hover:bg-neutral-800" data-bn="সব বই" data-en="All Books">সব বই</a>
+      <a href="{{ '/' | relative_url }}#categories" class="drawer-link rounded-xl px-4 py-3 hover:bg-neutral-50 dark:hover:bg-neutral-800" data-bn="ধরন" data-en="Categories">ধরন</a>
+      <a href="{{ '/' | relative_url }}#writers" class="drawer-link rounded-xl px-4 py-3 hover:bg-neutral-50 dark:hover:bg-neutral-800" data-bn="লেখক" data-en="Authors">লেখক</a>
+      <a href="{{ '/' | relative_url }}#popular" class="drawer-link rounded-xl px-4 py-3 hover:bg-neutral-50 dark:hover:bg-neutral-800" data-bn="জনপ্রিয় বই" data-en="Popular Books">জনপ্রিয় বই</a>
+      <a href="{{ '/' | relative_url }}#shelf" class="drawer-link rounded-xl px-4 py-3 hover:bg-neutral-50 dark:hover:bg-neutral-800" data-bn="আমার তাক" data-en="My Shelf">আমার তাক</a>
+    </nav>
+    <button id="drawer-lang" class="mt-3 w-full flex items-center gap-3 bg-[#fdf8f1] dark:bg-neutral-800 border border-orange-100/70 dark:border-neutral-700 rounded-2xl px-4 py-3.5 font-bold">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z"/></svg>
+      <span data-bn="ভাষা" data-en="Language">ভাষা</span>
+      <span class="flex-1"></span>
+      <span id="drawer-lang-label" class="text-neutral-500 dark:text-neutral-300">বাংলা</span>
+    </button>
+    <div class="mt-5">
+      <p class="font-bold flex items-center gap-2"><span>🎨</span><span data-bn="থিমের রং" data-en="Theme Colour">থিমের রং</span></p>
+      <div class="flex gap-3 mt-2.5 px-1">
+        <button class="swatch w-9 h-9 rounded-full border border-black/10" data-setcolor="purple" style="background:linear-gradient(140deg,#33248f,#e0521f)" title="Purple"></button>
+        <button class="swatch w-9 h-9 rounded-full border border-black/10" data-setcolor="emerald" style="background:linear-gradient(140deg,#065f46,#c8501b)" title="Emerald"></button>
+        <button class="swatch w-9 h-9 rounded-full border border-black/10" data-setcolor="ocean" style="background:linear-gradient(140deg,#0c4a6e,#0284c7)" title="Ocean"></button>
+        <button class="swatch w-9 h-9 rounded-full border border-black/10" data-setcolor="crimson" style="background:linear-gradient(140deg,#881337,#e11d48)" title="Crimson"></button>
+        <button class="swatch w-9 h-9 rounded-full border border-black/10" data-setcolor="amber" style="background:linear-gradient(140deg,#713f12,#d97706)" title="Amber"></button>
+      </div>
+    </div>
+    <p class="mt-6 mb-2.5 font-bold text-neutral-600 dark:text-neutral-300" data-bn="সহায়তা ও নীতিমালা" data-en="Help & Policies">সহায়তা ও নীতিমালা</p>
+    <div class="flex flex-wrap gap-2 text-sm font-semibold">
+      <a href="{{ '/' | relative_url }}#popular" class="drawer-link bg-[#fdf8f1] dark:bg-neutral-800 rounded-full px-3.5 py-1.5" data-bn="জনপ্রিয়" data-en="Popular">জনপ্রিয়</a>
+      <a href="{{ '/' | relative_url }}#popular" class="drawer-link bg-[#fdf8f1] dark:bg-neutral-800 rounded-full px-3.5 py-1.5" data-bn="নতুন" data-en="New">নতুন</a>
+      <a href="{{ '/' | relative_url }}#about" class="drawer-link bg-[#fdf8f1] dark:bg-neutral-800 rounded-full px-3.5 py-1.5" data-bn="ডাউনলোড সহায়তা" data-en="Download Help">ডাউনলোড সহায়তা</a>
+      <a href="{{ '/' | relative_url }}#about" class="drawer-link bg-[#fdf8f1] dark:bg-neutral-800 rounded-full px-3.5 py-1.5" data-bn="পড়ার নির্দেশিকা" data-en="Reading Guide">পড়ার নির্দেশিকা</a>
+      <a href="{{ '/' | relative_url }}#about" class="drawer-link bg-[#fdf8f1] dark:bg-neutral-800 rounded-full px-3.5 py-1.5" data-bn="আমাদের সম্পর্কে" data-en="About Us">আমাদের সম্পর্কে</a>
+      <a href="https://github.com/MDTowfiqul/our-boighar/issues" target="_blank" rel="noopener" class="bg-[#fdf8f1] dark:bg-neutral-800 rounded-full px-3.5 py-1.5" data-bn="যোগাযোগ" data-en="Contact">যোগাযোগ</a>
+      <a href="{{ '/' | relative_url }}#publish" class="drawer-link bg-[#fdf8f1] dark:bg-neutral-800 rounded-full px-3.5 py-1.5" data-bn="আপনার বই প্রকাশ করুন" data-en="Publish Your Book">আপনার বই প্রকাশ করুন</a>
+      <a href="{{ '/' | relative_url }}#about" class="drawer-link bg-[#fdf8f1] dark:bg-neutral-800 rounded-full px-3.5 py-1.5" data-bn="গোপনীয়তা নীতি" data-en="Privacy Policy">গোপনীয়তা নীতি</a>
+      <a href="{{ '/' | relative_url }}#about" class="drawer-link bg-[#fdf8f1] dark:bg-neutral-800 rounded-full px-3.5 py-1.5" data-bn="শর্তাবলি" data-en="Terms">শর্তাবলি</a>
+      <a href="{{ '/' | relative_url }}#about" class="drawer-link bg-[#fdf8f1] dark:bg-neutral-800 rounded-full px-3.5 py-1.5" data-bn="দায়মুক্তি" data-en="Disclaimer">দায়মুক্তি</a>
+      <a href="{{ '/' | relative_url }}#about" class="drawer-link bg-[#fdf8f1] dark:bg-neutral-800 rounded-full px-3.5 py-1.5">DMCA</a>
+    </div>
+  </div>
+  <div class="px-5 py-4 border-t border-neutral-100 dark:border-neutral-800 flex gap-3">
+    <a href="https://towfiqulislam.gumroad.com/l/vvcbp" target="_blank" rel="noopener" class="accent-bg flex-1 text-center text-white font-bold rounded-xl py-3" data-bn="Gumroad স্টোর" data-en="Gumroad Store">Gumroad স্টোর</a>
+    <a href="https://github.com/MDTowfiqul/our-boighar" target="_blank" rel="noopener" class="flex-1 text-center font-bold rounded-xl py-3 border-2 border-neutral-800 dark:border-neutral-200">GitHub</a>
+  </div>
+</aside>
+
 {{ content }}
 
-<footer class="bg-white dark:bg-neutral-950 border-t border-neutral-200 dark:border-neutral-800 mt-14 py-8 text-center text-sm text-neutral-500 dark:text-neutral-400">
-  <div class="max-w-6xl mx-auto px-4">
-    <p class="font-bold text-neutral-700 dark:text-neutral-200 mb-2">📚 আমাদের বইঘর (Our Boighar) — বাংলা ও ইংরেজি ইসলামিক বইয়ের উন্মুক্ত লাইব্রেরি</p>
-    <p>© মোঃ তৌফিকুল ইসলাম · <a class="text-emerald-700 dark:text-emerald-400 font-semibold hover:underline" href="https://towfiqulislam.gumroad.com/l/vvcbp">Gumroad</a> · <a class="text-emerald-700 dark:text-emerald-400 font-semibold hover:underline" href="https://mdtowfiqul.github.io/Our-Days/">Our Days</a> · <a class="text-emerald-700 dark:text-emerald-400 font-semibold hover:underline" href="https://github.com/MDTowfiqul">GitHub</a></p>
-  </div>
+<footer class="max-w-6xl mx-auto px-4 mt-14 pb-4 text-center text-sm text-neutral-500 dark:text-neutral-400">
+  <p class="font-bold text-neutral-700 dark:text-neutral-200 mb-2" data-bn="📚 আমাদের বইঘর (Our Boighar) — বাংলা ও ইংরেজি ইসলামিক বইয়ের উন্মুক্ত লাইব্রেরি" data-en="📚 Our Boighar — an open library of Bengali & English Islamic books">📚 আমাদের বইঘর (Our Boighar) — বাংলা ও ইংরেজি ইসলামিক বইয়ের উন্মুক্ত লাইব্রেরি</p>
+  <p>© মোঃ তৌফিকুল ইসলাম · <a class="text-emerald-700 dark:text-emerald-400 font-semibold hover:underline" href="https://towfiqulislam.gumroad.com/l/vvcbp">Gumroad</a> · <a class="text-emerald-700 dark:text-emerald-400 font-semibold hover:underline" href="https://mdtowfiqul.github.io/Our-Days/">Our Days</a> · <a class="text-emerald-700 dark:text-emerald-400 font-semibold hover:underline" href="https://github.com/MDTowfiqul">GitHub</a></p>
 </footer>
 
-<nav class="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-800 flex justify-around py-2 text-xs font-semibold text-neutral-600 dark:text-neutral-400">
-  <a href="{{ '/' | relative_url }}" class="flex flex-col items-center gap-0.5 px-3"><span class="text-lg">🏠</span>হোম</a>
-  <a href="{{ '/' | relative_url }}#categories" class="flex flex-col items-center gap-0.5 px-3"><span class="text-lg">📂</span>বিষয়</a>
-  <a href="{{ '/' | relative_url }}#writers" class="flex flex-col items-center gap-0.5 px-3"><span class="text-lg">✍️</span>লেখক</a>
-  <a href="{{ '/' | relative_url }}#searchbox" class="flex flex-col items-center gap-0.5 px-3"><span class="text-lg">🔍</span>খুঁজুন</a>
-  <a href="{{ '/' | relative_url }}#shelf" class="flex flex-col items-center gap-0.5 px-3"><span class="text-lg">★</span>আমার তাক</a>
+<!-- FLOATING BOTTOM NAV -->
+<nav class="fixed bottom-3 inset-x-3 sm:inset-x-0 sm:max-w-md sm:mx-auto z-30 bg-white dark:bg-neutral-800 rounded-full shadow-2xl border border-neutral-200/80 dark:border-neutral-700 flex justify-between px-2 py-1.5">
+  <a href="{{ '/' | relative_url }}" class="flex-1 flex flex-col items-center gap-0.5 rounded-full py-1.5 text-neutral-500 dark:text-neutral-300 {% if page.url == '/' %}accent-soft-bg accent-text{% endif %}">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 11.2L12 3l9 8.2V20a1.8 1.8 0 0 1-1.8 1.8h-4.4v-6.6H9.2v6.6H4.8A1.8 1.8 0 0 1 3 20z"/></svg>
+    <span class="text-[11px] font-bold" data-bn="হোম" data-en="Home">হোম</span>
+  </a>
+  <a href="{{ '/' | relative_url }}#categories" class="flex-1 flex flex-col items-center gap-0.5 rounded-full py-1.5 text-neutral-500 dark:text-neutral-300">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg>
+    <span class="text-[11px] font-bold" data-bn="ব্রাউজ" data-en="Browse">ব্রাউজ</span>
+  </a>
+  <a href="{{ '/' | relative_url }}#searchbox" class="flex-1 flex flex-col items-center gap-0.5 rounded-full py-1.5 text-neutral-500 dark:text-neutral-300">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20.5 20.5L16.7 16.7"/></svg>
+    <span class="text-[11px] font-bold" data-bn="খুঁজুন" data-en="Search">খুঁজুন</span>
+  </a>
+  <a href="{{ '/' | relative_url }}#shelf" class="flex-1 flex flex-col items-center gap-0.5 rounded-full py-1.5 text-neutral-500 dark:text-neutral-300">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 6.2C10 4.7 7.4 4.2 4 4.2v14c3.4 0 6 .5 8 2 2-1.5 4.6-2 8-2v-14c-3.4 0-6 .5-8 2zm0 0v14"/></svg>
+    <span class="text-[11px] font-bold" data-bn="আমার তাক" data-en="My Shelf">আমার তাক</span>
+  </a>
 </nav>
 
 <script>
-  document.getElementById('theme-toggle').addEventListener('click', function(){
+(function(){
+  /* dark / light */
+  var tt = document.getElementById('theme-toggle');
+  function paintThemeBtn(){ tt.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙'; }
+  tt.addEventListener('click', function(){
     var on = document.documentElement.classList.toggle('dark');
     localStorage.setItem('ob-theme', on ? 'dark' : 'light');
-    this.textContent = on ? '☀️' : '🌙';
+    paintThemeBtn();
   });
-  if (document.documentElement.classList.contains('dark')) document.getElementById('theme-toggle').textContent = '☀️';
+  paintThemeBtn();
+
+  /* colour themes */
+  function paintSwatches(){
+    var cur = document.documentElement.getAttribute('data-color') || 'purple';
+    Array.prototype.forEach.call(document.querySelectorAll('.swatch'), function(sw){
+      sw.classList.toggle('on', sw.getAttribute('data-setcolor') === cur);
+    });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.swatch'), function(sw){
+    sw.addEventListener('click', function(){
+      var c = sw.getAttribute('data-setcolor');
+      document.documentElement.setAttribute('data-color', c);
+      localStorage.setItem('ob-color', c);
+      paintSwatches();
+    });
+  });
+  paintSwatches();
+
+  /* language bn / en */
+  window.__obLang = localStorage.getItem('ob-lang') || 'bn';
+  function setLang(l){
+    window.__obLang = l;
+    localStorage.setItem('ob-lang', l);
+    document.documentElement.lang = l;
+    document.querySelectorAll('[data-bn]').forEach(function(el){
+      var v = l === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-bn');
+      if (v !== null) el.textContent = v;
+    });
+    document.querySelectorAll('[data-bn-ph]').forEach(function(el){
+      var v = l === 'en' ? el.getAttribute('data-en-ph') : el.getAttribute('data-bn-ph');
+      if (v !== null) el.setAttribute('placeholder', v);
+    });
+    document.getElementById('lang-label').textContent = l === 'en' ? 'EN' : 'BN';
+    document.getElementById('drawer-lang-label').textContent = l === 'en' ? 'English' : 'বাংলা';
+    window.dispatchEvent(new Event('ob-lang'));
+  }
+  window.__obSetLang = setLang;
+  document.getElementById('lang-toggle').addEventListener('click', function(){
+    setLang(window.__obLang === 'en' ? 'bn' : 'en');
+  });
+  document.getElementById('drawer-lang').addEventListener('click', function(){
+    setLang(window.__obLang === 'en' ? 'bn' : 'en');
+  });
+  if (window.__obLang === 'en') setLang('en');
+
+  /* drawer */
+  var drawer = document.getElementById('drawer'), overlay = document.getElementById('drawer-overlay');
+  function openDrawer(){
+    drawer.classList.remove('-translate-x-full');
+    overlay.classList.remove('opacity-0', 'pointer-events-none');
+  }
+  function closeDrawer(){
+    drawer.classList.add('-translate-x-full');
+    overlay.classList.add('opacity-0', 'pointer-events-none');
+  }
+  document.getElementById('menu-btn').addEventListener('click', openDrawer);
+  document.getElementById('drawer-close').addEventListener('click', closeDrawer);
+  overlay.addEventListener('click', closeDrawer);
+  Array.prototype.forEach.call(document.querySelectorAll('.drawer-link'), function(a){
+    a.addEventListener('click', closeDrawer);
+  });
+})();
 </script>
 </body>
 </html>

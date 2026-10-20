@@ -25,56 +25,56 @@ layout: default
       </div>
       <div class="grid grid-cols-2 gap-2.5 mt-5">
         {% if page.file %}
-        <a href="{{ '/reader.html' | relative_url }}?file={{ page.file | relative_url | url_encode }}&title={{ page.title | url_encode }}" class="col-span-2 flex items-center justify-center gap-2 bg-[#c8501b] hover:brightness-110 text-white font-bold rounded-xl py-3 px-4">📖 অনলাইনে পড়ুন</a>
-        <a href="{{ page.file | relative_url }}" download class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl py-3 px-4">⬇ ডাউনলোড</a>
+        <a href="{{ '/reader.html' | relative_url }}?file={{ page.file | relative_url | url_encode }}&title={{ page.title | url_encode }}" class="col-span-2 flex items-center justify-center gap-2 accent-bg text-white font-bold rounded-xl py-3 px-4" data-bn="📖 অনলাইনে পড়ুন" data-en="📖 Read Online">📖 অনলাইনে পড়ুন</a>
+        <a href="{{ page.file | relative_url }}" download class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl py-3 px-4" data-bn="⬇ ডাউনলোড" data-en="⬇ Download">⬇ ডাউনলোড</a>
         {% elsif page.gumroad %}
-        <a href="{{ page.gumroad }}" target="_blank" rel="noopener" class="col-span-2 flex items-center justify-center gap-2 bg-[#c8501b] hover:brightness-110 text-white font-bold rounded-xl py-3 px-4">🛒 Gumroad থেকে নিন{% if page.price %} · {{ page.price }}{% endif %}</a>
+        <a href="{{ page.gumroad }}" target="_blank" rel="noopener" class="col-span-2 flex items-center justify-center gap-2 accent-bg text-white font-bold rounded-xl py-3 px-4">🛒 Gumroad থেকে নিন{% if page.price %} · {{ page.price }}{% endif %}</a>
         {% endif %}
         <button id="bm-btn" class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl py-3 px-4">🔖 তাকে রাখুন</button>
-        <button id="share-btn" class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl py-3 px-4">⤴ শেয়ার</button>
+        <button id="share-btn" class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl py-3 px-4" data-bn="⤴ শেয়ার" data-en="⤴ Share">⤴ শেয়ার</button>
       </div>
     </div>
   </section>
 
   <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 mt-4">
-    <h2 class="text-lg font-bold mb-2">বইটি সম্পর্কে</h2>
+    <h2 class="text-lg font-bold mb-2" data-bn="বইটি সম্পর্কে" data-en="About This Book">বইটি সম্পর্কে</h2>
     <div class="text-[15px] text-neutral-700 dark:text-neutral-200">{{ content }}</div>
   </section>
 
   {% if page.file %}
   <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 mt-4">
-    <h2 class="text-lg font-bold mb-2">পড়ুন বা ডাউনলোড করুন</h2>
+    <h2 class="text-lg font-bold mb-2" data-bn="পড়ুন বা ডাউনলোড করুন" data-en="Read or Download">পড়ুন বা ডাউনলোড করুন</h2>
     <div class="flex items-center gap-3 border border-neutral-200 dark:border-neutral-600 rounded-xl p-3 mt-2">
       <span class="bg-amber-50 dark:bg-neutral-700 text-[#c8501b] dark:text-orange-300 font-extrabold rounded-lg px-3 py-2 text-sm">{{ page.format }}</span>
       <span class="flex-1 text-sm"><strong>{{ page.file_size }}</strong><br><span class="text-neutral-500 dark:text-neutral-400">Our Boighar থেকে সরাসরি ডাউনলোড</span></span>
-      <a href="{{ page.file | relative_url }}" download class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-lg px-4 py-2 text-sm">ডাউনলোড</a>
+      <a href="{{ page.file | relative_url }}" download class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-lg px-4 py-2 text-sm" data-bn="ডাউনলোড" data-en="Download">ডাউনলোড</a>
     </div>
-    <p class="text-[13px] text-neutral-500 dark:text-neutral-400 mt-3">✔ ফ্রি বই — অনলাইনে পড়ুন, ডাউনলোড করুন, শেয়ার করুন।</p>
+    <p class="text-[13px] text-neutral-500 dark:text-neutral-400 mt-3" data-bn="✔ ফ্রি বই — অনলাইনে পড়ুন, ডাউনলোড করুন, শেয়ার করুন।" data-en="✔ Free book — read online, download, share.">✔ ফ্রি বই — অনলাইনে পড়ুন, ডাউনলোড করুন, শেয়ার করুন।</p>
   </section>
   {% elsif page.gumroad %}
   <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 mt-4">
-    <h2 class="text-lg font-bold mb-2">কীভাবে পাবেন</h2>
+    <h2 class="text-lg font-bold mb-2" data-bn="কীভাবে পাবেন" data-en="How to Get It">কীভাবে পাবেন</h2>
     <p class="text-[15px]">এটি একটি পেইড সংস্করণ — পুরো ইবুকটি Gumroad থেকে কেনার পর ডেলিভারি পাবেন।</p>
   </section>
   {% endif %}
 
   <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 mt-4">
-    <h2 class="text-lg font-bold mb-2">বইয়ের তথ্য</h2>
+    <h2 class="text-lg font-bold mb-2" data-bn="বইয়ের তথ্য" data-en="Book Information">বইয়ের তথ্য</h2>
     <table class="w-full text-[15px]">
       <tr class="border-b border-neutral-200 dark:border-neutral-700"><td class="py-2 pr-3 text-neutral-500 dark:text-neutral-400 w-36 font-medium">লেখক / Writer</td><td class="py-2 font-semibold">{{ page.author }}</td></tr>
-      <tr class="border-b border-neutral-200 dark:border-neutral-700"><td class="py-2 pr-3 text-neutral-500 dark:text-neutral-400 font-medium">ইবুক নির্মাতা</td><td class="py-2 font-semibold">{{ page.creator }}</td></tr>
-      <tr class="border-b border-neutral-200 dark:border-neutral-700"><td class="py-2 pr-3 text-neutral-500 dark:text-neutral-400 font-medium">ভাষা</td><td class="py-2 font-semibold">{{ page.language_label }}</td></tr>
-      <tr class="border-b border-neutral-200 dark:border-neutral-700"><td class="py-2 pr-3 text-neutral-500 dark:text-neutral-400 font-medium">বিষয়</td><td class="py-2 font-semibold">{{ page.categories | join: ", " }}</td></tr>
-      <tr class="border-b border-neutral-200 dark:border-neutral-700"><td class="py-2 pr-3 text-neutral-500 dark:text-neutral-400 font-medium">ফরম্যাট</td><td class="py-2 font-semibold">{{ page.format }}{% if page.file %} · অনলাইন পড়া ও ডাউনলোড{% else %} · Gumroad{% endif %}</td></tr>
-      {% if page.file_size %}<tr class="border-b border-neutral-200 dark:border-neutral-700"><td class="py-2 pr-3 text-neutral-500 dark:text-neutral-400 font-medium">ফাইলের আকার</td><td class="py-2 font-semibold">{{ page.file_size }}</td></tr>{% endif %}
-      {% if page.year %}<tr><td class="py-2 pr-3 text-neutral-500 dark:text-neutral-400 font-medium">প্রথম প্রকাশ</td><td class="py-2 font-semibold">{{ page.year }}</td></tr>{% endif %}
+      <tr class="border-b border-neutral-200 dark:border-neutral-700"><td class="py-2 pr-3 text-neutral-500 dark:text-neutral-400 font-medium" data-bn="ইবুক নির্মাতা" data-en="Ebook Creator">ইবুক নির্মাতা</td><td class="py-2 font-semibold">{{ page.creator }}</td></tr>
+      <tr class="border-b border-neutral-200 dark:border-neutral-700"><td class="py-2 pr-3 text-neutral-500 dark:text-neutral-400 font-medium" data-bn="ভাষা" data-en="Language">ভাষা</td><td class="py-2 font-semibold">{{ page.language_label }}</td></tr>
+      <tr class="border-b border-neutral-200 dark:border-neutral-700"><td class="py-2 pr-3 text-neutral-500 dark:text-neutral-400 font-medium" data-bn="বিষয়" data-en="Subject">বিষয়</td><td class="py-2 font-semibold">{{ page.categories | join: ", " }}</td></tr>
+      <tr class="border-b border-neutral-200 dark:border-neutral-700"><td class="py-2 pr-3 text-neutral-500 dark:text-neutral-400 font-medium" data-bn="ফরম্যাট" data-en="Format">ফরম্যাট</td><td class="py-2 font-semibold">{{ page.format }}{% if page.file %} · অনলাইন পড়া ও ডাউনলোড{% else %} · Gumroad{% endif %}</td></tr>
+      {% if page.file_size %}<tr class="border-b border-neutral-200 dark:border-neutral-700"><td class="py-2 pr-3 text-neutral-500 dark:text-neutral-400 font-medium" data-bn="ফাইলের আকার" data-en="File Size">ফাইলের আকার</td><td class="py-2 font-semibold">{{ page.file_size }}</td></tr>{% endif %}
+      {% if page.year %}<tr><td class="py-2 pr-3 text-neutral-500 dark:text-neutral-400 font-medium" data-bn="প্রথম প্রকাশ" data-en="First Published">প্রথম প্রকাশ</td><td class="py-2 font-semibold">{{ page.year }}</td></tr>{% endif %}
     </table>
   </section>
 
   {% assign related = site.books | where: "category", page.category %}
   {% if related.size > 1 %}
   <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 mt-4">
-    <h2 class="text-lg font-bold mb-3">একই বিষয়ের আরও বই</h2>
+    <h2 class="text-lg font-bold mb-3" data-bn="একই বিষয়ের আরও বই" data-en="More in This Subject">একই বিষয়ের আরও বই</h2>
     <div class="grid grid-cols-3 sm:grid-cols-4 gap-4">
       {% for r in related %}{% unless r.url == page.url %}
       <a href="{{ r.url | relative_url }}" class="text-center">
@@ -87,7 +87,7 @@ layout: default
   {% endif %}
 
   <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 mt-4">
-    <h2 class="text-lg font-bold mb-1">💬 পাঠকের মন্তব্য ও রিঅ্যাকশন</h2>
+    <h2 class="text-lg font-bold mb-1" data-bn="💬 পাঠকের মন্তব্য ও রিঅ্যাকশন" data-en="💬 Reader Comments & Reactions">💬 পাঠকের মন্তব্য ও রিঅ্যাকশন</h2>
     <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-4">এই বই নিয়ে আপনার মতামত জানান — ফ্রি GitHub অ্যাকাউন্ট দিয়ে সাইন ইন করুন।</p>
     <div id="giscus"></div>
   </section>
@@ -99,12 +99,12 @@ layout: default
   function get(){ try{ return JSON.parse(localStorage.getItem(KEY)||'[]'); }catch(e){ return []; } }
   function set(l){ try{ localStorage.setItem(KEY, JSON.stringify(l)); }catch(e){} }
   var btn = document.getElementById('bm-btn');
-  function paint(){ var on = get().indexOf(BID) >= 0; btn.textContent = on ? '★ তাকে আছে' : '🔖 তাকে রাখুন'; btn.classList.toggle('ring-2', on); }
+  function paint(){ var on = get().indexOf(BID) >= 0; var en = (localStorage.getItem('ob-lang') === 'en'); btn.textContent = on ? (en ? '★ On Shelf' : '★ তাকে আছে') : (en ? '🔖 Add to Shelf' : '🔖 তাকে রাখুন'); btn.classList.toggle('ring-2', on); }
   btn.onclick = function(){ var l = get(), i = l.indexOf(BID); if(i>=0) l.splice(i,1); else l.push(BID); set(l); paint(); };
   paint();
   document.getElementById('share-btn').onclick = function(){
     if (navigator.share) navigator.share({title: document.title, url: location.href}).catch(function(){});
-    else if (navigator.clipboard){ navigator.clipboard.writeText(location.href); this.textContent = '✓ লিংক কপি হয়েছে'; }
+    else if (navigator.clipboard){ navigator.clipboard.writeText(location.href); this.textContent = (localStorage.getItem('ob-lang') === 'en') ? '✓ Link copied' : '✓ লিংক কপি হয়েছে'; }
   };
   var s = document.createElement('script');
   s.src = 'https://giscus.app/client.js';
