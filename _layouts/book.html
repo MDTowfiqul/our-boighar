@@ -126,8 +126,9 @@ layout: default
   <!-- COMMENTS -->
   <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 mt-4">
     <h2 class="text-lg font-bold mb-1" data-bn="💬 পাঠকের মন্তব্য ও রিঅ্যাকশন" data-en="💬 Reader Comments & Reactions">💬 পাঠকের মন্তব্য ও রিঅ্যাকশন</h2>
-    <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-4" data-bn="এই বই নিয়ে আপনার মতামত জানান — ফ্রি GitHub অ্যাকাউন্ট দিয়ে সাইন ইন করুন।" data-en="Share your thoughts on this book — sign in with a free GitHub account.">এই বই নিয়ে আপনার মতামত জানান — ফ্রি GitHub অ্যাকাউন্ট দিয়ে সাইন ইন করুন।</p>
-    <div id="giscus"></div>
+    <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-4" data-bn="এই বই নিয়ে আপনার মতামত জানান — আপনার Facebook অ্যাকাউন্ট দিয়ে মন্তব্য করুন।" data-en="Share your thoughts on this book — comment with your Facebook account.">এই বই নিয়ে আপনার মতামত জানান — আপনার Facebook অ্যাকাউন্ট দিয়ে মন্তব্য করুন।</p>
+    <div id="fb-root"></div>
+    <div class="fb-comments" data-href="{{ page.url | absolute_url }}" data-width="100%" data-numposts="5"></div>
   </section>
 
   {% assign same_author = site.books | where: "author", page.author %}
@@ -206,22 +207,9 @@ layout: default
   paintRating();
   window.addEventListener('ob-lang', function(){ paint(); paintRating(); });
 
-  var s = document.createElement('script');
-  s.src = 'https://giscus.app/client.js';
-  s.setAttribute('data-repo','MDTowfiqul/our-boighar');
-  s.setAttribute('data-repo-id','R_kgDOVQa34Q');
-  s.setAttribute('data-category','General');
-  s.setAttribute('data-category-id','DIC_kwDOVQa34c4DJF-s');
-  s.setAttribute('data-mapping','specific');
-  s.setAttribute('data-term','book: ' + BID);
-  s.setAttribute('data-strict','0');
-  s.setAttribute('data-reactions-enabled','1');
-  s.setAttribute('data-emit-metadata','0');
-  s.setAttribute('data-input-position','bottom');
-  s.setAttribute('data-theme','preferred_color_scheme');
-  s.setAttribute('data-lang','en');
-  s.setAttribute('crossorigin','anonymous');
-  s.async = true;
-  document.getElementById('giscus').appendChild(s);
+  var fs = document.createElement('script');
+  fs.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v21.0';
+  fs.async = true; fs.defer = true; fs.crossOrigin = 'anonymous';
+  document.body.appendChild(fs);
 })();
 </script>
