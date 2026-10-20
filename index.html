@@ -140,7 +140,7 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
       <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="জনপ্রিয় বাংলা বই" data-en="Popular Bengali Books">জনপ্রিয় বাংলা বই</h2>
       <a href="#popular" class="accent-text text-sm font-extrabold hover:underline" data-bn="সব দেখুন" data-en="View All">সব দেখুন</a>
     </div>
-    <div class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-3 px-5 scroll-pl-5 scroll-pr-5 sm:mx-0 sm:px-0 sm:scroll-pl-0 sm:scroll-pr-0">
+    <div id="row-popular-bn" class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-3 px-5 scroll-pl-5 scroll-pr-5 sm:mx-0 sm:px-0 sm:scroll-pl-0 sm:scroll-pr-0">
       {% for b in bnbooks %}
       <a href="{{ b.url | relative_url }}" class="snap-start shrink-0 w-[150px] sm:w-[172px] group">
         <div class="rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]">
@@ -162,7 +162,7 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
       <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="জনপ্রিয় ইংরেজি বই" data-en="Popular English Books">জনপ্রিয় ইংরেজি বই</h2>
       <a href="#popular" class="accent-text text-sm font-extrabold hover:underline" data-bn="সব দেখুন" data-en="View All">সব দেখুন</a>
     </div>
-    <div class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-3 px-5 scroll-pl-5 scroll-pr-5 sm:mx-0 sm:px-0 sm:scroll-pl-0 sm:scroll-pr-0">
+    <div id="row-popular-en" class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-3 px-5 scroll-pl-5 scroll-pr-5 sm:mx-0 sm:px-0 sm:scroll-pl-0 sm:scroll-pr-0">
       {% for b in enbooks %}
       <a href="{{ b.url | relative_url }}" class="snap-start shrink-0 w-[150px] sm:w-[172px] group">
         <div class="rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]">
@@ -340,6 +340,40 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   });
 
   window.addEventListener('ob-lang', function(){ apply(); if (!suggestEl.classList.contains('hidden')) renderSuggest(); });
+
+  /* ---------- জনপ্রিয়: reorder popular rows by real view counts (popular.json) ---------- */
+  (function(){
+    function bookIdOf(el){
+      var id = el.getAttribute('data-id');
+      if (id) return id;
+      var a = el.tagName === 'A' ? el : el.querySelector('a[href]');
+      if (!a) return null;
+      var m = (a.getAttribute('href') || '').match(/\/books\/([^\/]+)\//);
+      return m ? m[1] : null;
+    }
+    function sortRow(row, ranks){
+      if (!row) return;
+      var items = Array.prototype.slice.call(row.children);
+      var decorated = items.map(function(el, i){ return { el:el, i:i, r: ranks[bookIdOf(el)] }; });
+      decorated.sort(function(x, y){
+        var xr = (typeof x.r === 'number') ? x.r : Infinity;
+        var yr = (typeof y.r === 'number') ? y.r : Infinity;
+        if (xr !== yr) return xr - yr;
+        return x.i - y.i;
+      });
+      decorated.forEach(function(d){ row.appendChild(d.el); });
+    }
+    fetch('{{ "/popular.json" | relative_url }}', { cache:'no-cache' })
+      .then(function(res){ return res.ok ? res.json() : null; })
+      .then(function(ranks){
+        if (!ranks) return;
+        sortRow(document.getElementById('row-popular'), ranks);
+        sortRow(document.getElementById('row-popular-bn'), ranks);
+        sortRow(document.getElementById('row-popular-en'), ranks);
+        apply();
+      })
+      .catch(function(){});
+  })();
 
   var q = new URLSearchParams(location.search).get('q');
   if (q){ search.value = q; doSearch(); }
