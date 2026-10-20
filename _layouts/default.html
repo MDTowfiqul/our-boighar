@@ -16,7 +16,7 @@
   document.documentElement.lang = localStorage.getItem('ob-lang') || 'bn';
   /* Category display names: categories are stored in English in each book's
      file; this map gives their Bengali names. Add new categories here. */
-  window.__obCatBn = {"Dawah":"দাওয়াহ","Hadith":"হাদীস","Health":"স্বাস্থ্য","Islamic Q&A":"ইসলামিক প্রশ্নোত্তর","Manners & Character":"আদব ও চরিত্র","Prophetic Medicine":"তিব্বে নববী","Qur'an":"কুরআন","Spirituality":"আধ্যাত্মিকতা","Tafsir":"তাফসীর","Aqeedah":"আকীদা","Seerah":"সীরাহ","History":"ইতিহাস","Biography":"জীবনী","Fiqh":"ফিকহ","Family":"পরিবার","Women":"নারী","Dua":"দোয়া ও যিকির"};
+  window.__obCatBn = {"Dawah":"দাওয়াহ","Hadith":"হাদীস","Health":"স্বাস্থ্য","Islamic Q&A":"ইসলামিক প্রশ্নোত্তর","Manners & Character":"আদব ও চরিত্র","Prophetic Medicine":"তিব্বে নববী","Qur'an":"কুরআন","Spirituality":"আধ্যাত্মিকতা","Tafsir":"তাফসীর","Aqeedah":"আকীদা","Seerah":"সীরাহ","History":"ইতিহাস","Biography":"জীবনী","Fiqh":"ফিকহ","Family":"পরিবার","Women":"নারী","Dua":"দোয়া ও যিকির","Economics & Politics":"অর্থনীতি ও রাজনীতি"};
   window.__obCatName = function(c){ var l = localStorage.getItem('ob-lang') || 'bn'; return l === 'en' ? c : (window.__obCatBn[c] || c); };
 </script>
 <style>
