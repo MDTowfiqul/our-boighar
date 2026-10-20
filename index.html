@@ -105,6 +105,32 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
     </div>
   </section>
 
+  <!-- BOOK SERIES -->
+  {% assign series_groups = site.books | group_by: "series" | sort: "name" %}
+  <section id="series" class="mt-10">
+    <h2 class="serif text-xl sm:text-2xl font-extrabold mb-1 px-0.5" data-bn="📚 বইয়ের সিরিজ" data-en="📚 Book Series">📚 বইয়ের সিরিজ</h2>
+    {% for g in series_groups %}{% if g.name and g.size > 1 %}
+    {% assign sbooks = g.items | sort: "series_order" %}
+    <div class="mt-5">
+      <div class="flex items-baseline justify-between mb-3 px-0.5">
+        <h3 class="font-extrabold" data-bn="{{ g.name }}" data-en="{{ g.items.first.series_en | default: g.name }}">{{ g.name }}</h3>
+        <span class="text-sm font-bold text-neutral-500 dark:text-neutral-400">{{ g.size }} <span data-bn="টি বই" data-en="books">টি বই</span></span>
+      </div>
+      <div class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-3 px-3 sm:mx-0 sm:px-0">
+        {% for b in sbooks %}
+        <a href="{{ b.url | relative_url }}" class="snap-start shrink-0 w-[150px] sm:w-[172px] group">
+          <div class="rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]">
+            <img src="{{ b.cover | relative_url }}" alt="{{ b.title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+          </div>
+          <h3 class="font-bold text-sm sm:text-[15px] leading-snug mt-2 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400" data-bn="{{ b.title }}" data-en="{{ b.title_en | default: b.title }}">{{ b.title }}</h3>
+          <p class="text-xs font-bold accent-text mt-0.5" data-bn="অংশ {{ b.series_order }}" data-en="Part {{ b.series_order }}">অংশ {{ b.series_order }}</p>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}{% endfor %}
+  </section>
+
   <!-- BENGALI BOOKS ROW -->
   {% assign bnbooks = site.books | where: "language", "bn" %}
   {% if bnbooks.size > 0 %}
