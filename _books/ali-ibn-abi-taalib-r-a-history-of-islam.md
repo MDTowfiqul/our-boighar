@@ -13,6 +13,9 @@ cover: "/img/cover-ali-ibn-abi-taalib-r-a-history-of-islam.jpg"
 file: "/books/ali-ibn-abi-taalib-r-a-history-of-islam.epub"
 format: "EPUB"
 file_size: "0.32 MB"
+series: "History of Islam"
+series_en: "History of Islam"
+series_order: 4
 ---
 
 The life and caliphate of Ali ibn Abi Talib (R.A) — the fourth caliph of Islam — his virtues, battles, wisdom and martyrdom, from the History of Islam series.

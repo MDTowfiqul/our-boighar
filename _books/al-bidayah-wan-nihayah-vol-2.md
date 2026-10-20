@@ -13,6 +13,9 @@ cover: "/img/cover-al-bidayah-wan-nihayah-vol-2.jpg"
 file: "/books/al-bidayah-wan-nihayah-vol-2.epub"
 format: "EPUB"
 file_size: "0.98 MB"
+series: "আল বিদায়া ওয়ান নিহায়া"
+series_en: "Al-Bidayah wan-Nihayah"
+series_order: 2
 ---
 
 আল বিদায়া ওয়ান নিহায়া (২য় খণ্ড) — ইবনে কাসীরের মহাগ্রন্থের ধারাবাহিক বাংলা অনুবাদ; নবীযুগ ও খুলাফায়ে রাশেদীনের ইতিহাস।

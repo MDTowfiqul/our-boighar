@@ -13,6 +13,9 @@ cover: "/img/cover-ashabe-rasuler-jibonkotha-vol-5.jpg"
 file: "/books/ashabe-rasuler-jibonkotha-vol-5.epub"
 format: "EPUB"
 file_size: "0.32 MB"
+series: "আসহাবে রাসূলের জীবনকথা"
+series_en: "Ashabe Rasuler Jibonkotha"
+series_order: 5
 ---
 
 আসহাবে রাসূলের জীবনকথা (৫ম খণ্ড) — সাহাবায়ে কেরামের জীবনী সিরিজের পঞ্চম খণ্ড।

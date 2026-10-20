@@ -13,6 +13,9 @@ cover: "/img/cover-bharat-ovhijan-3.jpg"
 file: "/books/bharat-ovhijan-3.epub"
 format: "EPUB"
 file_size: "0.65 MB"
+series: "ভারত অভিযান"
+series_en: "Bharat Ovhijan"
+series_order: 3
 ---
 
 ভারত অভিযান (৩য় খণ্ড) — মুসলিম বীরদের ভারত অভিযানের ধারাবাহিক ঐতিহাসিক কাহিনির তৃতীয় পর্ব।

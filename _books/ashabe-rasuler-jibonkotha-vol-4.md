@@ -13,6 +13,9 @@ cover: "/img/cover-ashabe-rasuler-jibonkotha-vol-4.jpg"
 file: "/books/ashabe-rasuler-jibonkotha-vol-4.epub"
 format: "EPUB"
 file_size: "0.29 MB"
+series: "আসহাবে রাসূলের জীবনকথা"
+series_en: "Ashabe Rasuler Jibonkotha"
+series_order: 4
 ---
 
 আসহাবে রাসূলের জীবনকথা (৪র্থ খণ্ড) — সাহাবীদের জীবনকথা সিরিজের চতুর্থ খণ্ড; তাঁদের ঈমান, ত্যাগ ও চরিত্রের বিবরণ।

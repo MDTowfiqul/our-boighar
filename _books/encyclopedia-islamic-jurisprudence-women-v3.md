@@ -13,6 +13,9 @@ cover: "/img/cover-encyclopedia-islamic-jurisprudence-women-v3.jpg"
 file: "/books/encyclopedia-islamic-jurisprudence-women-v3.epub"
 format: "EPUB"
 file_size: "2.51 MB"
+series: "Encyclopedia of Islamic Jurisprudence Concerning Muslim Women"
+series_en: "Encyclopedia of Islamic Jurisprudence Concerning Muslim Women"
+series_order: 3
 ---
 
 Volume III of the comprehensive encyclopedia of Islamic jurisprudence concerning Muslim women — marriage, family and social rulings, completing the three-volume set.

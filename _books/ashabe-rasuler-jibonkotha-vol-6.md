@@ -13,6 +13,9 @@ cover: "/img/cover-ashabe-rasuler-jibonkotha-vol-6.jpg"
 file: "/books/ashabe-rasuler-jibonkotha-vol-6.epub"
 format: "EPUB"
 file_size: "0.36 MB"
+series: "আসহাবে রাসূলের জীবনকথা"
+series_en: "Ashabe Rasuler Jibonkotha"
+series_order: 6
 ---
 
 আসহাবে রাসূলের জীবনকথা (৬ষ্ঠ খণ্ড) — ড. মুহাম্মদ আবদুল মাবুদের সাহাবী-জীবনী সিরিজের ষষ্ঠ খণ্ড।

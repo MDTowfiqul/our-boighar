@@ -13,6 +13,9 @@ cover: "/img/cover-al-bidayah-wan-nihayah-vol-3.jpg"
 file: "/books/al-bidayah-wan-nihayah-vol-3.epub"
 format: "EPUB"
 file_size: "3.67 MB"
+series: "আল বিদায়া ওয়ান নিহায়া"
+series_en: "Al-Bidayah wan-Nihayah"
+series_order: 3
 ---
 
 আল বিদায়া ওয়ান নিহায়া (৩য় খণ্ড) — ইবনে কাসীরের ইতিহাসগ্রন্থের বাংলা অনুবাদের তৃতীয় খণ্ড; উমাইয়া যুগের ঘটনাবলি।

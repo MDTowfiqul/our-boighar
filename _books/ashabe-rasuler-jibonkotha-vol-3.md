@@ -13,6 +13,9 @@ cover: "/img/cover-ashabe-rasuler-jibonkotha-vol-3.jpg"
 file: "/books/ashabe-rasuler-jibonkotha-vol-3.epub"
 format: "EPUB"
 file_size: "0.35 MB"
+series: "আসহাবে রাসূলের জীবনকথা"
+series_en: "Ashabe Rasuler Jibonkotha"
+series_order: 3
 ---
 
 আসহাবে রাসূলের জীবনকথা (৩য় খণ্ড) — ড. মুহাম্মদ আবদুল মাবুদের সাহাবী-জীবনী সিরিজের তৃতীয় খণ্ড।

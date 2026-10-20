@@ -13,6 +13,9 @@ cover: "/img/cover-alor-michil-vol-2.jpg"
 file: "/books/alor-michil-vol-2.epub"
 format: "EPUB"
 file_size: "0.83 MB"
+series: "আলোর মিছিল"
+series_en: "Alor Michil"
+series_order: 2
 ---
 
 আলোর মিছিল (২য় খণ্ড) — সাহাবায়ে কেরামের জীবনের শিক্ষণীয় ঘটনাবলি নিয়ে রাফাত পাশার সিরিজের দ্বিতীয় খণ্ড।

@@ -13,6 +13,9 @@ cover: "/img/cover-bharat-ovhijan-1.jpg"
 file: "/books/bharat-ovhijan-1.epub"
 format: "EPUB"
 file_size: "0.7 MB"
+series: "ভারত অভিযান"
+series_en: "Bharat Ovhijan"
+series_order: 1
 ---
 
 ভারত অভিযান (১ম খণ্ড) — সুলতান মাহমুদ গজনবীসহ মুসলিম বীরদের ভারত অভিযানের ঐতিহাসিক কাহিনি, এনায়েতুল্লাহর জনপ্রিয় সিরিজের প্রথম পর্ব।

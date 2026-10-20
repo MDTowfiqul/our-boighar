@@ -13,6 +13,9 @@ cover: "/img/cover-amra-shei-she-jati-part-2.jpg"
 file: "/books/amra-shei-she-jati-part-2.epub"
 format: "EPUB"
 file_size: "0.22 MB"
+series: "আমরা সেই সে জাতি"
+series_en: "Amra Shei She Jati"
+series_order: 2
 ---
 
 আমরা সেই সে জাতি (২য় খণ্ড) — আবুল আসাদের জনপ্রিয় ইতিহাস-সিরিজের দ্বিতীয় খণ্ড; মুসলিম জাতির গৌরবময় অতীতের ধারাবাহিক কাহিনি।

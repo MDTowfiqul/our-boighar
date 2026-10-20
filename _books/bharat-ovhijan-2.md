@@ -13,6 +13,9 @@ cover: "/img/cover-bharat-ovhijan-2.jpg"
 file: "/books/bharat-ovhijan-2.epub"
 format: "EPUB"
 file_size: "0.6 MB"
+series: "ভারত অভিযান"
+series_en: "Bharat Ovhijan"
+series_order: 2
 ---
 
 ভারত অভিযান (২য় খণ্ড) — মুসলিম বীরদের ভারত অভিযানের ধারাবাহিক ঐতিহাসিক কাহিনির দ্বিতীয় পর্ব।

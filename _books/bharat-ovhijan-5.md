@@ -13,6 +13,9 @@ cover: "/img/cover-bharat-ovhijan-5.jpg"
 file: "/books/bharat-ovhijan-5.epub"
 format: "EPUB"
 file_size: "0.67 MB"
+series: "ভারত অভিযান"
+series_en: "Bharat Ovhijan"
+series_order: 5
 ---
 
 ভারত অভিযান (৫ম খণ্ড) — মুসলিম বীরদের ভারত অভিযানের ধারাবাহিক ঐতিহাসিক কাহিনির পঞ্চম ও শেষ পর্ব।

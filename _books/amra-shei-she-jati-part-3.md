@@ -13,6 +13,9 @@ cover: "/img/cover-amra-shei-she-jati-part-3.jpg"
 file: "/books/amra-shei-she-jati-part-3.epub"
 format: "EPUB"
 file_size: "0.23 MB"
+series: "আমরা সেই সে জাতি"
+series_en: "Amra Shei She Jati"
+series_order: 3
 ---
 
 আমরা সেই সে জাতি (৩য় খণ্ড) — আবুল আসাদের জনপ্রিয় ইতিহাস-সিরিজের তৃতীয় খণ্ড; মুসলিম জাতির গৌরবময় অতীতের ধারাবাহিক কাহিনি।

@@ -13,6 +13,9 @@ cover: "/img/cover-alor-michil-vol-1.jpg"
 file: "/books/alor-michil-vol-1.epub"
 format: "EPUB"
 file_size: "0.34 MB"
+series: "আলোর মিছিল"
+series_en: "Alor Michil"
+series_order: 1
 ---
 
 আলোর মিছিল (১ম খণ্ড) — ড. আব্দুর রহমান রাফাত পাশার রচনা; সাহাবীদের জীবনের আলোকিত ঘটনাবলির প্রথম খণ্ড।

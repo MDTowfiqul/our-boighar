@@ -13,6 +13,9 @@ cover: "/img/cover-ashabe-rasuler-jibonkotha-vol-1.jpg"
 file: "/books/ashabe-rasuler-jibonkotha-vol-1.epub"
 format: "EPUB"
 file_size: "0.31 MB"
+series: "আসহাবে রাসূলের জীবনকথা"
+series_en: "Ashabe Rasuler Jibonkotha"
+series_order: 1
 ---
 
 আসহাবে রাসূলের জীবনকথা (১ম খণ্ড) — ড. মুহাম্মদ আবদুল মাবুদের গবেষণালব্ধ সাহাবী-জীবনী সিরিজের প্রথম খণ্ড।

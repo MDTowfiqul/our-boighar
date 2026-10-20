@@ -13,6 +13,9 @@ cover: "/img/cover-ashabe-rasuler-jibonkotha-vol-2.jpg"
 file: "/books/ashabe-rasuler-jibonkotha-vol-2.epub"
 format: "EPUB"
 file_size: "0.34 MB"
+series: "আসহাবে রাসূলের জীবনকথা"
+series_en: "Ashabe Rasuler Jibonkotha"
+series_order: 2
 ---
 
 আসহাবে রাসূলের জীবনকথা (২য় খণ্ড) — সাহাবায়ে কেরামের জীবন, সংগ্রাম ও আদর্শের ধারাবাহিক বর্ণনার দ্বিতীয় খণ্ড।

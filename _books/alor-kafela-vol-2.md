@@ -13,6 +13,9 @@ cover: "/img/cover-alor-kafela-vol-2.jpg"
 file: "/books/alor-kafela-vol-2.epub"
 format: "EPUB"
 file_size: "0.3 MB"
+series: "আলোর কাফেলা"
+series_en: "Alor Kafela"
+series_order: 2
 ---
 
 আলোর কাফেলা (২য় খণ্ড) — সাহাবীদের জীবনের শিক্ষণীয় ও অনুপ্রেরণামূলক ঘটনাবলি; ড. আবদুর রহমান রাফাত পাশার বিখ্যাত সিরিজের দ্বিতীয় খণ্ড।

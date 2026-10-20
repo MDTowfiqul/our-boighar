@@ -13,6 +13,9 @@ cover: "/img/cover-al-bidayah-wan-nihayah-vol-6.jpg"
 file: "/books/al-bidayah-wan-nihayah-vol-6.epub"
 format: "EPUB"
 file_size: "0.96 MB"
+series: "আল বিদায়া ওয়ান নিহায়া"
+series_en: "Al-Bidayah wan-Nihayah"
+series_order: 6
 ---
 
 আল বিদায়া ওয়ান নিহায়া (৬ষ্ঠ খণ্ড) — ইবনে কাসীরের বিশ্ববিখ্যাত ইতিহাসের বাংলা অনুবাদের ষষ্ঠ খণ্ড।
