@@ -1,0 +1,1045 @@
+---
+layout: default
+title: Tools | টুলস
+permalink: /tools/
+description: "Free browser-only tools for Our Boighar readers — read EPUBs, check metadata, merge PDFs, plan your reading. No login, no upload, everything runs on your device."
+---
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/epubjs@0.3.93/dist/epub.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+
+<main class="max-w-6xl mx-auto px-3 sm:px-4">
+  <!-- PAGE HEADER -->
+  <section class="hero-bg text-white rounded-[1.8rem] mt-4 px-5 py-8 sm:p-10 shadow-xl">
+    <h1 class="serif text-2xl sm:text-3xl font-extrabold" data-bn="🛠️ বইঘর টুলস" data-en="🛠️ Boighar Tools">🛠️ বইঘর টুলস</h1>
+    <p class="mt-2 text-white/90 text-sm sm:text-base leading-relaxed max-w-2xl" data-bn="পড়া, সাজানো আর বই বানানোর কাজের টুল — সব আপনার ব্রাউজারেই চলে। কোনো লগইন লাগে না, ফাইল কোথাও আপলোড হয় না।" data-en="Tools for reading, organising and making books — everything runs in your browser. No login needed, no file is ever uploaded anywhere.">পড়া, সাজানো আর বই বানানোর কাজের টুল — সব আপনার ব্রাউজারেই চলে। কোনো লগইন লাগে না, ফাইল কোথাও আপলোড হয় না।</p>
+    <p class="mt-3 inline-flex items-center gap-2 bg-white/15 rounded-full px-3 py-1.5 text-xs sm:text-sm font-bold" data-bn="🔒 আপনার ফাইল আপনার ডিভাইসেই থাকে — কিছুই সার্ভারে যায় না" data-en="🔒 Your files stay on your device — nothing goes to any server">🔒 আপনার ফাইল আপনার ডিভাইসেই থাকে — কিছুই সার্ভারে যায় না</p>
+  </section>
+
+  <!-- PINNED TOOLS (xKAF style) -->
+  <section id="pinned-sec" class="mt-9 hidden">
+    <div class="flex items-baseline justify-between mb-3 px-0.5">
+      <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="📌 পিন করা টুল" data-en="📌 Pinned Tools">📌 পিন করা টুল</h2>
+    </div>
+    <div id="pinned-row" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+  </section>
+
+  <!-- EBOOK TOOLS -->
+  <section class="mt-9">
+    <div class="flex items-baseline justify-between mb-3 px-0.5">
+      <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="📖 ইবুক টুল" data-en="📖 Ebook Tools">📖 ইবুক টুল</h2>
+    </div>
+    <div class="tools-group grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+      <!-- 1. EPUB READER -->
+      <article class="tool-card bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm" data-tool="epub-reader">
+        <div class="flex items-start justify-between gap-2">
+          <div>
+            <span class="text-2xl">📖</span>
+            <h3 class="font-extrabold mt-1" data-bn="ইপাব রিডার" data-en="EPUB Reader">ইপাব রিডার</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="আপনার ফোনের ইপাব ফাইল ব্রাউজারেই পড়ুন — আপলোড ছাড়াই।" data-en="Read an EPUB file from your device right in the browser — no upload.">আপনার ফোনের ইপাব ফাইল ব্রাউজারেই পড়ুন — আপলোড ছাড়াই।</p>
+          </div>
+          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="epub-reader" aria-label="Pin tool" title="Pin">📌</button>
+        </div>
+        <button class="open-btn accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" data-open="epub-reader" data-bn="খুলুন" data-en="Open">খুলুন</button>
+        <div class="tool-work hidden mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-700" id="work-epub-reader">
+          <label class="block text-sm font-bold mb-1.5" data-bn="ইপাব ফাইল বেছে নিন" data-en="Choose an EPUB file">ইপাব ফাইল বেছে নিন</label>
+          <input type="file" id="epub-reader-file" accept=".epub" class="block w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg p-2 bg-white dark:bg-neutral-900">
+          <p class="tool-status text-sm text-neutral-500 dark:text-neutral-400 mt-2" id="epub-reader-status" role="status"></p>
+          <div id="epub-reader-controls" class="hidden mt-3">
+            <div class="flex flex-wrap items-center gap-2">
+              <button id="epub-reader-prev" class="border border-neutral-300 dark:border-neutral-600 rounded-lg px-3 py-1.5 text-sm font-bold">← <span data-bn="আগের" data-en="Prev">আগের</span></button>
+              <button id="epub-reader-next" class="border border-neutral-300 dark:border-neutral-600 rounded-lg px-3 py-1.5 text-sm font-bold"><span data-bn="পরের" data-en="Next">পরের</span> →</button>
+              <select id="epub-reader-toc" class="flex-1 min-w-[140px] border border-neutral-300 dark:border-neutral-600 rounded-lg px-2 py-1.5 text-sm bg-white dark:bg-neutral-900"></select>
+              <button id="epub-reader-smaller" class="border border-neutral-300 dark:border-neutral-600 rounded-lg px-3 py-1.5 text-sm font-bold" title="Smaller text">A−</button>
+              <button id="epub-reader-bigger" class="border border-neutral-300 dark:border-neutral-600 rounded-lg px-3 py-1.5 text-sm font-bold" title="Bigger text">A+</button>
+            </div>
+            <div id="epub-reader-area" class="mt-3 bg-white rounded-xl border border-neutral-200 dark:border-neutral-700 overflow-hidden" style="height:460px"></div>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-2" data-bn="পূর্ণ পড়ার অভিজ্ঞতা (অগ্রগতি সংরক্ষণসহ) চাইলে বইয়ের পাতার “অনলাইনে পড়ুন” ব্যবহার করুন।" data-en="For the full reading experience (with saved progress), use “Read Online” on the book's page.">পূর্ণ পড়ার অভিজ্ঞতা (অগ্রগতি সংরক্ষণসহ) চাইলে বইয়ের পাতার “অনলাইনে পড়ুন” ব্যবহার করুন।</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2. EPUB METADATA VIEWER -->
+      <article class="tool-card bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm" data-tool="epub-meta">
+        <div class="flex items-start justify-between gap-2">
+          <div>
+            <span class="text-2xl">🏷️</span>
+            <h3 class="font-extrabold mt-1" data-bn="ইপাব তথ্য দেখুন" data-en="EPUB Metadata Viewer">ইপাব তথ্য দেখুন</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="ইপাব ফাইলের ভেতরের শিরোনাম, লেখক, ভাষা ও প্রচ্ছদ দেখুন।" data-en="See the title, author, language and cover stored inside an EPUB file.">ইপাব ফাইলের ভেতরের শিরোনাম, লেখক, ভাষা ও প্রচ্ছদ দেখুন।</p>
+          </div>
+          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="epub-meta" aria-label="Pin tool" title="Pin">📌</button>
+        </div>
+        <button class="open-btn accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" data-open="epub-meta" data-bn="খুলুন" data-en="Open">খুলুন</button>
+        <div class="tool-work hidden mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-700" id="work-epub-meta">
+          <label class="block text-sm font-bold mb-1.5" data-bn="ইপাব ফাইল বেছে নিন" data-en="Choose an EPUB file">ইপাব ফাইল বেছে নিন</label>
+          <input type="file" id="epub-meta-file" accept=".epub" class="block w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg p-2 bg-white dark:bg-neutral-900">
+          <p class="tool-status text-sm text-neutral-500 dark:text-neutral-400 mt-2" id="epub-meta-status" role="status"></p>
+          <div id="epub-meta-result" class="hidden mt-3"></div>
+        </div>
+      </article>
+
+      <!-- 3. EPUB TO TXT -->
+      <article class="tool-card bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm" data-tool="epub-txt">
+        <div class="flex items-start justify-between gap-2">
+          <div>
+            <span class="text-2xl">📝</span>
+            <h3 class="font-extrabold mt-1" data-bn="ইপাব থেকে টেক্সট" data-en="EPUB to TXT">ইপাব থেকে টেক্সট</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="ইপাব থেকে শুধু লেখাটুকু বের করে .txt ফাইল হিসেবে ডাউনলোড করুন।" data-en="Extract the plain text of an EPUB and download it as a .txt file.">ইপাব থেকে শুধু লেখাটুকু বের করে .txt ফাইল হিসেবে ডাউনলোড করুন।</p>
+          </div>
+          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="epub-txt" aria-label="Pin tool" title="Pin">📌</button>
+        </div>
+        <button class="open-btn accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" data-open="epub-txt" data-bn="খুলুন" data-en="Open">খুলুন</button>
+        <div class="tool-work hidden mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-700" id="work-epub-txt">
+          <label class="block text-sm font-bold mb-1.5" data-bn="ইপাব ফাইল বেছে নিন" data-en="Choose an EPUB file">ইপাব ফাইল বেছে নিন</label>
+          <input type="file" id="epub-txt-file" accept=".epub" class="block w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg p-2 bg-white dark:bg-neutral-900">
+          <p class="tool-status text-sm text-neutral-500 dark:text-neutral-400 mt-2" id="epub-txt-status" role="status"></p>
+          <div id="epub-txt-result" class="hidden mt-3">
+            <textarea id="epub-txt-preview" readonly rows="6" class="w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg p-2 bg-neutral-50 dark:bg-neutral-900"></textarea>
+            <button id="epub-txt-download" class="accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-2" data-bn="টেক্সট ডাউনলোড করুন (.txt)" data-en="Download text (.txt)">টেক্সট ডাউনলোড করুন (.txt)</button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- PDF TOOLS -->
+  <section class="mt-9">
+    <div class="flex items-baseline justify-between mb-3 px-0.5">
+      <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="📄 পিডিএফ টুল" data-en="📄 PDF Tools">📄 পিডিএফ টুল</h2>
+    </div>
+    <div class="tools-group grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+      <!-- 4. PDF MERGE -->
+      <article class="tool-card bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm" data-tool="pdf-merge">
+        <div class="flex items-start justify-between gap-2">
+          <div>
+            <span class="text-2xl">📎</span>
+            <h3 class="font-extrabold mt-1" data-bn="পিডিএফ জোড়া দিন" data-en="PDF Merge">পিডিএফ জোড়া দিন</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="২টি বা তার বেশি পিডিএফ এক ফাইলে জোড়া দিন।" data-en="Combine 2 or more PDFs into a single file.">২টি বা তার বেশি পিডিএফ এক ফাইলে জোড়া দিন।</p>
+          </div>
+          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="pdf-merge" aria-label="Pin tool" title="Pin">📌</button>
+        </div>
+        <button class="open-btn accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" data-open="pdf-merge" data-bn="খুলুন" data-en="Open">খুলুন</button>
+        <div class="tool-work hidden mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-700" id="work-pdf-merge">
+          <label class="block text-sm font-bold mb-1.5" data-bn="পিডিএফ ফাইলগুলো বেছে নিন (কমপক্ষে ২টি)" data-en="Choose the PDF files (at least 2)">পিডিএফ ফাইলগুলো বেছে নিন (কমপক্ষে ২টি)</label>
+          <input type="file" id="pdf-merge-files" accept=".pdf,application/pdf" multiple class="block w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg p-2 bg-white dark:bg-neutral-900">
+          <ul id="pdf-merge-list" class="text-sm mt-2 space-y-1 text-neutral-600 dark:text-neutral-300"></ul>
+          <p class="tool-status text-sm text-neutral-500 dark:text-neutral-400 mt-2" id="pdf-merge-status" role="status"></p>
+          <button id="pdf-merge-go" class="accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-2" data-bn="জোড়া দিয়ে ডাউনলোড করুন" data-en="Merge & download">জোড়া দিয়ে ডাউনলোড করুন</button>
+        </div>
+      </article>
+
+      <!-- 5. PDF PAGE EXTRACTOR -->
+      <article class="tool-card bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm" data-tool="pdf-extract">
+        <div class="flex items-start justify-between gap-2">
+          <div>
+            <span class="text-2xl">✂️</span>
+            <h3 class="font-extrabold mt-1" data-bn="পিডিএফ পাতা বের করুন" data-en="PDF Page Extractor">পিডিএফ পাতা বের করুন</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="পিডিএফ থেকে শুধু দরকারি পাতাগুলো নিয়ে নতুন পিডিএফ বানান।" data-en="Take only the pages you need from a PDF and make a new PDF.">পিডিএফ থেকে শুধু দরকারি পাতাগুলো নিয়ে নতুন পিডিএফ বানান।</p>
+          </div>
+          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="pdf-extract" aria-label="Pin tool" title="Pin">📌</button>
+        </div>
+        <button class="open-btn accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" data-open="pdf-extract" data-bn="খুলুন" data-en="Open">খুলুন</button>
+        <div class="tool-work hidden mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-700" id="work-pdf-extract">
+          <label class="block text-sm font-bold mb-1.5" data-bn="পিডিএফ ফাইল বেছে নিন" data-en="Choose a PDF file">পিডিএফ ফাইল বেছে নিন</label>
+          <input type="file" id="pdf-extract-file" accept=".pdf,application/pdf" class="block w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg p-2 bg-white dark:bg-neutral-900">
+          <p class="tool-status text-sm text-neutral-500 dark:text-neutral-400 mt-2" id="pdf-extract-status" role="status"></p>
+          <div id="pdf-extract-controls" class="hidden mt-3">
+            <label class="block text-sm font-bold mb-1.5" data-bn="কোন পাতাগুলো নেবেন? (যেমন: 1-3, 5, 8-10)" data-en="Which pages? (e.g. 1-3, 5, 8-10)">কোন পাতাগুলো নেবেন? (যেমন: 1-3, 5, 8-10)</label>
+            <input type="text" id="pdf-extract-pages" placeholder="1-3, 5" class="w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg px-3 py-2 bg-white dark:bg-neutral-900">
+            <button id="pdf-extract-go" class="accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-2" data-bn="নতুন পিডিএফ ডাউনলোড করুন" data-en="Download new PDF">নতুন পিডিএফ ডাউনলোড করুন</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 6. IMAGE TO PDF -->
+      <article class="tool-card bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm" data-tool="img-pdf">
+        <div class="flex items-start justify-between gap-2">
+          <div>
+            <span class="text-2xl">🖼️</span>
+            <h3 class="font-extrabold mt-1" data-bn="ছবি থেকে পিডিএফ" data-en="Image to PDF">ছবি থেকে পিডিএফ</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="প্রচ্ছদ বা স্ক্যান করা পাতার ছবি দিয়ে পিডিএফ বানান — প্রতি ছবি এক পাতা।" data-en="Make a PDF from cover or scanned-page images — one image per page.">প্রচ্ছদ বা স্ক্যান করা পাতার ছবি দিয়ে পিডিএফ বানান — প্রতি ছবি এক পাতা।</p>
+          </div>
+          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="img-pdf" aria-label="Pin tool" title="Pin">📌</button>
+        </div>
+        <button class="open-btn accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" data-open="img-pdf" data-bn="খুলুন" data-en="Open">খুলুন</button>
+        <div class="tool-work hidden mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-700" id="work-img-pdf">
+          <label class="block text-sm font-bold mb-1.5" data-bn="ছবিগুলো বেছে নিন (JPG / PNG)" data-en="Choose the images (JPG / PNG)">ছবিগুলো বেছে নিন (JPG / PNG)</label>
+          <input type="file" id="img-pdf-files" accept="image/jpeg,image/png" multiple class="block w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg p-2 bg-white dark:bg-neutral-900">
+          <ul id="img-pdf-list" class="text-sm mt-2 space-y-1 text-neutral-600 dark:text-neutral-300"></ul>
+          <p class="tool-status text-sm text-neutral-500 dark:text-neutral-400 mt-2" id="img-pdf-status" role="status"></p>
+          <button id="img-pdf-go" class="accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-2" data-bn="পিডিএফ বানিয়ে ডাউনলোড করুন" data-en="Make PDF & download">পিডিএফ বানিয়ে ডাউনলোড করুন</button>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- IMAGE TOOLS -->
+  <section class="mt-9">
+    <div class="flex items-baseline justify-between mb-3 px-0.5">
+      <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="🖼️ ছবির টুল" data-en="🖼️ Image Tool">🖼️ ছবির টুল</h2>
+    </div>
+    <div class="tools-group grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+      <!-- 7. COVER RESIZER -->
+      <article class="tool-card bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm" data-tool="cover-resize">
+        <div class="flex items-start justify-between gap-2">
+          <div>
+            <span class="text-2xl">🖼️</span>
+            <h3 class="font-extrabold mt-1" data-bn="প্রচ্ছদ রিসাইজ" data-en="Cover Resizer">প্রচ্ছদ রিসাইজ</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="বইয়ের প্রচ্ছদ ছবি মানসম্মত সাইজে ছোট-বড় করে ডাউনলোড করুন।" data-en="Resize a book cover image to a standard size and download it.">বইয়ের প্রচ্ছদ ছবি মানসম্মত সাইজে ছোট-বড় করে ডাউনলোড করুন।</p>
+          </div>
+          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="cover-resize" aria-label="Pin tool" title="Pin">📌</button>
+        </div>
+        <button class="open-btn accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" data-open="cover-resize" data-bn="খুলুন" data-en="Open">খুলুন</button>
+        <div class="tool-work hidden mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-700" id="work-cover-resize">
+          <label class="block text-sm font-bold mb-1.5" data-bn="ছবি বেছে নিন (JPG / PNG)" data-en="Choose an image (JPG / PNG)">ছবি বেছে নিন (JPG / PNG)</label>
+          <input type="file" id="cover-file" accept="image/jpeg,image/png" class="block w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg p-2 bg-white dark:bg-neutral-900">
+          <div class="grid grid-cols-2 gap-3 mt-3">
+            <div>
+              <label class="block text-sm font-bold mb-1.5" data-bn="সাইজ" data-en="Size">সাইজ</label>
+              <select id="cover-size" class="w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg px-2 py-2 bg-white dark:bg-neutral-900">
+                <option value="600x900" data-bn="বইয়ের প্রচ্ছদ 600×900" data-en="Book cover 600×900">বইয়ের প্রচ্ছদ 600×900</option>
+                <option value="1000x1500" data-bn="বড় প্রচ্ছদ 1000×1500" data-en="Large cover 1000×1500">বড় প্রচ্ছদ 1000×1500</option>
+                <option value="512x512" data-bn="বর্গাকার 512×512" data-en="Square 512×512">বর্গাকার 512×512</option>
+                <option value="1200x630" data-bn="শেয়ার ছবি 1200×630" data-en="Share image 1200×630">শেয়ার ছবি 1200×630</option>
+                <option value="custom" data-bn="নিজের মতো" data-en="Custom">নিজের মতো</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-bold mb-1.5" data-bn="ধরন" data-en="Fit">ধরন</label>
+              <select id="cover-fit" class="w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg px-2 py-2 bg-white dark:bg-neutral-900">
+                <option value="cover" data-bn="কেটে ভরাট করুন" data-en="Crop to fill">কেটে ভরাট করুন</option>
+                <option value="contain" data-bn="পুরো ছবি রাখুন" data-en="Keep whole image">পুরো ছবি রাখুন</option>
+              </select>
+            </div>
+          </div>
+          <div id="cover-custom" class="hidden grid grid-cols-2 gap-3 mt-3">
+            <div>
+              <label class="block text-sm font-bold mb-1.5" data-bn="প্রস্থ (px)" data-en="Width (px)">প্রস্থ (px)</label>
+              <input type="number" id="cover-w" value="600" min="16" max="4000" class="w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg px-3 py-2 bg-white dark:bg-neutral-900">
+            </div>
+            <div>
+              <label class="block text-sm font-bold mb-1.5" data-bn="উচ্চতা (px)" data-en="Height (px)">উচ্চতা (px)</label>
+              <input type="number" id="cover-h" value="900" min="16" max="4000" class="w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg px-3 py-2 bg-white dark:bg-neutral-900">
+            </div>
+          </div>
+          <p class="tool-status text-sm text-neutral-500 dark:text-neutral-400 mt-2" id="cover-status" role="status"></p>
+          <div id="cover-preview-wrap" class="hidden mt-3">
+            <canvas id="cover-canvas" class="max-w-full rounded-xl border border-neutral-200 dark:border-neutral-700"></canvas>
+            <button id="cover-download" class="accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-2" data-bn="ছবি ডাউনলোড করুন" data-en="Download image">ছবি ডাউনলোড করুন</button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- READING TOOLS -->
+  <section class="mt-9">
+    <div class="flex items-baseline justify-between mb-3 px-0.5">
+      <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="📚 পড়ার অভ্যাসের টুল" data-en="📚 Reading Habit Tools">📚 পড়ার অভ্যাসের টুল</h2>
+    </div>
+    <div class="tools-group grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+      <!-- 8. READING PLANNER -->
+      <article class="tool-card bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm" data-tool="planner">
+        <div class="flex items-start justify-between gap-2">
+          <div>
+            <span class="text-2xl">📅</span>
+            <h3 class="font-extrabold mt-1" data-bn="পড়ার পরিকল্পনা" data-en="Reading Planner">পড়ার পরিকল্পনা</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="বই শেষ করার তারিখ বা দিনে কত পাতা পড়বেন — হিসাব করে পরিকল্পনা সাজান।" data-en="Plan by finish date or pages per day, and see when you'll finish the book.">বই শেষ করার তারিখ বা দিনে কত পাতা পড়বেন — হিসাব করে পরিকল্পনা সাজান।</p>
+          </div>
+          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="planner" aria-label="Pin tool" title="Pin">📌</button>
+        </div>
+        <button class="open-btn accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" data-open="planner" data-bn="খুলুন" data-en="Open">খুলুন</button>
+        <div class="tool-work hidden mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-700" id="work-planner">
+          <label class="block text-sm font-bold mb-1.5" data-bn="বইয়ের নাম (ঐচ্ছিক)" data-en="Book name (optional)">বইয়ের নাম (ঐচ্ছিক)</label>
+          <input type="text" id="planner-title" class="w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg px-3 py-2 bg-white dark:bg-neutral-900">
+          <div class="grid grid-cols-2 gap-3 mt-3">
+            <div>
+              <label class="block text-sm font-bold mb-1.5" data-bn="মোট পাতা" data-en="Total pages">মোট পাতা</label>
+              <input type="number" id="planner-total" min="1" placeholder="300" class="w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg px-3 py-2 bg-white dark:bg-neutral-900">
+            </div>
+            <div>
+              <label class="block text-sm font-bold mb-1.5" data-bn="পড়া হয়েছে" data-en="Pages read">পড়া হয়েছে</label>
+              <input type="number" id="planner-done" min="0" value="0" class="w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg px-3 py-2 bg-white dark:bg-neutral-900">
+            </div>
+          </div>
+          <div class="flex gap-4 mt-3 text-sm font-bold">
+            <label class="flex items-center gap-1.5"><input type="radio" name="planner-mode" value="perday" checked> <span data-bn="দিনে পাতা দিয়ে" data-en="By pages per day">দিনে পাতা দিয়ে</span></label>
+            <label class="flex items-center gap-1.5"><input type="radio" name="planner-mode" value="bydate"> <span data-bn="শেষের তারিখ দিয়ে" data-en="By finish date">শেষের তারিখ দিয়ে</span></label>
+          </div>
+          <div class="grid grid-cols-2 gap-3 mt-3">
+            <div id="planner-perday-wrap">
+              <label class="block text-sm font-bold mb-1.5" data-bn="দিনে কত পাতা" data-en="Pages per day">দিনে কত পাতা</label>
+              <input type="number" id="planner-perday" min="1" placeholder="10" class="w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg px-3 py-2 bg-white dark:bg-neutral-900">
+            </div>
+            <div id="planner-date-wrap" class="hidden">
+              <label class="block text-sm font-bold mb-1.5" data-bn="শেষ করতে চান" data-en="Finish by">শেষ করতে চান</label>
+              <input type="date" id="planner-date" class="w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg px-3 py-2 bg-white dark:bg-neutral-900">
+            </div>
+          </div>
+          <label class="flex items-center gap-2 mt-3 text-sm font-bold"><input type="checkbox" id="planner-boost"> <span data-bn="শুক্রবার ও শনিবার ৫০% বেশি পড়ব" data-en="Read 50% more on Fridays & Saturdays">শুক্রবার ও শনিবার ৫০% বেশি পড়ব</span></label>
+          <div class="flex gap-2 mt-3">
+            <button id="planner-go" class="accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5" data-bn="পরিকল্পনা দেখুন" data-en="Show plan">পরিকল্পনা দেখুন</button>
+            <button id="planner-save" class="border border-neutral-300 dark:border-neutral-600 text-sm font-bold rounded-lg px-4 py-2.5" data-bn="সংরক্ষণ করুন" data-en="Save">সংরক্ষণ করুন</button>
+          </div>
+          <div id="planner-result" class="text-sm mt-3 leading-relaxed" role="status"></div>
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-2" data-bn="পরিকল্পনা শুধু আপনার ডিভাইসে সংরক্ষিত হয় (localStorage)।" data-en="Your plan is saved only on your device (localStorage).">পরিকল্পনা শুধু আপনার ডিভাইসে সংরক্ষিত হয় (localStorage)।</p>
+        </div>
+      </article>
+
+      <!-- 9. WORD COUNTER -->
+      <article class="tool-card bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm" data-tool="wordcount">
+        <div class="flex items-start justify-between gap-2">
+          <div>
+            <span class="text-2xl">🔢</span>
+            <h3 class="font-extrabold mt-1" data-bn="শব্দ গণনা ও পড়ার সময়" data-en="Word Counter & Reading Time">শব্দ গণনা ও পড়ার সময়</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="লেখা বসান বা ফাইল দিন — শব্দ সংখ্যা আর পড়তে কত সময় লাগবে দেখুন।" data-en="Paste text or drop a file — get the word count and estimated reading time.">লেখা বসান বা ফাইল দিন — শব্দ সংখ্যা আর পড়তে কত সময় লাগবে দেখুন।</p>
+          </div>
+          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="wordcount" aria-label="Pin tool" title="Pin">📌</button>
+        </div>
+        <button class="open-btn accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" data-open="wordcount" data-bn="খুলুন" data-en="Open">খুলুন</button>
+        <div class="tool-work hidden mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-700" id="work-wordcount">
+          <label class="block text-sm font-bold mb-1.5" data-bn="লেখা এখানে বসান" data-en="Paste your text here">লেখা এখানে বসান</label>
+          <textarea id="wordcount-text" rows="5" class="w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg p-2 bg-white dark:bg-neutral-900"></textarea>
+          <div class="flex flex-wrap items-center gap-2 mt-2">
+            <label class="text-sm font-bold" data-bn="বা ফাইল দিন:" data-en="Or drop a file:">বা ফাইল দিন:</label>
+            <input type="file" id="wordcount-file" accept=".txt,.epub" class="text-sm">
+            <button id="wordcount-clear" class="ml-auto border border-neutral-300 dark:border-neutral-600 text-sm font-bold rounded-lg px-3 py-1.5" data-bn="মুছুন" data-en="Clear">মুছুন</button>
+          </div>
+          <div id="wordcount-result" class="grid grid-cols-2 gap-2 mt-3 text-sm" role="status"></div>
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-2" data-bn="হিসাব: ইংরেজি ২০০ শব্দ/মিনিট, বাংলা ১৫০ শব্দ/মিনিট ধরে।" data-en="Estimate: 200 words/min for English, 150 words/min for Bengali.">হিসাব: ইংরেজি ২০০ শব্দ/মিনিট, বাংলা ১৫০ শব্দ/মিনিট ধরে।</p>
+        </div>
+      </article>
+
+      <!-- 10. FONT LAB -->
+      <article class="tool-card bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm" data-tool="fontlab">
+        <div class="flex items-start justify-between gap-2">
+          <div>
+            <span class="text-2xl">🔤</span>
+            <h3 class="font-extrabold mt-1" data-bn="ফন্ট ল্যাব" data-en="Font Lab">ফন্ট ল্যাব</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="সাইটের বাংলা-ইংরেজি ফন্টগুলো বিভিন্ন সাইজে দেখে নিন।" data-en="Preview the site's Bengali and English fonts at different sizes.">সাইটের বাংলা-ইংরেজি ফন্টগুলো বিভিন্ন সাইজে দেখে নিন।</p>
+          </div>
+          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="fontlab" aria-label="Pin tool" title="Pin">📌</button>
+        </div>
+        <button class="open-btn accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" data-open="fontlab" data-bn="খুলুন" data-en="Open">খুলুন</button>
+        <div class="tool-work hidden mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-700" id="work-fontlab">
+          <label class="block text-sm font-bold mb-1.5" data-bn="নমুনা লেখা" data-en="Sample text">নমুনা লেখা</label>
+          <input type="text" id="fontlab-text" value="লা ইলাহা ইল্লাল্লাহ, মুহাম্মাদুর রাসূলুল্লাহ" class="w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg px-3 py-2 bg-white dark:bg-neutral-900">
+          <label class="block text-sm font-bold mt-3 mb-1.5"><span data-bn="অক্ষরের সাইজ" data-en="Font size">অক্ষরের সাইজ</span> — <span id="fontlab-size-label">24px</span></label>
+          <input type="range" id="fontlab-size" min="14" max="56" value="24" class="w-full accent-[#e0521f]">
+          <div id="fontlab-preview" class="mt-3 space-y-3"></div>
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-2" data-bn="“সিস্টেম ফন্ট” লেখাগুলো আপনার ডিভাইসে ইনস্টল থাকলেই দেখাবে — না থাকলে কাছাকাছি ফন্ট দেখাবে। এখান থেকে ফন্ট ডাউনলোড করা যায় না।" data-en="“System font” rows only show that font if it is installed on your device — otherwise a fallback font shows. Fonts cannot be downloaded from here.">“সিস্টেম ফন্ট” লেখাগুলো আপনার ডিভাইসে ইনস্টল থাকলেই দেখাবে — না থাকলে কাছাকাছি ফন্ট দেখাবে। এখান থেকে ফন্ট ডাউনলোড করা যায় না।</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- RELATED: OUR EBOOK MAKER -->
+  <section class="mt-10 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm">
+    <h2 class="text-lg font-bold mb-2" data-bn="✒️ নিজে ইবুক বানাতে চান?" data-en="✒️ Want to make an ebook yourself?">✒️ নিজে ইবুক বানাতে চান?</h2>
+    <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-300" data-bn="স্ক্যান করা পিডিএফ থেকে ইপাব বানানোর পুরো পথ — Our Ebook Maker-এ। শেয়ার করার আগে ১০ বছরের নিয়মটি মনে রাখবেন: শুধু ১০+ বছরের পুরোনো বই, অথবা লেখক/প্রকাশক নিজে প্রকাশ করেছেন এমন বই শেয়ার করা যায়।" data-en="The full path from a scanned PDF to an EPUB lives on Our Ebook Maker. Before sharing, remember the 10-year rule: only books 10+ years old, or books the writer/publisher published themselves, may be shared.">স্ক্যান করা পিডিএফ থেকে ইপাব বানানোর পুরো পথ — Our Ebook Maker-এ। শেয়ার করার আগে ১০ বছরের নিয়মটি মনে রাখবেন: শুধু ১০+ বছরের পুরোনো বই, অথবা লেখক/প্রকাশক নিজে প্রকাশ করেছেন এমন বই শেয়ার করা যায়।</p>
+    <a class="accent-bg inline-block text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" href="https://mdtowfiqul.github.io/our-ebook-maker" target="_blank" rel="noopener" data-bn="Our Ebook Maker খুলুন →" data-en="Open Our Ebook Maker →">Our Ebook Maker খুলুন →</a>
+  </section>
+</main>
+
+<script>
+(function(){
+'use strict';
+/* ================= helpers ================= */
+function $(id){ return document.getElementById(id); }
+function t(bn, en){ return (window.__obLang === 'en') ? en : bn; }
+function setStatus(el, msg){ if(el) el.textContent = msg || ''; }
+function downloadBlob(blob, name){
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = name;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); }, 500);
+}
+function downloadText(text, name){
+  downloadBlob(new Blob([text], {type: 'text/plain;charset=utf-8'}), name);
+}
+function esc(s){
+  return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
+}
+function libMissing(name){
+  return t('ইন্টারনেট ছাড়া এই টুলটি এখন চলবে না — ' + name + ' লাইব্রেরি লোড হয়নি। অনলাইনে এসে আবার চেষ্টা করুন।',
+           'This tool needs internet right now — the ' + name + ' library did not load. Please try again online.');
+}
+
+/* ================= pure logic (also exposed for tests) ================= */
+function countWords(text){
+  var s = String(text || '');
+  var words = s.trim() ? s.trim().split(/\s+/).length : 0;
+  var chars = s.length;
+  var charsNoSpaces = s.replace(/\s/g, '').length;
+  var sentences = s.trim() ? (s.split(/[।.!?]+/).filter(function(p){ return p.trim().length > 0; }).length) : 0;
+  return {
+    words: words, chars: chars, charsNoSpaces: charsNoSpaces, sentences: sentences,
+    minEn: Math.ceil(words / 200), minBn: Math.ceil(words / 150)
+  };
+}
+function parsePageRanges(str, total){
+  var out = [], seen = {};
+  if(!str) return {ok: false, pages: [], error: t('পাতা লিখুন (যেমন: 1-3, 5)', 'Enter pages (e.g. 1-3, 5)')};
+  var parts = String(str).split(',');
+  for(var i = 0; i < parts.length; i++){
+    var p = parts[i].trim();
+    if(!p) continue;
+    var m = p.match(/^(\d+)\s*-\s*(\d+)$/);
+    if(m){
+      var a = parseInt(m[1], 10), b = parseInt(m[2], 10);
+      if(a > b) return {ok: false, pages: [], error: t('ভুল পরিসর: ', 'Bad range: ') + p};
+      for(var n = a; n <= b; n++){
+        if(n < 1 || n > total) return {ok: false, pages: [], error: t('পাতা নেই: ', 'No such page: ') + n};
+        if(!seen[n]){ seen[n] = 1; out.push(n); }
+      }
+    } else if(/^\d+$/.test(p)){
+      var v = parseInt(p, 10);
+      if(v < 1 || v > total) return {ok: false, pages: [], error: t('পাতা নেই: ', 'No such page: ') + v};
+      if(!seen[v]){ seen[v] = 1; out.push(v); }
+    } else {
+      return {ok: false, pages: [], error: t('বোঝা যায়নি: ', 'Could not read: ') + p};
+    }
+  }
+  out.sort(function(x, y){ return x - y; });
+  return {ok: out.length > 0, pages: out, error: out.length ? '' : t('কোনো পাতা পাওয়া যায়নি', 'No pages found')};
+}
+function isWeekendBoostDay(d){ var g = d.getDay(); return g === 5 || g === 6; } /* Fri=5, Sat=6 */
+function simulateFinish(remaining, perDay, boost, start){
+  var left = remaining, days = 0, d = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+  if(remaining <= 0) return {days: 0, finish: d};
+  while(left > 0 && days < 3650){
+    var rate = boost && isWeekendBoostDay(d) ? perDay * 1.5 : perDay;
+    left -= rate; days += 1;
+    d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1);
+  }
+  d = new Date(d.getFullYear(), d.getMonth(), d.getDate() - 1);
+  return {days: days, finish: d};
+}
+function requiredRate(remaining, days, boost, start){
+  var units = 0, d = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+  for(var i = 0; i < days; i++){
+    units += (boost && isWeekendBoostDay(d)) ? 1.5 : 1;
+    d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1);
+  }
+  return units > 0 ? Math.ceil(remaining / units) : 0;
+}
+function planReading(total, done, mode, perDay, endDateStr, boost, today){
+  var remaining = Math.max(0, total - done);
+  if(total <= 0) return {ok: false, error: t('মোট পাতা লিখুন', 'Enter the total pages')};
+  if(done >= total) return {ok: true, done: true, remaining: 0};
+  if(mode === 'perday'){
+    if(!perDay || perDay <= 0) return {ok: false, error: t('দিনে কত পাতা লিখুন', 'Enter pages per day')};
+    var sim = simulateFinish(remaining, perDay, boost, today);
+    return {ok: true, remaining: remaining, days: sim.days, finish: sim.finish, perDay: perDay};
+  }
+  if(!endDateStr) return {ok: false, error: t('শেষের তারিখ বেছে নিন', 'Pick a finish date')};
+  var end = new Date(endDateStr + 'T00:00:00');
+  var start = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  var days = Math.round((end - start) / 86400000) + 1;
+  if(days <= 0) return {ok: false, error: t('শেষের তারিখ আজ বা তার পরে হতে হবে', 'Finish date must be today or later')};
+  var rate = requiredRate(remaining, days, boost, start);
+  return {ok: true, remaining: remaining, days: days, finish: end, perDay: rate};
+}
+function coverRect(sw, sh, W, H, mode){
+  /* returns source/dest rectangles for drawing an sw×sh image into a W×H canvas */
+  if(mode === 'contain'){
+    var s = Math.min(W / sw, H / sh);
+    var dw = Math.round(sw * s), dh = Math.round(sh * s);
+    return {sx: 0, sy: 0, sw: sw, sh: sh, dx: Math.round((W - dw) / 2), dy: Math.round((H - dh) / 2), dw: dw, dh: dh};
+  }
+  var sc = Math.max(W / sw, H / sh);
+  var cw = Math.round(W / sc), ch = Math.round(H / sc);
+  return {sx: Math.round((sw - cw) / 2), sy: Math.round((sh - ch) / 2), sw: cw, sh: ch, dx: 0, dy: 0, dw: W, dh: H};
+}
+function fmtDate(d){
+  var m = String(d.getMonth() + 1), dd = String(d.getDate());
+  return d.getFullYear() + '-' + (m.length < 2 ? '0' + m : m) + '-' + (dd.length < 2 ? '0' + dd : dd);
+}
+window.__obTools = {
+  countWords: countWords, parsePageRanges: parsePageRanges,
+  simulateFinish: simulateFinish, requiredRate: requiredRate,
+  planReading: planReading, coverRect: coverRect, fmtDate: fmtDate
+};
+
+/* ================= EPUB parsing (JSZip, no upload) ================= */
+function parseXml(text){
+  return new DOMParser().parseFromString(text, 'text/xml');
+}
+function tagText(doc, tag){
+  var els = doc.getElementsByTagName(tag);
+  return els.length ? els[0].textContent : '';
+}
+async function loadEpub(buf){
+  if(typeof JSZip === 'undefined') throw new Error(libMissing('JSZip'));
+  var zip = await JSZip.loadAsync(buf);
+  var container = zip.file('META-INF/container.xml');
+  if(!container) throw new Error(t('এটি বৈধ ইপাব নয় (container.xml পাওয়া যায়নি)', 'Not a valid EPUB (container.xml missing)'));
+  var rootPath = parseXml(await container.async('text'))
+    .getElementsByTagName('rootfile')[0].getAttribute('full-path');
+  var base = rootPath.indexOf('/') >= 0 ? rootPath.slice(0, rootPath.lastIndexOf('/') + 1) : '';
+  var opf = parseXml(await zip.file(rootPath).async('text'));
+  var manifest = {};
+  var items = opf.getElementsByTagName('item');
+  for(var i = 0; i < items.length; i++){
+    manifest[items[i].getAttribute('id')] = {
+      href: items[i].getAttribute('href'),
+      type: items[i].getAttribute('media-type')
+    };
+  }
+  var meta = {
+    title: tagText(opf, 'dc:title') || t('(শিরোনাম নেই)', '(no title)'),
+    creator: tagText(opf, 'dc:creator') || t('(লেখক নেই)', '(no author)'),
+    language: tagText(opf, 'dc:language') || '—',
+    identifier: tagText(opf, 'dc:identifier') || '—',
+    description: tagText(opf, 'dc:description') || '',
+    publisher: tagText(opf, 'dc:publisher') || ''
+  };
+  var coverId = '';
+  var metas = opf.getElementsByTagName('meta');
+  for(var j = 0; j < metas.length; j++){
+    if(metas[j].getAttribute('name') === 'cover') coverId = metas[j].getAttribute('content');
+  }
+  var coverItem = null;
+  if(coverId && manifest[coverId]) coverItem = manifest[coverId];
+  if(!coverItem){
+    Object.keys(manifest).forEach(function(k){
+      if(!coverItem && manifest[k].type && manifest[k].type.indexOf('image/') === 0) coverItem = manifest[k];
+    });
+  }
+  var coverBlob = null;
+  if(coverItem){
+    var f = zip.file(base + decodeURIComponent(coverItem.href));
+    if(f) coverBlob = await f.async('blob');
+  }
+  var spine = [];
+  var refs = opf.getElementsByTagName('itemref');
+  for(var k = 0; k < refs.length; k++){
+    var it = manifest[refs[k].getAttribute('idref')];
+    if(it && it.type === 'application/xhtml+xml') spine.push(base + decodeURIComponent(it.href));
+  }
+  return {zip: zip, meta: meta, coverBlob: coverBlob, spine: spine};
+}
+async function extractEpubText(buf){
+  var ep = await loadEpub(buf);
+  var parts = [];
+  for(var i = 0; i < ep.spine.length; i++){
+    var f = ep.zip.file(ep.spine[i]);
+    if(!f) continue;
+    var html = await f.async('text');
+    var doc = new DOMParser().parseFromString(html, 'text/html');
+    var txt = (doc.body ? doc.body.textContent : '') || '';
+    txt = txt.replace(/[ \t\r]+/g, ' ').replace(/\n\s*\n+/g, '\n\n').trim();
+    if(txt) parts.push(txt);
+  }
+  return {text: parts.join('\n\n'), chapters: parts.length, meta: ep.meta};
+}
+window.__obTools.loadEpub = loadEpub;
+window.__obTools.extractEpubText = extractEpubText;
+
+/* ================= open / close + pins ================= */
+var origPlace = {};
+document.querySelectorAll('.tool-card').forEach(function(card){
+  origPlace[card.getAttribute('data-tool')] = {parent: card.parentNode, next: card.nextSibling};
+});
+function setOpenLabel(btn, open){
+  btn.setAttribute('data-bn', open ? 'বন্ধ করুন' : 'খুলুন');
+  btn.setAttribute('data-en', open ? 'Close' : 'Open');
+  btn.textContent = open ? t('বন্ধ করুন', 'Close') : t('খুলুন', 'Open');
+}
+document.querySelectorAll('.open-btn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var id = btn.getAttribute('data-open');
+    var work = $('work-' + id);
+    var wasOpen = !work.classList.contains('hidden');
+    document.querySelectorAll('.tool-work').forEach(function(w){ w.classList.add('hidden'); });
+    document.querySelectorAll('.open-btn').forEach(function(b){ setOpenLabel(b, false); });
+    if(!wasOpen){ work.classList.remove('hidden'); setOpenLabel(btn, true); }
+  });
+});
+var PINKEY = 'ob-tools-pinned';
+function getPins(){
+  try{ return JSON.parse(localStorage.getItem(PINKEY) || '[]'); }catch(e){ return []; }
+}
+function paintPins(){
+  var pins = getPins();
+  document.querySelectorAll('.pin-btn').forEach(function(b){
+    b.textContent = pins.indexOf(b.getAttribute('data-pin')) >= 0 ? '📍' : '📌';
+    b.classList.toggle('opacity-100', pins.indexOf(b.getAttribute('data-pin')) >= 0);
+  });
+  var row = $('pinned-row');
+  pins.forEach(function(id){
+    var card = document.querySelector('.tool-card[data-tool="' + id + '"]');
+    if(card && card.parentNode !== row) row.appendChild(card);
+  });
+  $('pinned-sec').classList.toggle('hidden', pins.length === 0);
+}
+document.querySelectorAll('.pin-btn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var id = btn.getAttribute('data-pin');
+    var pins = getPins();
+    var i = pins.indexOf(id);
+    if(i >= 0){
+      pins.splice(i, 1);
+      var card = document.querySelector('.tool-card[data-tool="' + id + '"]');
+      var place = origPlace[id];
+      if(card && place) place.parent.insertBefore(card, place.next);
+    } else {
+      pins.push(id);
+    }
+    localStorage.setItem(PINKEY, JSON.stringify(pins));
+    paintPins();
+  });
+});
+paintPins();
+
+/* ================= 1. EPUB READER ================= */
+(function(){
+  var fileInput = $('epub-reader-file'), status = $('epub-reader-status');
+  var book = null, rendition = null, fontSize = 18, curCfi = null;
+  function needLib(){
+    if(typeof ePub === 'undefined'){ setStatus(status, libMissing('EPUB.js')); return false; }
+    return true;
+  }
+  fileInput.addEventListener('change', async function(){
+    var f = fileInput.files && fileInput.files[0];
+    if(!f) return;
+    if(!needLib()) return;
+    setStatus(status, t('খুলছি…', 'Opening…'));
+    try{
+      if(rendition){ rendition.destroy(); rendition = null; }
+      var buf = await f.arrayBuffer();
+      book = ePub(buf);
+      var area = $('epub-reader-area');
+      area.innerHTML = '';
+      rendition = book.renderTo(area, {width: '100%', height: 460, flow: 'paginated', spread: 'none'});
+      rendition.themes.fontSize(fontSize + 'px');
+      rendition.on('relocated', function(loc){ if(loc && loc.start) curCfi = loc.start.cfi; });
+      await rendition.display(curCfi || undefined);
+      var nav = await book.loaded.navigation;
+      var toc = $('epub-reader-toc');
+      toc.innerHTML = '';
+      function addToc(items, depth){
+        items.forEach(function(it){
+          var o = document.createElement('option');
+          o.value = it.href;
+          o.textContent = new Array(depth + 1).join('— ') + it.label;
+          toc.appendChild(o);
+          if(it.subitems && it.subitems.length) addToc(it.subitems, depth + 1);
+        });
+      }
+      addToc(nav.toc || [], 0);
+      $('epub-reader-controls').classList.remove('hidden');
+      setStatus(status, t('খোলা হয়েছে: ', 'Opened: ') + f.name);
+    }catch(e){
+      setStatus(status, t('ইপাবটি খোলা যায়নি। ফাইলটি ঠিক আছে কি না দেখুন।', 'Could not open this EPUB. Please check the file.'));
+    }
+  });
+  $('epub-reader-prev').addEventListener('click', function(){ if(rendition) rendition.prev(); });
+  $('epub-reader-next').addEventListener('click', function(){ if(rendition) rendition.next(); });
+  $('epub-reader-toc').addEventListener('change', function(e){
+    if(rendition && e.target.value) rendition.display(e.target.value);
+  });
+  $('epub-reader-smaller').addEventListener('click', function(){
+    fontSize = Math.max(12, fontSize - 2);
+    if(rendition) rendition.themes.fontSize(fontSize + 'px');
+  });
+  $('epub-reader-bigger').addEventListener('click', function(){
+    fontSize = Math.min(32, fontSize + 2);
+    if(rendition) rendition.themes.fontSize(fontSize + 'px');
+  });
+})();
+
+/* ================= 2. EPUB METADATA ================= */
+(function(){
+  var fileInput = $('epub-meta-file'), status = $('epub-meta-status'), result = $('epub-meta-result');
+  fileInput.addEventListener('change', async function(){
+    var f = fileInput.files && fileInput.files[0];
+    if(!f) return;
+    setStatus(status, t('পড়ছি…', 'Reading…'));
+    result.classList.add('hidden');
+    try{
+      var ep = await loadEpub(await f.arrayBuffer());
+      var m = ep.meta;
+      var coverHtml = '';
+      if(ep.coverBlob){
+        var url = URL.createObjectURL(ep.coverBlob);
+        coverHtml = '<img src="' + esc(url) + '" alt="" class="w-28 rounded-xl shadow mb-3">';
+      }
+      var rows = [
+        [t('শিরোনাম', 'Title'), m.title], [t('লেখক', 'Author'), m.creator],
+        [t('ভাষা', 'Language'), m.language], [t('প্রকাশক', 'Publisher'), m.publisher || '—'],
+        [t('শনাক্তকারী', 'Identifier'), m.identifier]
+      ];
+      var html = coverHtml + '<dl class="text-sm space-y-1.5">';
+      rows.forEach(function(r){ html += '<div class="flex gap-2"><dt class="font-bold w-24 shrink-0">' + esc(r[0]) + '</dt><dd class="break-words">' + esc(r[1]) + '</dd></div>'; });
+      html += '</dl>';
+      if(m.description) html += '<p class="text-sm text-neutral-600 dark:text-neutral-300 mt-3 leading-relaxed">' + esc(m.description) + '</p>';
+      result.innerHTML = html;
+      result.classList.remove('hidden');
+      setStatus(status, t('তথ্য পাওয়া গেছে।', 'Metadata found.'));
+    }catch(e){
+      setStatus(status, e.message || t('ফাইলটি পড়া যায়নি।', 'Could not read the file.'));
+    }
+  });
+})();
+
+/* ================= 3. EPUB TO TXT ================= */
+(function(){
+  var fileInput = $('epub-txt-file'), status = $('epub-txt-status'),
+      result = $('epub-txt-result'), preview = $('epub-txt-preview');
+  var fullText = '', fileName = 'book.txt';
+  fileInput.addEventListener('change', async function(){
+    var f = fileInput.files && fileInput.files[0];
+    if(!f) return;
+    setStatus(status, t('লেখা বের করছি…', 'Extracting text…'));
+    result.classList.add('hidden');
+    try{
+      var r = await extractEpubText(await f.arrayBuffer());
+      fullText = r.text;
+      fileName = f.name.replace(/\.epub$/i, '') + '.txt';
+      var wc = countWords(fullText);
+      preview.value = fullText.slice(0, 3000);
+      result.classList.remove('hidden');
+      setStatus(status, t('পাওয়া গেছে: ', 'Found: ') + r.chapters + t(' অধ্যায়, ', ' chapters, ') + wc.words + t(' শব্দ।', ' words.'));
+    }catch(e){
+      setStatus(status, e.message || t('ফাইলটি পড়া যায়নি।', 'Could not read the file.'));
+    }
+  });
+  $('epub-txt-download').addEventListener('click', function(){
+    if(fullText) downloadText(fullText, fileName);
+  });
+})();
+
+/* ================= PDF helpers ================= */
+function needPdfLib(statusEl){
+  if(typeof PDFLib === 'undefined'){ setStatus(statusEl, libMissing('PDF-Lib')); return false; }
+  return true;
+}
+async function loadPdfDoc(file){
+  var bytes = await file.arrayBuffer();
+  return await PDFLib.PDFDocument.load(bytes, {ignoreEncryption: true});
+}
+
+/* ================= 4. PDF MERGE ================= */
+(function(){
+  var input = $('pdf-merge-files'), list = $('pdf-merge-list'), status = $('pdf-merge-status');
+  input.addEventListener('change', function(){
+    list.innerHTML = '';
+    Array.prototype.forEach.call(input.files || [], function(f){
+      var li = document.createElement('li');
+      li.textContent = '📄 ' + f.name;
+      list.appendChild(li);
+    });
+    setStatus(status, '');
+  });
+  $('pdf-merge-go').addEventListener('click', async function(){
+    var files = Array.prototype.slice.call(input.files || []);
+    if(files.length < 2){ setStatus(status, t('কমপক্ষে ২টি পিডিএফ বেছে নিন।', 'Choose at least 2 PDFs.')); return; }
+    if(!needPdfLib(status)) return;
+    setStatus(status, t('জোড়া দিচ্ছি…', 'Merging…'));
+    try{
+      var out = await PDFLib.PDFDocument.create();
+      for(var i = 0; i < files.length; i++){
+        var src = await loadPdfDoc(files[i]);
+        var pages = await out.copyPages(src, src.getPageIndices());
+        pages.forEach(function(p){ out.addPage(p); });
+      }
+      var bytes = await out.save();
+      downloadBlob(new Blob([bytes], {type: 'application/pdf'}), 'merged.pdf');
+      setStatus(status, t('হয়ে গেছে — merged.pdf ডাউনলোড হয়েছে।', 'Done — merged.pdf downloaded.'));
+    }catch(e){
+      setStatus(status, t('জোড়া দেওয়া যায়নি। ফাইলগুলো বৈধ পিডিএফ কি না দেখুন।', 'Could not merge. Please check the files are valid PDFs.'));
+    }
+  });
+})();
+
+/* ================= 5. PDF PAGE EXTRACTOR ================= */
+(function(){
+  var input = $('pdf-extract-file'), status = $('pdf-extract-status'),
+      controls = $('pdf-extract-controls');
+  var srcDoc = null, total = 0, fileName = 'extracted.pdf';
+  input.addEventListener('change', async function(){
+    var f = input.files && input.files[0];
+    if(!f) return;
+    if(!needPdfLib(status)) return;
+    setStatus(status, t('পড়ছি…', 'Reading…'));
+    controls.classList.add('hidden');
+    try{
+      srcDoc = await loadPdfDoc(f);
+      total = srcDoc.getPageCount();
+      fileName = f.name.replace(/\.pdf$/i, '') + '-pages.pdf';
+      controls.classList.remove('hidden');
+      setStatus(status, t('মোট পাতা: ', 'Total pages: ') + total);
+    }catch(e){
+      setStatus(status, t('পিডিএফটি খোলা যায়নি।', 'Could not open this PDF.'));
+    }
+  });
+  $('pdf-extract-go').addEventListener('click', async function(){
+    if(!srcDoc) return;
+    var r = parsePageRanges($('pdf-extract-pages').value, total);
+    if(!r.ok){ setStatus(status, r.error); return; }
+    setStatus(status, t('বানাচ্ছি…', 'Building…'));
+    try{
+      var out = await PDFLib.PDFDocument.create();
+      var pages = await out.copyPages(srcDoc, r.pages.map(function(p){ return p - 1; }));
+      pages.forEach(function(p){ out.addPage(p); });
+      var bytes = await out.save();
+      downloadBlob(new Blob([bytes], {type: 'application/pdf'}), fileName);
+      setStatus(status, t('হয়ে গেছে — ', 'Done — ') + r.pages.length + t(' পাতার পিডিএফ ডাউনলোড হয়েছে।', ' pages downloaded.'));
+    }catch(e){
+      setStatus(status, t('বানানো যায়নি।', 'Could not build the PDF.'));
+    }
+  });
+})();
+
+/* ================= 6. IMAGE TO PDF ================= */
+(function(){
+  var input = $('img-pdf-files'), list = $('img-pdf-list'), status = $('img-pdf-status');
+  input.addEventListener('change', function(){
+    list.innerHTML = '';
+    Array.prototype.forEach.call(input.files || [], function(f){
+      var li = document.createElement('li');
+      li.textContent = '🖼️ ' + f.name;
+      list.appendChild(li);
+    });
+    setStatus(status, '');
+  });
+  $('img-pdf-go').addEventListener('click', async function(){
+    var files = Array.prototype.slice.call(input.files || []);
+    if(files.length < 1){ setStatus(status, t('কমপক্ষে ১টি ছবি বেছে নিন।', 'Choose at least 1 image.')); return; }
+    if(!needPdfLib(status)) return;
+    setStatus(status, t('বানাচ্ছি…', 'Building…'));
+    try{
+      var out = await PDFLib.PDFDocument.create();
+      for(var i = 0; i < files.length; i++){
+        var f = files[i];
+        var bytes = await f.arrayBuffer();
+        var img, dims;
+        if(/png/i.test(f.type)){
+          img = await out.embedPng(bytes);
+        } else {
+          img = await out.embedJpg(bytes);
+        }
+        dims = img.scale(1);
+        var maxW = 595, maxH = 842, s = Math.min(maxW / dims.width, maxH / dims.height, 1);
+        var w = dims.width * s, h = dims.height * s;
+        var page = out.addPage([w, h]);
+        page.drawImage(img, {x: 0, y: 0, width: w, height: h});
+      }
+      var pdfBytes = await out.save();
+      downloadBlob(new Blob([pdfBytes], {type: 'application/pdf'}), 'images.pdf');
+      setStatus(status, t('হয়ে গেছে — images.pdf ডাউনলোড হয়েছে।', 'Done — images.pdf downloaded.'));
+    }catch(e){
+      setStatus(status, t('বানানো যায়নি। JPG/PNG ছবি ব্যবহার করুন।', 'Could not build it. Please use JPG/PNG images.'));
+    }
+  });
+})();
+
+/* ================= 7. COVER RESIZER ================= */
+(function(){
+  var input = $('cover-file'), status = $('cover-status'),
+      wrap = $('cover-preview-wrap'), canvas = $('cover-canvas');
+  var img = null, imgName = 'cover.png';
+  function targetSize(){
+    var v = $('cover-size').value;
+    if(v === 'custom'){
+      return {
+        w: Math.max(16, Math.min(4000, parseInt($('cover-w').value, 10) || 600)),
+        h: Math.max(16, Math.min(4000, parseInt($('cover-h').value, 10) || 900))
+      };
+    }
+    var p = v.split('x');
+    return {w: parseInt(p[0], 10), h: parseInt(p[1], 10)};
+  }
+  function draw(){
+    if(!img) return;
+    var size = targetSize();
+    var mode = $('cover-fit').value;
+    canvas.width = size.w; canvas.height = size.h;
+    var ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, size.w, size.h);
+    var r = coverRect(img.naturalWidth, img.naturalHeight, size.w, size.h, mode);
+    ctx.drawImage(img, r.sx, r.sy, r.sw, r.sh, r.dx, r.dy, r.dw, r.dh);
+    wrap.classList.remove('hidden');
+    setStatus(status, t('প্রস্তুত: ', 'Ready: ') + size.w + '×' + size.h);
+  }
+  $('cover-size').addEventListener('change', function(){
+    $('cover-custom').classList.toggle('hidden', $('cover-size').value !== 'custom');
+    draw();
+  });
+  $('cover-fit').addEventListener('change', draw);
+  $('cover-w').addEventListener('input', draw);
+  $('cover-h').addEventListener('input', draw);
+  input.addEventListener('change', function(){
+    var f = input.files && input.files[0];
+    if(!f) return;
+    imgName = f.name.replace(/\.[^.]+$/, '') + '.png';
+    var url = URL.createObjectURL(f);
+    var im = new Image();
+    im.onload = function(){
+      img = im;
+      setStatus(status, t('ছবি লোড হয়েছে: ', 'Image loaded: ') + im.naturalWidth + '×' + im.naturalHeight);
+      draw();
+    };
+    im.onerror = function(){ setStatus(status, t('ছবিটি খোলা যায়নি।', 'Could not open this image.')); };
+    im.src = url;
+  });
+  $('cover-download').addEventListener('click', function(){
+    if(!img) return;
+    canvas.toBlob(function(blob){
+      if(blob) downloadBlob(blob, imgName);
+    }, 'image/png');
+  });
+})();
+
+/* ================= 8. READING PLANNER ================= */
+(function(){
+  var result = $('planner-result');
+  var PLANKEY = 'ob-reading-plan';
+  function readInputs(){
+    return {
+      title: $('planner-title').value.trim(),
+      total: parseInt($('planner-total').value, 10) || 0,
+      done: parseInt($('planner-done').value, 10) || 0,
+      mode: (document.querySelector('input[name="planner-mode"]:checked') || {}).value || 'perday',
+      perDay: parseInt($('planner-perday').value, 10) || 0,
+      endDate: $('planner-date').value,
+      boost: $('planner-boost').checked
+    };
+  }
+  function showPlan(p, inputs){
+    if(!p.ok){ result.innerHTML = '<p class="text-red-600 dark:text-red-400 font-bold">' + esc(p.error) + '</p>'; return; }
+    if(p.done){
+      result.innerHTML = '<p class="font-bold">🎉 ' + esc(t('বইটি শেষ! অভিনন্দন।', 'Book finished — congratulations!')) + '</p>';
+      return;
+    }
+    var html = '<div class="bg-neutral-50 dark:bg-neutral-900 rounded-xl p-3 space-y-1">';
+    if(inputs.title) html += '<p class="font-extrabold">📖 ' + esc(inputs.title) + '</p>';
+    html += '<p>' + esc(t('বাকি: ', 'Left: ')) + '<b>' + p.remaining + '</b> ' + esc(t('পাতা', 'pages')) + '</p>';
+    html += '<p>' + esc(t('দিনে পড়তে হবে: ', 'Read per day: ')) + '<b>' + p.perDay + '</b> ' + esc(t('পাতা', 'pages')) + '</p>';
+    html += '<p>' + esc(t('শেষ হবে: ', 'Finishes: ')) + '<b>' + fmtDate(p.finish) + '</b> (' + p.days + ' ' + esc(t('দিন', 'days')) + ')</p>';
+    if(inputs.boost) html += '<p class="text-xs">' + esc(t('শুক্র-শনিবার ৫০% বেশি ধরা হয়েছে।', 'Fridays & Saturdays counted at +50%.')) + '</p>';
+    html += '</div>';
+    result.innerHTML = html;
+  }
+  $('planner-go').addEventListener('click', function(){
+    var inputs = readInputs();
+    var p = planReading(inputs.total, inputs.done, inputs.mode, inputs.perDay, inputs.endDate, inputs.boost, new Date());
+    showPlan(p, inputs);
+  });
+  $('planner-save').addEventListener('click', function(){
+    var inputs = readInputs();
+    localStorage.setItem(PLANKEY, JSON.stringify(inputs));
+    result.innerHTML = '<p class="font-bold">✅ ' + esc(t('পরিকল্পনা সংরক্ষিত হয়েছে।', 'Plan saved.')) + '</p>';
+  });
+  document.querySelectorAll('input[name="planner-mode"]').forEach(function(r){
+    r.addEventListener('change', function(){
+      var mode = (document.querySelector('input[name="planner-mode"]:checked') || {}).value;
+      $('planner-perday-wrap').classList.toggle('hidden', mode !== 'perday');
+      $('planner-date-wrap').classList.toggle('hidden', mode !== 'bydate');
+    });
+  });
+  try{
+    var saved = JSON.parse(localStorage.getItem(PLANKEY) || 'null');
+    if(saved){
+      $('planner-title').value = saved.title || '';
+      $('planner-total').value = saved.total || '';
+      $('planner-done').value = saved.done || 0;
+      $('planner-perday').value = saved.perDay || '';
+      $('planner-date').value = saved.endDate || '';
+      $('planner-boost').checked = !!saved.boost;
+      if(saved.mode === 'bydate'){
+        document.querySelector('input[name="planner-mode"][value="bydate"]').checked = true;
+        $('planner-perday-wrap').classList.add('hidden');
+        $('planner-date-wrap').classList.remove('hidden');
+      }
+      showPlan(planReading(saved.total || 0, saved.done || 0, saved.mode || 'perday', saved.perDay || 0, saved.endDate || '', !!saved.boost, new Date()), saved);
+    }
+  }catch(e){ /* no saved plan — fine */ }
+})();
+
+/* ================= 9. WORD COUNTER ================= */
+(function(){
+  var ta = $('wordcount-text'), fileInput = $('wordcount-file'), result = $('wordcount-result');
+  function render(){
+    var wc = countWords(ta.value);
+    function mins(m){ return m <= 0 ? '0' : (m < 60 ? m + ' ' + t('মিনিট', 'min') : Math.floor(m / 60) + ' ' + t('ঘণ্টা', 'h') + ' ' + (m % 60) + ' ' + t('মিনিট', 'min')); }
+    result.innerHTML =
+      '<div class="bg-neutral-50 dark:bg-neutral-900 rounded-xl p-3"><p class="font-extrabold text-lg">' + wc.words + '</p><p>' + esc(t('শব্দ', 'Words')) + '</p></div>' +
+      '<div class="bg-neutral-50 dark:bg-neutral-900 rounded-xl p-3"><p class="font-extrabold text-lg">' + wc.charsNoSpaces + '</p><p>' + esc(t('অক্ষর (ফাঁকা ছাড়া)', 'Characters (no spaces)')) + '</p></div>' +
+      '<div class="bg-neutral-50 dark:bg-neutral-900 rounded-xl p-3"><p class="font-extrabold text-lg">' + wc.sentences + '</p><p>' + esc(t('বাক্য', 'Sentences')) + '</p></div>' +
+      '<div class="bg-neutral-50 dark:bg-neutral-900 rounded-xl p-3"><p class="font-extrabold text-lg">' + esc(mins(wc.minBn)) + '</p><p>' + esc(t('পড়ার সময় (বাংলা)', 'Reading time (Bengali)')) + '</p></div>' +
+      '<div class="bg-neutral-50 dark:bg-neutral-900 rounded-xl p-3 col-span-2"><p class="font-extrabold text-lg">' + esc(mins(wc.minEn)) + '</p><p>' + esc(t('পড়ার সময় (ইংরেজি)', 'Reading time (English)')) + '</p></div>';
+  }
+  ta.addEventListener('input', render);
+  $('wordcount-clear').addEventListener('click', function(){ ta.value = ''; render(); });
+  fileInput.addEventListener('change', async function(){
+    var f = fileInput.files && fileInput.files[0];
+    if(!f) return;
+    try{
+      if(/\.epub$/i.test(f.name)){
+        var r = await extractEpubText(await f.arrayBuffer());
+        ta.value = r.text;
+      } else {
+        ta.value = await f.text();
+      }
+      render();
+    }catch(e){
+      ta.value = '';
+      result.innerHTML = '<p class="col-span-2 text-red-600 dark:text-red-400 font-bold">' + esc(e.message || t('ফাইলটি পড়া যায়নি।', 'Could not read the file.')) + '</p>';
+    }
+  });
+  render();
+})();
+
+/* ================= 10. FONT LAB ================= */
+(function(){
+  var FONTS = [
+    {name: 'Hind Siliguri — ' + t('সাইটের মূল ফন্ট', 'Site body font'), family: "'Hind Siliguri', system-ui, sans-serif"},
+    {name: 'Noto Serif Bengali — ' + t('সাইটের শিরোনাম ফন্ট', 'Site heading font'), family: "'Noto Serif Bengali', serif"},
+    {name: 'Noto Sans Bengali — ' + t('সিস্টেম ফন্ট', 'System font'), family: "'Noto Sans Bengali', 'Hind Siliguri', sans-serif"},
+    {name: 'SolaimanLipi — ' + t('সিস্টেম ফন্ট', 'System font'), family: "'SolaimanLipi', 'Hind Siliguri', sans-serif"},
+    {name: 'Siyam Rupali — ' + t('সিস্টেম ফন্ট', 'System font'), family: "'Siyam Rupali', 'Hind Siliguri', sans-serif"},
+    {name: 'Kalpurush — ' + t('সিস্টেম ফন্ট', 'System font'), family: "'Kalpurush', 'Hind Siliguri', sans-serif"},
+    {name: 'Noto Naskh Arabic — ' + t('আরবি', 'Arabic'), family: "'Noto Naskh Arabic', serif"},
+    {name: 'Amiri — ' + t('আরবি', 'Arabic'), family: "'Amiri', serif"},
+    {name: 'Georgia — English', family: "Georgia, serif"},
+    {name: 'System Sans — English', family: "system-ui, sans-serif"}
+  ];
+  var textInput = $('fontlab-text'), sizeInput = $('fontlab-size'),
+      label = $('fontlab-size-label'), preview = $('fontlab-preview');
+  function render(){
+    var txt = textInput.value || 'অ';
+    var size = parseInt(sizeInput.value, 10) || 24;
+    label.textContent = size + 'px';
+    preview.innerHTML = '';
+    FONTS.forEach(function(f){
+      var row = document.createElement('div');
+      row.className = 'border border-neutral-200 dark:border-neutral-700 rounded-xl p-3 bg-white dark:bg-neutral-900';
+      var name = document.createElement('p');
+      name.className = 'text-xs font-bold text-neutral-500 dark:text-neutral-400 mb-1';
+      name.textContent = f.name;
+      var sample = document.createElement('p');
+      sample.style.fontFamily = f.family;
+      sample.style.fontSize = size + 'px';
+      sample.style.lineHeight = '1.6';
+      sample.textContent = txt;
+      row.appendChild(name);
+      row.appendChild(sample);
+      preview.appendChild(row);
+    });
+  }
+  textInput.addEventListener('input', render);
+  sizeInput.addEventListener('input', render);
+  render();
+})();
+})();
+</script>
