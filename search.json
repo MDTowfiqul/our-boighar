@@ -1,6 +1,7 @@
 ---
 ---
 [{% for book in site.books %}{
+  "book_id": {{ book.book_id | jsonify }},
   "title": {{ book.title | jsonify }},
   "title_en": {{ book.title_en | jsonify }},
   "author": {{ book.author | jsonify }},
@@ -9,6 +10,8 @@
   "categories": {{ book.categories | jsonify }},
   "alphabet": {{ book.alphabet | jsonify }},
   "language": {{ book.language | jsonify }},
+  "language_label": {{ book.language_label | jsonify }},
   "cover": {{ book.cover | relative_url | jsonify }},
+  "file": {% if book.file %}{% if book.file contains '://' %}{{ book.file | jsonify }}{% else %}{{ book.file | relative_url | jsonify }}{% endif %}{% else %}null{% endif %},
   "url": {{ book.url | relative_url | jsonify }}
 }{% unless forloop.last %},{% endunless %}{% endfor %}]

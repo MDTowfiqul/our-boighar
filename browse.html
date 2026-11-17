@@ -7,6 +7,13 @@ permalink: /browse/
 {% for b in site.books %}{% for c in b.categories %}{% unless cats contains c %}{% assign cats = cats | push: c %}{% endunless %}{% endfor %}{% endfor %}
 {% assign cats = cats | sort %}
 
+<style>
+#browse-grid.list-view{grid-template-columns:1fr}
+#browse-grid.list-view .book-card a.block{display:grid;grid-template-columns:64px 1fr;column-gap:12px;align-items:start}
+#browse-grid.list-view .book-card a.block>div{grid-row:1/span 3}
+#browse-grid.list-view .book-card a.accent-bg{display:none}
+.chip-on{background-color:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important}
+</style>
 <main class="max-w-6xl mx-auto px-3 sm:px-4 mt-6">
   <h1 class="serif text-2xl sm:text-3xl font-extrabold" data-bn="📚 সব বই ব্রাউজ করুন" data-en="📚 Browse All Books">📚 সব বই ব্রাউজ করুন</h1>
   <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1" data-bn="বিষয় বা নাম দিয়ে ফিল্টার করুন" data-en="Filter by subject or name">বিষয় বা নাম দিয়ে ফিল্টার করুন</p>
@@ -18,13 +25,45 @@ permalink: /browse/
     <input id="b-search" type="search" class="flex-1 px-2 py-2.5 bg-transparent outline-none text-base min-w-0" placeholder="বই বা লেখকের নাম দিয়ে খুঁজুন..." data-bn-ph="বই বা লেখকের নাম দিয়ে খুঁজুন..." data-en-ph="Search by book or author name...">
   </div>
 
+  <!-- SEARCH TOOLS: recent + popular searches, author facets, format/language, grid/list -->
+  <section class="mt-4 space-y-3" id="search-tools">
+    <div id="recent-row" class="hidden">
+      <p class="text-xs font-extrabold text-neutral-500 dark:text-neutral-400 mb-1.5" data-bn="🕘 সাম্প্রতিক খোঁজ" data-en="🕘 Recent searches">🕘 সাম্প্রতিক খোঁজ</p>
+      <div id="recent-chips" class="flex flex-wrap gap-2"></div>
+    </div>
+    <div id="popular-row" class="hidden">
+      <p class="text-xs font-extrabold text-neutral-500 dark:text-neutral-400 mb-1.5" data-bn="🔥 জনপ্রিয় খোঁজ" data-en="🔥 Popular searches">🔥 জনপ্রিয় খোঁজ</p>
+      <div id="popular-chips" class="flex flex-wrap gap-2"></div>
+    </div>
+    <div>
+      <p class="text-xs font-extrabold text-neutral-500 dark:text-neutral-400 mb-1.5" data-bn="✍️ জনপ্রিয় লেখক" data-en="✍️ Top authors">✍️ জনপ্রিয় লেখক</p>
+      <div id="author-facets" class="flex flex-wrap gap-2">
+        {% assign ag = site.books | group_by: "author" | sort: "size" | reverse %}
+        {% for g in ag limit: 8 %}
+        <button class="facet-author bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-600 rounded-full px-3 py-1 font-bold text-xs sm:text-sm transition" data-author="{{ g.name }}">{{ g.name }} ({{ g.size }})</button>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="flex flex-wrap items-center gap-2">
+      <span class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-600 rounded-full px-3 py-1 font-bold text-xs sm:text-sm" data-bn="📄 EPUB" data-en="📄 EPUB">📄 EPUB</span>
+      <button class="lang-chip bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-600 rounded-full px-3 py-1 font-bold text-xs sm:text-sm transition" data-flang="" data-bn="সব ভাষা" data-en="All languages">সব ভাষা</button>
+      <button class="lang-chip bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-600 rounded-full px-3 py-1 font-bold text-xs sm:text-sm transition" data-flang="bn" data-bn="বাংলা" data-en="Bengali">বাংলা</button>
+      <button class="lang-chip bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-600 rounded-full px-3 py-1 font-bold text-xs sm:text-sm transition" data-flang="en" data-bn="ইংরেজি" data-en="English">ইংরেজি</button>
+      <span class="flex-1"></span>
+      <button id="view-toggle" class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-600 rounded-full px-3 py-1 font-bold text-xs sm:text-sm transition" data-bn="☰ তালিকা" data-en="☰ List">☰ তালিকা</button>
+    </div>
+  </section>
+
   <!-- FILTERS -->
   <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-4 sm:p-5 shadow-sm mt-5">
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
       <h2 class="text-base sm:text-lg font-bold flex items-center gap-2 text-emerald-900 dark:text-emerald-300">
         <span>🏷️</span> <span data-bn="বিষয় অনুযায়ী বই খুঁজুন" data-en="Find books by subject">বিষয় অনুযায়ী বই খুঁজুন</span>
       </h2>
-      <button id="b-reset" class="text-xs font-bold text-rose-600 dark:text-rose-400 hover:underline self-start sm:self-auto hidden" data-bn="✕ ফিল্টার মুছুন (সব দেখুন)" data-en="✕ Clear filters (show all)">✕ ফিল্টার মুছুন (সব দেখুন)</button>
+      <span class="flex items-center gap-2 self-start sm:self-auto">
+        <button id="b-filter-btn" class="accent-bg text-white text-xs sm:text-sm font-bold rounded-lg px-4 py-2" data-bn="🔍 ফিল্টার" data-en="🔍 Filter">🔍 ফিল্টার</button>
+        <button id="b-reset" class="text-xs font-bold text-rose-600 dark:text-rose-400 hover:underline hidden" data-bn="✕ ফিল্টার মুছুন (সব দেখুন)" data-en="✕ Clear filters (show all)">✕ ফিল্টার মুছুন (সব দেখুন)</button>
+      </span>
     </div>
     <div class="flex flex-wrap items-center gap-2" id="cat-bar">
       <span class="text-xs font-bold text-neutral-500 dark:text-neutral-400 mr-1" data-bn="বিষয়:" data-en="Subject:">বিষয়:</span>
@@ -43,7 +82,7 @@ permalink: /browse/
 
   <div id="browse-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-5">
     {% for b in site.books %}
-    <div class="book-card" data-id="{{ b.book_id }}" data-alpha="{{ b.alphabet }}" data-cats="{{ b.categories | join: '|' }}" data-hay="{{ b.title }} {{ b.title_en }} {{ b.author }} {{ b.creator }} {{ b.category }}">
+    <div class="book-card" data-id="{{ b.book_id }}" data-alpha="{{ b.alphabet }}" data-lang="{{ b.language }}" data-author="{{ b.author }}" data-cats="{{ b.categories | join: '|' }}" data-hay="{{ b.title }} {{ b.title_en }} {{ b.author }} {{ b.creator }} {{ b.category }}">
       <a href="{{ b.url | relative_url }}" class="block group">
         <div class="relative rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]">
           <img src="{{ b.cover | relative_url }}" alt="{{ b.title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
@@ -63,58 +102,292 @@ permalink: /browse/
     <p class="text-lg font-bold text-neutral-700 dark:text-neutral-200" data-bn="দুঃখিত, এই ফিল্টারে কোনো বই পাওয়া যায়নি।" data-en="Sorry, no books match this filter.">দুঃখিত, এই ফিল্টারে কোনো বই পাওয়া যায়নি।</p>
     <button onclick="window.__obBrowseReset()" class="accent-bg mt-4 text-white font-bold text-sm px-5 py-2 rounded-lg" data-bn="সব বই দেখুন" data-en="Show All Books">সব বই দেখুন</button>
   </div>
+  <!-- FILTER DIALOG (xKAF style) -->
+  <div id="filter-dialog" class="hidden fixed inset-0 z-50">
+    <div class="absolute inset-0 bg-black/50" data-close></div>
+    <div class="relative bg-white dark:bg-neutral-800 rounded-2xl shadow-2xl max-w-lg mx-auto mt-14 sm:mt-20 mx-3 sm:mx-auto p-5 max-h-[82vh] overflow-y-auto">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-extrabold" data-bn="🔍 ফিল্টার" data-en="🔍 Filter">🔍 ফিল্টার</h3>
+        <button class="w-9 h-9 rounded-xl bg-neutral-100 dark:bg-neutral-700 text-lg font-bold" data-close aria-label="Close">✕</button>
+      </div>
+      <label class="block text-xs font-extrabold text-neutral-500 dark:text-neutral-400 mb-1" data-bn="খুঁজুন" data-en="Search">খুঁজুন</label>
+      <input id="f-text" type="search" class="w-full bg-neutral-50 dark:bg-neutral-700 border border-neutral-200 dark:border-neutral-600 rounded-xl px-3 py-2.5 outline-none text-base mb-4" placeholder="বই বা লেখকের নাম..." data-bn-ph="বই বা লেখকের নাম..." data-en-ph="Book or author name...">
+      <p class="text-xs font-extrabold text-neutral-500 dark:text-neutral-400 mb-1.5" data-bn="ফরম্যাট" data-en="Format">ফরম্যাট</p>
+      <label class="flex items-center gap-2 font-bold text-sm py-1.5"><input type="checkbox" checked disabled class="accent-emerald-600"> EPUB ({{ site.books.size }}) <span class="text-xs font-normal text-neutral-400" data-bn="— সব বই EPUB" data-en="— all books are EPUB">— সব বই EPUB</span></label>
+      <p class="text-xs font-extrabold text-neutral-500 dark:text-neutral-400 mt-4 mb-1.5" data-bn="বিষয়" data-en="Category">বিষয়</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-3">
+        {% for c in cats %}
+        {% assign n = 0 %}{% for b in site.books %}{% if b.categories contains c %}{% assign n = n | plus: 1 %}{% endif %}{% endfor %}
+        <label class="flex items-center gap-2 font-bold text-sm py-1.5"><input type="checkbox" name="f-cat" value="{{ c }}" class="accent-emerald-600"> <span data-cat="{{ c }}">{{ c }}</span> <span class="text-neutral-400">({{ n }})</span></label>
+        {% endfor %}
+      </div>
+      <p class="text-xs font-extrabold text-neutral-500 dark:text-neutral-400 mt-4 mb-1.5" data-bn="লেখক" data-en="Author">লেখক</p>
+      <div id="f-authors" class="grid grid-cols-1 sm:grid-cols-2 gap-x-3">
+        {% for g in ag limit: 15 %}
+        <label class="flex items-center gap-2 font-bold text-sm py-1.5"><input type="checkbox" name="f-author" value="{{ g.name }}" class="accent-emerald-600"> <span class="truncate">{{ g.name }}</span> <span class="text-neutral-400">({{ g.size }})</span></label>
+        {% endfor %}
+      </div>
+      <div id="f-authors-extra" class="grid grid-cols-1 sm:grid-cols-2 gap-x-3"></div>
+      <button id="f-authors-more" class="text-sm font-bold accent-text hover:underline mt-1" data-bn="আরও লেখক দেখুন ↓" data-en="Show more authors ↓">আরও লেখক দেখুন ↓</button>
+      <div class="flex items-center gap-2 mt-5">
+        <button id="f-clear" class="font-bold rounded-xl px-4 py-2.5 text-sm border border-neutral-300 dark:border-neutral-600" data-bn="মুছুন" data-en="Clear">মুছুন</button>
+        <span class="flex-1"></span>
+        <button id="f-apply" class="accent-bg text-white font-bold rounded-xl px-5 py-2.5 text-sm" data-bn="ফলাফল দেখুন" data-en="Show results">ফলাফল দেখুন</button>
+      </div>
+    </div>
+  </div>
 </main>
 
 <script>
 (function(){
   var BM = 'ourboighar-bookmarks';
+  var RECENT_KEY = 'ourboighar-recent-searches';
   function bookmarks(){ try{ return JSON.parse(localStorage.getItem(BM)||'[]'); }catch(e){ return []; } }
   function lang(){ return window.__obLang || 'bn'; }
-  var H = { bn:{all:'সকল বইসমূহ', shelf:'★ আমার তাকে রাখা বই', cat:'বিষয়: ', search:'অনুসন্ধান: ', books:'টি বই'},
-            en:{all:'All Books', shelf:'★ Books on My Shelf', cat:'Subject: ', search:'Search: ', books:'books'} };
+  function esc(v){ return String(v == null ? '' : v).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+  var H = { bn:{all:'সকল বইসমূহ', shelf:'★ আমার তাকে রাখা বই', cat:'বিষয়: ', search:'অনুসন্ধান: ', books:'টি বই', author:'লেখক: ', show:'টি ফলাফল দেখুন'},
+            en:{all:'All Books', shelf:'★ Books on My Shelf', cat:'Subject: ', search:'Search: ', books:'books', author:'Author: ', show:'Show results'} };
   var cards = Array.prototype.slice.call(document.querySelectorAll('#browse-grid .book-card'));
-  var state = { q:'', cat:'' };
+  var state = { q:'', cats:[], authors:[], lang:'', shelf:false };
   var search = document.getElementById('b-search');
   var headingEl = document.getElementById('b-heading');
   var countEl = document.getElementById('b-count');
   var resetBtn = document.getElementById('b-reset');
+  var gridEl = document.getElementById('browse-grid');
 
+  function matches(card, st){
+    if (st.q && card.getAttribute('data-hay').toLowerCase().indexOf(st.q) < 0) return false;
+    if (st.shelf && bookmarks().indexOf(card.getAttribute('data-id')) < 0) return false;
+    if (st.cats.length){
+      var cats = (card.getAttribute('data-cats')||'').split('|');
+      if (!st.cats.some(function(c){ return cats.indexOf(c) >= 0; })) return false;
+    }
+    if (st.authors.length && st.authors.indexOf(card.getAttribute('data-author')) < 0) return false;
+    if (st.lang && card.getAttribute('data-lang') !== st.lang) return false;
+    return true;
+  }
+  function countMatches(st){
+    var n = 0;
+    cards.forEach(function(c){ if (matches(c, st)) n++; });
+    return n;
+  }
   function syncPills(){
-    document.querySelectorAll('#cat-bar button').forEach(function(b){ b.classList.toggle('on', (b.getAttribute('data-c')||'') === state.cat); });
+    document.querySelectorAll('#cat-bar button').forEach(function(b){
+      var c = b.getAttribute('data-c') || '';
+      var on = (c === '' && !state.cats.length && !state.shelf) ||
+               (c === '__shelf' && state.shelf) ||
+               (c !== '' && c !== '__shelf' && state.cats.length === 1 && state.cats[0] === c);
+      b.classList.toggle('on', on);
+    });
+  }
+  function syncFacets(){
+    document.querySelectorAll('#author-facets .facet-author').forEach(function(b){
+      b.classList.toggle('chip-on', state.authors.indexOf(b.getAttribute('data-author')) >= 0);
+    });
+  }
+  function syncLangChips(){
+    document.querySelectorAll('.lang-chip').forEach(function(b){
+      b.classList.toggle('chip-on', (b.getAttribute('data-flang') || '') === state.lang);
+    });
   }
   function apply(){
     var visible = 0;
     cards.forEach(function(card){
-      var ok = true;
-      if (state.q && card.getAttribute('data-hay').toLowerCase().indexOf(state.q) < 0) ok = false;
-      if (state.cat === '__shelf'){ if (bookmarks().indexOf(card.getAttribute('data-id')) < 0) ok = false; }
-      else if (state.cat && (card.getAttribute('data-cats')||'').split('|').indexOf(state.cat) < 0) ok = false;
+      var ok = matches(card, state);
       card.style.display = ok ? '' : 'none';
       if (ok) visible++;
     });
     document.getElementById('b-nomatch').classList.toggle('hidden', visible > 0);
     var t = H[lang()];
     countEl.textContent = visible + ' ' + t.books;
-    resetBtn.classList.toggle('hidden', !(state.q || state.cat));
+    resetBtn.classList.toggle('hidden', !(state.q || state.cats.length || state.authors.length || state.lang || state.shelf));
     headingEl.removeAttribute('data-bn'); headingEl.removeAttribute('data-en');
-    if (state.cat === '__shelf') headingEl.textContent = t.shelf;
-    else if (state.cat) headingEl.textContent = t.cat + window.__obCatName(state.cat);
+    if (state.shelf) headingEl.textContent = t.shelf;
+    else if (state.authors.length === 1 && !state.cats.length && !state.q) headingEl.textContent = t.author + state.authors[0];
+    else if (state.cats.length === 1) headingEl.textContent = t.cat + window.__obCatName(state.cats[0]);
     else if (state.q) headingEl.textContent = t.search + '"' + search.value + '"';
     else headingEl.textContent = t.all;
-    syncPills();
+    syncPills(); syncFacets(); syncLangChips();
+    updateDialogCount();
   }
-  function resetAll(){ state.q=''; state.cat=''; search.value=''; apply(); }
+  function resetAll(){ state.q=''; state.cats=[]; state.authors=[]; state.lang=''; state.shelf=false; search.value=''; apply(); }
   window.__obBrowseReset = resetAll;
   resetBtn.onclick = resetAll;
-  search.addEventListener('input', function(){ state.q = search.value.trim().toLowerCase(); apply(); });
   document.querySelectorAll('#cat-bar button').forEach(function(btn){
-    btn.onclick = function(){ state.cat = btn.getAttribute('data-c') || ''; apply(); };
+    btn.onclick = function(){
+      var c = btn.getAttribute('data-c') || '';
+      if (c === '__shelf'){ state.shelf = true; state.cats = []; }
+      else { state.shelf = false; state.cats = c ? [c] : []; }
+      apply();
+    };
   });
+
+  /* ---------- search box + recent searches ---------- */
+  var saveTimer = null;
+  function getRecent(){
+    try { var v = JSON.parse(localStorage.getItem(RECENT_KEY)||'[]'); return Array.isArray(v) ? v : []; } catch (e) { return []; }
+  }
+  function saveRecent(q){
+    q = (q || '').trim();
+    if (q.length < 2) return;
+    var list = [q].concat(getRecent().filter(function(x){ return String(x).toLowerCase() !== q.toLowerCase(); })).slice(0, 10);
+    try { localStorage.setItem(RECENT_KEY, JSON.stringify(list)); } catch (e) {}
+    renderRecentChips();
+  }
+  function chipHTML(term){
+    return '<button class="search-chip bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-600 rounded-full px-3 py-1 font-bold text-xs sm:text-sm transition hover:border-emerald-500" data-term="' + esc(term) + '">' + esc(term) + '</button>';
+  }
+  function renderRecentChips(){
+    var list = getRecent();
+    var row = document.getElementById('recent-row');
+    row.classList.toggle('hidden', !list.length);
+    document.getElementById('recent-chips').innerHTML = list.map(chipHTML).join('');
+    bindChips(document.getElementById('recent-chips'));
+  }
+  function bindChips(wrap){
+    if (!wrap) return;
+    wrap.querySelectorAll('.search-chip').forEach(function(ch){
+      ch.onclick = function(){
+        search.value = ch.getAttribute('data-term');
+        state.q = search.value.trim().toLowerCase();
+        apply();
+        gridEl.scrollIntoView({behavior:'smooth'});
+      };
+    });
+  }
+  search.addEventListener('input', function(){
+    state.q = search.value.trim().toLowerCase();
+    apply();
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(function(){ saveRecent(search.value); }, 900);
+  });
+  search.addEventListener('keydown', function(e){ if (e.key === 'Enter') saveRecent(search.value); });
+  renderRecentChips();
+
+  /* ---------- popular searches (top titles by popular.json rank) ---------- */
+  fetch('{{ "/search.json" | relative_url }}').then(function(r){ return r.ok ? r.json() : []; })
+    .then(function(books){
+      return fetch('{{ "/popular.json" | relative_url }}', { cache:'no-cache' })
+        .then(function(r){ return r.ok ? r.json() : {}; })
+        .then(function(ranks){
+          var byId = {};
+          books.forEach(function(b){ byId[b.book_id] = b; });
+          var top = Object.keys(ranks)
+            .filter(function(id){ return typeof ranks[id] === 'number' && byId[id]; })
+            .sort(function(a, b){ return ranks[a] - ranks[b]; })
+            .slice(0, 6)
+            .map(function(id){ return byId[id].title; });
+          if (!top.length) return;
+          document.getElementById('popular-row').classList.remove('hidden');
+          document.getElementById('popular-chips').innerHTML = top.map(chipHTML).join('');
+          bindChips(document.getElementById('popular-chips'));
+        });
+    }).catch(function(){});
+
+  /* ---------- author facets (top 8) ---------- */
+  document.querySelectorAll('#author-facets .facet-author').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var a = btn.getAttribute('data-author');
+      if (state.authors.length === 1 && state.authors[0] === a) state.authors = [];
+      else state.authors = [a];
+      apply();
+    });
+  });
+
+  /* ---------- language chips ---------- */
+  document.querySelectorAll('.lang-chip').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      state.lang = btn.getAttribute('data-flang') || '';
+      apply();
+    });
+  });
+
+  /* ---------- grid / list view ---------- */
+  var viewBtn = document.getElementById('view-toggle');
+  function paintView(){
+    var list = gridEl.classList.contains('list-view');
+    viewBtn.textContent = list ? (lang() === 'en' ? '▦ Grid' : '▦ গ্রিড') : (lang() === 'en' ? '☰ List' : '☰ তালিকা');
+  }
+  if (localStorage.getItem('ourboighar-browse-view') === 'list') gridEl.classList.add('list-view');
+  viewBtn.addEventListener('click', function(){
+    gridEl.classList.toggle('list-view');
+    try { localStorage.setItem('ourboighar-browse-view', gridEl.classList.contains('list-view') ? 'list' : 'grid'); } catch (e) {}
+    paintView();
+  });
+  paintView();
+
+  /* ---------- filter dialog ---------- */
+  var dialog = document.getElementById('filter-dialog');
+  var fText = document.getElementById('f-text');
+  var fApply = document.getElementById('f-apply');
+  function readDialog(){
+    var st = { q:(fText.value || '').trim().toLowerCase(), cats:[], authors:[], lang:state.lang, shelf:false };
+    dialog.querySelectorAll('input[name="f-cat"]:checked').forEach(function(cb){ st.cats.push(cb.value); });
+    dialog.querySelectorAll('input[name="f-author"]:checked').forEach(function(cb){ st.authors.push(cb.value); });
+    return st;
+  }
+  function updateDialogCount(){
+    if (dialog.classList.contains('hidden')) return;
+    var n = countMatches(readDialog());
+    var t = H[lang()];
+    fApply.textContent = n + ' ' + t.show;
+  }
+  function openDialog(){
+    fText.value = search.value;
+    dialog.querySelectorAll('input[name="f-cat"]').forEach(function(cb){ cb.checked = state.cats.indexOf(cb.value) >= 0; });
+    dialog.querySelectorAll('input[name="f-author"]').forEach(function(cb){ cb.checked = state.authors.indexOf(cb.value) >= 0; });
+    dialog.classList.remove('hidden');
+    updateDialogCount();
+  }
+  function closeDialog(){ dialog.classList.add('hidden'); }
+  document.getElementById('b-filter-btn').addEventListener('click', openDialog);
+  dialog.querySelectorAll('[data-close]').forEach(function(el){ el.addEventListener('click', closeDialog); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeDialog(); });
+  dialog.addEventListener('change', updateDialogCount);
+  fText.addEventListener('input', updateDialogCount);
+  fApply.addEventListener('click', function(){
+    var st = readDialog();
+    state.q = st.q; state.cats = st.cats; state.authors = st.authors; state.shelf = false;
+    search.value = fText.value;
+    closeDialog();
+    apply();
+    gridEl.scrollIntoView({behavior:'smooth'});
+  });
+  document.getElementById('f-clear').addEventListener('click', function(){
+    dialog.querySelectorAll('input[type="checkbox"]:not([disabled])').forEach(function(cb){ cb.checked = false; });
+    fText.value = '';
+    updateDialogCount();
+  });
+
+  /* ---------- dialog: load the remaining authors on demand ---------- */
+  var authorsLoaded = false;
+  document.getElementById('f-authors-more').addEventListener('click', function(){
+    var btn = this;
+    if (authorsLoaded){ document.getElementById('f-authors-extra').classList.toggle('hidden'); return; }
+    fetch('{{ "/search.json" | relative_url }}').then(function(r){ return r.ok ? r.json() : []; })
+      .then(function(books){
+        var counts = {}, shown = {};
+        dialog.querySelectorAll('input[name="f-author"]').forEach(function(cb){ shown[cb.value] = 1; });
+        books.forEach(function(b){ counts[b.author] = (counts[b.author] || 0) + 1; });
+        var rest = Object.keys(counts).filter(function(a){ return !shown[a]; })
+          .sort(function(a, b){ return counts[b] - counts[a]; });
+        document.getElementById('f-authors-extra').innerHTML = rest.map(function(a){
+          return '<label class="flex items-center gap-2 font-bold text-sm py-1.5"><input type="checkbox" name="f-author" value="' + esc(a) + '" class="accent-emerald-600"> <span class="truncate">' + esc(a) + '</span> <span class="text-neutral-400">(' + counts[a] + ')</span></label>';
+        }).join('');
+        authorsLoaded = true;
+        btn.classList.add('hidden');
+        updateDialogCount();
+      }).catch(function(){});
+  });
+
   window.addEventListener('ob-lang', apply);
-  var q = new URLSearchParams(location.search).get('q');
+  var params = new URLSearchParams(location.search);
+  var q = params.get('q');
   if (q){ search.value = q; state.q = q.trim().toLowerCase(); }
-  var c = new URLSearchParams(location.search).get('cat');
-  if (c) state.cat = c;
+  var c = params.get('cat');
+  if (c) state.cats = [c];
+  var au = params.get('author');
+  if (au) state.authors = [au];
   apply();
 })();
 </script>

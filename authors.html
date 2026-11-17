@@ -1,0 +1,87 @@
+---
+layout: default
+title: "লেখক — Authors"
+permalink: /authors/
+---
+{% assign ag = site.books | group_by: "author" | sort: "size" | reverse %}
+
+<main class="max-w-6xl mx-auto px-3 sm:px-4 mt-6">
+  <h1 class="serif text-2xl sm:text-3xl font-extrabold" data-bn="✍️ লেখক" data-en="✍️ Authors">✍️ লেখক</h1>
+  <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1" data-bn="লেখক অনুযায়ী বই খুঁজুন — ফলো করলে লেখক আপনার অনুসরণ-তালিকায় থাকবে (শুধু এই ব্রাউজারে)।" data-en="Find books by author — following keeps the author in your follow list (only in this browser).">লেখক অনুযায়ী বই খুঁজুন — ফলো করলে লেখক আপনার অনুসরণ-তালিকায় থাকবে (শুধু এই ব্রাউজারে)।</p>
+
+  <div class="mt-5 flex items-center bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl shadow-sm p-1.5 gap-1 max-w-2xl">
+    <span class="pl-2.5 text-neutral-400">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20.5 20.5L16.7 16.7"/></svg>
+    </span>
+    <input id="a-search" type="search" class="flex-1 px-2 py-2.5 bg-transparent outline-none text-base min-w-0" placeholder="লেখকের নাম দিয়ে খুঁজুন..." data-bn-ph="লেখকের নাম দিয়ে খুঁজুন..." data-en-ph="Search by author name...">
+  </div>
+
+  <div class="flex items-baseline justify-between mt-7 mb-3 px-0.5">
+    <h2 class="serif text-xl font-extrabold" id="a-heading" data-bn="সকল লেখক" data-en="All Authors">সকল লেখক</h2>
+    <span id="a-count" class="text-sm font-bold text-neutral-500 dark:text-neutral-400">{{ ag.size }} <span data-bn="জন লেখক" data-en="authors">জন লেখক</span></span>
+  </div>
+
+  <div id="authors-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    {% for g in ag %}
+    {% assign aslug = site.data.author_slugs[g.name] %}
+    <div class="author-card bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-4 shadow-sm flex items-center gap-3" data-name="{{ g.name | downcase }}">
+      <a href="{% if aslug %}{{ '/authors/' | relative_url }}{{ aslug }}/{% else %}{{ '/authors/' | relative_url }}{% endif %}" class="accent-bg w-12 h-12 rounded-full flex items-center justify-center text-white text-xl font-extrabold flex-shrink-0">{{ g.name | slice: 0 }}</a>
+      <a href="{% if aslug %}{{ '/authors/' | relative_url }}{{ aslug }}/{% else %}{{ '/authors/' | relative_url }}{% endif %}" class="flex-1 min-w-0">
+        <span class="block font-bold leading-snug line-clamp-2 hover:text-emerald-700 dark:hover:text-emerald-400">{{ g.name }}</span>
+        <span class="block text-xs font-bold text-neutral-500 dark:text-neutral-400 mt-0.5">{{ g.size }} <span data-bn="টি বই" data-en="books">টি বই</span></span>
+      </a>
+      {% if aslug %}<button class="follow-btn border border-neutral-300 dark:border-neutral-600 font-bold rounded-lg px-3 py-1.5 text-xs flex-shrink-0" data-slug="{{ aslug }}" data-bn="+ ফলো" data-en="+ Follow">+ ফলো</button>{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+
+  <div id="a-nomatch" class="hidden bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl text-center py-12 px-4 mt-4">
+    <p class="text-lg font-bold text-neutral-700 dark:text-neutral-200" data-bn="দুঃখিত, এই নামে কোনো লেখক পাওয়া যায়নি।" data-en="Sorry, no author matches this name.">দুঃখিত, এই নামে কোনো লেখক পাওয়া যায়নি।</p>
+  </div>
+</main>
+
+<script>
+(function(){
+  var KEY = 'ourboighar-followed-authors';
+  function get(){ try{ return JSON.parse(localStorage.getItem(KEY)||'[]'); }catch(e){ return []; } }
+  function lang(){ return window.__obLang || 'bn'; }
+  function paintBtn(btn){
+    var on = get().indexOf(btn.getAttribute('data-slug')) >= 0;
+    btn.textContent = on ? (lang() === 'en' ? '✓ Following' : '✓ ফলো করা হচ্ছে')
+                         : (lang() === 'en' ? '+ Follow' : '+ ফলো');
+    btn.classList.toggle('accent-bg', on);
+    btn.classList.toggle('text-white', on);
+  }
+  function paintAll(){
+    document.querySelectorAll('.follow-btn').forEach(paintBtn);
+  }
+  document.querySelectorAll('.follow-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var l = get(), s = btn.getAttribute('data-slug'), i = l.indexOf(s);
+      if (i >= 0) l.splice(i, 1); else l.push(s);
+      try{ localStorage.setItem(KEY, JSON.stringify(l)); }catch(e){}
+      paintBtn(btn);
+    });
+  });
+  paintAll();
+  window.addEventListener('ob-lang', paintAll);
+
+  var search = document.getElementById('a-search');
+  var cards = Array.prototype.slice.call(document.querySelectorAll('#authors-grid .author-card'));
+  var countEl = document.getElementById('a-count');
+  var total = cards.length;
+  function apply(){
+    var q = search.value.trim().toLowerCase(), visible = 0;
+    cards.forEach(function(card){
+      var ok = !q || (card.getAttribute('data-name') || '').indexOf(q) >= 0;
+      card.style.display = ok ? '' : 'none';
+      if (ok) visible++;
+    });
+    document.getElementById('a-nomatch').classList.toggle('hidden', visible > 0);
+    countEl.textContent = visible + ' / ' + total + ' ' + (lang() === 'en' ? 'authors' : 'জন লেখক');
+  }
+  search.addEventListener('input', apply);
+  var q = new URLSearchParams(location.search).get('q');
+  if (q){ search.value = q; apply(); }
+})();
+</script>
