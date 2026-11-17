@@ -152,6 +152,20 @@ scripts/generate-authors.py` and commit the new files) so the new author
 gets a page and the book's author link points to it. Until then the
 author link falls back to a search for that name.
 
+## 8. Tools page (`/tools/`)
+
+`tools.html` is a single self-contained page (one inline script, no
+Liquid): 10 browser-only tools — EPUB Reader, EPUB Metadata Viewer,
+EPUB to TXT, PDF Merge, PDF Page Extractor, Image to PDF, Cover
+Resizer, Reading Planner, Word Counter, Font Lab. Everything runs on
+the reader's device; no file is uploaded anywhere. CDN libraries:
+JSZip + epub.js (same versions as `reader.html`) and pdf-lib 1.17.1
+for the PDF tools — a tool that needs a library shows a message when
+offline instead of failing silently. Pins are stored in localStorage
+`ob-tools-pinned`; the reading plan in `ob-reading-plan`. To add a
+tool, copy one `<article class="tool-card" …>` block (with its
+`work-<id>` workspace) and wire it in the same script.
+
 ---
 
 ## Overflow storage (when the main repo fills up)
