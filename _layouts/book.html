@@ -2,6 +2,8 @@
 layout: default
 ---
 {% assign bookfile = page.file %}{% if bookfile %}{% unless bookfile contains '://' %}{% assign bookfile = bookfile | relative_url %}{% endunless %}{% endif %}
+{% assign _catslug = page.category | slugify %}
+{% assign _opdsfeed = '/opds/category-' | append: _catslug | append: '.xml' | absolute_url %}
 <main class="max-w-4xl mx-auto px-3 sm:px-4 py-5">
   <p class="text-[13px] text-neutral-500 dark:text-neutral-400 mb-3">
     <a href="{{ '/' | relative_url }}" class="hover:underline" data-bn="হোম" data-en="Home">হোম</a> /
@@ -45,6 +47,8 @@ layout: default
           {% if page.file %}
           <a id="continue-btn" href="{{ '/reader.html' | relative_url }}?file={{ bookfile | url_encode }}&title={{ page.title | url_encode }}" class="accent-bg col-span-2 hidden items-center justify-center gap-2 text-white font-bold rounded-xl py-3 px-4">▶ <span data-bn="পড়া চালিয়ে যান" data-en="Continue Reading">পড়া চালিয়ে যান</span> · <span id="continue-pct"></span></a>
           <a href="{{ '/reader.html' | relative_url }}?file={{ bookfile | url_encode }}&title={{ page.title | url_encode }}" class="accent-bg col-span-2 flex items-center justify-center gap-2 text-white font-bold rounded-xl py-3 px-4" data-bn="📖 অনলাইনে পড়ুন" data-en="📖 Read Online">📖 অনলাইনে পড়ুন</a>
+          <a href="https://our-reader.vercel.app/opds?url={{ _opdsfeed | url_encode }}" target="_blank" rel="noopener" class="col-span-2 flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border-2 border-emerald-600 dark:border-emerald-500 text-emerald-800 dark:text-emerald-300 font-bold rounded-xl py-3 px-4">📚 <span data-bn="Our Reader-এ খুলুন" data-en="Open in Our Reader">Our Reader-এ খুলুন</span></a>
+          <p class="col-span-2 text-[13px] text-neutral-500 dark:text-neutral-400 -mt-1" data-bn="Our Reader-এ বইঘরের ক্যাটালগ খুলবে — বইটি খুঁজে Download চাপলেই আপনার Our Reader লাইব্রেরিতে যোগ হবে।" data-en="Opens the Our Boighar catalog in Our Reader — find the book and tap Download to add it to your Our Reader library.">Our Reader-এ বইঘরের ক্যাটালগ খুলবে — বইটি খুঁজে Download চাপলেই আপনার Our Reader লাইব্রেরিতে যোগ হবে।</p>
           <a href="{{ bookfile }}" download class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl py-3 px-4" data-bn="⬇ ডাউনলোড" data-en="⬇ Download">⬇ ডাউনলোড</a>
           {% elsif page.gumroad %}
           <a href="{{ page.gumroad }}" target="_blank" rel="noopener" class="accent-bg col-span-2 flex items-center justify-center gap-2 text-white font-bold rounded-xl py-3 px-4">🛒 Gumroad থেকে নিন{% if page.price %} · {{ page.price }}{% endif %}</a>
@@ -96,9 +100,11 @@ layout: default
         <p class="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed" data-bn="এই বইটি বন্ধুদের সঙ্গে শেয়ার করুন — লিংক কপি করুন বা QR কোডটি স্ক্যান করতে দিন।" data-en="Share this book with friends — copy the link or let them scan the QR code.">এই বইটি বন্ধুদের সঙ্গে শেয়ার করুন — লিংক কপি করুন বা QR কোডটি স্ক্যান করতে দিন।</p>
         <div class="flex flex-wrap gap-2.5 mt-4">
           <button id="copy-link-btn" class="accent-bg text-white font-bold rounded-xl px-4 py-2.5 text-sm" data-bn="🔗 লিংক কপি করুন" data-en="🔗 Copy Link">🔗 লিংক কপি করুন</button>
+          <button id="copy-opds-btn" class="bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl px-4 py-2.5 text-sm" data-bn="📡 OPDS লিংক কপি" data-en="📡 Copy OPDS Link">📡 OPDS লিংক কপি</button>
           <button id="share2-btn" class="bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl px-4 py-2.5 text-sm" data-bn="⤴ শেয়ার" data-en="⤴ Share">⤴ শেয়ার</button>
         </div>
         <p id="copy-ok" class="hidden text-sm font-bold text-emerald-700 dark:text-emerald-400 mt-2" data-bn="✓ লিংক কপি হয়েছে" data-en="✓ Link copied">✓ লিংক কপি হয়েছে</p>
+        <p id="copy-opds-ok" class="hidden text-sm font-bold text-emerald-700 dark:text-emerald-400 mt-2" data-bn="✓ OPDS লিংক কপি হয়েছে — KOReader বা Our Reader-এর OPDS ক্যাটালগে যোগ করুন" data-en="✓ OPDS link copied — add it as an OPDS catalog in KOReader or Our Reader">✓ OPDS লিংক কপি হয়েছে — KOReader বা Our Reader-এর OPDS ক্যাটালগে যোগ করুন</p>
       </div>
       <div id="qr-box" class="flex-shrink-0 text-center">
         <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&margin=6&data={{ page.url | absolute_url | url_encode }}" alt="QR code" width="160" height="160" class="rounded-lg border border-neutral-200 dark:border-neutral-600 bg-white p-1" onerror="document.getElementById('qr-box').style.display='none'">
@@ -267,6 +273,15 @@ layout: default
   if (copyBtn) copyBtn.onclick = function(){
     if (navigator.clipboard){ navigator.clipboard.writeText(location.href).then(function(){ document.getElementById('copy-ok').classList.remove('hidden'); }); }
     else { document.getElementById('copy-ok').classList.remove('hidden'); }
+  };
+
+  /* copy OPDS catalog link (for KOReader / any OPDS reader) */
+  var OPDS_URL = '{{ '/opds/catalog.xml' | absolute_url }}';
+  var opdsBtn = document.getElementById('copy-opds-btn');
+  if (opdsBtn) opdsBtn.onclick = function(){
+    function done(){ document.getElementById('copy-opds-ok').classList.remove('hidden'); }
+    if (navigator.clipboard){ navigator.clipboard.writeText(OPDS_URL).then(done, done); }
+    else { done(); }
   };
 
   document.getElementById('share-btn').onclick = function(){

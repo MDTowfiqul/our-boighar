@@ -1,0 +1,11 @@
+---
+layout: null
+---
+{%- assign books = "" | split: "" -%}
+{%- for id in site.data.recent -%}
+  {%- assign found = site.books | where: "book_id", id | first -%}
+  {%- if found -%}
+    {%- assign books = books | push: found -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- include opds-feed.xml feed_title="Our Boighar — Newly Added" self_href="/opds/new.xml" kind="acquisition" books=books -%}

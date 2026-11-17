@@ -1,0 +1,63 @@
+---
+layout: default
+title: "OPDS ক্যাটালগ"
+permalink: /opds/
+---
+<main class="max-w-3xl mx-auto px-3 sm:px-4 py-6">
+  <h1 class="serif text-2xl sm:text-3xl font-extrabold" data-bn="📡 OPDS ক্যাটালগ" data-en="📡 OPDS Catalog">📡 OPDS ক্যাটালগ</h1>
+  <p class="text-[15px] text-neutral-600 dark:text-neutral-300 mt-2 leading-relaxed" data-bn="OPDS হলো ইবুক লাইব্রেরির একটি সাধারণ মান — KOReader, Our Reader-সহ যেকোনো OPDS রিডারে আমাদের বইঘরের পুরো লাইব্রেরি ব্রাউজ করে সরাসরি বই ডাউনলোড করা যায়। কোনো অ্যাকাউন্ট বা লগইন লাগে না, সব ফ্রি।" data-en="OPDS is the standard way ebook libraries share their catalog — in KOReader, Our Reader and any OPDS reader you can browse the whole Our Boighar library and download books directly. No account or login needed; everything is free.">OPDS হলো ইবুক লাইব্রেরির একটি সাধারণ মান — KOReader, Our Reader-সহ যেকোনো OPDS রিডারে আমাদের বইঘরের পুরো লাইব্রেরি ব্রাউজ করে সরাসরি বই ডাউনলোড করা যায়। কোনো অ্যাকাউন্ট বা লগইন লাগে না, সব ফ্রি।</p>
+
+  <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 mt-5">
+    <h2 class="text-lg font-bold" data-bn="ক্যাটালগের ঠিকানা" data-en="Catalog address">ক্যাটালগের ঠিকানা</h2>
+    <p class="text-sm text-neutral-600 dark:text-neutral-300 mt-1"><code class="bg-neutral-100 dark:bg-neutral-700 rounded px-2 py-0.5 break-all">{{ '/opds/catalog.xml' | absolute_url }}</code></p>
+    <div class="flex flex-wrap gap-2.5 mt-4">
+      <button id="copy-opds-url" class="accent-bg text-white font-bold rounded-xl px-4 py-2.5 text-sm" data-bn="📋 ঠিকানাটি কপি করুন" data-en="📋 Copy the address">📋 ঠিকানাটি কপি করুন</button>
+      <a href="{{ '/opds/catalog.xml' | absolute_url }}" target="_blank" rel="noopener" class="bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl px-4 py-2.5 text-sm" data-bn="ক্যাটালগটি দেখুন" data-en="View the catalog">ক্যাটালগটি দেখুন</a>
+    </div>
+    <p id="copy-opds-done" class="hidden text-sm font-bold text-emerald-700 dark:text-emerald-400 mt-2" data-bn="✓ কপি হয়েছে" data-en="✓ Copied">✓ কপি হয়েছে</p>
+  </section>
+
+  <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 mt-4">
+    <h2 class="text-lg font-bold" data-bn="📚 Our Reader-এ ব্যবহার" data-en="📚 Use in Our Reader">📚 Our Reader-এ ব্যবহার</h2>
+    <ol class="text-[15px] text-neutral-700 dark:text-neutral-200 mt-2 space-y-2 list-decimal pl-5">
+      <li data-bn="যেকোনো বইয়ের পেজে “Our Reader-এ খুলুন” চাপুন — বইঘরের ক্যাটালগ Our Reader-এ খুলবে।" data-en="On any book page tap “Open in Our Reader” — the Our Boighar catalog opens in Our Reader.">যেকোনো বইয়ের পেজে “Our Reader-এ খুলুন” চাপুন — বইঘরের ক্যাটালগ Our Reader-এ খুলবে।</li>
+      <li data-bn="বইটি খুঁজে তার পেজে গিয়ে Download চাপুন — বইটি আপনার Our Reader লাইব্রেরিতে যোগ হবে, কভার ও তথ্যসহ।" data-en="Find the book, open its page and tap Download — it is added to your Our Reader library, with cover and details.">বইটি খুঁজে তার পেজে গিয়ে Download চাপুন — বইটি আপনার Our Reader লাইব্রেরিতে যোগ হবে, কভার ও তথ্যসহ।</li>
+      <li data-bn="অথবা Our Reader-এ OPDS ক্যাটালগ যোগ করার জায়গায় উপরের ঠিকানাটি বসান।" data-en="Or paste the catalog address above where Our Reader lets you add an OPDS catalog.">অথবা Our Reader-এ OPDS ক্যাটালগ যোগ করার জায়গায় উপরের ঠিকানাটি বসান।</li>
+    </ol>
+  </section>
+
+  <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 mt-4">
+    <h2 class="text-lg font-bold" data-bn="📖 KOReader-এ ব্যবহার" data-en="📖 Use in KOReader">📖 KOReader-এ ব্যবহার</h2>
+    <ol class="text-[15px] text-neutral-700 dark:text-neutral-200 mt-2 space-y-2 list-decimal pl-5">
+      <li data-bn="KOReader খুলে File Browser → OPDS Browser → Add a catalog-এ যান।" data-en="In KOReader go to File Browser → OPDS Browser → Add a catalog.">KOReader খুলে File Browser → OPDS Browser → Add a catalog-এ যান।</li>
+      <li data-bn="নাম দিন “Our Boighar”, ঠিকানায় উপরের লিংকটি বসান, Save করুন।" data-en="Name it “Our Boighar”, paste the address above, and save.">নাম দিন “Our Boighar”, ঠিকানায় উপরের লিংকটি বসান, Save করুন।</li>
+      <li data-bn="ক্যাটালগ থেকে বই বেছে Download করলেই বইটি আপনার ডিভাইসে নেমে যাবে।" data-en="Pick a book from the catalog and download it straight to your device.">ক্যাটালগ থেকে বই বেছে Download করলেই বইটি আপনার ডিভাইসে নেমে যাবে।</li>
+    </ol>
+  </section>
+
+  <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 mt-4">
+    <h2 class="text-lg font-bold" data-bn="ক্যাটালগের ভেতরে যা আছে" data-en="What is inside the catalog">ক্যাটালগের ভেতরে যা আছে</h2>
+    <ul class="text-[15px] mt-2 space-y-1.5">
+      <li><a class="accent-text font-bold hover:underline" href="{{ '/opds/catalog.xml' | absolute_url }}">📡 {{ '/opds/catalog.xml' | absolute_url }}</a> — <span data-bn="মূল ক্যাটালগ" data-en="main catalog">মূল ক্যাটালগ</span></li>
+      <li><a class="accent-text font-bold hover:underline" href="{{ '/opds/all-1.xml' | absolute_url }}">📚 {{ '/opds/all-1.xml' | absolute_url }}</a> — <span data-bn="সব বই, A–Z, প্রতি পেজে ৫০টি ({{ site.books.size }}টি বই)" data-en="all books, A–Z, 50 per page ({{ site.books.size }} books)">সব বই, A–Z, প্রতি পেজে ৫০টি ({{ site.books.size }}টি বই)</span></li>
+      <li><a class="accent-text font-bold hover:underline" href="{{ '/opds/new.xml' | absolute_url }}">🆕 {{ '/opds/new.xml' | absolute_url }}</a> — <span data-bn="নতুন যোগ হওয়া বই" data-en="newly added books">নতুন যোগ হওয়া বই</span></li>
+      <li><a class="accent-text font-bold hover:underline" href="{{ '/opds/popular.xml' | absolute_url }}">🔥 {{ '/opds/popular.xml' | absolute_url }}</a> — <span data-bn="জনপ্রিয় ১০০ বই" data-en="top 100 popular books">জনপ্রিয় ১০০ বই</span></li>
+      <li><a class="accent-text font-bold hover:underline" href="{{ '/opds/categories.xml' | absolute_url }}">🗂 {{ '/opds/categories.xml' | absolute_url }}</a> — <span data-bn="বিষয় অনুযায়ী (১৮টি বিষয়)" data-en="by category (18 categories)">বিষয় অনুযায়ী (১৮টি বিষয়)</span></li>
+      <li><a class="accent-text font-bold hover:underline" href="{{ '/opds/authors.xml' | absolute_url }}">✍️ {{ '/opds/authors.xml' | absolute_url }}</a> — <span data-bn="লেখক অনুযায়ী (সেরা ২০ লেখক)" data-en="by author (top 20 authors)">লেখক অনুযায়ী (সেরা ২০ লেখক)</span></li>
+    </ul>
+    <p class="text-[13px] text-neutral-500 dark:text-neutral-400 mt-3" data-bn="নোট: ক্যাটালগে সার্চ (খোঁজা) নেই — এই সাইটটি স্ট্যাটিক, তাই সার্ভার-সাইড সার্চ সম্ভব নয়। বিষয় বা লেখক দিয়ে ব্রাউজ করুন, বা সাইটের নিজের সার্চ ব্যবহার করুন।" data-en="Note: the catalog has no search — this is a static site, so server-side search is not possible. Browse by category or author, or use the site's own search.">নোট: ক্যাটালগে সার্চ (খোঁজা) নেই — এই সাইটটি স্ট্যাটিক, তাই সার্ভার-সাইড সার্চ সম্ভব নয়। বিষয় বা লেখক দিয়ে ব্রাউজ করুন, বা সাইটের নিজের সার্চ ব্যবহার করুন।</p>
+  </section>
+</main>
+
+<script>
+(function(){
+  var btn = document.getElementById('copy-opds-url');
+  if (!btn) return;
+  btn.onclick = function(){
+    var url = '{{ '/opds/catalog.xml' | absolute_url }}';
+    function done(){ document.getElementById('copy-opds-done').classList.remove('hidden'); }
+    if (navigator.clipboard){ navigator.clipboard.writeText(url).then(done, done); }
+    else { done(); }
+  };
+})();
+</script>

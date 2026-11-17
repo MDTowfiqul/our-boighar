@@ -1,0 +1,24 @@
+  <entry>
+    <title>{{ include.b.title | xml_escape }}</title>
+    <id>{{ include.b.url | absolute_url }}</id>
+    <updated>{{ site.time | date_to_xmlschema }}</updated>
+    <author><name>{{ include.b.author | xml_escape }}</name></author>
+    <dc:creator>{{ include.b.author | xml_escape }}</dc:creator>
+    {%- if include.b.creator -%}
+    <dc:contributor>{{ include.b.creator | xml_escape }}</dc:contributor>
+    {%- endif -%}
+    <dc:language>{{ include.b.language }}</dc:language>
+    {%- if include.b.year -%}
+    <dc:issued>{{ include.b.year }}</dc:issued>
+    {%- endif -%}
+    <summary type="text">{{ include.b.content | strip_html | strip_newlines | xml_escape | truncate: 600 }}</summary>
+    {%- for c in include.b.categories -%}
+    <category term="{{ c | slugify }}" label="{{ c | xml_escape }}"/>
+    {%- endfor -%}
+    <link rel="http://opds-spec.org/image" type="image/jpeg" href="{{ include.b.cover | absolute_url }}"/>
+    <link rel="http://opds-spec.org/image/thumbnail" type="image/jpeg" href="{{ include.b.cover | absolute_url }}"/>
+    <link rel="alternate" type="text/html" href="{{ include.b.url | absolute_url }}"/>
+    {%- if include.b.file -%}
+    <link rel="http://opds-spec.org/acquisition" type="application/epub+zip" href="{{ include.b.file | absolute_url }}"/>
+    {%- endif -%}
+  </entry>

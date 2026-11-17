@@ -1,0 +1,15 @@
+---
+layout: null
+---
+{%- assign books = "" | split: "" -%}
+{%- for rank in (0..99) -%}
+  {%- for pair in site.data.popular -%}
+    {%- if pair[1] == rank -%}
+      {%- assign found = site.books | where: "book_id", pair[0] | first -%}
+      {%- if found -%}
+        {%- assign books = books | push: found -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endfor -%}
+{%- include opds-feed.xml feed_title="Our Boighar — Popular (Top 100)" self_href="/opds/popular.xml" kind="acquisition" books=books -%}

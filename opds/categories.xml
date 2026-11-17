@@ -1,0 +1,26 @@
+---
+layout: null
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/terms/" xmlns:opds="http://opds-spec.org/2010/catalog">
+  <id>{{ '/opds/categories.xml' | absolute_url }}</id>
+  <title>Our Boighar — Categories</title>
+  <updated>{{ site.time | date_to_xmlschema }}</updated>
+  <author><name>Our Boighar</name><uri>{{ '/' | absolute_url }}</uri></author>
+  <link rel="self" type="application/atom+xml;profile=opds-catalog;kind=navigation" href="{{ '/opds/categories.xml' | absolute_url }}"/>
+  <link rel="start" type="application/atom+xml;profile=opds-catalog;kind=navigation" title="Our Boighar OPDS Catalog" href="{{ '/opds/catalog.xml' | absolute_url }}"/>
+  {%- assign _cats = "Aqeedah,Biography,Dawah,Dua,Economics & Politics,Family,Fiqh,Hadith,Health,History,Islamic Q&A,Manners & Character,Prophetic Medicine,Qur'an,Seerah,Spirituality,Tafsir,Women" | split: "," -%}
+  {%- comment -%} If a new category is added to the library, add it here AND run
+  scripts/generate-opds.py to create its feed file. {%- endcomment -%}
+  {%- for _c in _cats -%}
+  {%- assign _n = site.books | where_exp: "b", "b.categories contains _c" | size -%}
+  {%- assign _slug = _c | slugify -%}
+  <entry>
+    <title>{{ _c | xml_escape }} ({{ _n }})</title>
+    <id>{{ '/opds/category-' | append: _slug | append: '.xml' | absolute_url }}</id>
+    <updated>{{ site.time | date_to_xmlschema }}</updated>
+    <content type="text">{{ _n }} book(s) in {{ _c | xml_escape }}.</content>
+    <link rel="subsection" type="application/atom+xml;profile=opds-catalog;kind=acquisition" href="{{ '/opds/category-' | append: _slug | append: '.xml' | absolute_url }}"/>
+  </entry>
+  {%- endfor -%}
+</feed>
