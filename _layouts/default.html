@@ -58,9 +58,10 @@
     <nav class="hidden lg:flex items-center gap-6 text-[15px] font-bold text-neutral-700 dark:text-neutral-200 ml-4">
       <a href="{{ '/' | relative_url }}" class="hover:text-emerald-700 dark:hover:text-emerald-400" data-bn="হোম" data-en="Home">হোম</a>
       <a href="{{ '/browse/' | relative_url }}" class="hover:text-emerald-700 dark:hover:text-emerald-400" data-bn="সব বই" data-en="All Books">সব বই</a>
-      <a href="{{ '/' | relative_url }}#writers" class="hover:text-emerald-700 dark:hover:text-emerald-400" data-bn="লেখক" data-en="Authors">লেখক</a>
+      <a href="{{ '/authors/' | relative_url }}" class="hover:text-emerald-700 dark:hover:text-emerald-400" data-bn="লেখক" data-en="Authors">লেখক</a>
       <a href="{{ '/' | relative_url }}#categories" class="hover:text-emerald-700 dark:hover:text-emerald-400" data-bn="বিষয়" data-en="Categories">বিষয়</a>
       <a href="{{ '/shelf/' | relative_url }}" class="hover:text-emerald-700 dark:hover:text-emerald-400" data-bn="আমার তাক" data-en="My Shelf">আমার তাক</a>
+      <a href="{{ '/tools/' | relative_url }}" class="hover:text-emerald-700 dark:hover:text-emerald-400" data-bn="টুলস" data-en="Tools">টুলস</a>
     </nav>
     <span class="flex-1"></span>
     <button id="theme-toggle" class="border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 rounded-full w-10 h-10 text-base hover:bg-neutral-100 dark:hover:bg-neutral-700 transition" title="Dark / Light">🌙</button>
@@ -83,9 +84,10 @@
       <a href="{{ '/' | relative_url }}" class="drawer-link accent-soft-bg accent-text rounded-xl px-4 py-3 mb-1" data-bn="হোম" data-en="Home">হোম</a>
       <a href="{{ '/browse/' | relative_url }}" class="drawer-link rounded-xl px-4 py-3 hover:bg-neutral-50 dark:hover:bg-neutral-800" data-bn="সব বই" data-en="All Books">সব বই</a>
       <a href="{{ '/browse/' | relative_url }}" class="drawer-link rounded-xl px-4 py-3 hover:bg-neutral-50 dark:hover:bg-neutral-800" data-bn="ধরন" data-en="Categories">ধরন</a>
-      <a href="{{ '/' | relative_url }}#writers" class="drawer-link rounded-xl px-4 py-3 hover:bg-neutral-50 dark:hover:bg-neutral-800" data-bn="লেখক" data-en="Authors">লেখক</a>
+      <a href="{{ '/authors/' | relative_url }}" class="drawer-link rounded-xl px-4 py-3 hover:bg-neutral-50 dark:hover:bg-neutral-800" data-bn="লেখক" data-en="Authors">লেখক</a>
       <a href="{{ '/' | relative_url }}#popular" class="drawer-link rounded-xl px-4 py-3 hover:bg-neutral-50 dark:hover:bg-neutral-800" data-bn="জনপ্রিয় বই" data-en="Popular Books">জনপ্রিয় বই</a>
       <a href="{{ '/shelf/' | relative_url }}" class="drawer-link rounded-xl px-4 py-3 hover:bg-neutral-50 dark:hover:bg-neutral-800" data-bn="আমার তাক" data-en="My Shelf">আমার তাক</a>
+      <a href="{{ '/tools/' | relative_url }}" class="drawer-link rounded-xl px-4 py-3 hover:bg-neutral-50 dark:hover:bg-neutral-800" data-bn="🛠️ টুলস" data-en="🛠️ Tools">🛠️ টুলস</a>
     </nav>
     <button id="drawer-lang" class="mt-3 w-full flex items-center gap-3 bg-[#fdf8f1] dark:bg-neutral-800 border border-orange-100/70 dark:border-neutral-700 rounded-2xl px-4 py-3.5 font-bold">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z"/></svg>
@@ -127,7 +129,7 @@
 
 <footer class="max-w-6xl mx-auto px-4 mt-14 pb-4 text-center text-sm text-neutral-500 dark:text-neutral-400">
   <p class="font-bold text-neutral-700 dark:text-neutral-200 mb-2" data-bn="📚 আমাদের বইঘর (Our Boighar) — বাংলা ও ইংরেজি ইসলামিক বইয়ের উন্মুক্ত লাইব্রেরি" data-en="📚 Our Boighar — an open library of Bengali & English Islamic books">📚 আমাদের বইঘর (Our Boighar) — বাংলা ও ইংরেজি ইসলামিক বইয়ের উন্মুক্ত লাইব্রেরি</p>
-  <p class="mb-2"><a class="font-semibold hover:underline" href="{{ '/about/' | relative_url }}" data-bn="আমাদের সম্পর্কে" data-en="About Us">আমাদের সম্পর্কে</a> · <a class="font-semibold hover:underline" href="{{ '/guide/' | relative_url }}" data-bn="পড়ার নির্দেশিকা" data-en="Reading Guide">পড়ার নির্দেশিকা</a> · <a class="font-semibold hover:underline" href="{{ '/policies/' | relative_url }}" data-bn="নীতিমালা" data-en="Policies">নীতিমালা</a> · <a class="font-semibold hover:underline" href="{{ '/policies/' | relative_url }}#dmca">DMCA</a></p>
+  <p class="mb-2"><a class="font-semibold hover:underline" href="{{ '/about/' | relative_url }}" data-bn="আমাদের সম্পর্কে" data-en="About Us">আমাদের সম্পর্কে</a> · <a class="font-semibold hover:underline" href="{{ '/authors/' | relative_url }}" data-bn="লেখক" data-en="Authors">লেখক</a> · <a class="font-semibold hover:underline" href="{{ '/tools/' | relative_url }}" data-bn="টুলস" data-en="Tools">টুলস</a> · <a class="font-semibold hover:underline" href="{{ '/opds/' | relative_url }}" data-bn="OPDS ক্যাটালগ" data-en="OPDS Catalog">OPDS ক্যাটালগ</a> · <a class="font-semibold hover:underline" href="{{ '/guide/' | relative_url }}" data-bn="পড়ার নির্দেশিকা" data-en="Reading Guide">পড়ার নির্দেশিকা</a> · <a class="font-semibold hover:underline" href="{{ '/policies/' | relative_url }}" data-bn="নীতিমালা" data-en="Policies">নীতিমালা</a> · <a class="font-semibold hover:underline" href="{{ '/policies/' | relative_url }}#dmca">DMCA</a></p>
   <p class="mb-2"><span data-bn="🌙 Our Family-তে যুক্ত হোন:" data-en="🌙 Join Our Family:">🌙 Join Our Family:</span> <a class="font-semibold hover:underline" href="https://www.facebook.com/FBOurFamily" target="_blank" rel="noopener">Facebook</a> · <a class="font-semibold hover:underline" href="https://t.me/ourfamilybd" target="_blank" rel="noopener">Telegram Channel</a> · <a class="font-semibold hover:underline" href="https://t.me/Our_Family_bd" target="_blank" rel="noopener">Telegram Group</a> · <a class="font-semibold hover:underline" href="https://t.me/OurfamilyBDBot" target="_blank" rel="noopener">Telegram Bot</a> · <a class="font-semibold hover:underline" href="https://mdtowfiqul.github.io/our-family/">Our Family Hub</a></p>
   <p>© মোঃ তৌফিকুল ইসলাম · <a class="text-emerald-700 dark:text-emerald-400 font-semibold hover:underline" href="https://mdtowfiqul.github.io/Our-Days/">Our Days</a> · <a class="text-emerald-700 dark:text-emerald-400 font-semibold hover:underline" href="https://github.com/MDTowfiqul">GitHub</a></p>
 </footer>
@@ -234,5 +236,15 @@
 })();
 </script>
 <script data-goatcounter="https://mdtowfiqul.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script>
+/* Offline support (xKAF Phase 2): register the service worker. It only
+   caches this site's own pages, covers and EPUBs — nothing leaves the
+   device, and a failed registration is silently ignored. */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('{{ '/sw.js' | relative_url }}').catch(function(){});
+  });
+}
+</script>
 </body>
 </html>

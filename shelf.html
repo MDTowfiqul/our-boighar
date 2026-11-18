@@ -21,9 +21,15 @@ permalink: /shelf/
     <a href="{{ '/browse/' | relative_url }}" class="accent-bg inline-block mt-5 text-white font-bold text-sm px-6 py-2.5 rounded-lg" data-bn="বই ব্রাউজ করুন" data-en="Browse Books">বই ব্রাউজ করুন</a>
   </div>
 
+  <section id="notes-wrap" class="hidden mt-10">
+    <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="📝 আমার নোট ও হাইলাইট" data-en="📝 My Notes & Highlights">📝 আমার নোট ও হাইলাইট</h2>
+    <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1" data-bn="অনলাইন রিডারে লেখা নোট ও হাইলাইট — “এই জায়গায় খুলুন” চাপলে বইটি সেই জায়গাতেই খুলবে।" data-en="Notes and highlights written in the online reader — “Open at this spot” opens the book right there.">অনলাইন রিডারে লেখা নোট ও হাইলাইট — “এই জায়গায় খুলুন” চাপলে বইটি সেই জায়গাতেই খুলবে।</p>
+    <div id="notes-list" class="flex flex-col gap-3 mt-4"></div>
+  </section>
+
   <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 mt-10 shadow-sm">
     <h2 class="serif text-lg sm:text-xl font-extrabold" data-bn="💾 আমার তথ্যের ব্যাকআপ" data-en="💾 Back Up My Data">💾 আমার তথ্যের ব্যাকআপ</h2>
-    <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1.5 leading-relaxed" data-bn="আপনার তাকের বই, স্টার রেটিং, পড়ার অগ্রগতি, বুকমার্ক ও সেটিংস এই ব্রাউজারেই সংরক্ষিত থাকে। ফোন বদলালে বা ব্রাউজারের ডেটা মুছে গেলে ব্যাকআপ ফাইল দিয়ে সব ফিরিয়ে আনতে পারবেন।" data-en="Your shelf, star ratings, reading progress, bookmarks and settings are stored in this browser. Download a backup file and restore it anytime — on a new phone or after clearing browser data.">আপনার তাকের বই, স্টার রেটিং, পড়ার অগ্রগতি, বুকমার্ক ও সেটিংস এই ব্রাউজারেই সংরক্ষিত থাকে। ফোন বদলালে বা ব্রাউজারের ডেটা মুছে গেলে ব্যাকআপ ফাইল দিয়ে সব ফিরিয়ে আনতে পারবেন।</p>
+    <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1.5 leading-relaxed" data-bn="আপনার তাকের বই, স্টার রেটিং, পড়ার অগ্রগতি, বুকমার্ক, নোট ও হাইলাইট এবং সেটিংস এই ব্রাউজারেই সংরক্ষিত থাকে। ফোন বদলালে বা ব্রাউজারের ডেটা মুছে গেলে ব্যাকআপ ফাইল দিয়ে সব ফিরিয়ে আনতে পারবেন।" data-en="Your shelf, star ratings, reading progress, bookmarks, notes and highlights, and settings are stored in this browser. Download a backup file and restore it anytime — on a new phone or after clearing browser data.">আপনার তাকের বই, স্টার রেটিং, পড়ার অগ্রগতি, বুকমার্ক, নোট ও হাইলাইট এবং সেটিংস এই ব্রাউজারেই সংরক্ষিত থাকে। ফোন বদলালে বা ব্রাউজারের ডেটা মুছে গেলে ব্যাকআপ ফাইল দিয়ে সব ফিরিয়ে আনতে পারবেন।</p>
     <div class="flex flex-wrap gap-2 mt-4">
       <button id="bk-dl" class="accent-bg text-white font-bold rounded-lg px-5 py-2.5 text-sm" data-bn="⬇ ব্যাকআপ ডাউনলোড" data-en="⬇ Download Backup">⬇ ব্যাকআপ ডাউনলোড</button>
       <label for="bk-file" class="font-bold rounded-lg px-5 py-2.5 text-sm border border-neutral-300 dark:border-neutral-600 cursor-pointer" data-bn="⬆ ব্যাকআপ রিস্টোর" data-en="⬆ Restore Backup">⬆ ব্যাকআপ রিস্টোর</label>
@@ -107,6 +113,7 @@ var OB_BOOKS = [{% for b in site.books %}{
 
   function render(){
     renderContinue();
+    renderNotesSection();
     var ids = get(), t = T[lang()];
     var mine = ids.map(function(id){ return byId[id]; }).filter(Boolean);
     countEl.textContent = mine.length;
@@ -137,8 +144,54 @@ var OB_BOOKS = [{% for b in site.books %}{
       };
     });
   }
+  /* ---------- notes & highlights written in the reader ---------- */
+  var NOTEKEY = 'ob-reader-notes', HLKEY = 'ob-reader-highlights';
+  function getNotes(){ try{ return JSON.parse(localStorage.getItem(NOTEKEY)||'{}'); }catch(e){ return {}; } }
+  function getHl(){ try{ return JSON.parse(localStorage.getItem(HLKEY)||'{}'); }catch(e){ return {}; } }
+  function renderNotesSection(){
+    var wrap = document.getElementById('notes-wrap');
+    var list = document.getElementById('notes-list');
+    var t = T[lang()];
+    var items = [];
+    var notes = getNotes(), hls = getHl();
+    Object.keys(notes).forEach(function(f){
+      (notes[f] || []).forEach(function(n, idx){
+        if (byFile[f]) items.push({ kind:'note', key: NOTEKEY, f: f, idx: idx, b: byFile[f], text: n.text, chapter: n.chapter, when: n.when, cfi: n.cfi });
+      });
+    });
+    Object.keys(hls).forEach(function(f){
+      (hls[f] || []).forEach(function(h, idx){
+        if (byFile[f]) items.push({ kind:'hl', key: HLKEY, f: f, idx: idx, b: byFile[f], text: h.text, chapter: h.chapter, when: h.when, cfi: h.cfiRange });
+      });
+    });
+    wrap.classList.toggle('hidden', items.length === 0);
+    list.innerHTML = items.map(function(it, i){
+      var title = lang() === 'en' ? (it.b.title_en || it.b.title) : it.b.title;
+      var badge = it.kind === 'note' ? '📝 ' + (lang() === 'en' ? 'Note' : 'নোট') : '🖍 ' + (lang() === 'en' ? 'Highlight' : 'হাইলাইট');
+      var link = READER + '?file=' + encodeURIComponent(it.f) + '&title=' + encodeURIComponent(it.b.title) + (it.cfi ? '&cfi=' + encodeURIComponent(it.cfi) : '');
+      return '<div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-3.5 shadow-sm">' +
+        '<p class="text-[11px] font-bold text-neutral-400">' + badge + ' · <a href="' + it.b.url + '" class="hover:underline">' + esc(title) + '</a>' + (it.chapter ? ' · ' + esc(it.chapter) : '') + '</p>' +
+        '<p class="text-[15px] mt-1.5 leading-relaxed">' + esc(it.text) + '</p>' +
+        (it.when ? '<p class="text-[11px] text-neutral-400 mt-1">' + esc(it.when) + '</p>' : '') +
+        '<div class="flex flex-wrap gap-2 mt-2.5">' +
+          '<a href="' + link + '" class="accent-bg text-white font-bold rounded-lg px-4 py-2 text-sm">' + (lang() === 'en' ? '📖 Open at this spot' : '📖 এই জায়গায় খুলুন') + '</a>' +
+          '<button data-dropnote="' + i + '" class="font-bold rounded-lg px-4 py-2 text-sm text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900/60">' + t.remove + '</button>' +
+        '</div></div>';
+    }).join('');
+    list.querySelectorAll('[data-dropnote]').forEach(function(btn){
+      btn.onclick = function(){
+        var it = items[+btn.getAttribute('data-dropnote')];
+        if (!it) return;
+        var store = it.key === NOTEKEY ? getNotes() : getHl();
+        if (store[it.f]) store[it.f].splice(it.idx, 1);
+        try{ localStorage.setItem(it.key, JSON.stringify(store)); }catch(e){}
+        renderNotesSection();
+      };
+    });
+  }
+
   /* ---------- per-user backup / restore ---------- */
-  var BK_KEYS = ['ourboighar-bookmarks', 'ourboighar-ratings', 'ob-reader-progress', 'ob-reader-bookmarks', 'ob-reader-settings', 'ob-lang', 'ob-theme', 'ob-color'];
+  var BK_KEYS = ['ourboighar-bookmarks', 'ourboighar-ratings', 'ob-reader-progress', 'ob-reader-bookmarks', 'ob-reader-notes', 'ob-reader-highlights', 'ob-reader-settings', 'ob-lang', 'ob-theme', 'ob-color'];
   var dlBtn = document.getElementById('bk-dl');
   if(dlBtn) dlBtn.onclick = function(){
     var data = {};

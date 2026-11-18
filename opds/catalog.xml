@@ -1,0 +1,47 @@
+---
+layout: null
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/terms/" xmlns:opds="http://opds-spec.org/2010/catalog">
+  <id>{{ '/opds/catalog.xml' | absolute_url }}</id>
+  <title>Our Boighar — OPDS Catalog</title>
+  <updated>{{ site.time | date_to_xmlschema }}</updated>
+  <author><name>Our Boighar</name><uri>{{ '/' | absolute_url }}</uri></author>
+  <link rel="self" type="application/atom+xml;profile=opds-catalog;kind=navigation" href="{{ '/opds/catalog.xml' | absolute_url }}"/>
+  <link rel="start" type="application/atom+xml;profile=opds-catalog;kind=navigation" title="Our Boighar OPDS Catalog" href="{{ '/opds/catalog.xml' | absolute_url }}"/>
+  <entry>
+    <title>All Books</title>
+    <id>{{ '/opds/all-1.xml' | absolute_url }}</id>
+    <updated>{{ site.time | date_to_xmlschema }}</updated>
+    <content type="text">All {{ site.books.size }} free Islamic ebooks in the Our Boighar library, A to Z, 50 per page.</content>
+    <link rel="subsection" type="application/atom+xml;profile=opds-catalog;kind=acquisition" href="{{ '/opds/all-1.xml' | absolute_url }}"/>
+  </entry>
+  <entry>
+    <title>Newly Added</title>
+    <id>{{ '/opds/new.xml' | absolute_url }}</id>
+    <updated>{{ site.time | date_to_xmlschema }}</updated>
+    <content type="text">The most recently added books on Our Boighar.</content>
+    <link rel="subsection" type="application/atom+xml;profile=opds-catalog;kind=acquisition" href="{{ '/opds/new.xml' | absolute_url }}"/>
+  </entry>
+  <entry>
+    <title>Popular — Top 100</title>
+    <id>{{ '/opds/popular.xml' | absolute_url }}</id>
+    <updated>{{ site.time | date_to_xmlschema }}</updated>
+    <content type="text">The 100 most-read books on Our Boighar, ranked by reader visits.</content>
+    <link rel="subsection" type="application/atom+xml;profile=opds-catalog;kind=acquisition" href="{{ '/opds/popular.xml' | absolute_url }}"/>
+  </entry>
+  <entry>
+    <title>Categories</title>
+    <id>{{ '/opds/categories.xml' | absolute_url }}</id>
+    <updated>{{ site.time | date_to_xmlschema }}</updated>
+    <content type="text">Browse the library by subject — Hadith, Seerah, Tafsir, Fiqh, History and more.</content>
+    <link rel="subsection" type="application/atom+xml;profile=opds-catalog;kind=navigation" href="{{ '/opds/categories.xml' | absolute_url }}"/>
+  </entry>
+  <entry>
+    <title>Authors</title>
+    <id>{{ '/opds/authors.xml' | absolute_url }}</id>
+    <updated>{{ site.time | date_to_xmlschema }}</updated>
+    <content type="text">The most-read authors on Our Boighar, with all their books.</content>
+    <link rel="subsection" type="application/atom+xml;profile=opds-catalog;kind=navigation" href="{{ '/opds/authors.xml' | absolute_url }}"/>
+  </entry>
+</feed>

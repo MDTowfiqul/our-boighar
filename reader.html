@@ -62,6 +62,16 @@ layout: null
   .bitem{display:flex;gap:8px;align-items:flex-start;padding:10px 16px;border-bottom:1px solid var(--line)}
   .bitem .go{flex:1;border:0;background:transparent;color:inherit;font-family:inherit;text-align:left;cursor:pointer;font-size:14.5px}
   .bitem .del{border:0;background:transparent;color:#c0392b;font-size:16px;cursor:pointer;padding:2px 6px}
+  .nform{padding:12px 16px;border-bottom:1px solid var(--line)}
+  .nform textarea{width:100%;min-height:64px;resize:vertical;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font-family:inherit;font-size:14.5px;padding:9px 11px}
+  .nform button{margin-top:8px;border:0;background:var(--accent);color:#fff;border-radius:999px;padding:9px 18px;font-family:inherit;font-weight:700;font-size:14px;cursor:pointer}
+  .nsec{padding:12px 16px 4px;font-size:12.5px;font-weight:700;color:var(--muted)}
+  .nitem{padding:10px 16px;border-bottom:1px solid var(--line);font-size:14.5px;line-height:1.55}
+  .nitem .meta{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+  .nitem .row{display:flex;gap:8px;align-items:flex-start}
+  .nitem .go{flex:1;border:0;background:transparent;color:inherit;font-family:inherit;text-align:left;cursor:pointer;font-size:14.5px;line-height:1.55;padding:0}
+  .nitem.hl{background:rgba(255,229,138,.28)}
+  body[data-theme="dark"] .nitem.hl{background:rgba(255,229,138,.12)}
   .empty{padding:26px 16px;text-align:center;color:var(--muted);font-size:14px}
   .srow{padding:13px 16px;border-bottom:1px solid var(--line)}
   .srow label{display:block;font-size:12.5px;font-weight:700;color:var(--muted);margin-bottom:8px}
@@ -80,6 +90,7 @@ layout: null
   <div class="ttitles"><div id="book-title">অনলাইন রিডার</div><div id="chapter-title"></div></div>
   <button class="tbtn" id="btn-toc" title="সূচিপত্র ও বুকমার্ক">☰</button>
   <button class="tbtn" id="btn-bm" title="এই পৃষ্ঠায় বুকমার্ক">🔖</button>
+  <button class="tbtn" id="btn-hl" title="সিলেক্ট করা লেখা হাইলাইট করুন">🖍</button>
   <button class="tbtn" id="btn-settings" title="পড়ার সেটিংস">Aa</button>
   <button class="tbtn" id="btn-fs" title="ফুলস্ক্রিন">⛶</button>
 </header>
@@ -102,12 +113,14 @@ layout: null
     <div class="tabs">
       <button id="tab-toc" class="sel">সূচিপত্র</button>
       <button id="tab-bm">বুকমার্ক</button>
+      <button id="tab-notes">নোট</button>
     </div>
     <h3></h3>
     <button id="drawer-x">✕</button>
   </div>
   <div class="plist" id="toc-list"></div>
   <div class="plist" id="bm-list" style="display:none"></div>
+  <div class="plist" id="notes-list" style="display:none"></div>
 </aside>
 
 <aside class="panel" id="sheet">
@@ -264,7 +277,15 @@ layout: null
     rendition = book.renderTo('epub-area', opts);
     applyLook();
     rendition.on('relocated', onRelocated);
+    rendition.on('selected', function(cfiRange, contents){
+      var txt = '';
+      try{ var sel = contents.window.getSelection(); txt = sel ? String(sel) : ''; }catch(e){}
+      lastSel = { cfiRange: cfiRange, text: txt, contents: contents };
+      document.body.classList.remove('chrome-off');
+      toast('লেখা সিলেক্ট হয়েছে — হাইলাইট করতে উপরের 🖍 চাপুন');
+    });
     wireContent();
+    applyHighlights();
     var d = startCfi ? rendition.display(startCfi) : rendition.display();
     if(d && d.catch) d.catch(function(){});
   }
@@ -356,6 +377,69 @@ layout: null
     toast('🔖 বুকমার্ক যোগ হয়েছে');
   };
 
+  /* notes + highlights (per book, this browser only — localStorage) */
+  var NOTEKEY = 'ob-reader-notes', HLKEY = 'ob-reader-highlights';
+  var myNotes = (lsGet(NOTEKEY, {}))[file] || [];
+  var myHl = (lsGet(HLKEY, {}))[file] || [];
+  function saveNotes(){ var all = lsGet(NOTEKEY, {}); all[file] = myNotes; lsSet(NOTEKEY, all); }
+  function saveHl(){ var all = lsGet(HLKEY, {}); all[file] = myHl; lsSet(HLKEY, all); }
+  var lastSel = null; /* {cfiRange, text, contents} from rendition 'selected' */
+  function escHtml(s){ return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+  function shortToast(s){ return s.length > 120 ? s.slice(0, 120) + '…' : s; }
+
+  function applyHighlights(){
+    if(!rendition) return;
+    myHl.forEach(function(h){
+      try{
+        rendition.annotations.highlight(h.cfiRange, {}, function(){ toast(shortToast(h.text)); }, 'ob-hl', { fill:'#ffe58a', 'fill-opacity':'0.6' });
+      }catch(e){}
+    });
+  }
+
+  function renderNotes(){
+    var el = document.getElementById('notes-list');
+    var html = '<div class="nform"><textarea id="note-text" placeholder="এই বই নিয়ে আপনার নোট লিখুন…"></textarea><button id="note-save">💾 নোট সংরক্ষণ করুন</button></div>';
+    html += '<div class="nsec">📝 আমার নোট (' + bn(myNotes.length) + ')</div>';
+    if(!myNotes.length) html += '<div class="empty">এখনো কোনো নোট নেই।</div>';
+    myNotes.forEach(function(n, i){
+      html += '<div class="nitem"><div class="row"><button class="go" data-note="' + i + '">' + escHtml(n.text) + '<span class="meta">' + escHtml(n.chapter || '') + (n.chapter ? ' • ' : '') + n.when + '</span></button><button class="del" data-delnote="' + i + '" title="মুছুন">✕</button></div></div>';
+    });
+    html += '<div class="nsec">🖍 হাইলাইট (' + bn(myHl.length) + ')</div>';
+    if(!myHl.length) html += '<div class="empty">কোনো হাইলাইট নেই।<br>বইয়ের লেখা সিলেক্ট করে উপরের 🖍 চাপলেই হাইলাইট হবে।</div>';
+    myHl.forEach(function(h, i){
+      html += '<div class="nitem hl"><div class="row"><button class="go" data-hl="' + i + '">' + escHtml(h.text) + '<span class="meta">' + escHtml(h.chapter || '') + (h.chapter ? ' • ' : '') + h.when + '</span></button><button class="del" data-delhl="' + i + '" title="মুছুন">✕</button></div></div>';
+    });
+    el.innerHTML = html;
+    var saveBtn = document.getElementById('note-save');
+    if(saveBtn) saveBtn.onclick = function(){
+      var ta = document.getElementById('note-text');
+      var txt = ta.value.trim();
+      if(!txt){ toast('নোটটি খালি'); return; }
+      myNotes.unshift({ id: Date.now(), text: txt, chapter: cur.chapter, cfi: cur.cfi, when: new Date().toLocaleDateString('bn-BD') });
+      saveNotes(); renderNotes(); toast('💾 নোট সংরক্ষিত হয়েছে');
+    };
+    el.querySelectorAll('[data-note]').forEach(function(btn){ btn.onclick = function(){ var n = myNotes[+btn.getAttribute('data-note')]; closePanels(); if(n && n.cfi && rendition) rendition.display(n.cfi).catch(function(){}); }; });
+    el.querySelectorAll('[data-delnote]').forEach(function(btn){ btn.onclick = function(){ myNotes.splice(+btn.getAttribute('data-delnote'), 1); saveNotes(); renderNotes(); }; });
+    el.querySelectorAll('[data-hl]').forEach(function(btn){ btn.onclick = function(){ var h = myHl[+btn.getAttribute('data-hl')]; closePanels(); if(h && rendition) rendition.display(h.cfiRange).catch(function(){}); }; });
+    el.querySelectorAll('[data-delhl]').forEach(function(btn){ btn.onclick = function(){ var h = myHl[+btn.getAttribute('data-delhl')]; if(h && rendition){ try{ rendition.annotations.remove(h.cfiRange, 'highlight'); }catch(e){} } myHl.splice(+btn.getAttribute('data-delhl'), 1); saveHl(); renderNotes(); }; });
+  }
+
+  document.getElementById('btn-hl').onclick = function(){
+    if(!rendition){ toast('বই লোড হোক আগে'); return; }
+    if(!lastSel || !lastSel.cfiRange){ toast('প্রথমে বইয়ের কিছু লেখা সিলেক্ট করুন'); return; }
+    if(myHl.some(function(h){ return h.cfiRange === lastSel.cfiRange; })){ toast('এই অংশ আগেই হাইলাইট করা আছে'); return; }
+    var txt = (lastSel.text || '').replace(/\s+/g, ' ').trim().slice(0, 200);
+    if(!txt){ toast('প্রথমে বইয়ের কিছু লেখা সিলেক্ট করুন'); return; }
+    var h = { cfiRange: lastSel.cfiRange, text: txt, chapter: cur.chapter, when: new Date().toLocaleDateString('bn-BD') };
+    myHl.unshift(h);
+    saveHl();
+    try{ rendition.annotations.highlight(h.cfiRange, {}, function(){ toast(shortToast(h.text)); }, 'ob-hl', { fill:'#ffe58a', 'fill-opacity':'0.6' }); }catch(e){}
+    try{ if(lastSel.contents && lastSel.contents.window) lastSel.contents.window.getSelection().removeAllRanges(); }catch(e){}
+    lastSel = null;
+    renderNotes();
+    toast('🖍 হাইলাইট সংরক্ষিত হয়েছে');
+  };
+
   /* panels */
   var scrim = document.getElementById('scrim'), drawer = document.getElementById('drawer'), sheet = document.getElementById('sheet');
   function openPanel(p){ closePanels(); p.classList.add('on'); scrim.classList.add('on'); }
@@ -365,8 +449,17 @@ layout: null
   document.getElementById('sheet-x').onclick = closePanels;
   document.getElementById('btn-toc').onclick = function(){ openPanel(drawer); };
   document.getElementById('btn-settings').onclick = function(){ openPanel(sheet); };
-  document.getElementById('tab-toc').onclick = function(){ this.classList.add('sel'); document.getElementById('tab-bm').classList.remove('sel'); document.getElementById('toc-list').style.display = ''; document.getElementById('bm-list').style.display = 'none'; };
-  document.getElementById('tab-bm').onclick = function(){ this.classList.add('sel'); document.getElementById('tab-toc').classList.remove('sel'); document.getElementById('toc-list').style.display = 'none'; document.getElementById('bm-list').style.display = ''; renderBookmarks(); };
+  function showDrawerTab(which){
+    ['toc','bm','notes'].forEach(function(w){
+      document.getElementById('tab-' + w).classList.toggle('sel', w === which);
+      document.getElementById(w === 'toc' ? 'toc-list' : w === 'bm' ? 'bm-list' : 'notes-list').style.display = w === which ? '' : 'none';
+    });
+    if(which === 'bm') renderBookmarks();
+    if(which === 'notes') renderNotes();
+  }
+  document.getElementById('tab-toc').onclick = function(){ showDrawerTab('toc'); };
+  document.getElementById('tab-bm').onclick = function(){ showDrawerTab('bm'); };
+  document.getElementById('tab-notes').onclick = function(){ showDrawerTab('notes'); };
 
   /* nav buttons + keys */
   document.getElementById('prev').onclick = function(){ if(rendition) rendition.prev(); };
@@ -398,9 +491,11 @@ layout: null
 
   /* start: resume where the reader left off */
   var saved = progress[file];
-  buildRendition(saved && saved.cfi ? saved.cfi : null);
-  if(saved && saved.cfi) setTimeout(function(){ toast('আগের জায়গা থেকে শুরু হচ্ছে'); }, 600);
+  var jumpCfi = q.get('cfi');
+  buildRendition(jumpCfi || (saved && saved.cfi ? saved.cfi : null));
+  if(!jumpCfi && saved && saved.cfi) setTimeout(function(){ toast('আগের জায়গা থেকে শুরু হচ্ছে'); }, 600);
   renderBookmarks();
+  renderNotes();
   keepAwake();
 })();
 </script>
