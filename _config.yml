@@ -4,6 +4,11 @@ baseurl: "/our-boighar"
 url: "https://mdtowfiqul.github.io"
 markdown: kramdown
 
+# Phase 4 — account backend (Cloudflare Worker + D1). Change api_base after
+# deploying the Worker; leave turnstile_site_key empty until Turnstile is set up.
+boighar_api_base: "https://our-boighar-api.towfiqulislam1010.workers.dev"
+boighar_turnstile_site_key: ""
+
 collections:
   books:
     output: true

@@ -55,6 +55,11 @@ layout: default
           {% endif %}
           <button id="bm-btn" class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl py-3 px-4">🔖 তাকে রাখুন</button>
           {% if page.file %}<button id="share-btn" class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl py-3 px-4" data-bn="⤴ শেয়ার" data-en="⤴ Share">⤴ শেয়ার</button>{% else %}<button id="share-btn" class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl py-3 px-4" data-bn="⤴ শেয়ার" data-en="⤴ Share">⤴ শেয়ার</button>{% endif %}
+          <div id="ob-server-shelf" class="col-span-2 hidden items-center gap-2">
+            <select id="ob-shelf-select" class="flex-1 min-w-0 border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-700 rounded-xl px-3 py-3 font-bold"></select>
+            <button id="ob-shelf-add" class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border-2 border-emerald-600 dark:border-emerald-500 text-emerald-800 dark:text-emerald-300 font-bold rounded-xl py-3 px-4">☁️ <span data-bn="তাকে সংরক্ষণ করুন" data-en="Save to shelf">তাকে সংরক্ষণ করুন</span></button>
+          </div>
+          <p id="ob-server-shelf-login" class="col-span-2 hidden text-[13px] text-neutral-500 dark:text-neutral-400 text-center"><a class="accent-text font-bold hover:underline" href="{{ '/dashboard/' | relative_url }}" data-bn="সাইন ইন করুন" data-en="Sign in">সাইন ইন করুন</a> <span data-bn="— বইটি আপনার অ্যাকাউন্টের তাকে সংরক্ষণ করতে।" data-en="to save this book to your account shelves.">— বইটি আপনার অ্যাকাউন্টের তাকে সংরক্ষণ করতে।</span></p>
         </div>
       </div>
     </div>
@@ -230,6 +235,14 @@ layout: default
 </main>
 
 <script>
+  window.OB_CONFIG = {
+    apiBase: '{{ site.boighar_api_base }}',
+    turnstileSiteKey: '{{ site.boighar_turnstile_site_key }}'
+  };
+</script>
+<script src="{{ '/assets/js/boighar-api.js' | relative_url }}"></script>
+
+<script>
 (function(){
   var KEY = 'ourboighar-bookmarks', RKEY = 'ourboighar-ratings', BID = '{{ page.book_id }}';
   function get(){ try{ return JSON.parse(localStorage.getItem(KEY)||'[]'); }catch(e){ return []; } }
@@ -239,6 +252,31 @@ layout: default
   function paint(){ var on = get().indexOf(BID) >= 0; btn.textContent = on ? (en() ? '★ On Shelf' : '★ তাকে আছে') : (en() ? '🔖 Add to Shelf' : '🔖 তাকে রাখুন'); btn.classList.toggle('ring-2', on); }
   btn.onclick = function(){ var l = get(), i = l.indexOf(BID); if(i>=0) l.splice(i,1); else l.push(BID); set(l); paint(); };
   paint();
+
+  /* account shelves (Phase 4): save this book to a server shelf when signed in */
+  (function(){
+    var wrap = document.getElementById('ob-server-shelf'), login = document.getElementById('ob-server-shelf-login');
+    if (!wrap || !window.OBApi) return;
+    OBApi.getMe().then(function(u){
+      if (!u) { login.classList.remove('hidden'); return; }
+      wrap.classList.remove('hidden'); wrap.classList.add('flex');
+      OBApi.api('/api/shelves').then(function(d){
+        var sel = document.getElementById('ob-shelf-select');
+        (d.shelves || []).forEach(function(s){
+          var o = document.createElement('option'); o.value = s.id; o.textContent = s.name; sel.appendChild(o);
+        });
+      }).catch(function(){});
+    }).catch(function(){ login.classList.remove('hidden'); });
+    document.getElementById('ob-shelf-add').onclick = function(){
+      var sel = document.getElementById('ob-shelf-select');
+      if (!sel.value) return;
+      var btn = document.getElementById('ob-shelf-add');
+      btn.disabled = true;
+      OBApi.api('/api/shelves/' + encodeURIComponent(sel.value) + '/books', { method: 'POST', body: { book_id: BID } })
+        .then(function(){ btn.innerHTML = '✓ ' + (en() ? 'Saved' : 'সংরক্ষিত'); })
+        .catch(function(e){ btn.textContent = e.message; setTimeout(function(){ btn.disabled = false; btn.innerHTML = '☁️ <span>' + (en() ? 'Save to shelf' : 'তাকে সংরক্ষণ করুন') + '</span>'; }, 2500); });
+    };
+  })();
 
   /* mark this book as seen (feeds homepage For You + Unseen logic) */
   try{

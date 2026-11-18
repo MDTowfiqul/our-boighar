@@ -1,0 +1,510 @@
+---
+layout: default
+title: Dashboard
+permalink: /dashboard/
+description: "Your Our Boighar account — shelves, reading history, points and rank."
+---
+
+<script>
+  window.OB_CONFIG = {
+    apiBase: '{{ site.boighar_api_base }}',
+    turnstileSiteKey: '{{ site.boighar_turnstile_site_key }}'
+  };
+</script>
+<script src="{{ '/assets/js/boighar-api.js' | relative_url }}"></script>
+
+<main class="max-w-6xl mx-auto px-3 sm:px-4 pt-5">
+  <div id="dash-loading" class="text-center py-16 text-neutral-500 dark:text-neutral-400">
+    <span data-bn="লোড হচ্ছে…" data-en="Loading…">লোড হচ্ছে…</span>
+  </div>
+
+  <!-- ============ SIGNED OUT ============ -->
+  <div id="dash-signed-out" class="hidden">
+    <h1 class="serif text-2xl sm:text-3xl font-bold mb-1" data-bn="আমার ড্যাশবোর্ড" data-en="My Dashboard">আমার ড্যাশবোর্ড</h1>
+    <p class="text-neutral-500 dark:text-neutral-400 mb-6" data-bn="অ্যাকাউন্ট খুললে আপনার তাক, পড়ার ইতিহাস, পয়েন্ট ও র‍্যাংক সব ডিভাইসে সিঙ্ক হবে। পড়া ও ডাউনলোড অ্যাকাউন্ট ছাড়াই ফ্রি থাকবে।" data-en="With an account, your shelves, reading history, points and rank sync across devices. Reading and downloads stay free without an account.">অ্যাকাউন্ট খুললে আপনার তাক, পড়ার ইতিহাস, পয়েন্ট ও র‍্যাংক সব ডিভাইসে সিঙ্ক হবে। পড়া ও ডাউনলোড অ্যাকাউন্ট ছাড়াই ফ্রি থাকবে।</p>
+
+    <div class="max-w-md mx-auto bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 shadow-sm">
+      <a id="google-btn" href="#" class="flex items-center justify-center gap-3 w-full border border-neutral-300 dark:border-neutral-600 rounded-xl py-3 px-4 font-bold hover:bg-neutral-50 dark:hover:bg-neutral-700">
+        <span class="text-xl">G</span>
+        <span data-bn="Google দিয়ে সাইন ইন করুন" data-en="Continue with Google">Google দিয়ে সাইন ইন করুন</span>
+      </a>
+      <div class="flex items-center gap-3 my-5 text-neutral-400 text-sm">
+        <span class="flex-1 border-t border-neutral-200 dark:border-neutral-700"></span>
+        <span data-bn="অথবা ইমেইল দিয়ে" data-en="or with email">অথবা ইমেইল দিয়ে</span>
+        <span class="flex-1 border-t border-neutral-200 dark:border-neutral-700"></span>
+      </div>
+
+      <div class="flex gap-2 mb-4">
+        <button id="tab-login" class="flex-1 py-2 rounded-xl font-bold accent-soft-bg accent-text" data-bn="সাইন ইন" data-en="Sign in">সাইন ইন</button>
+        <button id="tab-register" class="flex-1 py-2 rounded-xl font-bold bg-neutral-100 dark:bg-neutral-700" data-bn="অ্যাকাউন্ট খুলুন" data-en="Create account">অ্যাকাউন্ট খুলুন</button>
+      </div>
+
+      <form id="form-login" class="space-y-3">
+        <input id="login-email" type="email" required placeholder="Email" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3" autocomplete="email">
+        <input id="login-password" type="password" required placeholder="Password" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3" autocomplete="current-password">
+        <div id="turnstile-box"></div>
+        <p id="login-err" class="hidden text-red-600 dark:text-red-400 text-sm"></p>
+        <button class="accent-bg w-full text-white font-bold rounded-xl py-3" data-bn="সাইন ইন" data-en="Sign in">সাইন ইন</button>
+      </form>
+
+      <form id="form-register" class="space-y-3 hidden">
+        <input id="reg-name" type="text" required maxlength="60" placeholder="Your name / আপনার নাম" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3" autocomplete="name">
+        <input id="reg-email" type="email" required placeholder="Email" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3" autocomplete="email">
+        <input id="reg-password" type="password" required minlength="8" placeholder="Password (at least 8 characters)" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3" autocomplete="new-password">
+        <div id="turnstile-box-reg"></div>
+        <p id="reg-err" class="hidden text-red-600 dark:text-red-400 text-sm"></p>
+        <button class="accent-bg w-full text-white font-bold rounded-xl py-3" data-bn="অ্যাকাউন্ট খুলুন" data-en="Create account">অ্যাকাউন্ট খুলুন</button>
+        <p class="text-xs text-neutral-500 dark:text-neutral-400" data-bn="অ্যাকাউন্ট খুললে আপনি গোপনীয়তা নীতিতে সম্মত হচ্ছেন। আপনার ইমেইল কখনো প্রকাশ করা হবে না।" data-en="By creating an account you agree to the privacy policy. Your email is never shown publicly.">অ্যাকাউন্ট খুললে আপনি গোপনীয়তা নীতিতে সম্মত হচ্ছেন। আপনার ইমেইল কখনো প্রকাশ করা হবে না।</p>
+      </form>
+
+      <p id="login-msg" class="hidden mt-4 text-sm text-center text-red-600 dark:text-red-400"></p>
+    </div>
+  </div>
+
+  <!-- ============ SIGNED IN ============ -->
+  <div id="dash-signed-in" class="hidden">
+    <div class="flex flex-wrap items-center gap-3 mb-1">
+      <h1 class="serif text-2xl sm:text-3xl font-bold" data-bn="আমার ড্যাশবোর্ড" data-en="My Dashboard">আমার ড্যাশবোর্ড</h1>
+      <span id="user-rank-badge" class="accent-soft-bg accent-text text-sm font-bold rounded-full px-3 py-1"></span>
+    </div>
+    <p class="text-neutral-500 dark:text-neutral-400 mb-5"><span id="user-name"></span> · <span id="user-email"></span> · <span id="user-points"></span></p>
+
+    <div class="flex gap-2 overflow-x-auto no-scrollbar pb-2 mb-5" id="dash-tabs">
+      <button data-tab="overview" class="dash-tab whitespace-nowrap px-4 py-2 rounded-full font-bold accent-soft-bg accent-text" data-bn="সংক্ষেপ" data-en="Overview">সংক্ষেপ</button>
+      <button data-tab="shelves" class="dash-tab whitespace-nowrap px-4 py-2 rounded-full font-bold bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700" data-bn="আমার তাক" data-en="Shelves">আমার তাক</button>
+      <button data-tab="history" class="dash-tab whitespace-nowrap px-4 py-2 rounded-full font-bold bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700" data-bn="ইতিহাস" data-en="History">ইতিহাস</button>
+      <button data-tab="ranking" class="dash-tab whitespace-nowrap px-4 py-2 rounded-full font-bold bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700" data-bn="র‍্যাংকিং" data-en="Ranking">র‍্যাংকিং</button>
+      <button data-tab="fix" class="dash-tab whitespace-nowrap px-4 py-2 rounded-full font-bold bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700" data-bn="তথ্য ঠিক করুন" data-en="Fix Info">তথ্য ঠিক করুন</button>
+      <button data-tab="support" class="dash-tab whitespace-nowrap px-4 py-2 rounded-full font-bold bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700" data-bn="সহায়তা" data-en="Support">সহায়তা</button>
+      <button data-tab="guide" class="dash-tab whitespace-nowrap px-4 py-2 rounded-full font-bold bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700" data-bn="নির্দেশিকা" data-en="Guide">নির্দেশিকা</button>
+      <button data-tab="settings" class="dash-tab whitespace-nowrap px-4 py-2 rounded-full font-bold bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700" data-bn="সেটিংস" data-en="Settings">সেটিংস</button>
+    </div>
+
+    <!-- Overview -->
+    <section id="panel-overview" class="dash-panel">
+      <div id="stats-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5"></div>
+      <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm mb-5">
+        <div class="flex justify-between items-center mb-2">
+          <h2 class="font-bold" data-bn="আপনার র‍্যাংক" data-en="Your rank">আপনার র‍্যাংক</h2>
+          <span id="rank-next" class="text-sm text-neutral-500 dark:text-neutral-400"></span>
+        </div>
+        <div class="h-3 bg-neutral-100 dark:bg-neutral-700 rounded-full overflow-hidden">
+          <div id="rank-bar" class="h-full accent-bg rounded-full" style="width:0%"></div>
+        </div>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-2" data-bn="পয়েন্ট পাবেন: বই শুরু করলে +১, শেষ করলে +১০, রেটিং দিলে +২, তাকে রাখলে +১, প্রতিদিন পড়লে +২, তথ্য ঠিক করলে +২।" data-en="Points: +1 for starting a book, +10 for finishing, +2 for a rating, +1 for shelving, +2 per reading day, +2 for a fix report.">পয়েন্ট পাবেন: বই শুরু করলে +১, শেষ করলে +১০, রেটিং দিলে +২, তাকে রাখলে +১, প্রতিদিন পড়লে +২, তথ্য ঠিক করলে +২।</p>
+      </div>
+      <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm mb-5">
+        <h2 class="font-bold mb-3" data-bn="পড়া চালিয়ে যান" data-en="Continue reading">পড়া চালিয়ে যান</h2>
+        <div id="continue-list" class="space-y-2 text-neutral-500 dark:text-neutral-400" data-bn="এখনো কোনো বই শুরু করেননি।" data-en="You have not started any book yet.">এখনো কোনো বই শুরু করেননি।</div>
+      </div>
+      <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm">
+        <h2 class="font-bold mb-3" data-bn="সাম্প্রতিক কার্যকলাপ" data-en="Recent activity">সাম্প্রতিক কার্যকলাপ</h2>
+        <div id="recent-history" class="space-y-2 text-neutral-500 dark:text-neutral-400"></div>
+      </div>
+    </section>
+
+    <!-- Shelves -->
+    <section id="panel-shelves" class="dash-panel hidden">
+      <form id="form-shelf" class="flex gap-2 mb-5">
+        <input id="shelf-name" type="text" required maxlength="40" placeholder="New shelf name / নতুন তাকের নাম" class="flex-1 border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3">
+        <button class="accent-bg text-white font-bold rounded-xl px-5" data-bn="তৈরি করুন" data-en="Create">তৈরি করুন</button>
+      </form>
+      <p id="shelf-err" class="hidden text-red-600 dark:text-red-400 text-sm mb-4"></p>
+      <div id="shelf-list" class="space-y-5"></div>
+    </section>
+
+    <!-- History -->
+    <section id="panel-history" class="dash-panel hidden">
+      <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm">
+        <div id="history-list" class="space-y-2 text-neutral-500 dark:text-neutral-400"></div>
+      </div>
+    </section>
+
+    <!-- Ranking -->
+    <section id="panel-ranking" class="dash-panel hidden">
+      <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm">
+        <h2 class="font-bold mb-1" data-bn="সেরা পাঠক" data-en="Top readers">সেরা পাঠক</h2>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-4" data-bn="শুধু নাম ও পয়েন্ট দেখানো হয় — ইমেইল কখনো প্রকাশ করা হয় না।" data-en="Only names and points are shown — emails are never public.">শুধু নাম ও পয়েন্ট দেখানো হয় — ইমেইল কখনো প্রকাশ করা হয় না।</p>
+        <div id="ranking-list" class="space-y-2"></div>
+      </div>
+    </section>
+
+    <!-- Fix Info -->
+    <section id="panel-fix" class="dash-panel hidden">
+      <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm mb-5">
+        <h2 class="font-bold mb-3" data-bn="বইয়ের তথ্যে ভুল জানান" data-en="Report wrong book info">বইয়ের তথ্যে ভুল জানান</h2>
+        <form id="form-fix" class="space-y-3">
+          <input id="fix-book" list="fix-books" required placeholder="Book title / বইয়ের নাম" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3">
+          <datalist id="fix-books">
+            {% for b in site.books %}<option value="{{ b.title | escape }}">{{ b.book_id }}</option>{% endfor %}
+          </datalist>
+          <select id="fix-field" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3">
+            <option value="title">Title / শিরোনাম</option>
+            <option value="writer">Writer / লেখক</option>
+            <option value="creator">Ebook creator / ইবুক নির্মাতা</option>
+            <option value="category">Category / বিষয়</option>
+            <option value="language">Language / ভাষা</option>
+            <option value="cover">Cover / প্রচ্ছদ</option>
+            <option value="file">File / ফাইল</option>
+            <option value="other">Other / অন্যান্য</option>
+          </select>
+          <textarea id="fix-message" required rows="3" placeholder="What is wrong? / কী ভুল আছে?" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3"></textarea>
+          <p id="fix-err" class="hidden text-red-600 dark:text-red-400 text-sm"></p>
+          <p id="fix-ok" class="hidden text-emerald-700 dark:text-emerald-400 text-sm" data-bn="ধন্যবাদ! আপনার রিপোর্ট পাঠানো হয়েছে।" data-en="Thank you! Your report has been sent.">ধন্যবাদ! আপনার রিপোর্ট পাঠানো হয়েছে।</p>
+          <button class="accent-bg text-white font-bold rounded-xl px-5 py-3" data-bn="রিপোর্ট পাঠান" data-en="Send report">রিপোর্ট পাঠান</button>
+        </form>
+      </div>
+      <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm">
+        <h2 class="font-bold mb-3" data-bn="আমার রিপোর্টগুলো" data-en="My reports">আমার রিপোর্টগুলো</h2>
+        <div id="my-fix-list" class="space-y-2 text-neutral-500 dark:text-neutral-400"></div>
+      </div>
+    </section>
+
+    <!-- Support -->
+    <section id="panel-support" class="dash-panel hidden">
+      <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm">
+        <h2 class="font-bold mb-3" data-bn="সহায়তা চান" data-en="Ask for support">সহায়তা চান</h2>
+        <form id="form-support" class="space-y-3">
+          <input id="support-subject" type="text" maxlength="120" placeholder="Subject (optional) / বিষয় (ঐচ্ছিক)" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3">
+          <textarea id="support-message" required rows="4" placeholder="Write your message / আপনার বার্তা লিখুন" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3"></textarea>
+          <p id="support-err" class="hidden text-red-600 dark:text-red-400 text-sm"></p>
+          <p id="support-ok" class="hidden text-emerald-700 dark:text-emerald-400 text-sm" data-bn="ধন্যবাদ! আপনার বার্তা পাঠানো হয়েছে।" data-en="Thank you! Your message has been sent.">ধন্যবাদ! আপনার বার্তা পাঠানো হয়েছে।</p>
+          <button class="accent-bg text-white font-bold rounded-xl px-5 py-3" data-bn="বার্তা পাঠান" data-en="Send message">বার্তা পাঠান</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Guide -->
+    <section id="panel-guide" class="dash-panel hidden">
+      <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 shadow-sm space-y-4 leading-relaxed">
+        <h2 class="serif text-xl font-bold" data-bn="নির্দেশিকা" data-en="Guide">নির্দেশিকা</h2>
+        <div>
+          <h3 class="font-bold" data-bn="অ্যাকাউন্ট কেন খুলবো?" data-en="Why make an account?">অ্যাকাউন্ট কেন খুলবো?</h3>
+          <p class="text-neutral-600 dark:text-neutral-300" data-bn="অ্যাকাউন্ট ছাড়াই সব বই পড়া ও ডাউনলোড করা যায়। অ্যাকাউন্ট শুধু আপনার তাক, পড়ার ইতিহাস, পয়েন্ট ও র‍্যাংক সব ডিভাইসে সিঙ্ক রাখে।" data-en="Every book can be read and downloaded without an account. An account only keeps your shelves, reading history, points and rank in sync across devices.">অ্যাকাউন্ট ছাড়াই সব বই পড়া ও ডাউনলোড করা যায়। অ্যাকাউন্ট শুধু আপনার তাক, পড়ার ইতিহাস, পয়েন্ট ও র‍্যাংক সব ডিভাইসে সিঙ্ক রাখে।</p>
+        </div>
+        <div>
+          <h3 class="font-bold" data-bn="পয়েন্ট ও র‍্যাংক কীভাবে কাজ করে?" data-en="How do points and ranks work?">পয়েন্ট ও র‍্যাংক কীভাবে কাজ করে?</h3>
+          <p class="text-neutral-600 dark:text-neutral-300" data-bn="বই শুরু করলে +১, শেষ করলে +১০, রেটিং দিলে +২, তাকে রাখলে +১, প্রতিদিন পড়লে +২, ভুল তথ্য জানালে +২। মোট ২০টি ধাপ আছে — অঙ্কুর থেকে কুতুবখানা পর্যন্ত। উঁচু ধাপ শুধু বাড়তি সম্মান দেয়, নিচু ধাপের কোনো সুবিধা কেড়ে নেয় না।" data-en="Starting a book gives +1, finishing +10, rating +2, shelving +1, reading on a day +2, reporting wrong info +2. There are 20 tiers, from অঙ্কুর to কুতুবখানা. Higher tiers only add recognition — they never take anything away from new readers.">বই শুরু করলে +১, শেষ করলে +১০, রেটিং দিলে +২, তাকে রাখলে +১, প্রতিদিন পড়লে +২, ভুল তথ্য জানালে +২। মোট ২০টি ধাপ আছে — অঙ্কুর থেকে কুতুবখানা পর্যন্ত। উঁচু ধাপ শুধু বাড়তি সম্মান দেয়, নিচু ধাপের কোনো সুবিধা কেড়ে নেয় না।</p>
+        </div>
+        <div>
+          <h3 class="font-bold" data-bn="আমার তথ্য কি নিরাপদ?" data-en="Is my data safe?">আমার তথ্য কি নিরাপদ?</h3>
+          <p class="text-neutral-600 dark:text-neutral-300" data-bn="আপনার ইমেইল কখনো প্রকাশ করা হয় না। র‍্যাংকিংয়ে শুধু নাম দেখায়। সেটিংস থেকে যেকোনো সময় অ্যাকাউন্ট মুছে ফেলতে পারবেন — তখন আপনার সব তথ্য মুছে যাবে।" data-en="Your email is never shown publicly. The ranking shows names only. You can delete your account any time from Settings — all your data is deleted with it.">আপনার ইমেইল কখনো প্রকাশ করা হয় না। র‍্যাংকিংয়ে শুধু নাম দেখায়। সেটিংস থেকে যেকোনো সময় অ্যাকাউন্ট মুছে ফেলতে পারবেন — তখন আপনার সব তথ্য মুছে যাবে।</p>
+        </div>
+        <div>
+          <h3 class="font-bold" data-bn="অফলাইনে পড়া যাবে?" data-en="Can I read offline?">অফলাইনে পড়া যাবে?</h3>
+          <p class="text-neutral-600 dark:text-neutral-300" data-bn="হ্যাঁ — একবার খোলা বই অফলাইনে পড়া যায়। অ্যাকাউন্ট থাকলে অনলাইনে ফিরলে আপনার পড়ার অগ্রগতি সিঙ্ক হয়ে যাবে।" data-en="Yes — a book you have opened can be read offline. With an account, your progress syncs when you are back online.">হ্যাঁ — একবার খোলা বই অফলাইনে পড়া যায়। অ্যাকাউন্ট থাকলে অনলাইনে ফিরলে আপনার পড়ার অগ্রগতি সিঙ্ক হয়ে যাবে।</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Settings -->
+    <section id="panel-settings" class="dash-panel hidden">
+      <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm space-y-5">
+        <div>
+          <h2 class="font-bold mb-2" data-bn="সিঙ্ক" data-en="Sync">সিঙ্ক</h2>
+          <p id="sync-status" class="text-sm text-neutral-500 dark:text-neutral-400 mb-2" data-bn="এই ডিভাইসের পড়ার অগ্রগতি আপনার অ্যাকাউন্টে সিঙ্ক করা হয়।" data-en="Reading progress on this device is synced to your account.">এই ডিভাইসের পড়ার অগ্রগতি আপনার অ্যাকাউন্টে সিঙ্ক করা হয়।</p>
+          <button id="sync-now" class="border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl px-4 py-2" data-bn="এখনই সিঙ্ক করুন" data-en="Sync now">এখনই সিঙ্ক করুন</button>
+        </div>
+        <div id="change-pw-box">
+          <h2 class="font-bold mb-2" data-bn="পাসওয়ার্ড পরিবর্তন" data-en="Change password">পাসওয়ার্ড পরিবর্তন</h2>
+          <form id="form-password" class="space-y-3 max-w-sm">
+            <input id="pw-current" type="password" placeholder="Current password" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3" autocomplete="current-password">
+            <input id="pw-next" type="password" required minlength="8" placeholder="New password (at least 8 characters)" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3" autocomplete="new-password">
+            <p id="pw-err" class="hidden text-red-600 dark:text-red-400 text-sm"></p>
+            <p id="pw-ok" class="hidden text-emerald-700 dark:text-emerald-400 text-sm" data-bn="পাসওয়ার্ড পরিবর্তন হয়েছে।" data-en="Password changed.">পাসওয়ার্ড পরিবর্তন হয়েছে।</p>
+            <button class="accent-bg text-white font-bold rounded-xl px-5 py-3" data-bn="পরিবর্তন করুন" data-en="Change">পরিবর্তন করুন</button>
+          </form>
+        </div>
+        <div>
+          <h2 class="font-bold mb-2" data-bn="সাইন আউট" data-en="Sign out">সাইন আউট</h2>
+          <button id="signout-btn" class="border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl px-4 py-2" data-bn="সাইন আউট করুন" data-en="Sign out">সাইন আউট করুন</button>
+        </div>
+        <div class="border-t border-red-200 dark:border-red-900 pt-4">
+          <h2 class="font-bold mb-2 text-red-600 dark:text-red-400" data-bn="অ্যাকাউন্ট মুছুন" data-en="Delete account">অ্যাকাউন্ট মুছুন</h2>
+          <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-3" data-bn="অ্যাকাউন্ট মুছলে আপনার তাক, ইতিহাস, পয়েন্ট ও রিপোর্ট — সব মুছে যাবে। এই কাজ ফেরানো যায় না।" data-en="Deleting your account removes your shelves, history, points and reports — everything. This cannot be undone.">অ্যাকাউন্ট মুছলে আপনার তাক, ইতিহাস, পয়েন্ট ও রিপোর্ট — সব মুছে যাবে। এই কাজ ফেরানো যায় না।</p>
+          <button id="delete-btn" class="bg-red-600 text-white font-bold rounded-xl px-4 py-2" data-bn="অ্যাকাউন্ট মুছুন" data-en="Delete my account">অ্যাকাউন্ট মুছুন</button>
+          <p id="delete-err" class="hidden text-red-600 dark:text-red-400 text-sm mt-2"></p>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script>
+(function () {
+  var API = window.OBApi;
+  function en() { return localStorage.getItem('ob-lang') === 'en'; }
+  function T(bn, eng) { return en() ? eng : bn; }
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function $(id) { return document.getElementById(id); }
+  function show(el, on) { if (el) el.classList.toggle('hidden', !on); }
+  function showErr(el, msg) { if (!el) return; if (msg) { el.textContent = msg; el.classList.remove('hidden'); } else el.classList.add('hidden'); }
+  function fmtDate(ts) {
+    try { return new Date(ts).toLocaleDateString(en() ? 'en-GB' : 'bn', { day: 'numeric', month: 'short', year: 'numeric' }); }
+    catch (e) { return ''; }
+  }
+  function bookUrl(bookId) { return '{{ "/books/" | relative_url }}' + bookId + '/'; }
+
+  var user = null;
+
+  /* ---------- init ---------- */
+  function init() {
+    var params = new URLSearchParams(location.search);
+    var loginState = params.get('login');
+    if (loginState === 'error') {
+      show($('dash-loading'), false);
+      show($('dash-signed-out'), true);
+      var m = $('login-msg');
+      m.textContent = params.get('msg') || T('Google সাইন ইন হয়নি। আবার চেষ্টা করুন।', 'Google sign-in did not work. Please try again.');
+      m.classList.remove('hidden');
+    }
+    $('google-btn').href = API.base + '/api/auth/google';
+    bindAuthForms();
+    API.getMe().then(function (u) {
+      user = u;
+      show($('dash-loading'), false);
+      if (!u) { show($('dash-signed-out'), true); return; }
+      show($('dash-signed-in'), true);
+      $('user-name').textContent = u.name;
+      $('user-email').textContent = u.email;
+      if (!u.has_password) { var b = $('change-pw-box'); if (b) b.style.display = 'none'; }
+      if (loginState === 'ok') {
+        // First sign-in: push this device's reading progress to the account.
+        API.syncAllLocalProgress().then(function (r) {
+          if (r.total > 0) $('sync-status').textContent = T('এই ডিভাইসের ' + r.synced + '/' + r.total + 'টি বইয়ের অগ্রগতি সিঙ্ক হয়েছে।', 'Synced progress for ' + r.synced + ' of ' + r.total + ' books from this device.');
+        }).catch(function () {});
+      }
+      bindTabs();
+      loadOverview();
+    }).catch(function () {
+      show($('dash-loading'), false);
+      show($('dash-signed-out'), true);
+      var m2 = $('login-msg');
+      m2.textContent = T('সার্ভারে পৌঁছানো যাচ্ছে না। পরে আবার চেষ্টা করুন।', 'Cannot reach the server. Please try again later.');
+      m2.classList.remove('hidden');
+    });
+  }
+
+  /* ---------- signed-out forms ---------- */
+  function bindAuthForms() {
+    $('tab-login').onclick = function () {
+      $('form-login').classList.remove('hidden'); $('form-register').classList.add('hidden');
+      $('tab-login').className = 'flex-1 py-2 rounded-xl font-bold accent-soft-bg accent-text';
+      $('tab-register').className = 'flex-1 py-2 rounded-xl font-bold bg-neutral-100 dark:bg-neutral-700';
+    };
+    $('tab-register').onclick = function () {
+      $('form-register').classList.remove('hidden'); $('form-login').classList.add('hidden');
+      $('tab-register').className = 'flex-1 py-2 rounded-xl font-bold accent-soft-bg accent-text';
+      $('tab-login').className = 'flex-1 py-2 rounded-xl font-bold bg-neutral-100 dark:bg-neutral-700';
+    };
+    $('form-login').addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      showErr($('login-err'), '');
+      API.getTurnstileToken().then(function (token) {
+        return API.api('/api/auth/login', { method: 'POST', body: { email: $('login-email').value.trim(), password: $('login-password').value, turnstile: token } });
+      }).then(function (d) {
+        user = d.user; location.search = '?login=ok';
+      }).catch(function (e) { showErr($('login-err'), e.message); });
+    });
+    $('form-register').addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      showErr($('reg-err'), '');
+      API.getTurnstileToken().then(function (token) {
+        return API.api('/api/auth/register', { method: 'POST', body: { name: $('reg-name').value.trim(), email: $('reg-email').value.trim(), password: $('reg-password').value, turnstile: token } });
+      }).then(function (d) {
+        user = d.user; location.search = '?login=ok';
+      }).catch(function (e) { showErr($('reg-err'), e.message); });
+    });
+  }
+
+  /* ---------- tabs ---------- */
+  var loaded = {};
+  function bindTabs() {
+    document.querySelectorAll('.dash-tab').forEach(function (btn) {
+      btn.onclick = function () { showTab(btn.getAttribute('data-tab')); };
+    });
+    $('form-shelf').addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      showErr($('shelf-err'), '');
+      API.api('/api/shelves', { method: 'POST', body: { name: $('shelf-name').value.trim() } })
+        .then(function () { $('shelf-name').value = ''; loadShelves(); })
+        .catch(function (e) { showErr($('shelf-err'), e.message); });
+    });
+    $('form-fix').addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      showErr($('fix-err'), ''); show($('fix-ok'), false);
+      var title = $('fix-book').value.trim();
+      var bookId = titleToId(title);
+      if (!bookId) { showErr($('fix-err'), T('বইটি তালিকায় পাওয়া যায়নি — নামটি তালিকা থেকে বেছে নিন।', 'That book was not found in the list — pick the name from the list.')); return; }
+      API.api('/api/fix', { method: 'POST', body: { book_id: bookId, field: $('fix-field').value, message: $('fix-message').value.trim() } })
+        .then(function () { show($('fix-ok'), true); $('fix-message').value = ''; loadMyFix(); })
+        .catch(function (e) { showErr($('fix-err'), e.message); });
+    });
+    $('form-support').addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      showErr($('support-err'), ''); show($('support-ok'), false);
+      API.api('/api/support', { method: 'POST', body: { subject: $('support-subject').value.trim(), message: $('support-message').value.trim() } })
+        .then(function () { show($('support-ok'), true); $('support-subject').value = ''; $('support-message').value = ''; })
+        .catch(function (e) { showErr($('support-err'), e.message); });
+    });
+    $('form-password').addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      showErr($('pw-err'), ''); show($('pw-ok'), false);
+      API.api('/api/auth/change-password', { method: 'POST', body: { current: $('pw-current').value, next: $('pw-next').value } })
+        .then(function () { show($('pw-ok'), true); $('pw-current').value = ''; $('pw-next').value = ''; })
+        .catch(function (e) { showErr($('pw-err'), e.message); });
+    });
+    $('sync-now').onclick = function () {
+      $('sync-status').textContent = T('সিঙ্ক হচ্ছে…', 'Syncing…');
+      API.syncAllLocalProgress().then(function (r) {
+        $('sync-status').textContent = r.total > 0
+          ? T('সিঙ্ক হয়েছে: ' + r.synced + '/' + r.total + 'টি বই।', 'Synced: ' + r.synced + ' of ' + r.total + ' books.')
+          : T('এই ডিভাইসে সিঙ্ক করার মতো কোনো অগ্রগতি নেই।', 'No progress on this device to sync.');
+      }).catch(function () { $('sync-status').textContent = T('সিঙ্ক হয়নি — আবার চেষ্টা করুন।', 'Sync failed — please try again.'); });
+    };
+    $('signout-btn').onclick = function () {
+      API.api('/api/auth/logout', { method: 'POST', body: {} }).finally(function () { API.clearMe(); location.search = ''; });
+    };
+    $('delete-btn').onclick = function () {
+      if (!confirm(T('আপনার অ্যাকাউন্ট ও সব তথ্য মুছে যাবে। আপনি কি নিশ্চিত?', 'Your account and all your data will be deleted. Are you sure?'))) return;
+      var body = { confirm: true };
+      if (user && user.has_password) {
+        var pw = prompt(T('মুছে ফেলতে আপনার পাসওয়ার্ড দিন:', 'Enter your password to delete:'));
+        if (pw === null) return;
+        body = { password: pw };
+      }
+      API.api('/api/auth/delete', { method: 'POST', body: body })
+        .then(function () { API.clearMe(); location.href = '{{ "/" | relative_url }}'; })
+        .catch(function (e) { showErr($('delete-err'), e.message); });
+    };
+  }
+  function showTab(name) {
+    document.querySelectorAll('.dash-tab').forEach(function (b) {
+      var on = b.getAttribute('data-tab') === name;
+      b.className = 'dash-tab whitespace-nowrap px-4 py-2 rounded-full font-bold ' + (on
+        ? 'accent-soft-bg accent-text'
+        : 'bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700');
+    });
+    document.querySelectorAll('.dash-panel').forEach(function (p) { p.classList.add('hidden'); });
+    var panel = $('panel-' + name);
+    if (panel) panel.classList.remove('hidden');
+    if (name === 'overview') loadOverview();
+    if (name === 'shelves') loadShelves();
+    if (name === 'history') loadHistory();
+    if (name === 'ranking') loadRanking();
+    if (name === 'fix' && !loaded.fix) { loadMyFix(); loaded.fix = true; }
+  }
+
+  function titleToId(title) {
+    var opts = document.querySelectorAll('#fix-books option');
+    for (var i = 0; i < opts.length; i++) {
+      if (opts[i].value === title) return opts[i].textContent.trim();
+    }
+    return '';
+  }
+
+  /* ---------- loaders ---------- */
+  function statCard(num, label) {
+    return '<div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-4 shadow-sm"><div class="text-2xl font-extrabold">' + esc(num) + '</div><div class="text-sm text-neutral-500 dark:text-neutral-400">' + esc(label) + '</div></div>';
+  }
+  function loadOverview() {
+    API.api('/api/stats').then(function (d) {
+      var s = d.stats;
+      $('stats-grid').innerHTML =
+        statCard(s.finished, T('বই শেষ', 'Books finished')) +
+        statCard(s.reading, T('পড়ছি', 'Reading')) +
+        statCard(s.total_points, T('পয়েন্ট', 'Points')) +
+        statCard(s.streak_days, T('দিনের ধারা', 'Day streak'));
+      $('user-rank-badge').textContent = '🏅 ' + s.rank.name;
+      $('user-points').textContent = T(s.total_points + ' পয়েন্ট', s.total_points + ' points');
+      var cur = s.rank.points, next = s.rank.next_tier_at;
+      if (next) {
+        var prev = 0;
+        // find previous tier threshold from the bar: approximate with current tier start
+        $('rank-next').textContent = T('পরের ধাপ: ' + (next - cur) + ' পয়েন্ট বাকি', 'Next tier: ' + (next - cur) + ' points to go');
+        $('rank-bar').style.width = Math.min(100, Math.round((cur / next) * 100)) + '%';
+      } else {
+        $('rank-next').textContent = T('সর্বোচ্চ ধাপে পৌঁছেছেন!', 'You reached the highest tier!');
+        $('rank-bar').style.width = '100%';
+      }
+    }).catch(function () {});
+    API.api('/api/progress').then(function (d) {
+      var list = (d.progress || []).filter(function (p) { return p.status === 'reading'; }).slice(0, 5);
+      if (!list.length) { $('continue-list').innerHTML = '<span>' + T('এখনো কোনো বই শুরু করেননি।', 'You have not started any book yet.') + '</span>'; return; }
+      $('continue-list').innerHTML = list.map(function (p) {
+        return '<a href="' + bookUrl(p.book_id) + '" class="flex justify-between gap-2 border-b border-neutral-100 dark:border-neutral-700 pb-2"><span class="font-bold">' + esc(p.title) + '</span><span class="text-sm">' + (p.percent || 0) + '%</span></a>';
+      }).join('');
+    }).catch(function () {});
+    API.api('/api/history?limit=5').then(function (d) {
+      renderHistory($('recent-history'), d.history || [], true);
+    }).catch(function () {});
+  }
+  function eventLabel(ev) {
+    return { started: T('শুরু করেছেন', 'Started'), progress: T('পড়ছেন', 'Reading'), finished: T('শেষ করেছেন', 'Finished'), rated: T('রেটিং দিয়েছেন', 'Rated'), shelved: T('তাকে রেখেছেন', 'Shelved'), unshelved: T('তাক থেকে সরিয়েছেন', 'Removed from shelf') }[ev] || ev;
+  }
+  function renderHistory(el, items, compact) {
+    if (!items.length) { el.innerHTML = '<span>' + T('কোনো ইতিহাস নেই।', 'No history yet.') + '</span>'; return; }
+    el.innerHTML = items.map(function (h) {
+      return '<div class="flex justify-between gap-2 border-b border-neutral-100 dark:border-neutral-700 pb-2">' +
+        '<span><a class="font-bold hover:underline" href="' + (h.book_id ? bookUrl(h.book_id) : '#') + '">' + esc(h.title || '') + '</a> — ' + esc(eventLabel(h.event)) + (h.detail ? ' (' + esc(h.detail) + ')' : '') + '</span>' +
+        '<span class="text-sm whitespace-nowrap">' + fmtDate(h.created_at) + '</span></div>';
+    }).join('');
+  }
+  function loadHistory() {
+    API.api('/api/history?limit=50').then(function (d) { renderHistory($('history-list'), d.history || []); }).catch(function () {});
+  }
+  function loadShelves() {
+    API.api('/api/shelves').then(function (d) {
+      var shelves = d.shelves || [];
+      if (!shelves.length) { $('shelf-list').innerHTML = '<p class="text-neutral-500 dark:text-neutral-400">' + T('কোনো তাক নেই।', 'No shelves yet.') + '</p>'; return; }
+      $('shelf-list').innerHTML = shelves.map(function (s) {
+        var books = (s.books || []).map(function (b) {
+          return '<div class="flex justify-between items-center gap-2 border-b border-neutral-100 dark:border-neutral-700 py-2">' +
+            '<a class="font-bold hover:underline" href="' + bookUrl(b.book_id) + '">' + esc(b.title) + '</a>' +
+            '<button class="text-red-600 dark:text-red-400 text-sm font-bold" data-shelf="' + esc(s.id) + '" data-book="' + esc(b.book_id) + '" onclick="OBDashRemove(this)">✕</button></div>';
+        }).join('') || '<p class="text-sm text-neutral-500 dark:text-neutral-400">' + T('এই তাকে এখনো কোনো বই নেই।', 'No books on this shelf yet.') + '</p>';
+        return '<div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm">' +
+          '<div class="flex justify-between items-center mb-2"><h3 class="font-bold text-lg">' + esc(s.name) + ' <span class="text-sm text-neutral-500 dark:text-neutral-400">(' + (s.books || []).length + '/100)</span></h3>' +
+          '<button class="text-red-600 dark:text-red-400 text-sm font-bold" data-shelf-del="' + esc(s.id) + '" onclick="OBDashDeleteShelf(this)">' + T('তাক মুছুন', 'Delete shelf') + '</button></div>' + books + '</div>';
+      }).join('');
+    }).catch(function () {});
+  }
+  window.OBDashRemove = function (btn) {
+    var shelfId = btn.getAttribute('data-shelf'), bookId = btn.getAttribute('data-book');
+    API.api('/api/shelves/' + encodeURIComponent(shelfId) + '/books/' + encodeURIComponent(bookId), { method: 'DELETE' })
+      .then(function () { loadShelves(); }).catch(function (e) { alert(e.message); });
+  };
+  window.OBDashDeleteShelf = function (btn) {
+    if (!confirm(T('এই তাকটি মুছে যাবে। আপনি কি নিশ্চিত?', 'This shelf will be deleted. Are you sure?'))) return;
+    API.api('/api/shelves/' + encodeURIComponent(btn.getAttribute('data-shelf-del')), { method: 'DELETE' })
+      .then(function () { loadShelves(); }).catch(function (e) { alert(e.message); });
+  };
+  function loadRanking() {
+    API.api('/api/ranking?limit=20').then(function (d) {
+      var rows = d.ranking || [];
+      if (!rows.length) { $('ranking-list').innerHTML = '<p class="text-neutral-500 dark:text-neutral-400">' + T('এখনো কেউ পয়েন্ট পাননি।', 'Nobody has earned points yet.') + '</p>'; return; }
+      $('ranking-list').innerHTML = rows.map(function (r) {
+        var medal = r.place === 1 ? '🥇 ' : r.place === 2 ? '🥈 ' : r.place === 3 ? '🥉 ' : '';
+        return '<div class="flex justify-between gap-2 border-b border-neutral-100 dark:border-neutral-700 pb-2"><span>' + medal + '<b>#' + r.place + '</b> ' + esc(r.name) + ' <span class="text-sm text-neutral-500 dark:text-neutral-400">· ' + esc(r.rank) + '</span></span><span class="font-bold">' + r.points + '</span></div>';
+      }).join('');
+    }).catch(function () {});
+  }
+  function loadMyFix() {
+    API.api('/api/fix/mine').then(function (d) {
+      var rows = d.reports || [];
+      if (!rows.length) { $('my-fix-list').innerHTML = '<span>' + T('আপনি এখনো কোনো রিপোর্ট পাঠাননি।', 'You have not sent any reports yet.') + '</span>'; return; }
+      var statusBn = { open: 'খোলা আছে', fixed: 'ঠিক হয়েছে', rejected: 'গ্রহণ হয়নি' };
+      var statusEn = { open: 'Open', fixed: 'Fixed', rejected: 'Rejected' };
+      $('my-fix-list').innerHTML = rows.map(function (r) {
+        return '<div class="flex justify-between gap-2 border-b border-neutral-100 dark:border-neutral-700 pb-2"><span><b>' + esc(r.title) + '</b> — ' + esc(r.field) + ': ' + esc(r.message) + '</span><span class="text-sm whitespace-nowrap">' + (en() ? statusEn[r.status] : statusBn[r.status]) + '</span></div>';
+      }).join('');
+    }).catch(function () {});
+  }
+
+  init();
+})();
+</script>
