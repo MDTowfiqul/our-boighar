@@ -10,6 +10,12 @@ binding = "DB"
 database_name = "our-boighar-db"
 database_id = "2adb67ee-313f-46e0-9ec0-a251e198ac8b"
 
+[observability]
+# Keep Workers Logs on across GitHub deploys — the dashboard warns a deploy
+# may otherwise switch logging off again (it was off during the 1101s).
+enabled = true
+head_sampling_rate = 1
+
 [vars]
 # Public values only. Secrets (GOOGLE_CLIENT_SECRET, SESSION_SECRET) are set
 # in the dashboard, never here. NOTE: GOOGLE_CLIENT_ID must live here, not

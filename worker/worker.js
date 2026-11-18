@@ -304,9 +304,17 @@ async function handleGoogleCallback(request, env) {
       .bind(t, profile.picture || null, user.id).run();
   }
   const token = await createSession(env, user.id);
-  const res = Response.redirect(SITE_URL + '/dashboard/?login=ok', 302);
-  res.headers.set('Set-Cookie', sessionCookie(token));
-  return res;
+  // NOTE: never `Response.redirect(...).headers.set(...)` — a redirect
+  // response has immutable headers and .set() throws TypeError ("immutable"),
+  // which is exactly what crashed this callback after the session was made.
+  // Build the redirect with `new Response` so the cookie can be attached.
+  return new Response(null, {
+    status: 302,
+    headers: {
+      Location: SITE_URL + '/dashboard/?login=ok',
+      'Set-Cookie': sessionCookie(token),
+    },
+  });
 }
 
 async function handleRegister(request, env) {
