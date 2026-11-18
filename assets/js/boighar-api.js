@@ -1,5 +1,5 @@
 // Our Boighar account client — talks to the Cloudflare Worker API.
-// Loaded on dashboard, book and reader pages. No dependencies.
+// Loaded on the My Dashboard page (shelf.html), book and reader pages. No dependencies.
 // Config comes from window.OB_CONFIG (emitted by the page from _config.yml):
 //   { apiBase: 'https://our-boighar-api.<subdomain>.workers.dev', turnstileSiteKey: '' }
 (function () {
