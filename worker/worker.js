@@ -624,8 +624,11 @@ export default {
 
       // --- public auth routes ---
       if (parts[0] === 'auth') {
-        if (parts[1] === 'google' && method === 'GET' && !parts[2]) return handleGoogleStart(request, env);
-        if (parts[1] === 'google' && parts[2] === 'callback' && method === 'GET') return handleGoogleCallback(request, env);
+        // NOTE: these two MUST use `await` (unlike a bare `return handler()`,
+        // which lets a rejection escape this try/catch as an uncaught
+        // exception → Cloudflare Error 1101 instead of a clean error page).
+        if (parts[1] === 'google' && method === 'GET' && !parts[2]) return await handleGoogleStart(request, env);
+        if (parts[1] === 'google' && parts[2] === 'callback' && method === 'GET') return await handleGoogleCallback(request, env);
         if (parts[1] === 'register' && method === 'POST') return finish(await handleRegister(request, env));
         if (parts[1] === 'login' && method === 'POST') return finish(await handleLogin(request, env));
         if (parts[1] === 'logout' && method === 'POST') return finish(await handleLogout(request, env));
