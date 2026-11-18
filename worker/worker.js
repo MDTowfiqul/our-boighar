@@ -126,8 +126,23 @@ async function createSession(env, userId) {
   ).bind(token, userId, t, t + SESSION_DAYS * 86400000).run();
   return token;
 }
+// The session token as the client presented it: HttpOnly cookie first,
+// then an Authorization: Bearer token (see getSessionUser).
+function presentedToken(request) {
+  let token = parseCookies(request)[COOKIE_NAME];
+  if (!token) {
+    const auth = request.headers.get('Authorization') || '';
+    const m = /^Bearer\s+([A-Za-z0-9]+)$/.exec(auth);
+    if (m) token = m[1];
+  }
+  return token || null;
+}
 async function getSessionUser(request, env) {
-  const token = parseCookies(request)[COOKIE_NAME];
+  // Session token: HttpOnly cookie first; fall back to an Authorization:
+  // Bearer token. The dashboard sends the Bearer header because the
+  // cross-site cookie is withheld by browsers that block third-party
+  // cookies (the token is the same 256-bit session token as the cookie).
+  const token = presentedToken(request);
   if (!token) return null;
   const row = await env.DB.prepare(
     'SELECT s.user_id, u.id, u.name, u.email, u.password_hash, u.google_id, u.avatar_url, u.created_at FROM sessions s JOIN users u ON u.id = s.user_id WHERE s.token = ? AND s.expires_at > ?'
@@ -311,7 +326,12 @@ async function handleGoogleCallback(request, env) {
   return new Response(null, {
     status: 302,
     headers: {
-      Location: SITE_URL + '/dashboard/?login=ok',
+      // The session token also rides in the URL fragment (#session=...):
+      // fragments are never sent to any server, and the dashboard reads
+      // the token from it into localStorage, because the cross-site
+      // cookie alone is withheld by browsers that block third-party
+      // cookies (the dashboard then authenticates with a Bearer header).
+      Location: SITE_URL + '/dashboard/?login=ok#session=' + token,
       'Set-Cookie': sessionCookie(token),
     },
   });
@@ -341,7 +361,7 @@ async function handleRegister(request, env) {
       .bind(crypto.randomUUID(), id, shelfName, t).run();
   }
   const token = await createSession(env, id);
-  return json({ user: { id, name, email, avatar_url: null, has_password: true, has_google: false, created_at: t } },
+  return json({ user: { id, name, email, avatar_url: null, has_password: true, has_google: false, created_at: t }, token },
     201, { 'Set-Cookie': sessionCookie(token) });
 }
 
@@ -357,11 +377,11 @@ async function handleLogin(request, env) {
   if (!user || !user.password_hash) return err('No account found with this email, or it was created with Google. Try Google sign-in.', 401);
   if (!(await verifyPassword(password, user.password_hash))) return err('Wrong password. Please try again.', 401);
   const token = await createSession(env, user.id);
-  return json({ user: publicUser(user) }, 200, { 'Set-Cookie': sessionCookie(token) });
+  return json({ user: publicUser(user), token }, 200, { 'Set-Cookie': sessionCookie(token) });
 }
 
 async function handleLogout(request, env) {
-  const token = parseCookies(request)[COOKIE_NAME];
+  const token = presentedToken(request);
   if (token) await env.DB.prepare('DELETE FROM sessions WHERE token = ?').bind(token).run();
   return json({ ok: true }, 200, { 'Set-Cookie': clearCookie() });
 }

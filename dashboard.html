@@ -307,7 +307,7 @@ description: "Your Our Boighar account — shelves, reading history, points and 
       API.getTurnstileToken().then(function (token) {
         return API.api('/api/auth/login', { method: 'POST', body: { email: $('login-email').value.trim(), password: $('login-password').value, turnstile: token } });
       }).then(function (d) {
-        user = d.user; location.search = '?login=ok';
+        user = d.user; if (d.token) API.setToken(d.token); location.search = '?login=ok';
       }).catch(function (e) { showErr($('login-err'), e.message); });
     });
     $('form-register').addEventListener('submit', function (ev) {
@@ -316,7 +316,7 @@ description: "Your Our Boighar account — shelves, reading history, points and 
       API.getTurnstileToken().then(function (token) {
         return API.api('/api/auth/register', { method: 'POST', body: { name: $('reg-name').value.trim(), email: $('reg-email').value.trim(), password: $('reg-password').value, turnstile: token } });
       }).then(function (d) {
-        user = d.user; location.search = '?login=ok';
+        user = d.user; if (d.token) API.setToken(d.token); location.search = '?login=ok';
       }).catch(function (e) { showErr($('reg-err'), e.message); });
     });
   }
@@ -367,7 +367,7 @@ description: "Your Our Boighar account — shelves, reading history, points and 
       }).catch(function () { $('sync-status').textContent = T('সিঙ্ক হয়নি — আবার চেষ্টা করুন।', 'Sync failed — please try again.'); });
     };
     $('signout-btn').onclick = function () {
-      API.api('/api/auth/logout', { method: 'POST', body: {} }).finally(function () { API.clearMe(); location.search = ''; });
+      API.api('/api/auth/logout', { method: 'POST', body: {} }).finally(function () { API.clearMe(); API.clearToken(); location.search = ''; });
     };
     $('delete-btn').onclick = function () {
       if (!confirm(T('আপনার অ্যাকাউন্ট ও সব তথ্য মুছে যাবে। আপনি কি নিশ্চিত?', 'Your account and all your data will be deleted. Are you sure?'))) return;

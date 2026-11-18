@@ -10,9 +10,40 @@
   var meCache = null;      // null = unknown, false = signed out, object = signed in
   var mePromise = null;
 
+  // Bearer-token fallback for the session: the Worker sets an HttpOnly
+  // cookie, but browsers that block third-party cookies withhold it on
+  // cross-site fetch from github.io to workers.dev, so the dashboard
+  // would always look signed out. The token (same 256-bit session token
+  // as the cookie) is therefore also kept in localStorage and sent as an
+  // Authorization header. The cookie stays the primary mechanism where
+  // third-party cookies are allowed.
+  var TOKEN_KEY = 'ob_api_token';
+  function storedToken() {
+    try { return localStorage.getItem(TOKEN_KEY) || ''; } catch (e) { return ''; }
+  }
+  function setToken(t) {
+    try { if (t) localStorage.setItem(TOKEN_KEY, t); } catch (e) {}
+  }
+  function clearToken() {
+    try { localStorage.removeItem(TOKEN_KEY); } catch (e) {}
+  }
+  // Pick up the session token from the post-login redirect fragment
+  // (#session=...) and strip it from the address bar at once.
+  (function () {
+    try {
+      var m = /(?:^|&)session=([A-Za-z0-9]+)/.exec(location.hash.slice(1));
+      if (m) {
+        setToken(m[1]);
+        if (history.replaceState) history.replaceState(null, '', location.pathname + location.search);
+      }
+    } catch (e) {}
+  })();
+
   function api(path, opts) {
     opts = opts || {};
     var headers = { 'Content-Type': 'application/json' };
+    var tok = storedToken();
+    if (tok) headers.Authorization = 'Bearer ' + tok;
     return fetch(BASE + path, {
       method: opts.method || 'GET',
       headers: headers,
@@ -128,6 +159,8 @@
     api: api,
     getMe: getMe,
     clearMe: clearMe,
+    setToken: setToken,
+    clearToken: clearToken,
     getTurnstileToken: getTurnstileToken,
     bookIdFromFile: bookIdFromFile,
     syncProgress: syncProgress,
