@@ -301,7 +301,9 @@ syncs progress to the account while reading (debounced, EPUBs only).
 its own `books` table, so a new book is invisible to accounts until it
 is seeded there. **Pushing an updated `seed-books.sql` to GitHub does
 NOT update the table** — the Worker code deploys from GitHub, but the
-database does not. Run the seed in the D1 console after adding books:
+database does not. Run the seed in the D1 console after adding books.
+Standing rule: the assistant does this re-seed on every book upload —
+no need to ask each time.
 
 ```bash
 # regenerate seed-books.sql from a BUILT search.json (the repo's search.json
