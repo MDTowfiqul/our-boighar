@@ -11,6 +11,13 @@ layout: null
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@400;600&family=Noto+Serif:ital@0;1&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/epubjs@0.3.93/dist/epub.min.js"></script>
+<script>
+  window.OB_CONFIG = {
+    apiBase: '{{ site.boighar_api_base }}',
+    turnstileSiteKey: '{{ site.boighar_turnstile_site_key }}'
+  };
+</script>
+<script src="{{ '/assets/js/boighar-api.js' | relative_url }}"></script>
 <style>
   :root{--bar-h:54px;--bot-h:64px}
   body[data-theme="light"]{--bg:#e9e2cf;--surface:#ffffff;--ink:#1d241f;--muted:#5c665e;--bar:#0d5c3f;--bar-ink:#ffffff;--panel:#ffffff;--line:#e0d7bd;--accent:#0d5c3f}
@@ -217,6 +224,8 @@ layout: null
     var keys = Object.keys(progress).sort(function(a,b){ return (progress[b].ts||0) - (progress[a].ts||0); });
     keys.slice(30).forEach(function(k){ delete progress[k]; });
     lsSet(PROGKEY, progress);
+    /* Phase 4: sync progress to the account when signed in (debounced, EPUBs only) */
+    if (window.OBApi && /\.epub$/i.test(file)) OBApi.syncProgress(file, cur.pct || 0, cur.cfi);
   }
 
   /* ---------- epub.js ---------- */

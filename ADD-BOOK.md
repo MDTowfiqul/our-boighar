@@ -276,6 +276,54 @@ are included in the shelf backup/restore. Nothing leaves the device.
 
 ---
 
+## 10. Accounts & dashboard (xKAF Phase 4 — Cloudflare Worker + D1)
+
+Accounts are optional: reading and downloading stay free without one.
+An account syncs shelves, reading progress, history, points and rank
+across devices. The backend is a Cloudflare Worker (`our-boighar-api`)
+with a D1 database (`our-boighar-db`); code, schema and the deploy
+guide live in `~/workspace/our-boighar-phase4/` (`worker.js`,
+`schema.sql`, `seed-books.sql`, `API.md`, `DEPLOY.md`).
+
+**Site side.** `_config.yml` holds `boighar_api_base` (the Worker URL)
+and `boighar_turnstile_site_key` (empty until Turnstile is set up).
+`dashboard.html` is the account area at `/dashboard/` (sign-in with
+Google or email, Overview, Shelves, History, Ranking, Fix Info,
+Support, Guide, Settings). `assets/js/boighar-api.js` is the shared
+API client; book pages get a "Save to shelf" control and `reader.html`
+syncs progress to the account while reading (debounced, EPUBs only).
+
+**After adding a book.** The Worker validates every `book_id` against
+its own `books` table, so a new book is invisible to accounts until it
+is seeded there. Re-run the seed after adding books:
+
+```bash
+# regenerate seed-books.sql from a BUILT search.json (the repo's search.json
+# is a Liquid template — use the Jekyll build output or the live site's copy),
+# then paste it into the D1 console (or wrangler d1 execute --file=seed-books.sql)
+python3 ~/workspace/our-boighar-phase4/seed-books-from-search.py /tmp/boighar-site/search.json > ~/workspace/our-boighar-phase4/seed-books.sql
+```
+
+If the generator is not handy: add one line to `seed-books.sql` —
+`INSERT OR REPLACE INTO books (id, title, writer, category, language) VALUES ('<slug>', '<title>', '<writer>', '<category>', '<language>');` —
+and paste it into the D1 console (dashboard → D1 → our-boighar-db →
+Console → Execute). `INSERT OR REPLACE` makes re-running the whole
+seed safe — existing rows are updated, not duplicated.
+
+**No password-reset email (Phase 4 limit).** Sending email needs a
+custom domain + a sender service, which the site does not have yet.
+Signed-in users can change their password in Settings; a locked-out
+user must contact support. A reset email is a documented follow-up
+for when a domain exists — do not promise it to readers meanwhile.
+
+**Fix Info & Support.** Reader reports and support messages land in
+the D1 tables `fix_reports` and `support_messages`; if the Worker has
+`TELEGRAM_BOT_TOKEN` + `TELEGRAM_ADMIN_ID` set, they also arrive in
+Telegram. Check the tables in the D1 console (or the Telegram
+messages) and mark fix reports `fixed`/`rejected` there.
+
+---
+
 ## Overflow storage (when the main repo fills up)
 
 GitHub Pages caps a site at ~1 GB. Book files can overflow into the
