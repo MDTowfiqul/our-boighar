@@ -1,0 +1,14 @@
+# Our Boighar API — Cloudflare Worker config.
+# Deployed from GitHub via Workers Builds (repo MDTowfiqul/our-boighar, branch main).
+# Secrets (GOOGLE_CLIENT_SECRET, SESSION_SECRET) are set in the dashboard, never here.
+name = "our-boighar-api"
+main = "worker/worker.js"
+compatibility_date = "2026-11-18"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "our-boighar-db"
+database_id = "2adb67ee-313f-46e0-9ec0-a251e198ac8b"
+
+[vars]
+# Public values only. GOOGLE_CLIENT_ID is set as a plain-text variable in the dashboard.
