@@ -281,9 +281,13 @@ are included in the shelf backup/restore. Nothing leaves the device.
 Accounts are optional: reading and downloading stay free without one.
 An account syncs shelves, reading progress, history, points and rank
 across devices. The backend is a Cloudflare Worker (`our-boighar-api`)
-with a D1 database (`our-boighar-db`); code, schema and the deploy
-guide live in `~/workspace/our-boighar-phase4/` (`worker.js`,
-`schema.sql`, `seed-books.sql`, `API.md`, `DEPLOY.md`).
+with a D1 database (`our-boighar-db`). The code, schema, seed and
+deploy config live in the repo: `worker/worker.js`,
+`worker/schema.sql`, `worker/seed-books.sql`, `wrangler.toml` at the
+repo root. The Worker deploys automatically from GitHub (Workers
+Builds) on every push to main. The full API contract and the
+step-by-step deploy guide live in `~/workspace/our-boighar-phase4/`
+(`API.md`, `DEPLOY.md`).
 
 **Site side.** `_config.yml` holds `boighar_api_base` (the Worker URL)
 and `boighar_turnstile_site_key` (empty until Turnstile is set up).
@@ -295,7 +299,9 @@ syncs progress to the account while reading (debounced, EPUBs only).
 
 **After adding a book.** The Worker validates every `book_id` against
 its own `books` table, so a new book is invisible to accounts until it
-is seeded there. Re-run the seed after adding books:
+is seeded there. **Pushing an updated `seed-books.sql` to GitHub does
+NOT update the table** — the Worker code deploys from GitHub, but the
+database does not. Run the seed in the D1 console after adding books:
 
 ```bash
 # regenerate seed-books.sql from a BUILT search.json (the repo's search.json
