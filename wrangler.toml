@@ -11,4 +11,9 @@ database_name = "our-boighar-db"
 database_id = "2adb67ee-313f-46e0-9ec0-a251e198ac8b"
 
 [vars]
-# Public values only. GOOGLE_CLIENT_ID is set as a plain-text variable in the dashboard.
+# Public values only. Secrets (GOOGLE_CLIENT_SECRET, SESSION_SECRET) are set
+# in the dashboard, never here. NOTE: GOOGLE_CLIENT_ID must live here, not
+# only in the dashboard — a GitHub build replaces the Worker's plain-text
+# variables with this section, so a dashboard-only value gets wiped on the
+# next push (that is how the Client ID went missing on 2026-11-18).
+GOOGLE_CLIENT_ID = "1009644293864-s69cob4vkt8cepr0iqnrhq61lhdr5p2v.apps.googleusercontent.com"
