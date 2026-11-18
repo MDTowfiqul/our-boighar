@@ -55,7 +55,11 @@ function corsHeaders(request, env) {
   if (origin) {
     h['Access-Control-Allow-Origin'] = origin;
     h['Access-Control-Allow-Credentials'] = 'true';
-    h['Access-Control-Allow-Headers'] = 'Content-Type';
+    // Authorization MUST be listed: the dashboard now sends a Bearer token,
+    // which makes the browser preflight (OPTIONS) the request, and a header
+    // missing here makes the preflight fail — fetch then rejects with
+    // "Failed to fetch" and the dashboard reports "Cannot reach the server".
+    h['Access-Control-Allow-Headers'] = 'Content-Type, Authorization';
     h['Access-Control-Allow-Methods'] = 'GET, POST, DELETE, OPTIONS';
   }
   return h;
