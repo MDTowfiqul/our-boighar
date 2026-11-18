@@ -59,7 +59,7 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   <section id="continue-sec" class="mt-9 hidden">
     <div class="flex items-baseline justify-between mb-3 px-0.5">
       <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="📖 পড়ছিলেন" data-en="📖 Continue Reading">📖 পড়ছিলেন</h2>
-      <a href="{{ '/shelf/' | relative_url }}" class="accent-text text-sm font-extrabold hover:underline" data-bn="আমার তাক →" data-en="My Shelf →">আমার তাক →</a>
+      <a href="{{ '/shelf/' | relative_url }}" class="accent-text text-sm font-extrabold hover:underline" data-bn="আমার ড্যাশবোর্ড →" data-en="My Dashboard →">আমার ড্যাশবোর্ড →</a>
     </div>
     <div id="continue-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
   </section>
@@ -312,8 +312,8 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   function bookmarks(){ try{ return JSON.parse(localStorage.getItem(BM)||'[]'); }catch(e){ return []; } }
   function lang(){ return window.__obLang || 'bn'; }
   var H = {
-    bn: { all:'জনপ্রিয় এখন', shelf:'★ আমার তাকে রাখা বই', cat:'বিষয়: ', alpha:'বর্ণমালা: ', search:'অনুসন্ধান: ', books:'টি বই', rec:'সুপারিশকৃত বই', res:'খোঁজার ফলাফল', none:'কোনো বই মেলেনি' },
-    en: { all:'Popular Now', shelf:'★ Books on My Shelf', cat:'Subject: ', alpha:'Letter: ', search:'Search: ', books:'books', rec:'Recommended Books', res:'Search Results', none:'No matching books' }
+    bn: { all:'জনপ্রিয় এখন', shelf:'★ আমার ড্যাশবোর্ডে রাখা বই', cat:'বিষয়: ', alpha:'বর্ণমালা: ', search:'অনুসন্ধান: ', books:'টি বই', rec:'সুপারিশকৃত বই', res:'খোঁজার ফলাফল', none:'কোনো বই মেলেনি' },
+    en: { all:'Popular Now', shelf:'★ Books on My Dashboard', cat:'Subject: ', alpha:'Letter: ', search:'Search: ', books:'books', rec:'Recommended Books', res:'Search Results', none:'No matching books' }
   };
   var cards = Array.prototype.slice.call(document.querySelectorAll('#row-popular .book-card'));
   var state = { q:'', alpha:'', cat:'' };

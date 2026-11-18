@@ -291,9 +291,11 @@ step-by-step deploy guide live in `~/workspace/our-boighar-phase4/`
 
 **Site side.** `_config.yml` holds `boighar_api_base` (the Worker URL)
 and `boighar_turnstile_site_key` (empty until Turnstile is set up).
-`dashboard.html` is the account area at `/dashboard/` (sign-in with
-Google or email, Overview, Shelves, History, Ranking, Fix Info,
-Support, Guide, Settings). `assets/js/boighar-api.js` is the shared
+`shelf.html` is the account area at `/shelf/`, now called “My Dashboard”
+(sign-in with Google or email, Overview, Shelves, History, Ranking,
+Notes, Fix Info, Support, Guide, Settings — plus the on-device shelf,
+notes & highlights and backup/restore). `dashboard.html` is only a
+redirect to `/shelf/`. `assets/js/boighar-api.js` is the shared
 API client; book pages get a "Save to shelf" control and `reader.html`
 syncs progress to the account while reading (debounced, EPUBs only).
 
