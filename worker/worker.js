@@ -75,10 +75,14 @@ function parseCookies(request) {
   return out;
 }
 function sessionCookie(token) {
-  return `${COOKIE_NAME}=${token}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=${SESSION_DAYS * 86400}`;
+  // SameSite=None: the dashboard lives on mdtowfiqul.github.io while the API
+  // is on workers.dev, so the session cookie must be sent on cross-site
+  // fetch() calls (credentials:include). Lax would withhold it and the
+  // dashboard would always look signed out. None requires Secure (set).
+  return `${COOKIE_NAME}=${token}; HttpOnly; Secure; SameSite=None; Path=/; Max-Age=${SESSION_DAYS * 86400}`;
 }
 function clearCookie() {
-  return `${COOKIE_NAME}=; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=0`;
+  return `${COOKIE_NAME}=; HttpOnly; Secure; SameSite=None; Path=/; Max-Age=0`;
 }
 async function readBody(request) {
   try {
