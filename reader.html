@@ -32,11 +32,12 @@ layout: null
   #epub-area img{max-width:100%}
   #pdf-frame{width:100%;height:100%;border:0;background:#fff}
   .msg{text-align:center;color:var(--muted);padding:80px 20px;font-size:16px}
-  .bar{position:fixed;left:0;right:0;z-index:20;background:var(--bar);color:var(--bar-ink);display:flex;align-items:center;gap:6px;padding:0 8px;transition:transform .25s}
-  #topbar{top:0;height:var(--bar-h)}
-  #botbar{bottom:0;height:var(--bot-h);background:var(--panel);color:var(--ink);border-top:1px solid var(--line);gap:10px;padding:0 12px}
-  body.chrome-off #topbar{transform:translateY(-100%)}
-  body.chrome-off #botbar{transform:translateY(100%)}
+  .bar{position:fixed;left:12px;right:12px;z-index:20;background:var(--bar);color:var(--bar-ink);display:flex;align-items:center;gap:6px;padding:0 8px;transition:transform .25s;border-radius:999px;border:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.25)}
+  #topbar{top:10px;height:var(--bar-h)}
+  #botbar{bottom:10px;height:var(--bot-h);background:var(--panel);color:var(--ink);gap:10px;padding:0 12px}
+  body.chrome-off #topbar{transform:translateY(calc(-100% - 16px))}
+  body.chrome-off #botbar{transform:translateY(calc(100% + 16px))}
+  body[data-theme="dark"] .bar{border-color:#d8b25c}
   .tbtn{flex:0 0 auto;border:0;background:rgba(255,255,255,.14);color:inherit;font-family:inherit;font-weight:700;font-size:15px;border-radius:9px;padding:8px 11px;cursor:pointer;text-decoration:none;line-height:1}
   .tbtn:active{transform:scale(.96)}
   #btn-settings{font-family:"Noto Serif Bengali",serif}
@@ -87,7 +88,7 @@ layout: null
   .seg button.sel{background:var(--accent);color:#fff;border-color:var(--accent)}
   .swatch{width:52px;height:38px;border-radius:10px;border:2px solid var(--line);cursor:pointer;font-family:inherit;font-weight:700;font-size:13px}
   .swatch.sel{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
-  #toast{position:fixed;left:50%;bottom:calc(var(--bot-h) + 16px);transform:translateX(-50%) translateY(20px);background:#222;color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;z-index:40;opacity:0;pointer-events:none;transition:.3s;max-width:88vw;text-align:center}
+  #toast{position:fixed;left:50%;bottom:calc(var(--bot-h) + 26px);transform:translateX(-50%) translateY(20px);background:#222;color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;z-index:40;opacity:0;pointer-events:none;transition:.3s;max-width:88vw;text-align:center}
   #toast.on{opacity:1;transform:translateX(-50%)}
 </style>
 </head>

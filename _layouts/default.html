@@ -11,9 +11,22 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
   tailwind.config = { darkMode: 'class' };
-  if (localStorage.getItem('ob-theme') === 'dark') document.documentElement.classList.add('dark');
-  document.documentElement.setAttribute('data-color', localStorage.getItem('ob-color') || 'purple');
-  document.documentElement.lang = localStorage.getItem('ob-lang') || 'bn';
+  /* OB_DEFAULT_DARK — the first-visit default. true = dark first (Midnight
+     look, like the xKAF screenshots), false = light first (xKAF's real
+     default). A visitor's own saved choice always wins over this. */
+  var OB_DEFAULT_DARK = true;
+  (function(){
+    var t = null;
+    try { t = localStorage.getItem('ob-theme'); } catch (e) {}
+    if (t === 'dark' || (t === null && OB_DEFAULT_DARK)) document.documentElement.classList.add('dark');
+    var c = 'gold';
+    try { c = localStorage.getItem('ob-color') || 'gold'; } catch (e) {}
+    document.documentElement.setAttribute('data-color', c);
+    var fs = 100;
+    try { fs = parseInt(localStorage.getItem('ob-fontscale') || '100', 10) || 100; } catch (e) {}
+    document.documentElement.style.fontSize = fs + '%';
+    try { document.documentElement.lang = localStorage.getItem('ob-lang') || 'bn'; } catch (e) {}
+  })();
   /* Category display names: categories are stored in English in each book's
      file; this map gives their Bengali names. Add new categories here. */
   window.__obCatBn = {"Dawah":"দাওয়াহ","Hadith":"হাদীস","Health":"স্বাস্থ্য","Islamic Q&A":"ইসলামিক প্রশ্নোত্তর","Manners & Character":"আদব ও চরিত্র","Prophetic Medicine":"তিব্বে নববী","Qur'an":"কুরআন","Spirituality":"আধ্যাত্মিকতা","Tafsir":"তাফসীর","Aqeedah":"আকীদা","Seerah":"সীরাহ","History":"ইতিহাস","Biography":"জীবনী","Fiqh":"ফিকহ","Family":"পরিবার","Women":"নারী","Dua":"দোয়া ও যিকির","Economics & Politics":"অর্থনীতি ও রাজনীতি"};
@@ -22,7 +35,12 @@
 <style>
   body{font-family:'Hind Siliguri',system-ui,sans-serif}
   .serif{font-family:'Noto Serif Bengali',serif}
-  :root, [data-color="purple"]{--hero1:#33248f;--hero2:#171233;--accent:#e0521f;--accent-bright:#ff9e6e;--accent-soft:#fdeee6}
+  /* ---- xKAF-inspired tokens (own version: near-black primary, gold decoration) ---- */
+  :root{--pagebg:#f9fafb;--topbar:#f6f7f8;--surface:#ffffff;--ink:#16191a;--muted:#5b5e60;--line:#e8eaeb;--navbg:#fefefe;--navpill:#e3e3e3;--gold:#c98500;--gold-soft:#f5efe1}
+  .dark{--pagebg:#0c1621;--topbar:#17222d;--surface:#202b37;--ink:#e8ecef;--muted:#9aa7b4;--line:#2e3d4c;--navbg:#202b37;--navpill:#343e49;--gold:#bfab80;--gold-soft:#2a2417}
+  body{background:var(--pagebg);color:var(--ink)}
+  :root, [data-color="gold"]{--hero1:#3d2c0e;--hero2:#141007;--accent:#875627;--accent-bright:#d9b96a;--accent-soft:#f5efe1}
+  [data-color="purple"]{--hero1:#33248f;--hero2:#171233;--accent:#e0521f;--accent-bright:#ff9e6e;--accent-soft:#fdeee6}
   [data-color="emerald"]{--hero1:#065f46;--hero2:#022c22;--accent:#c8501b;--accent-bright:#ffb37a;--accent-soft:#fdf0e4}
   [data-color="ocean"]{--hero1:#0c4a6e;--hero2:#082f49;--accent:#0284c7;--accent-bright:#7dd3fc;--accent-soft:#e0f2fe}
   [data-color="crimson"]{--hero1:#881337;--hero2:#1f0a12;--accent:#e11d48;--accent-bright:#fda4af;--accent-soft:#ffe4e6}
@@ -34,141 +52,243 @@
   .hero-accent{color:var(--accent-bright)}
   .accent-soft-bg{background-color:var(--accent-soft)}
   .dark .accent-soft-bg{background-color:rgba(255,255,255,.09)}
+  .gold-text{color:var(--gold)}
   #alpha-bar button.on, #cat-bar button.on{background-color:var(--accent);color:#fff;border-color:var(--accent)}
   #alpha-bar button.alpha-off{cursor:not-allowed;opacity:.55}
   .no-scrollbar::-webkit-scrollbar{display:none}
   .no-scrollbar{scrollbar-width:none;-ms-overflow-style:none}
   #drawer{transition:transform .3s ease}
   #drawer-overlay{transition:opacity .3s ease}
-  .swatch.on{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--accent)}
+  .swatch.on{box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--accent)}
+  /* section eyebrow: small gold label with flanking rules */
+  .ob-eyebrow{display:flex;align-items:center;gap:10px;color:var(--gold);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:2px}
+  .ob-eyebrow::after{content:"";flex:1;height:1px;background:var(--line)}
+  /* top pill tabs */
+  .ob-pilltab{display:inline-flex;align-items:center;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:8px 18px;font-weight:700;font-size:14.5px;white-space:nowrap;transition:.2s}
+  .ob-pilltab.on{background:#16191a;color:#fff;border-color:#16191a}
+  .dark .ob-pilltab.on{background:#e8ecef;color:#16191a;border-color:#e8ecef}
+  /* bottom nav */
+  .ob-nav{background:var(--navbg);box-shadow:0 8px 30px rgba(0,0,0,.18);border:1px solid var(--line)}
+  .ob-nav-item{color:var(--muted)}
+  .ob-nav-item.on{background:var(--navpill);color:var(--ink)}
+  /* drawer sheet rows */
+  .ob-card{background:var(--surface);border:1px solid var(--line);border-radius:20px}
+  .ob-chip-ic{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+  .ob-qpath{width:64px;height:64px;border-radius:50%;background:var(--surface);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+  /* theme panel + guide */
+  #theme-panel{transition:transform .3s cubic-bezier(.22,1,.36,1)}
+  #theme-scrim,#guide-scrim{transition:opacity .25s ease}
+  .ob-seg button.on{background:#16191a;color:#fff}
+  .dark .ob-seg button.on{background:#e8ecef;color:#16191a}
+  .ob-fontbtn.on{background:#16191a;color:#fff;border-color:#16191a}
+  .dark .ob-fontbtn.on{background:#e8ecef;color:#16191a;border-color:#e8ecef}
+  .ob-phone{width:200px;height:300px;border-radius:26px;border:2px solid var(--line);background:var(--surface);box-shadow:0 10px 30px rgba(0,0,0,.18);margin:0 auto;padding:12px;display:flex;flex-direction:column;gap:8px;overflow:hidden;position:relative}
+  .ob-dot{width:8px;height:8px;border-radius:999px;background:var(--line);transition:.25s}
+  .ob-dot.on{width:22px;background:var(--gold)}
+  .ob-guide-btn{transition:transform .15s ease}
+  .ob-guide-btn:active{transform:scale(.97)}
 </style>
 </head>
-<body class="bg-[#f8f9fa] text-[#212529] dark:bg-neutral-900 dark:text-neutral-100 min-h-screen pb-28">
+<body class="min-h-screen pb-28">
 
 <!-- TOP BAR -->
-<header class="sticky top-0 z-30 bg-white/95 dark:bg-neutral-900/95 backdrop-blur shadow-sm border-b border-neutral-200 dark:border-neutral-800">
+<header class="sticky top-0 z-30 backdrop-blur shadow-sm border-b" style="background:var(--topbar);border-color:var(--line)">
   <div class="max-w-6xl mx-auto px-3 sm:px-4 py-2.5 flex items-center gap-2 sm:gap-3">
-    <button id="menu-btn" class="p-2 -ml-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800" aria-label="Menu">
+    <button id="menu-btn" class="p-2 -ml-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/10" aria-label="Menu">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
-    <a href="{{ '/' | relative_url }}" class="font-extrabold text-lg sm:text-2xl text-emerald-800 dark:text-emerald-400 flex items-center gap-2">
+    <a href="{{ '/' | relative_url }}" class="font-extrabold text-lg sm:text-2xl flex items-center gap-2">
       <span>📚</span>
       <span data-bn="আমাদের বইঘর" data-en="Our Boighar">আমাদের বইঘর</span>
     </a>
-    <nav class="hidden lg:flex items-center gap-6 text-[15px] font-bold text-neutral-700 dark:text-neutral-200 ml-4">
-      <a href="{{ '/' | relative_url }}" class="hover:text-emerald-700 dark:hover:text-emerald-400" data-bn="হোম" data-en="Home">হোম</a>
-      <a href="{{ '/browse/' | relative_url }}" class="hover:text-emerald-700 dark:hover:text-emerald-400" data-bn="সব বই" data-en="All Books">সব বই</a>
-      <a href="{{ '/authors/' | relative_url }}" class="hover:text-emerald-700 dark:hover:text-emerald-400" data-bn="লেখক" data-en="Authors">লেখক</a>
-      <a href="{{ '/' | relative_url }}#categories" class="hover:text-emerald-700 dark:hover:text-emerald-400" data-bn="বিষয়" data-en="Categories">বিষয়</a>
-      <a href="{{ '/shelf/' | relative_url }}" class="hover:text-emerald-700 dark:hover:text-emerald-400" data-bn="আমার ড্যাশবোর্ড" data-en="My Dashboard">আমার ড্যাশবোর্ড</a>
-      <a href="{{ '/tools/' | relative_url }}" class="hover:text-emerald-700 dark:hover:text-emerald-400" data-bn="টুলস" data-en="Tools">টুলস</a>
+    <nav class="hidden lg:flex items-center gap-6 text-[15px] font-bold ml-4" style="color:var(--muted)">
+      <a href="{{ '/' | relative_url }}" class="hover:opacity-70" data-bn="হোম" data-en="Home">হোম</a>
+      <a href="{{ '/browse/' | relative_url }}" class="hover:opacity-70" data-bn="সব বই" data-en="All Books">সব বই</a>
+      <a href="{{ '/authors/' | relative_url }}" class="hover:opacity-70" data-bn="লেখক" data-en="Authors">লেখক</a>
+      <a href="{{ '/' | relative_url }}#categories" class="hover:opacity-70" data-bn="বিষয়" data-en="Categories">বিষয়</a>
+      <a href="{{ '/shelf/' | relative_url }}" class="hover:opacity-70" data-bn="আমার ড্যাশবোর্ড" data-en="My Dashboard">আমার ড্যাশবোর্ড</a>
+      <a href="{{ '/tools/' | relative_url }}" class="hover:opacity-70" data-bn="টুলস" data-en="Tools">টুলস</a>
     </nav>
     <span class="flex-1"></span>
-    <button id="theme-toggle" class="border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 rounded-full w-10 h-10 text-base hover:bg-neutral-100 dark:hover:bg-neutral-700 transition" title="Dark / Light">🌙</button>
-    <button id="lang-toggle" class="flex items-center gap-1.5 bg-[#fdf3e7] dark:bg-neutral-800 border border-orange-100 dark:border-neutral-700 rounded-full px-3.5 h-10 text-sm font-extrabold text-neutral-800 dark:text-neutral-100 hover:brightness-95 transition" title="Language / ভাষা">
+    <button id="top-search" class="border rounded-full w-10 h-10 text-base transition hover:opacity-75" style="border-color:var(--line);background:var(--surface)" title="Search / খুঁজুন" aria-label="Search">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="margin:0 auto"><circle cx="11" cy="11" r="7"/><path d="M20.5 20.5L16.7 16.7"/></svg>
+    </button>
+    <button id="theme-btn" class="border rounded-full w-10 h-10 text-base transition hover:opacity-75" style="border-color:var(--line);background:var(--surface)" title="Theme / থিম" aria-label="Theme">🎨</button>
+    <button id="lang-toggle" class="flex items-center gap-1.5 border rounded-full px-3.5 h-10 text-sm font-extrabold transition hover:opacity-75" style="border-color:var(--line);background:var(--surface)" title="Language / ভাষা">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z"/></svg>
       <span id="lang-label">BN</span>
     </button>
+    <a href="{{ '/shelf/' | relative_url }}" class="border rounded-full w-10 h-10 flex items-center justify-center text-base transition hover:opacity-75" style="border-color:var(--line);background:var(--surface)" title="My Dashboard / আমার ড্যাশবোর্ড" aria-label="My Dashboard">👤</a>
   </div>
 </header>
 
-<!-- SIDE MENU DRAWER -->
+<!-- SIDE MENU — full-screen sheet -->
 <div id="drawer-overlay" class="fixed inset-0 bg-black/45 z-40 opacity-0 pointer-events-none"></div>
-<aside id="drawer" class="fixed inset-y-0 left-0 w-[86%] max-w-sm bg-white dark:bg-neutral-900 z-50 -translate-x-full flex flex-col shadow-2xl">
-  <div class="flex items-center justify-between px-5 py-4 border-b border-neutral-100 dark:border-neutral-800">
-    <span class="serif text-xl font-bold" data-bn="মেনু" data-en="Menu">মেনু</span>
-    <button id="drawer-close" class="w-10 h-10 rounded-xl bg-[#fdf3e7] dark:bg-neutral-800 text-lg font-bold" aria-label="Close">✕</button>
-  </div>
-  <div class="flex-1 overflow-y-auto px-5 py-4">
-    <nav class="flex flex-col text-[17px] font-bold">
-      <a href="{{ '/' | relative_url }}" class="drawer-link accent-soft-bg accent-text rounded-xl px-4 py-3 mb-1" data-bn="হোম" data-en="Home">হোম</a>
-      <a href="{{ '/browse/' | relative_url }}" class="drawer-link rounded-xl px-4 py-3 hover:bg-neutral-50 dark:hover:bg-neutral-800" data-bn="সব বই" data-en="All Books">সব বই</a>
-      <a href="{{ '/browse/' | relative_url }}" class="drawer-link rounded-xl px-4 py-3 hover:bg-neutral-50 dark:hover:bg-neutral-800" data-bn="ধরন" data-en="Categories">ধরন</a>
-      <a href="{{ '/authors/' | relative_url }}" class="drawer-link rounded-xl px-4 py-3 hover:bg-neutral-50 dark:hover:bg-neutral-800" data-bn="লেখক" data-en="Authors">লেখক</a>
-      <a href="{{ '/' | relative_url }}#popular" class="drawer-link rounded-xl px-4 py-3 hover:bg-neutral-50 dark:hover:bg-neutral-800" data-bn="জনপ্রিয় বই" data-en="Popular Books">জনপ্রিয় বই</a>
-      <a href="{{ '/shelf/' | relative_url }}" class="drawer-link rounded-xl px-4 py-3 hover:bg-neutral-50 dark:hover:bg-neutral-800" data-bn="📊 আমার ড্যাশবোর্ড" data-en="📊 My Dashboard">📊 আমার ড্যাশবোর্ড</a>
-      <a href="{{ '/tools/' | relative_url }}" class="drawer-link rounded-xl px-4 py-3 hover:bg-neutral-50 dark:hover:bg-neutral-800" data-bn="🛠️ টুলস" data-en="🛠️ Tools">🛠️ টুলস</a>
+<aside id="drawer" class="fixed inset-0 z-50 -translate-x-full flex flex-col overflow-y-auto" style="background:var(--pagebg)">
+  <div class="max-w-xl mx-auto w-full px-5 py-4">
+    <div class="flex items-center justify-between">
+      <span class="font-extrabold text-xl flex items-center gap-2"><span>📚</span><span data-bn="আমাদের বইঘর" data-en="Our Boighar">আমাদের বইঘর</span></span>
+      <button id="drawer-close" class="w-10 h-10 rounded-full text-lg font-bold" style="background:var(--surface);border:1px solid var(--line)" aria-label="Close">✕</button>
+    </div>
+    <a href="{{ '/shelf/' | relative_url }}" class="drawer-link ob-card mt-5 px-4 py-3.5 flex items-center gap-3">
+      <span class="ob-chip-ic" style="background:var(--gold-soft)">👤</span>
+      <span class="min-w-0">
+        <span class="block font-bold" data-bn="সাইন ইন করুন" data-en="Sign in">সাইন ইন করুন</span>
+        <span class="block text-sm" style="color:var(--muted)" data-bn="নিজের তাক, ইতিহাস আর পয়েন্ট" data-en="Your shelves, history and points">নিজের তাক, ইতিহাস আর পয়েন্ট</span>
+      </span>
+      <span class="flex-1"></span><span aria-hidden="true">›</span>
+    </a>
+    <p class="font-bold mt-6 mb-2.5" data-bn="দ্রুত পথ" data-en="Quick path">দ্রুত পথ</p>
+    <div class="flex flex-wrap gap-3">
+      <a href="{{ '/browse/' | relative_url }}" class="drawer-link flex flex-col items-center gap-1.5 w-[68px]"><span class="ob-qpath">📚</span><span class="text-xs font-bold text-center" data-bn="সব বই" data-en="All Books">সব বই</span></a>
+      <a href="{{ '/authors/' | relative_url }}" class="drawer-link flex flex-col items-center gap-1.5 w-[68px]"><span class="ob-qpath">✍️</span><span class="text-xs font-bold text-center" data-bn="লেখক" data-en="Authors">লেখক</span></a>
+      <a href="{{ '/' | relative_url }}#popular" class="drawer-link flex flex-col items-center gap-1.5 w-[68px]"><span class="ob-qpath">🏆</span><span class="text-xs font-bold text-center" data-bn="সেরা ১০০" data-en="Top 100">সেরা ১০০</span></a>
+      <a href="{{ '/shelf/' | relative_url }}" class="drawer-link flex flex-col items-center gap-1.5 w-[68px]"><span class="ob-qpath">📊</span><span class="text-xs font-bold text-center" data-bn="ড্যাশবোর্ড" data-en="Dashboard">ড্যাশবোর্ড</span></a>
+      <a href="{{ '/tools/' | relative_url }}" class="drawer-link flex flex-col items-center gap-1.5 w-[68px]"><span class="ob-qpath">🛠️</span><span class="text-xs font-bold text-center" data-bn="টুলস" data-en="Tools">টুলস</span></a>
+      <a href="{{ '/opds/' | relative_url }}" class="drawer-link flex flex-col items-center gap-1.5 w-[68px]"><span class="ob-qpath">📡</span><span class="text-xs font-bold text-center">OPDS</span></a>
+      <a href="{{ '/guide/' | relative_url }}" class="drawer-link flex flex-col items-center gap-1.5 w-[68px]"><span class="ob-qpath">📖</span><span class="text-xs font-bold text-center" data-bn="গাইড" data-en="Guide">গাইড</span></a>
+      <a href="https://our-reader.vercel.app" target="_blank" rel="noopener" class="drawer-link flex flex-col items-center gap-1.5 w-[68px]"><span class="ob-qpath">📱</span><span class="text-xs font-bold text-center" data-bn="রিডার" data-en="Reader">রিডার</span></a>
+    </div>
+    <p class="font-bold mt-6 mb-2.5" data-bn="লাইব্রেরি" data-en="Library">লাইব্রেরি</p>
+    <nav class="ob-card divide-y divide-neutral-200 dark:divide-neutral-700">
+      <a href="{{ '/' | relative_url }}" class="drawer-link flex items-center gap-3 px-4 py-3.5 font-bold"><span class="ob-chip-ic" style="background:#fdf0e4">🏠</span><span data-bn="হোম" data-en="Home">হোম</span></a>
+      <a href="{{ '/browse/' | relative_url }}" class="drawer-link flex items-center gap-3 px-4 py-3.5 font-bold"><span class="ob-chip-ic" style="background:#e0f2fe">📚</span><span data-bn="সব বই" data-en="All Books">সব বই</span></a>
+      <a href="{{ '/browse/' | relative_url }}" class="drawer-link flex items-center gap-3 px-4 py-3.5 font-bold"><span class="ob-chip-ic" style="background:#ede9fe">🏷️</span><span data-bn="ধরন" data-en="Categories">ধরন</span></a>
+      <a href="{{ '/authors/' | relative_url }}" class="drawer-link flex items-center gap-3 px-4 py-3.5 font-bold"><span class="ob-chip-ic" style="background:#ede9fe">✍️</span><span data-bn="লেখক" data-en="Authors">লেখক</span></a>
+      <a href="{{ '/' | relative_url }}#popular" class="drawer-link flex items-center gap-3 px-4 py-3.5 font-bold"><span class="ob-chip-ic" style="background:#fef3c7">🏆</span><span data-bn="জনপ্রিয় বই" data-en="Popular Books">জনপ্রিয় বই</span></a>
+      <a href="{{ '/shelf/' | relative_url }}" class="drawer-link flex items-center gap-3 px-4 py-3.5 font-bold"><span class="ob-chip-ic" style="background:#dcfce7">📊</span><span data-bn="আমার ড্যাশবোর্ড" data-en="My Dashboard">আমার ড্যাশবোর্ড</span></a>
+      <a href="{{ '/tools/' | relative_url }}" class="drawer-link flex items-center gap-3 px-4 py-3.5 font-bold"><span class="ob-chip-ic" style="background:#ffe4e6">🛠️</span><span data-bn="টুলস" data-en="Tools">টুলস</span></a>
     </nav>
-    <button id="drawer-lang" class="mt-3 w-full flex items-center gap-3 bg-[#fdf8f1] dark:bg-neutral-800 border border-orange-100/70 dark:border-neutral-700 rounded-2xl px-4 py-3.5 font-bold">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z"/></svg>
-      <span data-bn="ভাষা" data-en="Language">ভাষা</span>
-      <span class="flex-1"></span>
-      <span id="drawer-lang-label" class="text-neutral-500 dark:text-neutral-300">বাংলা</span>
-    </button>
-    <div class="mt-5">
-      <p class="font-bold flex items-center gap-2"><span>🎨</span><span data-bn="থিমের রং" data-en="Theme Colour">থিমের রং</span></p>
-      <div class="flex gap-3 mt-2.5 px-1">
+    <p class="font-bold mt-6 mb-2.5" data-bn="থিমের রং" data-en="Theme Colour">থিমের রং</p>
+    <div class="ob-card px-4 py-3.5">
+      <div class="flex gap-3 px-1">
+        <button class="swatch w-9 h-9 rounded-full border border-black/10" data-setcolor="gold" style="background:linear-gradient(140deg,#3d2c0e,#c98500)" title="Gold"></button>
         <button class="swatch w-9 h-9 rounded-full border border-black/10" data-setcolor="purple" style="background:linear-gradient(140deg,#33248f,#e0521f)" title="Purple"></button>
         <button class="swatch w-9 h-9 rounded-full border border-black/10" data-setcolor="emerald" style="background:linear-gradient(140deg,#065f46,#c8501b)" title="Emerald"></button>
         <button class="swatch w-9 h-9 rounded-full border border-black/10" data-setcolor="ocean" style="background:linear-gradient(140deg,#0c4a6e,#0284c7)" title="Ocean"></button>
         <button class="swatch w-9 h-9 rounded-full border border-black/10" data-setcolor="crimson" style="background:linear-gradient(140deg,#881337,#e11d48)" title="Crimson"></button>
         <button class="swatch w-9 h-9 rounded-full border border-black/10" data-setcolor="amber" style="background:linear-gradient(140deg,#713f12,#d97706)" title="Amber"></button>
       </div>
+      <button id="drawer-lang" class="mt-3.5 w-full flex items-center gap-3 rounded-2xl px-4 py-3 font-bold" style="background:var(--gold-soft)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z"/></svg>
+        <span data-bn="ভাষা" data-en="Language">ভাষা</span>
+        <span class="flex-1"></span>
+        <span id="drawer-lang-label" style="color:var(--muted)">বাংলা</span>
+      </button>
     </div>
-    <p class="mt-6 mb-2.5 font-bold text-neutral-600 dark:text-neutral-300" data-bn="সহায়তা ও নীতিমালা" data-en="Help & Policies">সহায়তা ও নীতিমালা</p>
-    <div class="flex flex-wrap gap-2 text-sm font-semibold">
-      <a href="{{ '/' | relative_url }}#popular" class="drawer-link bg-[#fdf8f1] dark:bg-neutral-800 rounded-full px-3.5 py-1.5" data-bn="জনপ্রিয়" data-en="Popular">জনপ্রিয়</a>
-      <a href="{{ '/browse/' | relative_url }}" class="drawer-link bg-[#fdf8f1] dark:bg-neutral-800 rounded-full px-3.5 py-1.5" data-bn="নতুন" data-en="New">নতুন</a>
-      <a href="{{ '/guide/' | relative_url }}#download" class="drawer-link bg-[#fdf8f1] dark:bg-neutral-800 rounded-full px-3.5 py-1.5" data-bn="ডাউনলোড সহায়তা" data-en="Download Help">ডাউনলোড সহায়তা</a>
-      <a href="{{ '/guide/' | relative_url }}" class="drawer-link bg-[#fdf8f1] dark:bg-neutral-800 rounded-full px-3.5 py-1.5" data-bn="পড়ার নির্দেশিকা" data-en="Reading Guide">পড়ার নির্দেশিকা</a>
-      <a href="{{ '/about/' | relative_url }}" class="drawer-link bg-[#fdf8f1] dark:bg-neutral-800 rounded-full px-3.5 py-1.5" data-bn="আমাদের সম্পর্কে" data-en="About Us">আমাদের সম্পর্কে</a>
-      <a href="{{ '/about/' | relative_url }}#contact" class="drawer-link bg-[#fdf8f1] dark:bg-neutral-800 rounded-full px-3.5 py-1.5" data-bn="যোগাযোগ" data-en="Contact">যোগাযোগ</a>
-      <a href="{{ '/about/' | relative_url }}#publish" class="drawer-link bg-[#fdf8f1] dark:bg-neutral-800 rounded-full px-3.5 py-1.5" data-bn="আপনার বই প্রকাশ করুন" data-en="Publish Your Book">আপনার বই প্রকাশ করুন</a>
-      <a href="{{ '/policies/' | relative_url }}#privacy" class="drawer-link bg-[#fdf8f1] dark:bg-neutral-800 rounded-full px-3.5 py-1.5" data-bn="গোপনীয়তা নীতি" data-en="Privacy Policy">গোপনীয়তা নীতি</a>
-      <a href="{{ '/policies/' | relative_url }}#terms" class="drawer-link bg-[#fdf8f1] dark:bg-neutral-800 rounded-full px-3.5 py-1.5" data-bn="শর্তাবলি" data-en="Terms">শর্তাবলি</a>
-      <a href="{{ '/policies/' | relative_url }}#disclaimer" class="drawer-link bg-[#fdf8f1] dark:bg-neutral-800 rounded-full px-3.5 py-1.5" data-bn="দায়মুক্তি" data-en="Disclaimer">দায়মুক্তি</a>
-      <a href="{{ '/policies/' | relative_url }}#dmca" class="drawer-link bg-[#fdf8f1] dark:bg-neutral-800 rounded-full px-3.5 py-1.5">DMCA</a>
+    <p class="font-bold mt-6 mb-2.5" data-bn="সহায়তা ও নীতিমালা" data-en="Help & Policies">সহায়তা ও নীতিমালা</p>
+    <div class="flex flex-wrap gap-2 text-sm font-semibold pb-2">
+      <a href="{{ '/' | relative_url }}#popular" class="drawer-link rounded-full px-3.5 py-1.5" style="background:var(--surface);border:1px solid var(--line)" data-bn="জনপ্রিয়" data-en="Popular">জনপ্রিয়</a>
+      <a href="{{ '/browse/' | relative_url }}" class="drawer-link rounded-full px-3.5 py-1.5" style="background:var(--surface);border:1px solid var(--line)" data-bn="নতুন" data-en="New">নতুন</a>
+      <a href="{{ '/guide/' | relative_url }}#download" class="drawer-link rounded-full px-3.5 py-1.5" style="background:var(--surface);border:1px solid var(--line)" data-bn="ডাউনলোড সহায়তা" data-en="Download Help">ডাউনলোড সহায়তা</a>
+      <a href="{{ '/guide/' | relative_url }}" class="drawer-link rounded-full px-3.5 py-1.5" style="background:var(--surface);border:1px solid var(--line)" data-bn="পড়ার নির্দেশিকা" data-en="Reading Guide">পড়ার নির্দেশিকা</a>
+      <a href="{{ '/about/' | relative_url }}" class="drawer-link rounded-full px-3.5 py-1.5" style="background:var(--surface);border:1px solid var(--line)" data-bn="আমাদের সম্পর্কে" data-en="About Us">আমাদের সম্পর্কে</a>
+      <a href="{{ '/about/' | relative_url }}#contact" class="drawer-link rounded-full px-3.5 py-1.5" style="background:var(--surface);border:1px solid var(--line)" data-bn="যোগাযোগ" data-en="Contact">যোগাযোগ</a>
+      <a href="{{ '/about/' | relative_url }}#publish" class="drawer-link rounded-full px-3.5 py-1.5" style="background:var(--surface);border:1px solid var(--line)" data-bn="আপনার বই প্রকাশ করুন" data-en="Publish Your Book">আপনার বই প্রকাশ করুন</a>
+      <a href="{{ '/policies/' | relative_url }}#privacy" class="drawer-link rounded-full px-3.5 py-1.5" style="background:var(--surface);border:1px solid var(--line)" data-bn="গোপনীয়তা নীতি" data-en="Privacy Policy">গোপনীয়তা নীতি</a>
+      <a href="{{ '/policies/' | relative_url }}#terms" class="drawer-link rounded-full px-3.5 py-1.5" style="background:var(--surface);border:1px solid var(--line)" data-bn="শর্তাবলি" data-en="Terms">শর্তাবলি</a>
+      <a href="{{ '/policies/' | relative_url }}#disclaimer" class="drawer-link rounded-full px-3.5 py-1.5" style="background:var(--surface);border:1px solid var(--line)" data-bn="দায়মুক্তি" data-en="Disclaimer">দায়মুক্তি</a>
+      <a href="{{ '/policies/' | relative_url }}#dmca" class="drawer-link rounded-full px-3.5 py-1.5" style="background:var(--surface);border:1px solid var(--line)">DMCA</a>
+      <button id="guide-reopen" class="rounded-full px-3.5 py-1.5" style="background:var(--surface);border:1px solid var(--line)" data-bn="✨ শুরুর গাইড দেখুন" data-en="✨ Show the intro guide">✨ শুরুর গাইড দেখুন</button>
     </div>
-  </div>
-  <div class="px-5 py-4 border-t border-neutral-100 dark:border-neutral-800 flex gap-3">
-    <a href="https://github.com/MDTowfiqul/our-boighar" target="_blank" rel="noopener" class="flex-1 text-center font-bold rounded-xl py-3 border-2 border-neutral-800 dark:border-neutral-200">GitHub</a>
+    <div class="py-4 flex gap-3">
+      <a href="https://github.com/MDTowfiqul/our-boighar" target="_blank" rel="noopener" class="flex-1 text-center font-bold rounded-full py-3 border-2" style="border-color:var(--ink)">GitHub</a>
+    </div>
   </div>
 </aside>
 
+<!-- THEME PANEL -->
+<div id="theme-scrim" class="fixed inset-0 bg-black/45 z-40 opacity-0 pointer-events-none"></div>
+<div id="theme-panel" class="fixed inset-x-3 bottom-3 sm:inset-x-0 sm:max-w-md sm:mx-auto z-50 rounded-[24px] p-5 translate-y-[120%] shadow-2xl" style="background:var(--surface);border:1px solid var(--line)">
+  <div class="flex items-center justify-between">
+    <span class="font-extrabold text-lg" data-bn="থিম" data-en="Theme">থিম</span>
+    <button id="theme-close" class="w-9 h-9 rounded-full text-base font-bold" style="background:var(--gold-soft)" aria-label="Close">✕</button>
+  </div>
+  <p class="text-sm font-bold mt-4 mb-2" style="color:var(--muted)" data-bn="রং" data-en="Colour">রং</p>
+  <div class="flex gap-3 flex-wrap">
+    <button class="swatch w-10 h-10 rounded-full border border-black/10" data-setcolor="gold" style="background:linear-gradient(140deg,#3d2c0e,#c98500)" title="Gold"></button>
+    <button class="swatch w-10 h-10 rounded-full border border-black/10" data-setcolor="purple" style="background:linear-gradient(140deg,#33248f,#e0521f)" title="Purple"></button>
+    <button class="swatch w-10 h-10 rounded-full border border-black/10" data-setcolor="emerald" style="background:linear-gradient(140deg,#065f46,#c8501b)" title="Emerald"></button>
+    <button class="swatch w-10 h-10 rounded-full border border-black/10" data-setcolor="ocean" style="background:linear-gradient(140deg,#0c4a6e,#0284c7)" title="Ocean"></button>
+    <button class="swatch w-10 h-10 rounded-full border border-black/10" data-setcolor="crimson" style="background:linear-gradient(140deg,#881337,#e11d48)" title="Crimson"></button>
+    <button class="swatch w-10 h-10 rounded-full border border-black/10" data-setcolor="amber" style="background:linear-gradient(140deg,#713f12,#d97706)" title="Amber"></button>
+  </div>
+  <p class="text-sm font-bold mt-5 mb-2" style="color:var(--muted)" data-bn="আলো" data-en="Brightness">আলো</p>
+  <div class="ob-seg flex rounded-full p-1 gap-1 text-sm font-bold" style="background:var(--gold-soft)">
+    <button id="mode-light" class="flex-1 rounded-full py-2">☀️ <span data-bn="আলো" data-en="Light">আলো</span></button>
+    <button id="mode-dark" class="flex-1 rounded-full py-2">🌙 <span data-bn="অন্ধকার" data-en="Dark">অন্ধকার</span></button>
+  </div>
+  <p class="text-sm font-bold mt-5 mb-2" style="color:var(--muted)" data-bn="লেখার আকার" data-en="Text size">লেখার আকার</p>
+  <div class="flex gap-2">
+    <button class="ob-fontbtn flex-1 border rounded-full py-2 text-sm font-bold" style="border-color:var(--line)" data-fontscale="90">90%</button>
+    <button class="ob-fontbtn flex-1 border rounded-full py-2 text-sm font-bold" style="border-color:var(--line)" data-fontscale="100">100%</button>
+    <button class="ob-fontbtn flex-1 border rounded-full py-2 text-sm font-bold" style="border-color:var(--line)" data-fontscale="110">110%</button>
+    <button class="ob-fontbtn flex-1 border rounded-full py-2 text-sm font-bold" style="border-color:var(--line)" data-fontscale="120">120%</button>
+    <button class="ob-fontbtn flex-1 border rounded-full py-2 text-sm font-bold" style="border-color:var(--line)" data-fontscale="130">130%</button>
+  </div>
+</div>
+
+<!-- INTRO GUIDE (first visit) -->
+<div id="guide-scrim" class="fixed inset-0 bg-black/70 z-[60] opacity-0 pointer-events-none flex items-end sm:items-center justify-center">
+  <div id="ob-guide" class="w-full sm:max-w-md rounded-t-[28px] sm:rounded-[28px] p-5 pb-6 max-h-[92vh] overflow-y-auto" style="background:var(--pagebg)">
+    <div class="flex justify-end">
+      <button id="guide-skip" class="text-sm font-bold px-3 py-1.5 rounded-full" style="color:var(--muted)" data-bn="এড়িয়ে যান" data-en="Skip">এড়িয়ে যান</button>
+    </div>
+    <div id="guide-mock"></div>
+    <h2 id="guide-title" class="serif text-2xl font-extrabold text-center mt-4"></h2>
+    <p id="guide-text" class="text-center mt-2 leading-relaxed" style="color:var(--muted)"></p>
+    <div id="guide-dots" class="flex justify-center gap-2 mt-5"></div>
+    <button id="guide-next" class="ob-guide-btn w-full mt-5 rounded-full py-3.5 font-extrabold text-base" style="background:#16191a;color:#fff" data-bn="পরের" data-en="Next">পরের</button>
+  </div>
+</div>
+
 {{ content }}
 
-<footer class="max-w-6xl mx-auto px-4 mt-14 pb-4 text-center text-sm text-neutral-500 dark:text-neutral-400">
-  <p class="font-bold text-neutral-700 dark:text-neutral-200 mb-2" data-bn="📚 আমাদের বইঘর (Our Boighar) — বাংলা ও ইংরেজি ইসলামিক বইয়ের উন্মুক্ত লাইব্রেরি" data-en="📚 Our Boighar — an open library of Bengali & English Islamic books">📚 আমাদের বইঘর (Our Boighar) — বাংলা ও ইংরেজি ইসলামিক বইয়ের উন্মুক্ত লাইব্রেরি</p>
+<footer class="max-w-6xl mx-auto px-4 mt-14 pb-4 text-center text-sm" style="color:var(--muted)">
+  <p class="font-bold mb-2" style="color:var(--ink)" data-bn="📚 আমাদের বইঘর (Our Boighar) — বাংলা ও ইংরেজি ইসলামিক বইয়ের উন্মুক্ত লাইব্রেরি" data-en="📚 Our Boighar — an open library of Bengali & English Islamic books">📚 আমাদের বইঘর (Our Boighar) — বাংলা ও ইংরেজি ইসলামিক বইয়ের উন্মুক্ত লাইব্রেরি</p>
   <p class="mb-2"><a class="font-semibold hover:underline" href="{{ '/about/' | relative_url }}" data-bn="আমাদের সম্পর্কে" data-en="About Us">আমাদের সম্পর্কে</a> · <a class="font-semibold hover:underline" href="{{ '/authors/' | relative_url }}" data-bn="লেখক" data-en="Authors">লেখক</a> · <a class="font-semibold hover:underline" href="{{ '/tools/' | relative_url }}" data-bn="টুলস" data-en="Tools">টুলস</a> · <a class="font-semibold hover:underline" href="{{ '/opds/' | relative_url }}" data-bn="OPDS ক্যাটালগ" data-en="OPDS Catalog">OPDS ক্যাটালগ</a> · <a class="font-semibold hover:underline" href="{{ '/guide/' | relative_url }}" data-bn="পড়ার নির্দেশিকা" data-en="Reading Guide">পড়ার নির্দেশিকা</a> · <a class="font-semibold hover:underline" href="{{ '/policies/' | relative_url }}" data-bn="নীতিমালা" data-en="Policies">নীতিমালা</a> · <a class="font-semibold hover:underline" href="{{ '/policies/' | relative_url }}#dmca">DMCA</a></p>
   <p class="mb-2"><span data-bn="🌙 Our Family-তে যুক্ত হোন:" data-en="🌙 Join Our Family:">🌙 Join Our Family:</span> <a class="font-semibold hover:underline" href="https://www.facebook.com/FBOurFamily" target="_blank" rel="noopener">Facebook</a> · <a class="font-semibold hover:underline" href="https://t.me/ourfamilybd" target="_blank" rel="noopener">Telegram Channel</a> · <a class="font-semibold hover:underline" href="https://t.me/Our_Family_bd" target="_blank" rel="noopener">Telegram Group</a> · <a class="font-semibold hover:underline" href="https://t.me/OurfamilyBDBot" target="_blank" rel="noopener">Telegram Bot</a> · <a class="font-semibold hover:underline" href="https://mdtowfiqul.github.io/our-family/">Our Family Hub</a></p>
-  <p>© মোঃ তৌফিকুল ইসলাম · <a class="text-emerald-700 dark:text-emerald-400 font-semibold hover:underline" href="https://mdtowfiqul.github.io/Our-Days/">Our Days</a> · <a class="text-emerald-700 dark:text-emerald-400 font-semibold hover:underline" href="https://github.com/MDTowfiqul">GitHub</a></p>
+  <p>© মোঃ তৌফিকুল ইসলাম · <a class="accent-text font-semibold hover:underline" href="https://mdtowfiqul.github.io/Our-Days/">Our Days</a> · <a class="accent-text font-semibold hover:underline" href="https://github.com/MDTowfiqul">GitHub</a></p>
 </footer>
 
 <!-- FLOATING BOTTOM NAV -->
-<nav class="fixed bottom-3 inset-x-3 sm:inset-x-0 sm:max-w-md sm:mx-auto z-30 bg-white dark:bg-neutral-800 rounded-full shadow-2xl border border-neutral-200/80 dark:border-neutral-700 flex justify-between px-2 py-1.5">
-  <a href="{{ '/' | relative_url }}" class="flex-1 flex flex-col items-center gap-0.5 rounded-full py-1.5 text-neutral-500 dark:text-neutral-300 {% if page.url == '/' %}accent-soft-bg accent-text{% endif %}">
+<nav class="ob-nav fixed bottom-3 inset-x-3 sm:inset-x-0 sm:max-w-md sm:mx-auto z-30 rounded-full flex justify-between px-2 py-1.5">
+  <a href="{{ '/' | relative_url }}" class="ob-nav-item flex-1 flex flex-col items-center gap-0.5 rounded-full py-1.5 {% if page.url == '/' %}on{% endif %}">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 11.2L12 3l9 8.2V20a1.8 1.8 0 0 1-1.8 1.8h-4.4v-6.6H9.2v6.6H4.8A1.8 1.8 0 0 1 3 20z"/></svg>
     <span class="text-[11px] font-bold" data-bn="হোম" data-en="Home">হোম</span>
   </a>
-  <a href="{{ '/browse/' | relative_url }}" class="flex-1 flex flex-col items-center gap-0.5 rounded-full py-1.5 text-neutral-500 dark:text-neutral-300 {% if page.url == '/browse/' %}accent-soft-bg accent-text{% endif %}">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg>
-    <span class="text-[11px] font-bold" data-bn="ব্রাউজ" data-en="Browse">ব্রাউজ</span>
+  <a href="{{ '/forum/' | relative_url }}" class="ob-nav-item flex-1 flex flex-col items-center gap-0.5 rounded-full py-1.5 {% if page.url == '/forum/' %}on{% endif %}">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01" stroke-linecap="round"/></svg>
+    <span class="text-[11px] font-bold" data-bn="ফোরাম" data-en="Forum">ফোরাম</span>
   </a>
-  <a href="{{ '/' | relative_url }}#searchbox" class="flex-1 flex flex-col items-center gap-0.5 rounded-full py-1.5 text-neutral-500 dark:text-neutral-300">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20.5 20.5L16.7 16.7"/></svg>
-    <span class="text-[11px] font-bold" data-bn="খুঁজুন" data-en="Search">খুঁজুন</span>
-  </a>
-  <a href="{{ '/shelf/' | relative_url }}" class="flex-1 flex flex-col items-center gap-0.5 rounded-full py-1.5 text-neutral-500 dark:text-neutral-300 {% if page.url == '/shelf/' %}accent-soft-bg accent-text{% endif %}">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 6.2C10 4.7 7.4 4.2 4 4.2v14c3.4 0 6 .5 8 2 2-1.5 4.6-2 8-2v-14c-3.4 0-6 .5-8 2zm0 0v14"/></svg>
-    <span class="text-[11px] font-bold" data-bn="ড্যাশবোর্ড" data-en="Dashboard">ড্যাশবোর্ড</span>
+  <a href="{{ '/audio/' | relative_url }}" class="ob-nav-item flex-1 flex flex-col items-center gap-0.5 rounded-full py-1.5 {% if page.url == '/audio/' %}on{% endif %}">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V6l11-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/></svg>
+    <span class="text-[11px] font-bold" data-bn="অডিও" data-en="Audio">অডিও</span>
   </a>
 </nav>
 
 <script>
 (function(){
+  function store(k, v){ try { localStorage.setItem(k, v); } catch (e) {} }
+  function read(k){ try { return localStorage.getItem(k); } catch (e) { return null; } }
+
   /* dark / light */
-  var tt = document.getElementById('theme-toggle');
-  function paintThemeBtn(){ tt.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙'; }
-  tt.addEventListener('click', function(){
-    var on = document.documentElement.classList.toggle('dark');
-    localStorage.setItem('ob-theme', on ? 'dark' : 'light');
-    paintThemeBtn();
-  });
-  paintThemeBtn();
+  function setMode(dark){
+    document.documentElement.classList.toggle('dark', dark);
+    store('ob-theme', dark ? 'dark' : 'light');
+    var l = document.getElementById('mode-light'), d = document.getElementById('mode-dark');
+    if (l) l.classList.toggle('on', !dark);
+    if (d) d.classList.toggle('on', dark);
+  }
+  window.__obSetMode = setMode;
+  var modeLight = document.getElementById('mode-light'), modeDark = document.getElementById('mode-dark');
+  if (modeLight) modeLight.addEventListener('click', function(){ setMode(false); });
+  if (modeDark) modeDark.addEventListener('click', function(){ setMode(true); });
+  setMode(document.documentElement.classList.contains('dark'));
 
   /* colour themes */
   function paintSwatches(){
-    var cur = document.documentElement.getAttribute('data-color') || 'purple';
+    var cur = document.documentElement.getAttribute('data-color') || 'gold';
     Array.prototype.forEach.call(document.querySelectorAll('.swatch'), function(sw){
       sw.classList.toggle('on', sw.getAttribute('data-setcolor') === cur);
     });
@@ -177,14 +297,57 @@
     sw.addEventListener('click', function(){
       var c = sw.getAttribute('data-setcolor');
       document.documentElement.setAttribute('data-color', c);
-      localStorage.setItem('ob-color', c);
+      store('ob-color', c);
       paintSwatches();
     });
   });
   paintSwatches();
 
+  /* text size */
+  function paintFontBtns(){
+    var cur = read('ob-fontscale') || '100';
+    Array.prototype.forEach.call(document.querySelectorAll('.ob-fontbtn'), function(b){
+      b.classList.toggle('on', b.getAttribute('data-fontscale') === String(cur));
+    });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.ob-fontbtn'), function(b){
+    b.addEventListener('click', function(){
+      var v = b.getAttribute('data-fontscale');
+      document.documentElement.style.fontSize = v + '%';
+      store('ob-fontscale', v);
+      paintFontBtns();
+    });
+  });
+  paintFontBtns();
+
+  /* theme panel */
+  var panel = document.getElementById('theme-panel'), tscrim = document.getElementById('theme-scrim');
+  function openTheme(){
+    panel.classList.remove('translate-y-[120%]');
+    tscrim.classList.remove('opacity-0', 'pointer-events-none');
+  }
+  function closeTheme(){
+    panel.classList.add('translate-y-[120%]');
+    tscrim.classList.add('opacity-0', 'pointer-events-none');
+  }
+  document.getElementById('theme-btn').addEventListener('click', openTheme);
+  document.getElementById('theme-close').addEventListener('click', closeTheme);
+  tscrim.addEventListener('click', closeTheme);
+
+  /* top search: focus the homepage search, or go there */
+  document.getElementById('top-search').addEventListener('click', function(){
+    var inp = document.getElementById('f-search');
+    if (inp) {
+      var box = document.getElementById('searchbox');
+      if (box) box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(function(){ inp.focus({ preventScroll: true }); }, 350);
+    } else {
+      location.href = "{{ '/' | relative_url }}#searchbox";
+    }
+  });
+
   /* language bn / en */
-  window.__obLang = localStorage.getItem('ob-lang') || 'bn';
+  window.__obLang = read('ob-lang') || 'bn';
   function paintCats(){
     document.querySelectorAll('[data-cat]').forEach(function(el){
       el.textContent = window.__obCatName(el.getAttribute('data-cat'));
@@ -192,7 +355,7 @@
   }
   function setLang(l){
     window.__obLang = l;
-    localStorage.setItem('ob-lang', l);
+    store('ob-lang', l);
     document.documentElement.lang = l;
     document.querySelectorAll('[data-bn]').forEach(function(el){
       var v = l === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-bn');
@@ -203,7 +366,8 @@
       if (v !== null) el.setAttribute('placeholder', v);
     });
     document.getElementById('lang-label').textContent = l === 'en' ? 'EN' : 'BN';
-    document.getElementById('drawer-lang-label').textContent = l === 'en' ? 'English' : 'বাংলা';
+    var dl = document.getElementById('drawer-lang-label');
+    if (dl) dl.textContent = l === 'en' ? 'English' : 'বাংলা';
     paintCats();
     window.dispatchEvent(new Event('ob-lang'));
   }
@@ -211,7 +375,8 @@
   document.getElementById('lang-toggle').addEventListener('click', function(){
     setLang(window.__obLang === 'en' ? 'bn' : 'en');
   });
-  document.getElementById('drawer-lang').addEventListener('click', function(){
+  var dlBtn = document.getElementById('drawer-lang');
+  if (dlBtn) dlBtn.addEventListener('click', function(){
     setLang(window.__obLang === 'en' ? 'bn' : 'en');
   });
   if (window.__obLang === 'en') setLang('en');
@@ -222,10 +387,12 @@
   function openDrawer(){
     drawer.classList.remove('-translate-x-full');
     overlay.classList.remove('opacity-0', 'pointer-events-none');
+    document.body.style.overflow = 'hidden';
   }
   function closeDrawer(){
     drawer.classList.add('-translate-x-full');
     overlay.classList.add('opacity-0', 'pointer-events-none');
+    document.body.style.overflow = '';
   }
   document.getElementById('menu-btn').addEventListener('click', openDrawer);
   document.getElementById('drawer-close').addEventListener('click', closeDrawer);
@@ -233,6 +400,59 @@
   Array.prototype.forEach.call(document.querySelectorAll('.drawer-link'), function(a){
     a.addEventListener('click', closeDrawer);
   });
+
+  /* intro guide — 5 pages, first visit only (own words, own mockups) */
+  var GUIDE = [
+    { mock: 'home', bn: { t: 'হোমপেজে যা আছে', d: 'উপরের ট্যাব দিয়ে লাইব্রেরি, সেরা বই, বুকশেলফ আর টুলস — সব পাতায় যাবেন। মাঝের বড় প্রচ্ছদটি আজকের সেরা বই।' }, en: { t: 'What is on the homepage', d: 'The top tabs take you to the library, best books, bookshelf and tools. The big cover in the middle is today\u2019s best book.' } },
+    { mock: 'rows', bn: { t: 'বইয়ের সারি', d: 'প্রতিটি সারি আঙুলে পাশে সরিয়ে আরও বই দেখুন। যেকোনো প্রচ্ছদে চাপ দিলে বইয়ের বিবরণ, ডাউনলোড আর পড়ার বোতাম পাবেন।' }, en: { t: 'Book rows', d: 'Swipe each row sideways to see more books. Tap any cover for the book\u2019s details, download and read buttons.' } },
+    { mock: 'nav', bn: { t: 'নিচের বাটনগুলো', d: 'হোম, ফোরাম আর অডিও — যেকোনো পাতা থেকে এক চাপেই। মেনু খুলতে উপরের ☰ চাপুন, আর খুঁজতে উপরের 🔍।' }, en: { t: 'The bottom buttons', d: 'Home, Forum and Audio — one tap from any page. Tap ☰ at the top for the menu, and 🔍 to search.' } },
+    { mock: 'read', bn: { t: 'বই পড়ার সময়', d: 'পাতার মাঝখানে একবার চাপ দিলে নিচে বাটন আসবে: অধ্যায়, থিম, লেখা, আলো। যেখানে পড়া থামাবেন, পরের বার সেখান থেকেই শুরু হবে।' }, en: { t: 'While reading', d: 'Tap the middle of a page and a toolbar appears below: chapters, theme, text and light. Wherever you stop, reading resumes from there next time.' } },
+    { mock: 'custom', bn: { t: 'নিজের পছন্দে সাজান', d: 'উপরের 🎨 বোতাম চেপে থিম আর লেখার আকার বদলান। হোমপেজে কোন অংশ থাকবে আর কোনটা আগে আসবে, ঠিক করুন আমার ড্যাশবোর্ডের হোমপেজ সাজান থেকে।' }, en: { t: 'Make it your own', d: 'Tap the 🎨 button up top to change the theme and text size. Choose which homepage sections show, and in what order, from Homepage setup in My Dashboard.' } }
+  ];
+  function mockHTML(kind){
+    var gold = 'background:var(--gold)', soft = 'background:var(--gold-soft)', surf = 'background:var(--surface);border:1px solid var(--line)';
+    var pill = 'height:26px;border-radius:999px;' + surf;
+    var cover = 'width:52px;height:78px;border-radius:8px;' + gold;
+    var cover2 = 'width:52px;height:78px;border-radius:8px;background:#3d2c0e';
+    var cover3 = 'width:52px;height:78px;border-radius:8px;background:#6b5a2e';
+    var bar = 'height:10px;border-radius:99px;background:var(--line)';
+    var barD = 'height:10px;border-radius:99px;background:var(--muted);opacity:.5';
+    if (kind === 'home') return '<div class="ob-phone"><div style="display:flex;gap:6px"><div style="flex:1;' + pill + '"></div><div style="flex:1;' + pill + '"></div><div style="flex:1;' + pill + '"></div></div><div style="height:96px;border-radius:18px;background:linear-gradient(150deg,#3d2c0e,#141007);display:flex;align-items:center;justify-content:center;color:#d9b96a;font-size:28px">📚</div><div style="display:flex;gap:8px;justify-content:center"><div style="' + cover + '"></div><div style="' + cover2 + '"></div><div style="' + cover3 + '"></div></div><div style="' + bar + ';width:70%;margin:0 auto"></div><div style="' + bar + ';width:50%;margin:0 auto"></div></div>';
+    if (kind === 'rows') return '<div class="ob-phone"><div style="' + barD + ';width:45%"></div><div style="display:flex;gap:8px"><div style="' + cover + '"></div><div style="' + cover2 + '"></div><div style="' + cover3 + '"></div></div><div style="' + barD + ';width:45%"></div><div style="display:flex;gap:8px"><div style="' + cover3 + '"></div><div style="' + cover + '"></div><div style="' + cover2 + '"></div></div><div style="margin-top:auto;border-radius:18px;padding:10px;' + soft + '"><div style="' + bar + ';width:60%"></div><div style="display:flex;gap:6px;margin-top:8px"><div style="flex:1;height:30px;border-radius:99px;background:#16191a"></div><div style="flex:1;height:30px;border-radius:99px;' + surf + '"></div></div></div></div>';
+    if (kind === 'nav') return '<div class="ob-phone"><div style="' + barD + ';width:40%"></div><div style="display:flex;gap:8px;justify-content:center"><div style="' + cover + '"></div><div style="' + cover2 + '"></div></div><div style="flex:1"></div><div style="display:flex;gap:6px;border-radius:999px;padding:8px;' + surf + 'box-shadow:0 4px 14px rgba(0,0,0,.15)"><div style="flex:1;height:34px;border-radius:99px;background:var(--navpill);display:flex;align-items:center;justify-content:center">🏠</div><div style="flex:1;height:34px;border-radius:99px;display:flex;align-items:center;justify-content:center">💬</div><div style="flex:1;height:34px;border-radius:99px;display:flex;align-items:center;justify-content:center">🎵</div></div></div>';
+    if (kind === 'read') return '<div class="ob-phone"><div style="' + barD + ';width:30%"></div><div style="' + bar + '"></div><div style="' + bar + ';width:92%"></div><div style="' + bar + ';width:85%"></div><div style="' + bar + '"></div><div style="' + bar + ';width:70%"></div><div style="flex:1"></div><div style="border-radius:999px;padding:8px 10px;display:flex;gap:6px;align-items:center;border:1.5px solid var(--gold);' + surf + '"><div style="flex:1;text-align:center;font-size:11px;font-weight:700">অধ্যায়</div><div style="flex:1;text-align:center;font-size:11px;font-weight:700">থিম</div><div style="flex:1;text-align:center;font-size:11px;font-weight:700">লেখা</div><div style="flex:1;text-align:center;font-size:11px;font-weight:700">আলো</div></div><div style="height:8px;border-radius:99px;background:var(--line)"><div style="width:35%;height:8px;border-radius:99px;' + gold + '"></div></div></div>';
+    return '<div class="ob-phone"><div style="display:flex;gap:8px;justify-content:center"><div style="width:34px;height:34px;border-radius:50%;' + gold + '"></div><div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(140deg,#33248f,#e0521f)"></div><div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(140deg,#065f46,#c8501b)"></div><div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(140deg,#0c4a6e,#0284c7)"></div></div><div style="border-radius:16px;padding:10px;' + surf + '"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px;font-weight:700">সেরা ১০০</span><span style="width:34px;height:20px;border-radius:99px;' + gold + '"></span></div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px"><span style="font-size:13px;font-weight:700">পড়ছিলেন</span><span style="width:34px;height:20px;border-radius:99px;' + gold + '"></span></div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px"><span style="font-size:13px;font-weight:700">নতুন বই</span><span style="width:34px;height:20px;border-radius:99px;background:var(--line)"></span></div></div><div style="' + bar + ';width:60%;margin:0 auto"></div></div>';
+  }
+  var gScrim = document.getElementById('guide-scrim'), gTitle = document.getElementById('guide-title'),
+      gText = document.getElementById('guide-text'), gMock = document.getElementById('guide-mock'),
+      gDots = document.getElementById('guide-dots'), gNext = document.getElementById('guide-next'), gPage = 0;
+  function guidePage(i){
+    gPage = i;
+    var l = window.__obLang === 'en' ? 'en' : 'bn', p = GUIDE[i][l];
+    gTitle.textContent = p.t;
+    gText.textContent = p.d;
+    gMock.innerHTML = mockHTML(GUIDE[i].mock);
+    gDots.innerHTML = GUIDE.map(function(_, j){
+      return '<span class="ob-dot' + (j === i ? ' on' : '') + '"></span>';
+    }).join('');
+    gNext.textContent = (i === GUIDE.length - 1)
+      ? (l === 'en' ? 'Start' : 'শুরু করি')
+      : (l === 'en' ? 'Next' : 'পরের');
+  }
+  function guideShow(){ guidePage(0); gScrim.classList.remove('opacity-0', 'pointer-events-none'); }
+  function guideHide(done){
+    gScrim.classList.add('opacity-0', 'pointer-events-none');
+    if (done) store('ob-guide-done', '1');
+  }
+  gNext.addEventListener('click', function(){
+    if (gPage >= GUIDE.length - 1) guideHide(true); else guidePage(gPage + 1);
+  });
+  document.getElementById('guide-skip').addEventListener('click', function(){ guideHide(true); });
+  gScrim.addEventListener('click', function(e){ if (e.target === gScrim) guideHide(true); });
+  var gReopen = document.getElementById('guide-reopen');
+  if (gReopen) gReopen.addEventListener('click', function(){ closeDrawer(); guideShow(); });
+  window.__obShowGuide = guideShow;
+  if (!read('ob-guide-done')) setTimeout(guideShow, 600);
 })();
 </script>
 <script data-goatcounter="https://mdtowfiqul.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>

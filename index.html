@@ -8,6 +8,14 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
 
 <!-- HERO (BDeBooks style) -->
 <div class="max-w-6xl mx-auto px-3 sm:px-4">
+  <!-- TOP PILL TABS -->
+  <div class="flex gap-2 overflow-x-auto no-scrollbar mt-4 pb-1">
+    <a href="{{ '/' | relative_url }}" class="ob-pilltab on" data-bn="লাইব্রেরি" data-en="Library">লাইব্রেরি</a>
+    <a href="{{ '/' | relative_url }}#popular" class="ob-pilltab" data-bn="সেরা বই" data-en="Best Books">সেরা বই</a>
+    <a href="{{ '/shelf/' | relative_url }}" class="ob-pilltab" data-bn="বুকশেলফ" data-en="Bookshelf">বুকশেলফ</a>
+    <a href="{{ '/tools/' | relative_url }}" class="ob-pilltab" data-bn="টুলস" data-en="Tools">টুলস</a>
+    <a href="{{ '/authors/' | relative_url }}" class="ob-pilltab" data-bn="লেখক" data-en="Authors">লেখক</a>
+  </div>
   <section class="hero-bg text-white rounded-[1.8rem] mt-4 px-5 py-8 sm:p-10 shadow-xl relative">
     <span class="inline-flex items-center gap-2 bg-white/12 border border-white/20 text-amber-200 text-xs sm:text-sm font-bold px-3.5 py-1.5 rounded-full" style="background:rgba(255,255,255,.12)">
       <span class="w-2 h-2 rounded-full hero-accent" style="background:var(--accent-bright)"></span>
@@ -56,7 +64,7 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
 <main class="max-w-6xl mx-auto px-3 sm:px-4 mt-6">
 
   <!-- CONTINUE READING — filled in from the reader's saved progress (localStorage); hidden when empty -->
-  <section id="continue-sec" class="mt-9 hidden">
+  <section id="continue-sec" class="mt-9 hidden" data-home-sec="continue">
     <div class="flex items-baseline justify-between mb-3 px-0.5">
       <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="📖 পড়ছিলেন" data-en="📖 Continue Reading">📖 পড়ছিলেন</h2>
       <a href="{{ '/shelf/' | relative_url }}" class="accent-text text-sm font-extrabold hover:underline" data-bn="আমার ড্যাশবোর্ড →" data-en="My Dashboard →">আমার ড্যাশবোর্ড →</a>
@@ -65,7 +73,7 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   </section>
 
   <!-- SHOWCASE MODE (?showcase=true) — Top 10 as a large grid, like xKAF's showcase -->
-  <section id="showcase-sec" class="mt-9 hidden">
+  <section id="showcase-sec" class="mt-9 hidden" data-home-sec="top100">
     <div class="flex items-baseline justify-between mb-3 px-0.5 flex-wrap gap-2">
       <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="🏆 সেরা ১০০ — শোকেস" data-en="🏆 Top 100 — Showcase">🏆 সেরা ১০০ — শোকেস</h2>
       <a href="{{ '/' | relative_url }}" class="accent-bg text-white text-sm font-bold rounded-lg px-4 py-2" data-bn="✕ বন্ধ করুন" data-en="✕ Close">✕ বন্ধ করুন</a>
@@ -75,7 +83,8 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   </section>
 
   <!-- RECENTLY UPLOADED -->
-  <section class="mt-9">
+  <section class="mt-9" id="recent-sec" data-home-sec="recent">
+    <p class="ob-eyebrow" data-bn="সদ্য যোগ" data-en="Just added">সদ্য যোগ</p>
     <div class="flex items-baseline justify-between mb-3 px-0.5">
       <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="🆕 সম্প্রতি আপলোড" data-en="🆕 Recently Uploaded">🆕 সম্প্রতি আপলোড</h2>
     </div>
@@ -96,7 +105,8 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   </section>
 
   <!-- POPULAR NOW — swipeable row, filters apply here -->
-  <section class="mt-9" id="popular">
+  <section class="mt-9" id="popular" data-home-sec="popular">
+    <p class="ob-eyebrow" data-bn="জনপ্রিয়" data-en="Popular">জনপ্রিয়</p>
     <div class="flex items-baseline justify-between mb-3 px-0.5">
       <h2 class="serif text-xl sm:text-2xl font-extrabold" id="grid-heading" data-bn="জনপ্রিয় এখন" data-en="Popular Now">জনপ্রিয় এখন</h2>
       <span class="flex items-center gap-3">
@@ -128,7 +138,8 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   </section>
 
   <!-- TOP 100 — filled in from popular.json + search.json (client-side); hidden until loaded -->
-  <section class="mt-9 hidden" id="top100-sec">
+  <section class="mt-9 hidden" id="top100-sec" data-home-sec="top100">
+    <p class="ob-eyebrow" data-bn="সেরা ১০০" data-en="Top 100">সেরা ১০০</p>
     <div class="flex items-baseline justify-between mb-3 px-0.5">
       <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="🏆 সেরা ১০০" data-en="🏆 Top 100">🏆 সেরা ১০০</h2>
       <a href="{{ '/' | relative_url }}?showcase=true" class="accent-text text-sm font-extrabold hover:underline" data-bn="শোকেস দেখুন →" data-en="View showcase →">শোকেস দেখুন →</a>
@@ -137,7 +148,8 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   </section>
 
   <!-- NEWLY ADDED — newest 12 from the recent list -->
-  <section class="mt-9">
+  <section class="mt-9" id="new-sec" data-home-sec="new">
+    <p class="ob-eyebrow" data-bn="নতুন" data-en="New">নতুন</p>
     <div class="flex items-baseline justify-between mb-3 px-0.5">
       <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="✨ নতুন যুক্ত হয়েছে" data-en="✨ Newly Added">✨ নতুন যুক্ত হয়েছে</h2>
       <a href="{{ '/browse/' | relative_url }}" class="accent-text text-sm font-extrabold hover:underline" data-bn="সব দেখুন" data-en="View All">সব দেখুন</a>
@@ -160,7 +172,8 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   </section>
 
   <!-- FOR YOU — recommendations from shelf / ratings / reading history (localStorage); hidden until computed -->
-  <section class="mt-9 hidden" id="foryou-sec">
+  <section class="mt-9 hidden" id="foryou-sec" data-home-sec="foryou">
+    <p class="ob-eyebrow" data-bn="আপনার জন্য" data-en="For you">আপনার জন্য</p>
     <div class="flex items-baseline justify-between mb-3 px-0.5">
       <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="💡 আপনার জন্য" data-en="💡 For You">💡 আপনার জন্য</h2>
       <a href="{{ '/browse/' | relative_url }}" class="accent-text text-sm font-extrabold hover:underline" data-bn="সব দেখুন" data-en="View All">সব দেখুন</a>
@@ -171,7 +184,8 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   <!-- CATEGORY SHELVES — one swipe row per top category (top 6 by book count) -->
   {% assign top_cats = "History|Spirituality|Biography|Dawah|Aqeedah|Manners & Character" | split: "|" %}
   {% for catname in top_cats %}
-  <section class="mt-10">
+  <section class="mt-10" data-home-sec="cats">
+    <p class="ob-eyebrow" data-bn="ধরন" data-en="Category">ধরন</p>
     <div class="flex items-baseline justify-between mb-3 px-0.5">
       <h2 class="serif text-xl sm:text-2xl font-extrabold" data-cat="{{ catname }}">{{ catname }}</h2>
       <a href="{{ '/browse/' | relative_url }}?cat={{ catname | url_encode }}" class="accent-text text-sm font-extrabold hover:underline" data-bn="সব দেখুন" data-en="See all">সব দেখুন</a>
@@ -490,7 +504,7 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   }
   function cardHTML(b, rank){
     var title = lang() === 'en' ? (b.title_en || b.title) : b.title;
-    var badge = (typeof rank === 'number') ? '<span class="absolute top-2 left-2 accent-bg text-white text-[11px] font-extrabold px-2 py-0.5 rounded-full shadow">#' + rank + '</span>' : '';
+    var badge = (typeof rank === 'number') ? '<span class="absolute bottom-0.5 left-2 serif text-[42px] leading-none font-bold text-white" style="text-shadow:0 2px 8px rgba(0,0,0,.7)">' + rank + '</span>' : '';
     return '<a href="' + b.url + '" class="snap-start shrink-0 w-[150px] sm:w-[172px] group">' +
       '<div class="relative rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]">' +
       '<img src="' + b.cover + '" alt="" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">' + badge + '</div>' +
@@ -617,6 +631,34 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
     renderContinue(cat);
     renderForYou(cat);
   });
+
+  /* ---------- homepage setup (My Dashboard → হোমপেজ সাজান) ---------- */
+  var HOME_SECS = ['continue', 'top100', 'recent', 'popular', 'new', 'foryou', 'cats'];
+  function readHomeSetup(){
+    try { return JSON.parse(localStorage.getItem('ob-home-sections') || 'null'); } catch (e) { return null; }
+  }
+  function applyHomeSections(){
+    if (new URLSearchParams(location.search).get('showcase') === 'true') return;
+    var setup = readHomeSetup();
+    if (!setup || !setup.order) return;
+    var main = document.querySelector('main');
+    var anchor = document.getElementById('series') || null;
+    var byKey = {};
+    Array.prototype.forEach.call(document.querySelectorAll('[data-home-sec]'), function(s){
+      var k = s.getAttribute('data-home-sec');
+      (byKey[k] = byKey[k] || []).push(s);
+    });
+    var order = setup.order.filter(function(k){ return byKey[k]; });
+    HOME_SECS.forEach(function(k){ if (byKey[k] && order.indexOf(k) < 0) order.push(k); });
+    order.forEach(function(k){
+      byKey[k].forEach(function(s){
+        if (anchor) main.insertBefore(s, anchor); else main.appendChild(s);
+        s.style.display = (setup.hidden && setup.hidden.indexOf(k) >= 0) ? 'none' : '';
+      });
+    });
+  }
+  window.__obApplyHomeSections = applyHomeSections;
+  applyHomeSections();
 
   /* ---------- recent searches (shared with the Browse page) ---------- */
   function saveRecentSearch(q){
