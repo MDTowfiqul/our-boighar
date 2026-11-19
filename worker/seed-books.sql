@@ -477,3 +477,5 @@ INSERT OR REPLACE INTO books (id, title, writer, category, language) VALUES ('yo
 INSERT OR REPLACE INTO books (id, title, writer, category, language) VALUES ('yusuf-bin-tashfin', 'ইউসুফ বিন তাশফিন', 'নসীম হিজাযী', 'History', 'bn');
 INSERT OR REPLACE INTO books (id, title, writer, category, language) VALUES ('ze-zubok-zubotir-sathe-fereshta-hat-milay', 'যে যুবক-যুবতীর সাথে ফেরেশতা হাত মিলায়', 'এ.এন.এম. সিরাজুল ইসলাম', 'Spirituality', 'bn');
 COMMIT;
+INSERT OR REPLACE INTO books (id, title, writer, category, language) VALUES ('makkar-power-politics', 'মক্কার পাওয়ার পলিটিক্স', 'সীরাহ পড়ি টিম', 'Seerah, History', 'bn');
+INSERT OR REPLACE INTO books (id, title, writer, category, language) VALUES ('al-bidayah-wan-nihayah-vol-7', 'আল বিদায়া ওয়ান নিহায়া সপ্তম খণ্ড', 'ইবনে কাসীর আদ-দামেশকী (র)', 'History, Seerah', 'bn');
