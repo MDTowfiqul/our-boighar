@@ -1,0 +1,37 @@
+name: Announce new books on Telegram
+
+# Posts to the Our Boighar Telegram channel the moment new books land on
+# main (i.e. right after a book PR is merged). Waits until each new book
+# page is live before posting, so the link works when readers tap it.
+# Needs three repo secrets: TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID (the
+# Our Family group, -1004423692844) and TELEGRAM_TOPIC_ID (the Our Boighar
+# topic, 9 — from the topic's invite link t.me/Our_Family_bd/9).
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '_books/**'
+
+jobs:
+  announce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Find newly added books
+        id: added
+        run: |
+          git diff --diff-filter=A --name-only HEAD~1 HEAD -- '_books/*.md' > added.txt || true
+          echo "count=$(wc -l < added.txt)" >> "$GITHUB_OUTPUT"
+          cat added.txt
+
+      - name: Announce on Telegram
+        if: steps.added.outputs.count != '0'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_TOPIC_ID: ${{ secrets.TELEGRAM_TOPIC_ID }}
+        run: python3 scripts/announce-new-books.py added.txt
