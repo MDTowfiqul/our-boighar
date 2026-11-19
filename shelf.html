@@ -269,6 +269,12 @@ var OB_BOOKS = [{% for b in site.books %}{
           <p id="delete-err" class="hidden text-red-600 dark:text-red-400 text-sm mt-2"></p>
         </div>
       </div>
+      <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm mb-5">
+        <h2 class="serif text-lg sm:text-xl font-extrabold" data-bn="🏠 হোমপেজ সাজান" data-en="🏠 Homepage setup">🏠 হোমপেজ সাজান</h2>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1.5 leading-relaxed" data-bn="হোমপেজে কোন অংশ থাকবে আর কোনটা আগে আসবে, এখান থেকে ঠিক করুন। পছন্দ এই ডিভাইসেই সংরক্ষিত থাকে।" data-en="Choose which homepage sections show, and in what order. Your choice is saved on this device.">হোমপেজে কোন অংশ থাকবে আর কোনটা আগে আসবে, এখান থেকে ঠিক করুন। পছন্দ এই ডিভাইসেই সংরক্ষিত থাকে।</p>
+        <div id="home-setup-list" class="mt-4 space-y-2"></div>
+        <button id="home-setup-reset" class="mt-4 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl px-4 py-2 text-sm" data-bn="ডিফল্টে ফেরান" data-en="Reset to default">ডিফল্টে ফেরান</button>
+      </div>
       <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm">
         <h2 class="serif text-lg sm:text-xl font-extrabold" data-bn="💾 আমার তথ্যের ব্যাকআপ" data-en="💾 Back Up My Data">💾 আমার তথ্যের ব্যাকআপ</h2>
         <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1.5 leading-relaxed" data-bn="আপনার তাকের বই, স্টার রেটিং, পড়ার অগ্রগতি, বুকমার্ক, নোট ও হাইলাইট এবং সেটিংস এই ব্রাউজারেই সংরক্ষিত থাকে। ফোন বদলালে বা ব্রাউজারের ডেটা মুছে গেলে ব্যাকআপ ফাইল দিয়ে সব ফিরিয়ে আনতে পারবেন।" data-en="Your shelf, star ratings, reading progress, bookmarks, notes and highlights, and settings are stored in this browser. Download a backup file and restore it anytime — on a new phone or after clearing browser data.">আপনার তাকের বই, স্টার রেটিং, পড়ার অগ্রগতি, বুকমার্ক, নোট ও হাইলাইট এবং সেটিংস এই ব্রাউজারেই সংরক্ষিত থাকে। ফোন বদলালে বা ব্রাউজারের ডেটা মুছে গেলে ব্যাকআপ ফাইল দিয়ে সব ফিরিয়ে আনতে পারবেন।</p>
@@ -322,6 +328,7 @@ var OB_BOOKS = [{% for b in site.books %}{
     bindAuthForms();
     bindTabs();
     bindLocal();
+    bindHomeSetup();
     API.getMe().then(function (u) {
       user = u;
       show($('dash-loading'), false);
@@ -704,7 +711,69 @@ var OB_BOOKS = [{% for b in site.books %}{
     renderDeviceShelf();
     renderNotesSection();
   }
-  var BK_KEYS = ['ourboighar-bookmarks', 'ourboighar-ratings', 'ob-reader-progress', 'ob-reader-bookmarks', 'ob-reader-notes', 'ob-reader-highlights', 'ob-reader-settings', 'ob-lang', 'ob-theme', 'ob-color'];
+  var BK_KEYS = ['ourboighar-bookmarks', 'ourboighar-ratings', 'ob-reader-progress', 'ob-reader-bookmarks', 'ob-reader-notes', 'ob-reader-highlights', 'ob-reader-settings', 'ob-lang', 'ob-theme', 'ob-color', 'ob-fontscale', 'ob-home-sections'];
+  /* ---------- homepage setup: which sections show, in what order ---------- */
+  var HOME_SECS = [
+    { k: 'continue', bn: 'পড়ছিলেন', en: 'Continue Reading' },
+    { k: 'top100', bn: 'সেরা ১০০', en: 'Top 100' },
+    { k: 'recent', bn: 'সম্প্রতি আপলোড', en: 'Recently Uploaded' },
+    { k: 'popular', bn: 'জনপ্রিয় এখন', en: 'Popular Now' },
+    { k: 'new', bn: 'নতুন যুক্ত হয়েছে', en: 'Newly Added' },
+    { k: 'foryou', bn: 'আপনার জন্য', en: 'For You' },
+    { k: 'cats', bn: 'ধরন অনুযায়ী বই', en: 'Books by Category' }
+  ];
+  function readHomeSetup() {
+    var d = { order: HOME_SECS.map(function (s) { return s.k; }), hidden: [] };
+    try {
+      var raw = JSON.parse(localStorage.getItem('ob-home-sections') || 'null');
+      if (raw && Array.isArray(raw.order)) d.order = raw.order.filter(function (k) { return HOME_SECS.some(function (s) { return s.k === k; }); });
+      if (raw && Array.isArray(raw.hidden)) d.hidden = raw.hidden;
+      HOME_SECS.forEach(function (s) { if (d.order.indexOf(s.k) < 0) d.order.push(s.k); });
+    } catch (e) {}
+    return d;
+  }
+  function saveHomeSetup(d) { try { localStorage.setItem('ob-home-sections', JSON.stringify(d)); } catch (e) {} }
+  function renderHomeSetup() {
+    var list = $('home-setup-list');
+    if (!list) return;
+    var d = readHomeSetup();
+    list.innerHTML = d.order.map(function (k, i) {
+      var s = HOME_SECS.filter(function (x) { return x.k === k; })[0];
+      var on = d.hidden.indexOf(k) < 0;
+      return '<div class="flex items-center gap-2 rounded-xl border border-neutral-200 dark:border-neutral-700 px-3 py-2.5">' +
+        '<span class="flex flex-col gap-0.5">' +
+        '<button data-hs-move="' + i + ':-1" class="text-sm leading-none px-1.5 py-0.5 rounded hover:bg-neutral-100 dark:hover:bg-neutral-700" ' + (i === 0 ? 'disabled style="opacity:.3"' : '') + ' aria-label="Up">▲</button>' +
+        '<button data-hs-move="' + i + ':1" class="text-sm leading-none px-1.5 py-0.5 rounded hover:bg-neutral-100 dark:hover:bg-neutral-700" ' + (i === d.order.length - 1 ? 'disabled style="opacity:.3"' : '') + ' aria-label="Down">▼</button></span>' +
+        '<span class="flex-1 font-bold text-[15px]">' + T(s.bn, s.en) + '</span>' +
+        '<label class="flex items-center gap-2 text-sm font-bold"><input type="checkbox" data-hs-show="' + k + '" ' + (on ? 'checked' : '') + '> ' + T('দেখান', 'Show') + '</label></div>';
+    }).join('');
+    list.querySelectorAll('[data-hs-move]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var parts = b.getAttribute('data-hs-move').split(':');
+        var i = parseInt(parts[0], 10), dir = parseInt(parts[1], 10), j = i + dir;
+        var dd = readHomeSetup();
+        if (j < 0 || j >= dd.order.length) return;
+        var tmp = dd.order[i]; dd.order[i] = dd.order[j]; dd.order[j] = tmp;
+        saveHomeSetup(dd); renderHomeSetup();
+      });
+    });
+    list.querySelectorAll('[data-hs-show]').forEach(function (c) {
+      c.addEventListener('change', function () {
+        var dd = readHomeSetup(), k = c.getAttribute('data-hs-show');
+        dd.hidden = dd.hidden.filter(function (x) { return x !== k; });
+        if (!c.checked) dd.hidden.push(k);
+        saveHomeSetup(dd);
+      });
+    });
+  }
+  function bindHomeSetup() {
+    renderHomeSetup();
+    var r = $('home-setup-reset');
+    if (r) r.addEventListener('click', function () {
+      try { localStorage.removeItem('ob-home-sections'); } catch (e) {}
+      renderHomeSetup();
+    });
+  }
   function bindLocal() {
     var dlBtn = $('bk-dl');
     if (dlBtn) dlBtn.onclick = function () {
@@ -741,7 +810,7 @@ var OB_BOOKS = [{% for b in site.books %}{
       };
       reader.readAsText(f);
     });
-    window.addEventListener('ob-lang', function () { renderLocal(); showTab(currentTab); });
+    window.addEventListener('ob-lang', function () { renderLocal(); showTab(currentTab); renderHomeSetup(); });
   }
 
   init();
