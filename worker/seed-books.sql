@@ -479,3 +479,5 @@ INSERT OR REPLACE INTO books (id, title, writer, category, language) VALUES ('ze
 COMMIT;
 INSERT OR REPLACE INTO books (id, title, writer, category, language) VALUES ('makkar-power-politics', 'মক্কার পাওয়ার পলিটিক্স', 'সীরাহ পড়ি টিম', 'Seerah, History', 'bn');
 INSERT OR REPLACE INTO books (id, title, writer, category, language) VALUES ('al-bidayah-wan-nihayah-vol-7', 'আল বিদায়া ওয়ান নিহায়া সপ্তম খণ্ড', 'ইবনে কাসীর আদ-দামেশকী (র)', 'History, Seerah', 'bn');
+INSERT OR REPLACE INTO books (id, title, writer, category, language) VALUES ('arober-gotro-o-byaktitto', 'আরবের গোত্র ও ব্যক্তিত্ব', 'আব্দুল্লাহ ইয়াছিন শরীফী', 'Seerah, History', 'bn');
+INSERT OR REPLACE INTO books (id, title, writer, category, language) VALUES ('nobojatoker-1000-nam', 'নবজাতকের ১০০০ নাম', 'আব্দুল্লাহ ইয়াছিন শরীফী', 'Family', 'bn');
