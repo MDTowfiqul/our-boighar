@@ -16,46 +16,46 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
     <a href="{{ '/tools/' | relative_url }}" class="ob-pilltab" data-bn="টুলস" data-en="Tools">টুলস</a>
     <a href="{{ '/authors/' | relative_url }}" class="ob-pilltab" data-bn="লেখক" data-en="Authors">লেখক</a>
   </div>
-  <section class="hero-bg text-white rounded-[1.8rem] mt-4 px-5 py-8 sm:p-10 shadow-xl relative">
-    <span class="inline-flex items-center gap-2 bg-white/12 border border-white/20 text-amber-200 text-xs sm:text-sm font-bold px-3.5 py-1.5 rounded-full" style="background:rgba(255,255,255,.12)">
+  <section class="hero-bg text-white rounded-[20px] mt-4 px-5 py-8 sm:p-10 relative ring-1 ring-white/10">
+    <span class="inline-flex items-center gap-2 bg-white/12 border border-white/20 text-amber-200 text-xs sm:text-sm font-bold px-4 py-1.5 rounded-[10px]" style="background:rgba(255,255,255,.12)">
       <span class="w-2 h-2 rounded-full hero-accent" style="background:var(--accent-bright)"></span>
-      {{ site.books.size }} <span data-bn="টি বই, সব বিনামূল্যে" data-en="books, all free">টি বই, সব বিনামূল্যে</span>
+      <span data-bn-digits="{{ site.books.size }}">{{ site.books.size }}</span> <span data-bn="টি বই, সব বিনামূল্যে" data-en="books, all free">টি বই, সব বিনামূল্যে</span>
     </span>
-    <h1 class="serif text-[32px] sm:text-5xl font-extrabold leading-tight mt-4">
+    <h1 class="serif text-[32px] sm:text-5xl font-semibold leading-tight mt-4">
       <span class="hero-accent" data-bn="আজ" data-en="Today,">আজ</span>
       <span data-bn="কোন বইয়ে ডুব দেবেন?" data-en="which book will you dive into?">কোন বইয়ে ডুব দেবেন?</span>
     </h1>
     <p class="text-white/75 mt-2 text-sm sm:text-base" data-bn="বাংলা ও ইংরেজি ইসলামিক বই — অনলাইনে পড়ুন, ফ্রি ডাউনলোড করুন" data-en="Bengali & English Islamic books — read online, download free">বাংলা ও ইংরেজি ইসলামিক বই — অনলাইনে পড়ুন, ফ্রি ডাউনলোড করুন</p>
 
     <div class="relative max-w-2xl mt-6">
-    <div id="searchbox" class="flex items-center bg-white rounded-2xl shadow-lg p-1.5 gap-1">
+    <div id="searchbox" class="flex items-center bg-white rounded-2xl shadow-sm p-1.5 gap-1">
       <span class="pl-2.5 text-neutral-400">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20.5 20.5L16.7 16.7"/></svg>
       </span>
       <input id="f-search" type="search" class="flex-1 px-2 py-2.5 text-neutral-800 outline-none text-base min-w-0"
         placeholder="বইয়ের নাম, লেখক বা ধরন" data-bn-ph="বইয়ের নাম, লেখক বা ধরন" data-en-ph="Book name, author or category">
-      <button id="go-search" class="accent-bg text-white px-6 py-2.5 rounded-xl font-bold transition" data-bn="খুঁজুন" data-en="Search">খুঁজুন</button>
+      <button id="go-search" class="accent-bg text-white px-6 py-2.5 rounded-[10px] font-bold transition-colors" data-bn="খুঁজুন" data-en="Search">খুঁজুন</button>
     </div>
     <div id="suggest" class="hidden absolute left-0 right-0 top-full mt-2 bg-white dark:bg-neutral-800 text-neutral-800 dark:text-neutral-100 rounded-2xl shadow-2xl overflow-hidden z-20"></div>
     </div>
 
-    <div class="mt-5 inline-flex bg-white/10 rounded-full p-1 gap-1 text-sm sm:text-[15px] font-bold" style="background:rgba(255,255,255,.1)">
-      <button class="hero-tab bg-white text-neutral-900 rounded-full px-4 sm:px-5 py-1.5 transition" data-tab="all" data-bn="সব বই" data-en="All Books">সব বই</button>
-      <button class="hero-tab text-white/85 rounded-full px-4 sm:px-5 py-1.5 transition" data-tab="discover" data-bn="আবিষ্কার" data-en="Discover">আবিষ্কার</button>
-      <button class="hero-tab text-white/85 rounded-full px-4 sm:px-5 py-1.5 transition" data-tab="top" data-bn="সেরা বই" data-en="Top Books">সেরা বই</button>
+    <div class="mt-5 inline-flex bg-white/10 rounded-[12px] p-1 gap-1 text-sm sm:text-[15px] font-bold" style="background:rgba(255,255,255,.1)">
+      <button class="hero-tab bg-white text-neutral-900 rounded-[8px] px-4 sm:px-5 py-1.5 transition-colors" data-tab="all" data-bn="সব বই" data-en="All Books">সব বই</button>
+      <button class="hero-tab text-white/85 rounded-[8px] px-4 sm:px-5 py-1.5 transition-colors" data-tab="discover" data-bn="আবিষ্কার" data-en="Discover">আবিষ্কার</button>
+      <button class="hero-tab text-white/85 rounded-[8px] px-4 sm:px-5 py-1.5 transition-colors" data-tab="top" data-bn="সেরা বই" data-en="Top Books">সেরা বই</button>
     </div>
 
     {% assign f = site.books | where: "book_id", "islam-objections-bn" | first %}
     {% if f %}
-    <a href="{{ f.url | relative_url }}" class="mt-7 bg-white dark:bg-neutral-800 text-neutral-800 dark:text-neutral-100 rounded-2xl p-4 flex items-center gap-4 max-w-xl shadow-lg">
-      <img src="{{ f.cover | relative_url }}" alt="{{ f.title }}" class="w-14 sm:w-16 rounded-md shadow flex-shrink-0">
+    <a href="{{ f.url | relative_url }}" class="mt-7 bg-white dark:bg-neutral-800 text-neutral-800 dark:text-neutral-100 rounded-2xl p-4 flex items-center gap-4 max-w-xl shadow-sm">
+      <span class="relative flex-shrink-0"><img src="{{ f.cover | relative_url }}" alt="{{ f.title }}" class="w-14 sm:w-16 rounded-md shadow"><span class="ob-bookmark-tab" aria-hidden="true"></span></span>
       <span class="min-w-0">
-        <span class="block accent-text text-[13px] font-extrabold" data-bn="এখান থেকে শুরু করুন" data-en="Start here">এখান থেকে শুরু করুন</span>
+        <span class="block accent-text text-[13px] font-semibold" data-bn="এখান থেকে শুরু করুন" data-en="Start here">এখান থেকে শুরু করুন</span>
         <span class="block serif text-lg sm:text-xl font-bold leading-snug line-clamp-2" data-bn="{{ f.title }}" data-en="{{ f.title_en | default: f.title }}">{{ f.title }}</span>
         <span class="block text-sm text-neutral-500 dark:text-neutral-400 truncate">{{ f.author }}</span>
       </span>
       <span class="flex-1"></span>
-      <span class="accent-text font-extrabold flex-shrink-0" data-bn="খুলুন" data-en="Open">খুলুন</span>
+      <span class="accent-text font-semibold flex-shrink-0" data-bn="খুলুন" data-en="Open">খুলুন</span>
     </a>
     {% endif %}
   </section>
@@ -66,8 +66,8 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   <!-- CONTINUE READING — filled in from the reader's saved progress (localStorage); hidden when empty -->
   <section id="continue-sec" class="mt-9 hidden" data-home-sec="continue">
     <div class="flex items-baseline justify-between mb-3 px-0.5">
-      <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="📖 পড়ছিলেন" data-en="📖 Continue Reading">📖 পড়ছিলেন</h2>
-      <a href="{{ '/shelf/' | relative_url }}" class="accent-text text-sm font-extrabold hover:underline" data-bn="আমার ড্যাশবোর্ড →" data-en="My Dashboard →">আমার ড্যাশবোর্ড →</a>
+      <h2 class="serif text-xl sm:text-2xl font-semibold flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-book-open"/></svg> <span data-bn="পড়ছিলেন" data-en="Continue Reading">পড়ছিলেন</span></h2>
+      <a href="{{ '/shelf/' | relative_url }}" class="accent-text text-sm font-semibold hover:underline" data-bn="আমার ড্যাশবোর্ড →" data-en="My Dashboard →">আমার ড্যাশবোর্ড →</a>
     </div>
     <div id="continue-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
   </section>
@@ -75,8 +75,8 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   <!-- SHOWCASE MODE (?showcase=true) — Top 10 as a large grid, like xKAF's showcase -->
   <section id="showcase-sec" class="mt-9 hidden" data-home-sec="top100">
     <div class="flex items-baseline justify-between mb-3 px-0.5 flex-wrap gap-2">
-      <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="🏆 সেরা ১০০ — শোকেস" data-en="🏆 Top 100 — Showcase">🏆 সেরা ১০০ — শোকেস</h2>
-      <a href="{{ '/' | relative_url }}" class="accent-bg text-white text-sm font-bold rounded-lg px-4 py-2" data-bn="✕ বন্ধ করুন" data-en="✕ Close">✕ বন্ধ করুন</a>
+      <h2 class="serif text-xl sm:text-2xl font-semibold flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-award"/></svg> <span data-bn="সেরা ১০০ — শোকেস" data-en="Top 100 — Showcase">সেরা ১০০ — শোকেস</span></h2>
+      <a href="{{ '/' | relative_url }}" class="accent-bg text-white text-sm font-bold rounded-[10px] px-4 py-2 inline-flex items-center gap-1.5"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-x"/></svg> <span data-bn="বন্ধ করুন" data-en="Close">বন্ধ করুন</span></a>
     </div>
     <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-4" data-bn="পাঠকদের সবচেয়ে বেশি পড়া ১০টি বই" data-en="The 10 most-read books by our readers">পাঠকদের সবচেয়ে বেশি পড়া ১০টি বই</p>
     <div id="showcase-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5"></div>
@@ -86,18 +86,18 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   <section class="mt-9" id="recent-sec" data-home-sec="recent">
     <p class="ob-eyebrow" data-bn="সদ্য যোগ" data-en="Just added">সদ্য যোগ</p>
     <div class="flex items-baseline justify-between mb-3 px-0.5">
-      <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="🆕 সম্প্রতি আপলোড" data-en="🆕 Recently Uploaded">🆕 সম্প্রতি আপলোড</h2>
+      <h2 class="serif text-xl sm:text-2xl font-semibold flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-clock"/></svg> <span data-bn="সম্প্রতি আপলোড" data-en="Recently Uploaded">সম্প্রতি আপলোড</span></h2>
     </div>
     <div class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-3 px-5 scroll-pl-5 scroll-pr-5 sm:mx-0 sm:px-0 sm:scroll-pl-0 sm:scroll-pr-0">
       {% for rid in site.data.recent limit: 18 %}
       {% assign b = site.books | where: "book_id", rid | first %}
       {% if b %}
-      <a href="{{ b.url | relative_url }}" class="snap-start shrink-0 w-[150px] sm:w-[172px] group">
+      <a href="{{ b.url | relative_url }}" class="snap-start shrink-0 w-[152px] sm:w-[176px] group">
         <div class="rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]">
-          <img src="{{ b.cover | relative_url }}" alt="{{ b.title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+          <img src="{{ b.cover | relative_url }}" alt="{{ b.title }}" class="w-full h-full object-cover transition-[filter] duration-200 group-hover:brightness-105">
         </div>
-        <h3 class="font-bold text-sm sm:text-[15px] leading-snug mt-2 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400" data-bn="{{ b.title }}" data-en="{{ b.title_en | default: b.title }}">{{ b.title }}</h3>
-        <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1">✍️ {{ b.author }}</p>
+        <h3 class="font-semibold text-sm sm:text-[15px] leading-snug mt-2 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400" data-bn="{{ b.title }}" data-en="{{ b.title_en | default: b.title }}">{{ b.title }}</h3>
+        <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-edit"/></svg> {{ b.author }}</p>
       </a>
       {% endif %}
       {% endfor %}
@@ -108,25 +108,25 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   <section class="mt-9" id="popular" data-home-sec="popular">
     <p class="ob-eyebrow" data-bn="জনপ্রিয়" data-en="Popular">জনপ্রিয়</p>
     <div class="flex items-baseline justify-between mb-3 px-0.5">
-      <h2 class="serif text-xl sm:text-2xl font-extrabold" id="grid-heading" data-bn="জনপ্রিয় এখন" data-en="Popular Now">জনপ্রিয় এখন</h2>
+      <h2 class="serif text-xl sm:text-2xl font-semibold" id="grid-heading" data-bn="জনপ্রিয় এখন" data-en="Popular Now">জনপ্রিয় এখন</h2>
       <span class="flex items-center gap-3">
         <span id="result-count" class="text-sm font-bold text-neutral-500 dark:text-neutral-400">{{ site.books.size }} <span data-bn="টি বই" data-en="books">টি বই</span></span>
-        <button id="view-all" class="accent-text text-sm font-extrabold hover:underline" data-bn="সব দেখুন" data-en="View All">সব দেখুন</button>
+        <button id="view-all" class="accent-text text-sm font-semibold hover:underline" data-bn="সব দেখুন" data-en="View All">সব দেখুন</button>
       </span>
     </div>
     <div id="row-popular" class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-3 px-5 scroll-pl-5 scroll-pr-5 sm:mx-0 sm:px-0 sm:scroll-pl-0 sm:scroll-pr-0">
       {% for b in site.books %}
-      <div class="book-card snap-start shrink-0 w-[150px] sm:w-[172px]" data-id="{{ b.book_id }}" data-alpha="{{ b.alphabet }}" data-cats="{{ b.categories | join: '|' }}" data-hay="{{ b.title }} {{ b.title_en }} {{ b.author }} {{ b.creator }} {{ b.category }}">
+      <div class="book-card snap-start shrink-0 w-[152px] sm:w-[176px]" data-id="{{ b.book_id }}" data-alpha="{{ b.alphabet }}" data-cats="{{ b.categories | join: '|' }}" data-hay="{{ b.title }} {{ b.title_en }} {{ b.author }} {{ b.creator }} {{ b.category }}">
         <a href="{{ b.url | relative_url }}" class="block group">
           <div class="relative rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]">
-            <img src="{{ b.cover | relative_url }}" alt="{{ b.title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-            {% if b.price %}<span class="absolute top-2 left-2 bg-amber-600 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow" data-bn="প্রিমিয়াম" data-en="Premium">প্রিমিয়াম</span>{% else %}<span class="absolute top-2 left-2 bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow" data-bn="ফ্রি" data-en="Free">ফ্রি</span>{% endif %}
-            <span class="absolute top-2 right-2 bg-black/55 text-white text-[10px] font-bold px-2 py-0.5 rounded">{{ b.language_label }}</span>
+            <img src="{{ b.cover | relative_url }}" alt="{{ b.title }}" class="w-full h-full object-cover transition-[filter] duration-200 group-hover:brightness-105">
+            {% if b.price %}<span class="absolute top-2 left-2 bg-amber-600 text-white text-xs font-bold px-2 py-0.5 rounded shadow" data-bn="প্রিমিয়াম" data-en="Premium">প্রিমিয়াম</span>{% endif %}
+            <span class="absolute top-2 right-2 bg-black/55 text-white text-xs font-bold px-2 py-0.5 rounded">{{ b.language_label }}</span>
           </div>
-          <h3 class="font-bold text-sm sm:text-[15px] leading-snug mt-2 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400" data-bn="{{ b.title }}" data-en="{{ b.title_en | default: b.title }}">{{ b.title }}</h3>
-          <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1">✍️ {{ b.author }}</p>
+          <h3 class="font-semibold text-sm sm:text-[15px] leading-snug mt-2 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400" data-bn="{{ b.title }}" data-en="{{ b.title_en | default: b.title }}">{{ b.title }}</h3>
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-edit"/></svg> {{ b.author }}</p>
         </a>
-        <a href="{{ b.url | relative_url }}" class="accent-bg block text-center text-white text-xs sm:text-sm font-bold py-2 rounded-lg mt-2 transition" {% if b.file %}data-bn="📖 পড়ুন / ডাউনলোড" data-en="📖 Read / Download"{% else %}data-bn="🛒 বিস্তারিত দেখুন" data-en="🛒 View Details"{% endif %}>{% if b.file %}📖 পড়ুন / ডাউনলোড{% else %}🛒 বিস্তারিত দেখুন{% endif %}</a>
+        <a href="{{ b.url | relative_url }}" class="accent-bg block text-center text-white text-xs sm:text-sm font-bold py-2 rounded-[10px] mt-2 transition-colors">{% if b.file %}<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-book-open"/></svg> <span data-bn="পড়ুন / ডাউনলোড" data-en="Read / Download">পড়ুন / ডাউনলোড</span>{% else %}<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-cart"/></svg> <span data-bn="বিস্তারিত দেখুন" data-en="View Details">বিস্তারিত দেখুন</span>{% endif %}</a>
       </div>
       {% endfor %}
     </div>
@@ -141,8 +141,8 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   <section class="mt-9 hidden" id="top100-sec" data-home-sec="top100">
     <p class="ob-eyebrow" data-bn="সেরা ১০০" data-en="Top 100">সেরা ১০০</p>
     <div class="flex items-baseline justify-between mb-3 px-0.5">
-      <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="🏆 সেরা ১০০" data-en="🏆 Top 100">🏆 সেরা ১০০</h2>
-      <a href="{{ '/' | relative_url }}?showcase=true" class="accent-text text-sm font-extrabold hover:underline" data-bn="শোকেস দেখুন →" data-en="View showcase →">শোকেস দেখুন →</a>
+      <h2 class="serif text-xl sm:text-2xl font-semibold flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-award"/></svg> <span data-bn="সেরা ১০০" data-en="Top 100">সেরা ১০০</span></h2>
+      <a href="{{ '/' | relative_url }}?showcase=true" class="accent-text text-sm font-semibold hover:underline" data-bn="শোকেস দেখুন →" data-en="View showcase →">শোকেস দেখুন →</a>
     </div>
     <div id="row-top100" class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-3 px-5 scroll-pl-5 scroll-pr-5 sm:mx-0 sm:px-0 sm:scroll-pl-0 sm:scroll-pr-0"></div>
   </section>
@@ -151,20 +151,20 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   <section class="mt-9" id="new-sec" data-home-sec="new">
     <p class="ob-eyebrow" data-bn="নতুন" data-en="New">নতুন</p>
     <div class="flex items-baseline justify-between mb-3 px-0.5">
-      <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="✨ নতুন যুক্ত হয়েছে" data-en="✨ Newly Added">✨ নতুন যুক্ত হয়েছে</h2>
-      <a href="{{ '/browse/' | relative_url }}" class="accent-text text-sm font-extrabold hover:underline" data-bn="সব দেখুন" data-en="View All">সব দেখুন</a>
+      <h2 class="serif text-xl sm:text-2xl font-semibold" data-bn="নতুন যুক্ত হয়েছে" data-en="Newly Added">নতুন যুক্ত হয়েছে</h2>
+      <a href="{{ '/browse/' | relative_url }}" class="accent-text text-sm font-semibold hover:underline" data-bn="সব দেখুন" data-en="View All">সব দেখুন</a>
     </div>
     <div class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-3 px-5 scroll-pl-5 scroll-pr-5 sm:mx-0 sm:px-0 sm:scroll-pl-0 sm:scroll-pr-0">
       {% for rid in site.data.recent limit: 12 %}
       {% assign b = site.books | where: "book_id", rid | first %}
       {% if b %}
-      <a href="{{ b.url | relative_url }}" class="snap-start shrink-0 w-[150px] sm:w-[172px] group">
+      <a href="{{ b.url | relative_url }}" class="snap-start shrink-0 w-[152px] sm:w-[176px] group">
         <div class="relative rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]">
-          <img src="{{ b.cover | relative_url }}" alt="{{ b.title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-          <span class="absolute top-2 left-2 bg-rose-600 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow" data-bn="নতুন" data-en="New">নতুন</span>
+          <img src="{{ b.cover | relative_url }}" alt="{{ b.title }}" class="w-full h-full object-cover transition-[filter] duration-200 group-hover:brightness-105">
+          <span class="absolute top-2 left-2 bg-rose-600 text-white text-xs font-bold px-2 py-0.5 rounded shadow" data-bn="নতুন" data-en="New">নতুন</span>
         </div>
-        <h3 class="font-bold text-sm sm:text-[15px] leading-snug mt-2 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400" data-bn="{{ b.title }}" data-en="{{ b.title_en | default: b.title }}">{{ b.title }}</h3>
-        <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1">✍️ {{ b.author }}</p>
+        <h3 class="font-semibold text-sm sm:text-[15px] leading-snug mt-2 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400" data-bn="{{ b.title }}" data-en="{{ b.title_en | default: b.title }}">{{ b.title }}</h3>
+        <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-edit"/></svg> {{ b.author }}</p>
       </a>
       {% endif %}
       {% endfor %}
@@ -175,8 +175,8 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   <section class="mt-9 hidden" id="foryou-sec" data-home-sec="foryou">
     <p class="ob-eyebrow" data-bn="আপনার জন্য" data-en="For you">আপনার জন্য</p>
     <div class="flex items-baseline justify-between mb-3 px-0.5">
-      <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="💡 আপনার জন্য" data-en="💡 For You">💡 আপনার জন্য</h2>
-      <a href="{{ '/browse/' | relative_url }}" class="accent-text text-sm font-extrabold hover:underline" data-bn="সব দেখুন" data-en="View All">সব দেখুন</a>
+      <h2 class="serif text-xl sm:text-2xl font-semibold flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-heart"/></svg> <span data-bn="আপনার জন্য" data-en="For You">আপনার জন্য</span></h2>
+      <a href="{{ '/browse/' | relative_url }}" class="accent-text text-sm font-semibold hover:underline" data-bn="সব দেখুন" data-en="View All">সব দেখুন</a>
     </div>
     <div id="row-foryou" class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-3 px-5 scroll-pl-5 scroll-pr-5 sm:mx-0 sm:px-0 sm:scroll-pl-0 sm:scroll-pr-0"></div>
   </section>
@@ -187,18 +187,18 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   <section class="mt-10" data-home-sec="cats">
     <p class="ob-eyebrow" data-bn="ধরন" data-en="Category">ধরন</p>
     <div class="flex items-baseline justify-between mb-3 px-0.5">
-      <h2 class="serif text-xl sm:text-2xl font-extrabold" data-cat="{{ catname }}">{{ catname }}</h2>
-      <a href="{{ '/browse/' | relative_url }}?cat={{ catname | url_encode }}" class="accent-text text-sm font-extrabold hover:underline" data-bn="সব দেখুন" data-en="See all">সব দেখুন</a>
+      <h2 class="serif text-xl sm:text-2xl font-semibold" data-cat="{{ catname }}">{{ catname }}</h2>
+      <a href="{{ '/browse/' | relative_url }}?cat={{ catname | url_encode }}" class="accent-text text-sm font-semibold hover:underline" data-bn="সব দেখুন" data-en="See all">সব দেখুন</a>
     </div>
     <div class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-3 px-5 scroll-pl-5 scroll-pr-5 sm:mx-0 sm:px-0 sm:scroll-pl-0 sm:scroll-pr-0">
       {% assign shown = 0 %}
       {% for b in site.books %}{% if b.categories contains catname %}{% assign shown = shown | plus: 1 %}{% if shown > 12 %}{% break %}{% endif %}
-      <a href="{{ b.url | relative_url }}" class="snap-start shrink-0 w-[150px] sm:w-[172px] group">
+      <a href="{{ b.url | relative_url }}" class="snap-start shrink-0 w-[152px] sm:w-[176px] group">
         <div class="rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]">
-          <img src="{{ b.cover | relative_url }}" alt="{{ b.title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+          <img src="{{ b.cover | relative_url }}" alt="{{ b.title }}" class="w-full h-full object-cover transition-[filter] duration-200 group-hover:brightness-105">
         </div>
-        <h3 class="font-bold text-sm sm:text-[15px] leading-snug mt-2 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400" data-bn="{{ b.title }}" data-en="{{ b.title_en | default: b.title }}">{{ b.title }}</h3>
-        <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1">✍️ {{ b.author }}</p>
+        <h3 class="font-semibold text-sm sm:text-[15px] leading-snug mt-2 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400" data-bn="{{ b.title }}" data-en="{{ b.title_en | default: b.title }}">{{ b.title }}</h3>
+        <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-edit"/></svg> {{ b.author }}</p>
       </a>
       {% endif %}{% endfor %}
     </div>
@@ -209,21 +209,21 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   {% assign series_groups = site.books | group_by: "series" | sort: "name" %}
   <section id="series" class="mt-10">
     <div class="flex items-baseline justify-between mb-3 px-0.5">
-      <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="📚 বইয়ের সিরিজ" data-en="📚 Book Series">📚 বইয়ের সিরিজ</h2>
+      <h2 class="serif text-xl sm:text-2xl font-semibold flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-book"/></svg> <span data-bn="বইয়ের সিরিজ" data-en="Book Series">বইয়ের সিরিজ</span></h2>
     </div>
     <div class="flex gap-5 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-3 pt-1 -mx-3 px-5 scroll-pl-5 scroll-pr-5 sm:mx-0 sm:px-0 sm:scroll-pl-0 sm:scroll-pr-0">
       {% for g in series_groups %}{% if g.name and g.name != "" and g.size > 1 %}
       {% assign sbooks = g.items | sort: "series_order" %}
       {% assign first = sbooks | first %}
-      <a href="{{ first.url | relative_url }}" class="snap-start shrink-0 w-[150px] sm:w-[172px] group">
+      <a href="{{ first.url | relative_url }}" class="snap-start shrink-0 w-[152px] sm:w-[176px] group">
         <div class="relative aspect-[2/3] mx-2">
           {% if sbooks.size > 2 %}{% assign third = sbooks[2] %}<img src="{{ third.cover | relative_url }}" alt="" class="absolute inset-0 w-full h-full object-cover rounded-xl shadow rotate-[6deg] translate-x-2">{% endif %}
           {% if sbooks.size > 1 %}{% assign second = sbooks[1] %}<img src="{{ second.cover | relative_url }}" alt="" class="absolute inset-0 w-full h-full object-cover rounded-xl shadow rotate-[-5deg] -translate-x-1.5">{% endif %}
           <img src="{{ first.cover | relative_url }}" alt="{{ g.name }}" class="absolute inset-0 w-full h-full object-cover rounded-xl shadow-lg">
-          <span class="absolute -bottom-2 right-0 accent-bg text-white text-[11px] font-bold rounded-full px-2 py-0.5 shadow">{{ g.size }} <span data-bn="টি বই" data-en="books">টি বই</span></span>
+          <span class="absolute -bottom-2 right-0 accent-bg text-white text-xs font-bold rounded-md px-2 py-0.5 shadow"><span data-bn-digits="{{ g.size }}">{{ g.size }}</span> <span data-bn="টি বই" data-en="books">টি বই</span></span>
         </div>
-        <h3 class="font-bold text-sm sm:text-[15px] leading-snug mt-3.5 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400" data-bn="{{ g.name }}" data-en="{{ first.series_en | default: g.name }}">{{ g.name }}</h3>
-        <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1">✍️ {{ first.author }}</p>
+        <h3 class="font-semibold text-sm sm:text-[15px] leading-snug mt-3.5 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400" data-bn="{{ g.name }}" data-en="{{ first.series_en | default: g.name }}">{{ g.name }}</h3>
+        <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-edit"/></svg> {{ first.author }}</p>
       </a>
       {% endif %}{% endfor %}
     </div>
@@ -234,17 +234,17 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   {% if bnbooks.size > 0 %}
   <section class="mt-10">
     <div class="flex items-baseline justify-between mb-3 px-0.5">
-      <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="জনপ্রিয় বাংলা বই" data-en="Popular Bengali Books">জনপ্রিয় বাংলা বই</h2>
-      <a href="#popular" class="accent-text text-sm font-extrabold hover:underline" data-bn="সব দেখুন" data-en="View All">সব দেখুন</a>
+      <h2 class="serif text-xl sm:text-2xl font-semibold" data-bn="জনপ্রিয় বাংলা বই" data-en="Popular Bengali Books">জনপ্রিয় বাংলা বই</h2>
+      <a href="#popular" class="accent-text text-sm font-semibold hover:underline" data-bn="সব দেখুন" data-en="View All">সব দেখুন</a>
     </div>
     <div id="row-popular-bn" class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-3 px-5 scroll-pl-5 scroll-pr-5 sm:mx-0 sm:px-0 sm:scroll-pl-0 sm:scroll-pr-0">
       {% for b in bnbooks %}
-      <a href="{{ b.url | relative_url }}" class="snap-start shrink-0 w-[150px] sm:w-[172px] group">
+      <a href="{{ b.url | relative_url }}" class="snap-start shrink-0 w-[152px] sm:w-[176px] group">
         <div class="rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]">
-          <img src="{{ b.cover | relative_url }}" alt="{{ b.title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+          <img src="{{ b.cover | relative_url }}" alt="{{ b.title }}" class="w-full h-full object-cover transition-[filter] duration-200 group-hover:brightness-105">
         </div>
-        <h3 class="font-bold text-sm sm:text-[15px] leading-snug mt-2 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400" data-bn="{{ b.title }}" data-en="{{ b.title_en | default: b.title }}">{{ b.title }}</h3>
-        <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1">✍️ {{ b.author }}</p>
+        <h3 class="font-semibold text-sm sm:text-[15px] leading-snug mt-2 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400" data-bn="{{ b.title }}" data-en="{{ b.title_en | default: b.title }}">{{ b.title }}</h3>
+        <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-edit"/></svg> {{ b.author }}</p>
       </a>
       {% endfor %}
     </div>
@@ -256,17 +256,17 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   {% if enbooks.size > 0 %}
   <section class="mt-10">
     <div class="flex items-baseline justify-between mb-3 px-0.5">
-      <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="জনপ্রিয় ইংরেজি বই" data-en="Popular English Books">জনপ্রিয় ইংরেজি বই</h2>
-      <a href="#popular" class="accent-text text-sm font-extrabold hover:underline" data-bn="সব দেখুন" data-en="View All">সব দেখুন</a>
+      <h2 class="serif text-xl sm:text-2xl font-semibold" data-bn="জনপ্রিয় ইংরেজি বই" data-en="Popular English Books">জনপ্রিয় ইংরেজি বই</h2>
+      <a href="#popular" class="accent-text text-sm font-semibold hover:underline" data-bn="সব দেখুন" data-en="View All">সব দেখুন</a>
     </div>
     <div id="row-popular-en" class="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 -mx-3 px-5 scroll-pl-5 scroll-pr-5 sm:mx-0 sm:px-0 sm:scroll-pl-0 sm:scroll-pr-0">
       {% for b in enbooks %}
-      <a href="{{ b.url | relative_url }}" class="snap-start shrink-0 w-[150px] sm:w-[172px] group">
+      <a href="{{ b.url | relative_url }}" class="snap-start shrink-0 w-[152px] sm:w-[176px] group">
         <div class="rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]">
-          <img src="{{ b.cover | relative_url }}" alt="{{ b.title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+          <img src="{{ b.cover | relative_url }}" alt="{{ b.title }}" class="w-full h-full object-cover transition-[filter] duration-200 group-hover:brightness-105">
         </div>
-        <h3 class="font-bold text-sm sm:text-[15px] leading-snug mt-2 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400" data-bn="{{ b.title }}" data-en="{{ b.title_en | default: b.title }}">{{ b.title }}</h3>
-        <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1">✍️ {{ b.author }}</p>
+        <h3 class="font-semibold text-sm sm:text-[15px] leading-snug mt-2 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400" data-bn="{{ b.title }}" data-en="{{ b.title_en | default: b.title }}">{{ b.title }}</h3>
+        <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-edit"/></svg> {{ b.author }}</p>
       </a>
       {% endfor %}
     </div>
@@ -277,24 +277,24 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   <section class="mt-10">
     <div class="hero-bg text-white rounded-2xl p-5 sm:p-6 shadow-sm flex flex-col sm:flex-row sm:items-center gap-4">
       <div class="flex-1">
-        <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="🛠️ বইঘর টুলস" data-en="🛠️ Boighar Tools">🛠️ বইঘর টুলস</h2>
+        <h2 class="serif text-xl sm:text-2xl font-semibold flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-settings"/></svg> <span data-bn="বইঘর টুলস" data-en="Boighar Tools">বইঘর টুলস</span></h2>
         <p class="text-sm text-white/90 mt-1 leading-relaxed" data-bn="ইপাব পড়ুন, পিডিএফ জোড়া দিন, প্রচ্ছদ সাজান, পড়ার পরিকল্পনা করুন — সব আপনার ব্রাউজারেই, লগইন ছাড়াই।" data-en="Read EPUBs, merge PDFs, resize covers, plan your reading — all in your browser, no login needed.">ইপাব পড়ুন, পিডিএফ জোড়া দিন, প্রচ্ছদ সাজান, পড়ার পরিকল্পনা করুন — সব আপনার ব্রাউজারেই, লগইন ছাড়াই।</p>
       </div>
-      <a href="{{ '/tools/' | relative_url }}" class="shrink-0 bg-white text-neutral-900 text-sm font-extrabold rounded-xl px-5 py-3 text-center hover:brightness-95" data-bn="সব টুল দেখুন →" data-en="See all tools →">সব টুল দেখুন →</a>
+      <a href="{{ '/tools/' | relative_url }}" class="shrink-0 bg-white text-neutral-900 text-sm font-semibold rounded-xl px-5 py-3 text-center hover:brightness-95" data-bn="সব টুল দেখুন →" data-en="See all tools →">সব টুল দেখুন →</a>
     </div>
   </section>
 
   <!-- CATEGORIES DIRECTORY -->
   <section id="categories" class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm mt-12">
-    <h2 class="text-lg font-extrabold mb-4 pb-2 border-b border-neutral-100 dark:border-neutral-700 flex items-center gap-2">
-      <span>📂</span> <span data-bn="বিষয়ভিত্তিক বই (Categories)" data-en="Books by Category">বিষয়ভিত্তিক বই (Categories)</span>
+    <h2 class="text-lg font-semibold mb-4 pb-2 border-b border-neutral-100 dark:border-neutral-700 flex items-center gap-2">
+      <svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-folder"/></svg> <span data-bn="বিষয়ভিত্তিক বই (Categories)" data-en="Books by Category">বিষয়ভিত্তিক বই (Categories)</span>
     </h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
       {% assign cg = site.books | group_by: "category" | sort: "name" %}
       {% for g in cg %}
-      <button class="catgrid-btn bg-neutral-50 dark:bg-neutral-700/60 hover:bg-emerald-50 dark:hover:bg-neutral-700 border border-neutral-200 dark:border-neutral-600 rounded-xl px-4 py-2.5 font-bold text-left flex justify-between items-center transition" data-c="{{ g.name }}">
+      <button class="catgrid-btn bg-neutral-50 dark:bg-neutral-700/60 hover:bg-emerald-50 dark:hover:bg-neutral-700 border border-neutral-200 dark:border-neutral-600 rounded-xl px-4 py-2.5 font-bold text-left flex justify-between items-center transition-colors" data-c="{{ g.name }}">
         <span class="text-sm" data-cat="{{ g.name }}">{{ g.name }}</span>
-        <span class="bg-emerald-100 dark:bg-neutral-600 text-emerald-800 dark:text-emerald-300 font-bold text-xs px-2.5 py-0.5 rounded-full">{{ g.size }}</span>
+        <span class="bg-emerald-100 dark:bg-neutral-600 text-emerald-800 dark:text-emerald-300 font-bold text-xs px-2.5 py-0.5 rounded-md"><span data-bn-digits="{{ g.size }}">{{ g.size }}</span></span>
       </button>
       {% endfor %}
     </div>
@@ -303,16 +303,16 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   <!-- ABOUT & PUBLISH -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
     <section id="about" class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm">
-      <h2 class="text-lg font-bold mb-2" data-bn="📖 আমাদের বইঘর (Our Boighar) সম্পর্কে" data-en="📖 About Our Boighar">📖 আমাদের বইঘর (Our Boighar) সম্পর্কে</h2>
+      <h2 class="text-lg font-semibold mb-2 flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-book-open"/></svg> <span data-bn="আমাদের বইঘর (Our Boighar) সম্পর্কে" data-en="About Our Boighar">আমাদের বইঘর (Our Boighar) সম্পর্কে</span></h2>
       <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-300" data-bn="Our Boighar (আমাদের বইঘর) হলো মোঃ তৌফিকুল ইসলাম-এর তৈরি একটি উন্মুক্ত ডিজিটাল লাইব্রেরি — যেখানে বাংলা ও ইংরেজি ইসলামিক বই, অনুবাদ ও ইপাব সংস্করণ সংরক্ষিত রয়েছে। ফ্রি বইগুলো সরাসরি ব্রাউজারেই পড়া বা ডাউনলোড করা যায়।" data-en="Our Boighar is an open digital library created by Md. Towfiqul Islam — Bengali & English Islamic books, translations and EPUB editions. Free books can be read in the browser or downloaded.">Our Boighar (আমাদের বইঘর) হলো মোঃ তৌফিকুল ইসলাম-এর তৈরি একটি উন্মুক্ত ডিজিটাল লাইব্রেরি — যেখানে বাংলা ও ইংরেজি ইসলামিক বই, অনুবাদ ও ইপাব সংস্করণ সংরক্ষিত রয়েছে। ফ্রি বইগুলো সরাসরি ব্রাউজারেই পড়া বা ডাউনলোড করা যায়।</p>
     </section>
     <section id="publish" class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm flex flex-col justify-between">
       <div>
-        <h2 class="text-lg font-bold mb-2" data-bn="✒️ আপনার বই যুক্ত করুন" data-en="✒️ Add Your Book">✒️ আপনার বই যুক্ত করুন</h2>
+        <h2 class="text-lg font-semibold mb-2 flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-edit"/></svg> <span data-bn="আপনার বই যুক্ত করুন" data-en="Add Your Book">আপনার বই যুক্ত করুন</span></h2>
         <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-300 mb-4" data-bn="আপনার অনুবাদকৃত বা রচিত কোনো ইসলামিক বই এই লাইব্রেরিতে বিনামূল্যে পাঠকদের জন্য উন্মুক্ত করতে চাইলে আমাদের GitHub রিপোজিটরিতে পাঠাতে পারেন।" data-en="Want to share your translated or authored Islamic book with readers for free? Send it via our GitHub repository.">আপনার অনুবাদকৃত বা রচিত কোনো ইসলামিক বই এই লাইব্রেরিতে বিনামূল্যে পাঠকদের জন্য উন্মুক্ত করতে চাইলে আমাদের GitHub রিপোজিটরিতে পাঠাতে পারেন।</p>
       </div>
       <div>
-        <a class="accent-bg inline-block text-white text-sm font-bold rounded-lg px-5 py-2.5 transition" href="https://github.com/MDTowfiqul/our-boighar" target="_blank" rel="noopener" data-bn="GitHub-এ যোগাযোগ করুন →" data-en="Contact on GitHub →">GitHub-এ যোগাযোগ করুন →</a>
+        <a class="accent-bg inline-block text-white text-sm font-bold rounded-lg px-5 py-2.5 transition-colors" href="https://github.com/MDTowfiqul/our-boighar" target="_blank" rel="noopener" data-bn="GitHub-এ যোগাযোগ করুন →" data-en="Contact on GitHub →">GitHub-এ যোগাযোগ করুন →</a>
       </div>
     </section>
   </div>
@@ -326,8 +326,8 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   function bookmarks(){ try{ return JSON.parse(localStorage.getItem(BM)||'[]'); }catch(e){ return []; } }
   function lang(){ return window.__obLang || 'bn'; }
   var H = {
-    bn: { all:'জনপ্রিয় এখন', shelf:'★ আমার ড্যাশবোর্ডে রাখা বই', cat:'বিষয়: ', alpha:'বর্ণমালা: ', search:'অনুসন্ধান: ', books:'টি বই', rec:'সুপারিশকৃত বই', res:'খোঁজার ফলাফল', none:'কোনো বই মেলেনি' },
-    en: { all:'Popular Now', shelf:'★ Books on My Dashboard', cat:'Subject: ', alpha:'Letter: ', search:'Search: ', books:'books', rec:'Recommended Books', res:'Search Results', none:'No matching books' }
+    bn: { all:'জনপ্রিয় এখন', shelf:'আমার ড্যাশবোর্ডে রাখা বই', cat:'বিষয়: ', alpha:'বর্ণমালা: ', search:'অনুসন্ধান: ', books:'টি বই', rec:'সুপারিশকৃত বই', res:'খোঁজার ফলাফল', none:'কোনো বই মেলেনি' },
+    en: { all:'Popular Now', shelf:'Books on My Dashboard', cat:'Subject: ', alpha:'Letter: ', search:'Search: ', books:'books', rec:'Recommended Books', res:'Search Results', none:'No matching books' }
   };
   var cards = Array.prototype.slice.call(document.querySelectorAll('#row-popular .book-card'));
   var state = { q:'', alpha:'', cat:'' };
@@ -350,7 +350,7 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
     });
     document.getElementById('no-match').classList.toggle('hidden', visible > 0);
     var t = H[lang()];
-    countEl.innerHTML = visible + ' ' + t.books;
+    countEl.innerHTML = window.__obDigits(visible) + ' ' + t.books;
     headingEl.removeAttribute('data-bn'); headingEl.removeAttribute('data-en');
     if (state.cat === '__shelf') headingEl.textContent = t.shelf;
     else if (state.cat) headingEl.textContent = t.cat + state.cat;
@@ -417,14 +417,14 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
     if (!list.length){
       suggestEl.innerHTML = '<p class="px-4 py-3.5 text-sm font-semibold text-neutral-500">' + t.none + '</p>';
     } else {
-      var head = '<p class="px-4 pt-3 pb-1 text-[11px] font-extrabold tracking-wide text-neutral-400">' + (q ? t.res : t.rec) + '</p>';
+      var head = '<p class="px-4 pt-3 pb-1 text-xs font-semibold tracking-wide text-neutral-400">' + (q ? t.res : t.rec) + '</p>';
       suggestEl.innerHTML = head + list.map(function(b){
         var title = lang() === 'en' ? (b.title_en || b.title) : b.title;
         return '<a href="' + b.url + '" class="flex items-center gap-3 px-3 py-2 hover:bg-neutral-50 dark:hover:bg-neutral-700/60">' +
           '<img src="' + b.cover + '" alt="" class="w-9 h-[52px] object-cover rounded shadow-sm">' +
           '<span class="min-w-0"><span class="block font-bold text-sm leading-snug line-clamp-1">' + esc(title) + '</span>' +
-          '<span class="block text-xs text-neutral-500 dark:text-neutral-400 line-clamp-1">✍️ ' + esc(b.author) + '</span></span>' +
-          '<span class="flex-1"></span><span class="text-[10px] font-bold bg-neutral-100 dark:bg-neutral-700 rounded px-2 py-0.5">' + esc(window.__obCatName(b.category)) + '</span></a>';
+          '<span class="block text-xs text-neutral-500 dark:text-neutral-400 line-clamp-1"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-edit"/></svg> ' + esc(b.author) + '</span></span>' +
+          '<span class="flex-1"></span><span class="text-xs font-bold bg-neutral-100 dark:bg-neutral-700 rounded px-2 py-0.5">' + esc(window.__obCatName(b.category)) + '</span></a>';
       }).join('') + '<div class="pb-1.5"></div>';
     }
     suggestEl.classList.remove('hidden');
@@ -504,12 +504,12 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   }
   function cardHTML(b, rank){
     var title = lang() === 'en' ? (b.title_en || b.title) : b.title;
-    var badge = (typeof rank === 'number') ? '<span class="absolute bottom-0.5 left-2 serif text-[42px] leading-none font-bold text-white" style="text-shadow:0 2px 8px rgba(0,0,0,.7)">' + rank + '</span>' : '';
-    return '<a href="' + b.url + '" class="snap-start shrink-0 w-[150px] sm:w-[172px] group">' +
+    var badge = (typeof rank === 'number') ? '<span class="absolute bottom-0.5 left-2 serif text-[42px] leading-none font-bold text-white" style="text-shadow:0 2px 8px rgba(0,0,0,.7)">' + window.__obDigits(rank) + '</span>' : '';
+    return '<a href="' + b.url + '" class="snap-start shrink-0 w-[152px] sm:w-[176px] group">' +
       '<div class="relative rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]">' +
-      '<img src="' + b.cover + '" alt="" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">' + badge + '</div>' +
-      '<h3 class="font-bold text-sm sm:text-[15px] leading-snug mt-2 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400">' + esc(title) + '</h3>' +
-      '<p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1">✍️ ' + esc(b.author) + '</p></a>';
+      '<img src="' + b.cover + '" alt="" class="w-full h-full object-cover transition-[filter] duration-200 group-hover:brightness-105">' + badge + '</div>' +
+      '<h3 class="font-semibold text-sm sm:text-[15px] leading-snug mt-2 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400">' + esc(title) + '</h3>' +
+      '<p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-edit"/></svg> ' + esc(b.author) + '</p></a>';
   }
 
   /* ---------- Top 100 (by popular.json rank) ---------- */
@@ -537,8 +537,8 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
       return;
     }
     var t = lang() === 'en'
-      ? { resume:'📖 Continue Reading', done:'% read', remove:'Remove' }
-      : { resume:'📖 পড়া চালিয়ে যান', done:'% পড়া হয়েছে', remove:'সরান' };
+      ? { resume:'Continue Reading', done:'% read', remove:'Remove' }
+      : { resume:'পড়া চালিয়ে যান', done:'% পড়া হয়েছে', remove:'সরান' };
     var list = document.getElementById('continue-list');
     list.innerHTML = items.map(function(p){
       var b = cat.byFile[p.f];
@@ -547,13 +547,13 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
       return '<div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-3.5 flex gap-4 items-center shadow-sm">' +
         '<a href="' + b.url + '" class="shrink-0"><img src="' + b.cover + '" alt="" class="w-14 h-[84px] object-cover rounded-md shadow"></a>' +
         '<div class="flex-1 min-w-0">' +
-        '<a href="' + b.url + '" class="font-bold leading-snug line-clamp-2 hover:text-emerald-700 dark:hover:text-emerald-400">' + esc(title) + '</a>' +
+        '<a href="' + b.url + '" class="font-semibold leading-snug line-clamp-2 hover:text-emerald-700 dark:hover:text-emerald-400">' + esc(title) + '</a>' +
         (p.chapter ? '<p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1">' + esc(p.chapter) + '</p>' : '') +
         '<div class="h-2 rounded-full bg-neutral-200 dark:bg-neutral-700 mt-2 overflow-hidden"><div class="h-full accent-bg rounded-full" style="width:' + pct + '%"></div></div>' +
-        '<p class="text-[11px] font-bold text-neutral-400 mt-1">' + pct + t.done + '</p>' +
+        '<p class="text-xs font-bold text-neutral-400 mt-1">' + window.__obDigits(pct) + t.done + '</p>' +
         '<div class="flex flex-wrap gap-2 mt-2.5">' +
-        '<a href="{{ '/reader.html' | relative_url }}?file=' + encodeURIComponent(p.f) + '&title=' + encodeURIComponent(b.title) + '" class="accent-bg text-white font-bold rounded-lg px-4 py-2 text-sm">' + t.resume + '</a>' +
-        '<button data-drop="' + esc(p.f) + '" class="font-bold rounded-lg px-4 py-2 text-sm text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900/60">' + t.remove + '</button>' +
+        '<a href="{{ '/reader.html' | relative_url }}?file=' + encodeURIComponent(p.f) + '&title=' + encodeURIComponent(b.title) + '" class="accent-bg text-white font-bold rounded-[10px] px-4 py-2 text-sm">' + '<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-book-open"/></svg> ' + t.resume + '</a>' +
+        '<button data-drop="' + esc(p.f) + '" class="font-bold rounded-[10px] px-4 py-2 text-sm text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900/60">' + t.remove + '</button>' +
         '</div></div></div>';
     }).join('');
     list.querySelectorAll('[data-drop]').forEach(function(btn){
@@ -615,10 +615,10 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
       var title = lang() === 'en' ? (b.title_en || b.title) : b.title;
       return '<a href="' + b.url + '" class="group">' +
         '<div class="relative rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]">' +
-        '<img src="' + b.cover + '" alt="" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">' +
-        '<span class="absolute top-2 left-2 accent-bg text-white text-xs font-extrabold px-2.5 py-1 rounded-full shadow">#' + (i + 1) + '</span></div>' +
-        '<h3 class="font-bold text-sm sm:text-base leading-snug mt-2 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400">' + esc(title) + '</h3>' +
-        '<p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1">✍️ ' + esc(b.author) + '</p></a>';
+        '<img src="' + b.cover + '" alt="" class="w-full h-full object-cover transition-[filter] duration-200 group-hover:brightness-105">' +
+        '<span class="absolute top-2 left-2 accent-bg text-white text-xs font-semibold px-2.5 py-1 rounded-md shadow">#' + window.__obDigits(i + 1) + '</span></div>' +
+        '<h3 class="font-semibold text-sm sm:text-base leading-snug mt-2 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400">' + esc(title) + '</h3>' +
+        '<p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-edit"/></svg> ' + esc(b.author) + '</p></a>';
     }).join('');
     document.getElementById('showcase-sec').classList.remove('hidden');
     Array.prototype.forEach.call(document.querySelectorAll('main > section:not(#showcase-sec)'), function(s){ s.classList.add('hidden'); });
