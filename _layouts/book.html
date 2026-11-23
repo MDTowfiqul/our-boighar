@@ -20,44 +20,44 @@ layout: default
       </div>
       <div class="flex-1 min-w-0">
         <div class="flex flex-wrap gap-2 mb-3">
-          {% for c in page.categories %}<a href="{{ '/browse/' | relative_url }}?cat={{ c | url_encode }}" class="bg-white dark:bg-neutral-700 border border-neutral-200 dark:border-neutral-600 accent-text rounded-full text-xs font-bold px-3 py-1" data-cat="{{ c }}">{{ c }}</a>{% endfor %}
-          <span class="bg-white dark:bg-neutral-700 border border-neutral-200 dark:border-neutral-600 text-emerald-800 dark:text-emerald-300 rounded-full text-xs font-bold px-3 py-1">{{ page.format }}</span>
-          <span class="bg-white dark:bg-neutral-700 border border-neutral-200 dark:border-neutral-600 text-neutral-600 dark:text-neutral-300 rounded-full text-xs font-bold px-3 py-1">{{ page.language_label }}</span>
+          {% for c in page.categories %}<a href="{{ '/browse/' | relative_url }}?cat={{ c | url_encode }}" class="bg-white dark:bg-neutral-700 border border-neutral-200 dark:border-neutral-600 accent-text rounded-md text-xs font-bold px-3 py-1" data-cat="{{ c }}">{{ c }}</a>{% endfor %}
+          <span class="bg-white dark:bg-neutral-700 border border-neutral-200 dark:border-neutral-600 text-emerald-800 dark:text-emerald-300 rounded-md text-xs font-bold px-3 py-1">{{ page.format }}</span>
+          <span class="bg-white dark:bg-neutral-700 border border-neutral-200 dark:border-neutral-600 text-neutral-600 dark:text-neutral-300 rounded-md text-xs font-bold px-3 py-1">{{ page.language_label }}</span>
         </div>
-        <h1 class="serif text-2xl sm:text-[28px] font-bold leading-snug">{{ page.title }}</h1>
+        <h1 class="serif text-2xl sm:text-[28px] font-semibold leading-snug">{{ page.title }}</h1>
         {% if page.title_en %}<p class="font-semibold text-neutral-600 dark:text-neutral-300 mt-1">{{ page.title_en }}</p>{% endif %}
         {% assign aslug = site.data.author_slugs[page.author] %}
-        <p class="mt-3 text-[15px]">✍️ <span data-bn="লেখক" data-en="Writer">লেখক</span>: {% if aslug %}<a class="font-bold text-emerald-800 dark:text-emerald-300" href="{{ '/authors/' | relative_url }}{{ aslug }}/">{{ page.author }}</a>{% else %}<a class="font-bold text-emerald-800 dark:text-emerald-300" href="{{ '/' | relative_url }}?q={{ page.author | url_encode }}">{{ page.author }}</a>{% endif %}</p>
-        <p class="text-[15px]">📘 <span data-bn="ইবুক নির্মাতা" data-en="Ebook creator">ইবুক নির্মাতা</span>: <span class="font-semibold">{{ page.creator }}</span></p>
+        <p class="mt-3 text-[15px]"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-edit"/></svg> <span data-bn="লেখক" data-en="Writer">লেখক</span>: {% if aslug %}<a class="font-bold text-emerald-800 dark:text-emerald-300" href="{{ '/authors/' | relative_url }}{{ aslug }}/">{{ page.author }}</a>{% else %}<a class="font-bold text-emerald-800 dark:text-emerald-300" href="{{ '/' | relative_url }}?q={{ page.author | url_encode }}">{{ page.author }}</a>{% endif %}</p>
+        <p class="text-[15px]"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-book"/></svg> <span data-bn="ইবুক নির্মাতা" data-en="Ebook creator">ইবুক নির্মাতা</span>: <span class="font-semibold">{{ page.creator }}</span></p>
         <div class="flex flex-wrap gap-x-5 gap-y-1 mt-3 text-sm font-semibold text-neutral-600 dark:text-neutral-300">
-          <span>🌐 {{ page.language_label }}</span>
-          <span>📄 {{ page.format }}</span>
-          {% if page.file_size %}<span>💾 {{ page.file_size }}</span>{% endif %}
-          {% if page.year %}<span>🗓 <span data-bn="প্রথম প্রকাশ" data-en="First published">প্রথম প্রকাশ</span> {{ page.year }}</span>{% endif %}
+          <span><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-globe"/></svg> {{ page.language_label }}</span>
+          <span><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-file"/></svg> {{ page.format }}</span>
+          {% if page.file_size %}<span><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-save"/></svg> {{ page.file_size }}</span>{% endif %}
+          {% if page.year %}<span><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-calendar"/></svg> <span data-bn="প্রথম প্রকাশ" data-en="First published">প্রথম প্রকাশ</span> {{ page.year }}</span>{% endif %}
         </div>
 
         <!-- personal 1-10 rating -->
         <div class="flex items-center gap-2 mt-4 flex-wrap">
           <span class="text-sm font-bold" data-bn="আপনার রেটিং:" data-en="Your rating:">আপনার রেটিং:</span>
-          <span id="rate-stars" class="flex gap-0.5 text-[22px] leading-none cursor-pointer select-none"></span>
+          <span id="rate-stars" class="flex gap-1 leading-none cursor-pointer select-none"></span>
           <span id="rate-label" class="text-sm font-bold text-neutral-500 dark:text-neutral-400"></span>
         </div>
 
         <div class="grid grid-cols-2 gap-2.5 mt-5">
           {% if page.file %}
-          <a id="continue-btn" href="{{ '/reader.html' | relative_url }}?file={{ bookfile | url_encode }}&title={{ page.title | url_encode }}" class="accent-bg col-span-2 hidden items-center justify-center gap-2 text-white font-bold rounded-xl py-3 px-4">▶ <span data-bn="পড়া চালিয়ে যান" data-en="Continue Reading">পড়া চালিয়ে যান</span> · <span id="continue-pct"></span></a>
-          <a href="{{ '/reader.html' | relative_url }}?file={{ bookfile | url_encode }}&title={{ page.title | url_encode }}" class="accent-bg col-span-2 flex items-center justify-center gap-2 text-white font-bold rounded-xl py-3 px-4" data-bn="📖 অনলাইনে পড়ুন" data-en="📖 Read Online">📖 অনলাইনে পড়ুন</a>
-          <a href="https://our-reader.vercel.app/opds?url={{ _opdsfeed | url_encode }}" target="_blank" rel="noopener" class="col-span-2 flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border-2 border-emerald-600 dark:border-emerald-500 text-emerald-800 dark:text-emerald-300 font-bold rounded-xl py-3 px-4">📚 <span data-bn="Our Reader-এ খুলুন" data-en="Open in Our Reader">Our Reader-এ খুলুন</span></a>
+          <a id="continue-btn" href="{{ '/reader.html' | relative_url }}?file={{ bookfile | url_encode }}&title={{ page.title | url_encode }}" class="accent-bg col-span-2 hidden items-center justify-center gap-2 text-white font-bold rounded-[10px] py-3 px-4"><span data-bn="পড়া চালিয়ে যান" data-en="Continue Reading">পড়া চালিয়ে যান</span> · <span id="continue-pct"></span></a>
+          <a href="{{ '/reader.html' | relative_url }}?file={{ bookfile | url_encode }}&title={{ page.title | url_encode }}" class="accent-bg col-span-2 flex items-center justify-center gap-2 text-white font-bold rounded-[10px] py-3 px-4"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-book-open"/></svg> <span data-bn="অনলাইনে পড়ুন" data-en="Read Online">অনলাইনে পড়ুন</span></a>
+          <a href="https://our-reader.vercel.app/opds?url={{ _opdsfeed | url_encode }}" target="_blank" rel="noopener" class="col-span-2 flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border-2 border-emerald-600 dark:border-emerald-500 text-emerald-800 dark:text-emerald-300 font-bold rounded-[10px] py-3 px-4"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-book"/></svg> <span data-bn="Our Reader-এ খুলুন" data-en="Open in Our Reader">Our Reader-এ খুলুন</span></a>
           <p class="col-span-2 text-[13px] text-neutral-500 dark:text-neutral-400 -mt-1" data-bn="Our Reader-এ বইঘরের ক্যাটালগ খুলবে — বইটি খুঁজে Download চাপলেই আপনার Our Reader লাইব্রেরিতে যোগ হবে।" data-en="Opens the Our Boighar catalog in Our Reader — find the book and tap Download to add it to your Our Reader library.">Our Reader-এ বইঘরের ক্যাটালগ খুলবে — বইটি খুঁজে Download চাপলেই আপনার Our Reader লাইব্রেরিতে যোগ হবে।</p>
-          <a href="{{ bookfile }}" download class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl py-3 px-4" data-bn="⬇ ডাউনলোড" data-en="⬇ Download">⬇ ডাউনলোড</a>
+          <a href="{{ bookfile }}" download class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-[10px] py-3 px-4"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-download"/></svg> <span data-bn="ডাউনলোড" data-en="Download">ডাউনলোড</span></a>
           {% elsif page.gumroad %}
-          <a href="{{ page.gumroad }}" target="_blank" rel="noopener" class="accent-bg col-span-2 flex items-center justify-center gap-2 text-white font-bold rounded-xl py-3 px-4">🛒 Gumroad থেকে নিন{% if page.price %} · {{ page.price }}{% endif %}</a>
+          <a href="{{ page.gumroad }}" target="_blank" rel="noopener" class="accent-bg col-span-2 flex items-center justify-center gap-2 text-white font-bold rounded-[10px] py-3 px-4"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-cart"/></svg> Gumroad থেকে নিন{% if page.price %} · {{ page.price }}{% endif %}</a>
           {% endif %}
-          <button id="bm-btn" class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl py-3 px-4">🔖 তাকে রাখুন</button>
-          {% if page.file %}<button id="share-btn" class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl py-3 px-4" data-bn="⤴ শেয়ার" data-en="⤴ Share">⤴ শেয়ার</button>{% else %}<button id="share-btn" class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl py-3 px-4" data-bn="⤴ শেয়ার" data-en="⤴ Share">⤴ শেয়ার</button>{% endif %}
+          <button id="bm-btn" class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-[10px] py-3 px-4"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-bookmark"/></svg> <span>তাকে রাখুন</span></button>
+          {% if page.file %}<button id="share-btn" class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-[10px] py-3 px-4" ><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-upload"/></svg> <span data-bn="শেয়ার" data-en="Share">শেয়ার</span></button>{% else %}<button id="share-btn" class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-[10px] py-3 px-4" ><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-upload"/></svg> <span data-bn="শেয়ার" data-en="Share">শেয়ার</span></button>{% endif %}
           <div id="ob-server-shelf" class="col-span-2 hidden items-center gap-2">
             <select id="ob-shelf-select" class="flex-1 min-w-0 border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-700 rounded-xl px-3 py-3 font-bold"></select>
-            <button id="ob-shelf-add" class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border-2 border-emerald-600 dark:border-emerald-500 text-emerald-800 dark:text-emerald-300 font-bold rounded-xl py-3 px-4">☁️ <span data-bn="তাকে সংরক্ষণ করুন" data-en="Save to shelf">তাকে সংরক্ষণ করুন</span></button>
+            <button id="ob-shelf-add" class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border-2 border-emerald-600 dark:border-emerald-500 text-emerald-800 dark:text-emerald-300 font-bold rounded-[10px] py-3 px-4"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-cloud"/></svg> <span data-bn="তাকে সংরক্ষণ করুন" data-en="Save to shelf">তাকে সংরক্ষণ করুন</span></button>
           </div>
           <p id="ob-server-shelf-login" class="col-span-2 hidden text-[13px] text-neutral-500 dark:text-neutral-400 text-center"><a class="accent-text font-bold hover:underline" href="{{ '/shelf/' | relative_url }}" data-bn="সাইন ইন করুন" data-en="Sign in">সাইন ইন করুন</a> <span data-bn="— বইটি আপনার অ্যাকাউন্টের তাকে সংরক্ষণ করতে।" data-en="to save this book to your account shelves.">— বইটি আপনার অ্যাকাউন্টের তাকে সংরক্ষণ করতে।</span></p>
         </div>
@@ -67,60 +67,60 @@ layout: default
 
   <!-- ABOUT -->
   <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 mt-4">
-    <h2 class="text-lg font-bold mb-2" data-bn="বইটি সম্পর্কে" data-en="About This Book">বইটি সম্পর্কে</h2>
+    <h2 class="text-lg font-semibold mb-2" data-bn="বইটি সম্পর্কে" data-en="About This Book">বইটি সম্পর্কে</h2>
     <div class="text-[15px] text-neutral-700 dark:text-neutral-200 leading-relaxed">{{ content }}</div>
   </section>
 
   {% if page.file %}
   <!-- READ / DOWNLOAD -->
   <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 mt-4">
-    <h2 class="text-lg font-bold mb-2" data-bn="পড়ুন বা ডাউনলোড করুন" data-en="Read or Download">পড়ুন বা ডাউনলোড করুন</h2>
+    <h2 class="text-lg font-semibold mb-2" data-bn="পড়ুন বা ডাউনলোড করুন" data-en="Read or Download">পড়ুন বা ডাউনলোড করুন</h2>
     <div class="flex items-center gap-3 border border-neutral-200 dark:border-neutral-600 rounded-xl p-3 mt-2">
-      <span class="accent-soft-bg accent-text font-extrabold rounded-lg px-3 py-2 text-sm">{{ page.format }}</span>
+      <span class="accent-soft-bg accent-text font-semibold rounded-lg px-3 py-2 text-sm">{{ page.format }}</span>
       <span class="flex-1 text-sm"><strong>{{ page.file_size }}</strong><br>
       <span class="text-neutral-500 dark:text-neutral-400" data-bn="Our Boighar থেকে সরাসরি ডাউনলোড" data-en="Direct download from Our Boighar">Our Boighar থেকে সরাসরি ডাউনলোড</span></span>
       <a href="{{ bookfile }}" download class="accent-bg text-white font-bold rounded-lg px-4 py-2 text-sm" data-bn="ডাউনলোড" data-en="Download">ডাউনলোড</a>
     </div>
     <div class="flex items-center gap-3 border border-neutral-200 dark:border-neutral-600 rounded-xl p-3 mt-2">
-      <span class="accent-soft-bg accent-text font-extrabold rounded-lg px-3 py-2 text-sm">WEB</span>
+      <span class="accent-soft-bg accent-text font-semibold rounded-lg px-3 py-2 text-sm">WEB</span>
       <span class="flex-1 text-sm"><strong data-bn="অনলাইন রিডার" data-en="Online Reader">অনলাইন রিডার</strong><br>
       <span class="text-neutral-500 dark:text-neutral-400" data-bn="ডাউনলোড ছাড়াই ব্রাউজারে পড়ুন" data-en="Read in your browser, no download needed">ডাউনলোড ছাড়াই ব্রাউজারে পড়ুন</span></span>
       <a href="{{ '/reader.html' | relative_url }}?file={{ bookfile | url_encode }}&title={{ page.title | url_encode }}" class="accent-bg text-white font-bold rounded-lg px-4 py-2 text-sm" data-bn="পড়ুন" data-en="Read">পড়ুন</a>
     </div>
-    <p class="text-[13px] text-neutral-500 dark:text-neutral-400 mt-3">✔ <span data-bn="ফ্রি বই — অনলাইনে পড়ুন, ডাউনলোড করুন, শেয়ার করুন।" data-en="Free book — read online, download, share.">ফ্রি বই — অনলাইনে পড়ুন, ডাউনলোড করুন, শেয়ার করুন।</span>
+    <p class="text-[13px] text-neutral-500 dark:text-neutral-400 mt-3"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-check"/></svg> <span data-bn="ফ্রি বই — অনলাইনে পড়ুন, ডাউনলোড করুন, শেয়ার করুন।" data-en="Free book — read online, download, share.">ফ্রি বই — অনলাইনে পড়ুন, ডাউনলোড করুন, শেয়ার করুন।</span>
     · <a class="accent-text font-semibold hover:underline" href="https://github.com/MDTowfiqul/our-boighar/issues" target="_blank" rel="noopener" data-bn="তথ্যে ভুল থাকলে জানান" data-en="Report an error">তথ্যে ভুল থাকলে জানান</a></p>
   </section>
   {% elsif page.gumroad %}
   <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 mt-4">
-    <h2 class="text-lg font-bold mb-2" data-bn="কীভাবে পাবেন" data-en="How to Get It">কীভাবে পাবেন</h2>
+    <h2 class="text-lg font-semibold mb-2" data-bn="কীভাবে পাবেন" data-en="How to Get It">কীভাবে পাবেন</h2>
     <p class="text-[15px]" data-bn="এটি একটি পেইড সংস্করণ — পুরো ইবুকটি Gumroad থেকে কেনার পর ডেলিভারি পাবেন।" data-en="This is a paid edition — the full ebook is delivered after purchase on Gumroad.">এটি একটি পেইড সংস্করণ — পুরো ইবুকটি Gumroad থেকে কেনার পর ডেলিভারি পাবেন।</p>
   </section>
   {% endif %}
 
   <!-- SHARE + QR -->
   <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 mt-4">
-    <h2 class="text-lg font-bold mb-2" data-bn="শেয়ার করুন" data-en="Share This Book">শেয়ার করুন</h2>
+    <h2 class="text-lg font-semibold mb-2" data-bn="শেয়ার করুন" data-en="Share This Book">শেয়ার করুন</h2>
     <div class="flex flex-col sm:flex-row items-start gap-5">
       <div class="flex-1 min-w-0">
         <p class="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed" data-bn="এই বইটি বন্ধুদের সঙ্গে শেয়ার করুন — লিংক কপি করুন বা QR কোডটি স্ক্যান করতে দিন।" data-en="Share this book with friends — copy the link or let them scan the QR code.">এই বইটি বন্ধুদের সঙ্গে শেয়ার করুন — লিংক কপি করুন বা QR কোডটি স্ক্যান করতে দিন।</p>
         <div class="flex flex-wrap gap-2.5 mt-4">
-          <button id="copy-link-btn" class="accent-bg text-white font-bold rounded-xl px-4 py-2.5 text-sm" data-bn="🔗 লিংক কপি করুন" data-en="🔗 Copy Link">🔗 লিংক কপি করুন</button>
-          <button id="copy-opds-btn" class="bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl px-4 py-2.5 text-sm" data-bn="📡 OPDS লিংক কপি" data-en="📡 Copy OPDS Link">📡 OPDS লিংক কপি</button>
-          <button id="share2-btn" class="bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl px-4 py-2.5 text-sm" data-bn="⤴ শেয়ার" data-en="⤴ Share">⤴ শেয়ার</button>
+          <button id="copy-link-btn" class="accent-bg text-white font-bold rounded-[10px] px-4 py-2.5 text-sm"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-link"/></svg> <span data-bn="লিংক কপি করুন" data-en="Copy Link">লিংক কপি করুন</span></button>
+          <button id="copy-opds-btn" class="bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-[10px] px-4 py-2.5 text-sm"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-rss"/></svg> <span data-bn="OPDS লিংক কপি" data-en="Copy OPDS Link">OPDS লিংক কপি</span></button>
+          <button id="share2-btn" class="bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-[10px] px-4 py-2.5 text-sm" ><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-upload"/></svg> <span data-bn="শেয়ার" data-en="Share">শেয়ার</span></button>
         </div>
-        <p id="copy-ok" class="hidden text-sm font-bold text-emerald-700 dark:text-emerald-400 mt-2" data-bn="✓ লিংক কপি হয়েছে" data-en="✓ Link copied">✓ লিংক কপি হয়েছে</p>
-        <p id="copy-opds-ok" class="hidden text-sm font-bold text-emerald-700 dark:text-emerald-400 mt-2" data-bn="✓ OPDS লিংক কপি হয়েছে — KOReader বা Our Reader-এর OPDS ক্যাটালগে যোগ করুন" data-en="✓ OPDS link copied — add it as an OPDS catalog in KOReader or Our Reader">✓ OPDS লিংক কপি হয়েছে — KOReader বা Our Reader-এর OPDS ক্যাটালগে যোগ করুন</p>
+        <p id="copy-ok" class="hidden text-sm font-bold text-emerald-700 dark:text-emerald-400 mt-2"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-check"/></svg> <span data-bn="লিংক কপি হয়েছে" data-en="Link copied">লিংক কপি হয়েছে</span></p>
+        <p id="copy-opds-ok" class="hidden text-sm font-bold text-emerald-700 dark:text-emerald-400 mt-2"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-check"/></svg> <span data-bn="OPDS লিংক কপি হয়েছে — KOReader বা Our Reader-এর OPDS ক্যাটালগে যোগ করুন" data-en="OPDS link copied — add it as an OPDS catalog in KOReader or Our Reader">OPDS লিংক কপি হয়েছে — KOReader বা Our Reader-এর OPDS ক্যাটালগে যোগ করুন</span></p>
       </div>
       <div id="qr-box" class="flex-shrink-0 text-center">
         <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&margin=6&data={{ page.url | absolute_url | url_encode }}" alt="QR code" width="160" height="160" class="rounded-lg border border-neutral-200 dark:border-neutral-600 bg-white p-1" onerror="document.getElementById('qr-box').style.display='none'">
-        <p class="text-[11px] font-bold text-neutral-400 mt-1" data-bn="QR কোড স্ক্যান করুন" data-en="Scan the QR code">QR কোড স্ক্যান করুন</p>
+        <p class="text-xs font-bold text-neutral-400 mt-1" data-bn="QR কোড স্ক্যান করুন" data-en="Scan the QR code">QR কোড স্ক্যান করুন</p>
       </div>
     </div>
   </section>
 
   <!-- INFO TABLE -->
   <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 mt-4">
-    <h2 class="text-lg font-bold mb-2" data-bn="বইয়ের তথ্য" data-en="Book Information">বইয়ের তথ্য</h2>
+    <h2 class="text-lg font-semibold mb-2" data-bn="বইয়ের তথ্য" data-en="Book Information">বইয়ের তথ্য</h2>
     <table class="w-full text-[15px]">
       <tr class="border-b border-neutral-200 dark:border-neutral-700"><td class="py-2 pr-3 text-neutral-500 dark:text-neutral-400 w-36 font-medium" data-bn="লেখক" data-en="Writer">লেখক</td><td class="py-2 font-semibold">{{ page.author }}</td></tr>
       <tr class="border-b border-neutral-200 dark:border-neutral-700"><td class="py-2 pr-3 text-neutral-500 dark:text-neutral-400 font-medium" data-bn="ইবুক নির্মাতা" data-en="Ebook Creator">ইবুক নির্মাতা</td><td class="py-2 font-semibold">{{ page.creator }}</td></tr>
@@ -135,7 +135,7 @@ layout: default
   {% if page.toc %}
   <!-- TABLE OF CONTENTS -->
   <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 mt-4">
-    <h2 class="text-lg font-bold mb-2" data-bn="সূচিপত্র" data-en="Table of Contents">সূচিপত্র</h2>
+    <h2 class="text-lg font-semibold mb-2" data-bn="সূচিপত্র" data-en="Table of Contents">সূচিপত্র</h2>
     <ul class="divide-y divide-neutral-100 dark:divide-neutral-700">
       {% for item in page.toc %}<li class="py-2.5 flex items-center justify-between text-[15px] font-medium"><span>{{ item }}</span><span class="text-neutral-300 dark:text-neutral-600">›</span></li>{% endfor %}
     </ul>
@@ -144,9 +144,9 @@ layout: default
 
   <!-- AUTHOR CARD -->
   <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 mt-4">
-    <h2 class="text-lg font-bold mb-3" data-bn="লেখকের পরিচিতি" data-en="About the Author">লেখকের পরিচিতি</h2>
+    <h2 class="text-lg font-semibold mb-3" data-bn="লেখকের পরিচিতি" data-en="About the Author">লেখকের পরিচিতি</h2>
     <div class="flex items-start gap-4">
-      <span class="accent-bg w-14 h-14 rounded-full flex items-center justify-center text-white text-2xl font-extrabold flex-shrink-0">{{ page.author | slice: 0 }}</span>
+      <span class="accent-bg w-14 h-14 rounded-full flex items-center justify-center text-white text-2xl font-semibold flex-shrink-0">{{ page.author | slice: 0 }}</span>
       <div class="min-w-0">
         <p class="font-bold text-[16px]">{{ page.author }}</p>
         {% assign akey = page.author | strip %}
@@ -167,14 +167,14 @@ layout: default
   {% if series_books.size > 1 %}
   <!-- SERIES -->
   <section class="mt-8">
-    <h2 class="serif text-xl font-extrabold mb-1" data-bn="📚 এই সিরিজের বই" data-en="📚 Books in This Series">📚 এই সিরিজের বই</h2>
+    <h2 class="serif text-xl font-semibold mb-1 flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-book"/></svg> <span data-bn="এই সিরিজের বই" data-en="Books in This Series">এই সিরিজের বই</span></h2>
     <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-3"><strong data-bn="{{ page.series }}" data-en="{{ page.series_en | default: page.series }}">{{ page.series }}</strong> · <span data-bn="অংশ {{ page.series_order }} / {{ series_books.size }}" data-en="Part {{ page.series_order }} of {{ series_books.size }}">অংশ {{ page.series_order }} / {{ series_books.size }}</span></p>
     <div class="flex gap-4 overflow-x-auto no-scrollbar snap-x pb-2 -mx-3 px-3 sm:mx-0 sm:px-0">
       {% for r in series_books %}
-      <a href="{{ r.url | relative_url }}" class="snap-start shrink-0 w-[132px] sm:w-[150px] group">
-        <div class="rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]{% if r.url == page.url %} ring-4 ring-emerald-500{% endif %}"><img src="{{ r.cover | relative_url }}" alt="" class="w-full h-full object-cover group-hover:scale-105 transition duration-300"></div>
+      <a href="{{ r.url | relative_url }}" class="snap-start shrink-0 w-[132px] sm:w-[152px] group">
+        <div class="rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]{% if r.url == page.url %} ring-4 ring-emerald-500{% endif %}"><img src="{{ r.cover | relative_url }}" alt="" class="w-full h-full object-cover transition-[filter] duration-200 group-hover:brightness-105"></div>
         <span class="block text-[13px] font-bold mt-2 leading-snug line-clamp-2">{{ r.title }}</span>
-        <span class="block text-[11px] font-bold accent-text mt-0.5" data-bn="অংশ {{ r.series_order }}" data-en="Part {{ r.series_order }}">অংশ {{ r.series_order }}</span>
+        <span class="block text-xs font-bold accent-text mt-0.5" data-bn="অংশ {{ r.series_order }}" data-en="Part {{ r.series_order }}">অংশ {{ r.series_order }}</span>
       </a>
       {% endfor %}
     </div>
@@ -184,7 +184,7 @@ layout: default
 
   <!-- COMMENTS -->
   <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 mt-4">
-    <h2 class="text-lg font-bold mb-1" data-bn="💬 পাঠকের মন্তব্য ও রিঅ্যাকশন" data-en="💬 Reader Comments & Reactions">💬 পাঠকের মন্তব্য ও রিঅ্যাকশন</h2>
+    <h2 class="text-lg font-semibold mb-1 flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-message"/></svg> <span data-bn="পাঠকের মন্তব্য ও রিঅ্যাকশন" data-en="Reader Comments & Reactions">পাঠকের মন্তব্য ও রিঅ্যাকশন</span></h2>
     <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-4" data-bn="এই বই নিয়ে আপনার মতামত জানান — আপনার Facebook অ্যাকাউন্ট দিয়ে মন্তব্য করুন।" data-en="Share your thoughts on this book — comment with your Facebook account.">এই বই নিয়ে আপনার মতামত জানান — আপনার Facebook অ্যাকাউন্ট দিয়ে মন্তব্য করুন।</p>
     <div id="fb-root"></div>
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v21.0"></script>
@@ -195,12 +195,12 @@ layout: default
   {% if same_author.size > 1 %}
   <!-- MORE BY THIS AUTHOR -->
   <section class="mt-8">
-    <h2 class="serif text-xl font-extrabold mb-3" data-bn="একই লেখকের আরও বই" data-en="More by This Author">একই লেখকের আরও বই</h2>
+    <h2 class="serif text-xl font-semibold mb-3" data-bn="একই লেখকের আরও বই" data-en="More by This Author">একই লেখকের আরও বই</h2>
     <div class="flex gap-4 overflow-x-auto no-scrollbar snap-x pb-2 -mx-3 px-3 sm:mx-0 sm:px-0">
       {% assign shown = 0 %}
       {% for r in same_author %}{% unless r.url == page.url %}{% assign shown = shown | plus: 1 %}{% if shown > 12 %}{% break %}{% endif %}
-      <a href="{{ r.url | relative_url }}" class="snap-start shrink-0 w-[132px] sm:w-[150px] group">
-        <div class="rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]"><img src="{{ r.cover | relative_url }}" alt="" class="w-full h-full object-cover group-hover:scale-105 transition duration-300"></div>
+      <a href="{{ r.url | relative_url }}" class="snap-start shrink-0 w-[132px] sm:w-[152px] group">
+        <div class="rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]"><img src="{{ r.cover | relative_url }}" alt="" class="w-full h-full object-cover transition-[filter] duration-200 group-hover:brightness-105"></div>
         <span class="block text-[13px] font-bold mt-2 leading-snug line-clamp-2">{{ r.title }}</span>
       </a>
       {% endunless %}{% endfor %}
@@ -212,14 +212,14 @@ layout: default
   {% if related.size > 1 %}
   <!-- READERS ALSO READ (same category, excluding this book) -->
   <section class="mt-8">
-    <h2 class="serif text-xl font-extrabold mb-3" data-bn="📖 পাঠকরা আরও পড়ছেন" data-en="📖 Readers Also Read">📖 পাঠকরা আরও পড়ছেন</h2>
+    <h2 class="serif text-xl font-semibold mb-3 flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-book-open"/></svg> <span data-bn="পাঠকরা আরও পড়ছেন" data-en="Readers Also Read">পাঠকরা আরও পড়ছেন</span></h2>
     <div class="flex gap-4 overflow-x-auto no-scrollbar snap-x pb-2 -mx-3 px-3 sm:mx-0 sm:px-0">
       {% assign shown = 0 %}
       {% for r in related %}{% unless r.url == page.url %}{% assign shown = shown | plus: 1 %}{% if shown > 12 %}{% break %}{% endif %}
-      <a href="{{ r.url | relative_url }}" class="snap-start shrink-0 w-[132px] sm:w-[150px] group">
-        <div class="rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]"><img src="{{ r.cover | relative_url }}" alt="" class="w-full h-full object-cover group-hover:scale-105 transition duration-300"></div>
+      <a href="{{ r.url | relative_url }}" class="snap-start shrink-0 w-[132px] sm:w-[152px] group">
+        <div class="rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]"><img src="{{ r.cover | relative_url }}" alt="" class="w-full h-full object-cover transition-[filter] duration-200 group-hover:brightness-105"></div>
         <span class="block text-[13px] font-bold mt-2 leading-snug line-clamp-2">{{ r.title }}</span>
-        <span class="block text-[11px] text-neutral-500 dark:text-neutral-400 line-clamp-1">{{ r.author }}</span>
+        <span class="block text-xs text-neutral-500 dark:text-neutral-400 line-clamp-1">{{ r.author }}</span>
       </a>
       {% endunless %}{% endfor %}
     </div>
@@ -228,7 +228,7 @@ layout: default
 
   <!-- NOTICE -->
   <section class="border border-amber-200 dark:border-neutral-700 bg-amber-50 dark:bg-neutral-800 rounded-2xl p-4 mt-8 text-[13px] text-neutral-600 dark:text-neutral-300">
-    ⚠️ <span data-bn="দায়মুক্তি: এখানে দেওয়া বইগুলো শিক্ষামূলক উদ্দেশ্যে সংগৃহীত। কোনো বই নিয়ে কপিরাইট আপত্তি থাকলে" data-en="Disclaimer: books here are collected for educational purposes. If you hold a copyright concern about any book, please">দায়মুক্তি: এখানে দেওয়া বইগুলো শিক্ষামূলক উদ্দেশ্যে সংগৃহীত। কোনো বই নিয়ে কপিরাইট আপত্তি থাকলে</span>
+    <svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-alert"/></svg> <span data-bn="দায়মুক্তি: এখানে দেওয়া বইগুলো শিক্ষামূলক উদ্দেশ্যে সংগৃহীত। কোনো বই নিয়ে কপিরাইট আপত্তি থাকলে" data-en="Disclaimer: books here are collected for educational purposes. If you hold a copyright concern about any book, please">দায়মুক্তি: এখানে দেওয়া বইগুলো শিক্ষামূলক উদ্দেশ্যে সংগৃহীত। কোনো বই নিয়ে কপিরাইট আপত্তি থাকলে</span>
     <a class="accent-text font-bold hover:underline" href="https://github.com/MDTowfiqul/our-boighar/issues" target="_blank" rel="noopener" data-bn="যোগাযোগ করুন" data-en="contact us">যোগাযোগ করুন</a>
     <span data-bn="— যাচাই করে সরিয়ে দেওয়া হবে।" data-en="— it will be verified and removed.">— যাচাই করে সরিয়ে দেওয়া হবে।</span>
   </section>
@@ -249,7 +249,7 @@ layout: default
   function set(l){ try{ localStorage.setItem(KEY, JSON.stringify(l)); }catch(e){} }
   function en(){ return localStorage.getItem('ob-lang') === 'en'; }
   var btn = document.getElementById('bm-btn');
-  function paint(){ var on = get().indexOf(BID) >= 0; btn.textContent = on ? (en() ? '★ On Shelf' : '★ তাকে আছে') : (en() ? '🔖 Add to Shelf' : '🔖 তাকে রাখুন'); btn.classList.toggle('ring-2', on); }
+  function paint(){ var on = get().indexOf(BID) >= 0; btn.innerHTML = '<svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-bookmark"/></svg><span>' + (on ? (en() ? 'On Shelf' : 'তাকে আছে') : (en() ? 'Add to Shelf' : 'তাকে রাখুন')) + '</span>'; btn.classList.toggle('ring-2', on); }
   btn.onclick = function(){ var l = get(), i = l.indexOf(BID); if(i>=0) l.splice(i,1); else l.push(BID); set(l); paint(); };
   paint();
 
@@ -273,8 +273,8 @@ layout: default
       var btn = document.getElementById('ob-shelf-add');
       btn.disabled = true;
       OBApi.api('/api/shelves/' + encodeURIComponent(sel.value) + '/books', { method: 'POST', body: { book_id: BID } })
-        .then(function(){ btn.innerHTML = '✓ ' + (en() ? 'Saved' : 'সংরক্ষিত'); })
-        .catch(function(e){ btn.textContent = e.message; setTimeout(function(){ btn.disabled = false; btn.innerHTML = '☁️ <span>' + (en() ? 'Save to shelf' : 'তাকে সংরক্ষণ করুন') + '</span>'; }, 2500); });
+        .then(function(){ btn.innerHTML = '<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-check"/></svg> ' + (en() ? 'Saved' : 'সংরক্ষিত'); })
+        .catch(function(e){ btn.textContent = e.message; setTimeout(function(){ btn.disabled = false; btn.innerHTML = '<svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-cloud"/></svg> <span>' + (en() ? 'Save to shelf' : 'তাকে সংরক্ষণ করুন') + '</span>'; }, 2500); });
     };
   })();
 
@@ -294,7 +294,7 @@ layout: default
     var file = {{ bookfile | jsonify }};
     var p = file && prog[file];
     if (p && typeof p.pct === 'number' && p.pct > 0){
-      document.getElementById('continue-pct').textContent = p.pct + '%';
+      document.getElementById('continue-pct').textContent = window.__obDigits(p.pct) + '%';
       btn.classList.remove('hidden');
       btn.classList.add('flex');
     }
@@ -324,7 +324,7 @@ layout: default
 
   document.getElementById('share-btn').onclick = function(){
     if (navigator.share) navigator.share({title: document.title, url: location.href}).catch(function(){});
-    else if (navigator.clipboard){ navigator.clipboard.writeText(location.href); this.textContent = en() ? '✓ Link copied' : '✓ লিংক কপি হয়েছে'; }
+    else if (navigator.clipboard){ navigator.clipboard.writeText(location.href); this.innerHTML = '<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-check"/></svg> ' + (en() ? 'Link copied' : 'লিংক কপি হয়েছে'); }
   };
 
   /* personal 1-10 rating */
@@ -332,9 +332,9 @@ layout: default
   var starsEl = document.getElementById('rate-stars'), labelEl = document.getElementById('rate-label');
   function paintRating(){
     var r = getRatings()[BID] || 0, html = '';
-    for (var i = 1; i <= 10; i++) html += '<span data-v="' + i + '" style="color:' + (i <= r ? 'var(--accent)' : '#d4d4d4') + '">★</span>';
+    for (var i = 1; i <= 10; i++) html += '<span data-v="' + i + '" class="ob-rate-star' + (i <= r ? ' on' : '') + '"><svg class="ob-ic" style="width:22px;height:22px" aria-hidden="true"><use href="#ob-ic-star"/></svg></span>';
     starsEl.innerHTML = html;
-    labelEl.textContent = r ? (r + '/10') : (en() ? 'Tap to rate' : 'রেটিং দিতে চাপুন');
+    labelEl.textContent = r ? window.__obDigits(r + '/10') : (en() ? 'Tap to rate' : 'রেটিং দিতে চাপুন');
     Array.prototype.forEach.call(starsEl.children, function(st){
       st.onclick = function(){
         var all = getRatings(), v = parseInt(st.getAttribute('data-v'), 10);
