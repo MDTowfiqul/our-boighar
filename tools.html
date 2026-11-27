@@ -4,22 +4,26 @@ title: Tools | টুলস
 permalink: /tools/
 description: "Free browser-only tools for Our Boighar readers — read EPUBs, check metadata, merge PDFs, plan your reading. No login, no upload, everything runs on your device."
 ---
+<style>
+.pin-btn .ob-ic{color:var(--muted)}
+.pin-btn.pinned .ob-ic{color:var(--gold)}
+</style>
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/epubjs@0.3.93/dist/epub.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 
 <main class="max-w-6xl mx-auto px-3 sm:px-4">
   <!-- PAGE HEADER -->
-  <section class="hero-bg text-white rounded-[1.8rem] mt-4 px-5 py-8 sm:p-10 shadow-xl">
-    <h1 class="serif text-2xl sm:text-3xl font-extrabold" data-bn="🛠️ বইঘর টুলস" data-en="🛠️ Boighar Tools">🛠️ বইঘর টুলস</h1>
+  <section class="hero-bg text-white rounded-3xl mt-4 px-5 py-8 sm:p-10 ob-shadow">
+    <h1 class="serif text-2xl sm:text-3xl font-semibold flex items-center gap-2"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-wrench"/></svg><span data-bn="বইঘর টুলস" data-en="Boighar Tools">বইঘর টুলস</span></h1>
     <p class="mt-2 text-white/90 text-sm sm:text-base leading-relaxed max-w-2xl" data-bn="পড়া, সাজানো আর বই বানানোর কাজের টুল — সব আপনার ব্রাউজারেই চলে। কোনো লগইন লাগে না, ফাইল কোথাও আপলোড হয় না।" data-en="Tools for reading, organising and making books — everything runs in your browser. No login needed, no file is ever uploaded anywhere.">পড়া, সাজানো আর বই বানানোর কাজের টুল — সব আপনার ব্রাউজারেই চলে। কোনো লগইন লাগে না, ফাইল কোথাও আপলোড হয় না।</p>
-    <p class="mt-3 inline-flex items-center gap-2 bg-white/15 rounded-full px-3 py-1.5 text-xs sm:text-sm font-bold" data-bn="🔒 আপনার ফাইল আপনার ডিভাইসেই থাকে — কিছুই সার্ভারে যায় না" data-en="🔒 Your files stay on your device — nothing goes to any server">🔒 আপনার ফাইল আপনার ডিভাইসেই থাকে — কিছুই সার্ভারে যায় না</p>
+    <p class="mt-3 inline-flex items-center gap-2 bg-white/15 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-bold"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-lock"/></svg><span data-bn="আপনার ফাইল আপনার ডিভাইসেই থাকে — কিছুই সার্ভারে যায় না" data-en="Your files stay on your device — nothing goes to any server">আপনার ফাইল আপনার ডিভাইসেই থাকে — কিছুই সার্ভারে যায় না</span></p>
   </section>
 
   <!-- PINNED TOOLS (xKAF style) -->
   <section id="pinned-sec" class="mt-9 hidden">
     <div class="flex items-baseline justify-between mb-3 px-0.5">
-      <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="📌 পিন করা টুল" data-en="📌 Pinned Tools">📌 পিন করা টুল</h2>
+      <h2 class="serif text-xl sm:text-2xl font-semibold flex items-center gap-2"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-pin"/></svg><span data-bn="পিন করা টুল" data-en="Pinned Tools">পিন করা টুল</span></h2>
     </div>
     <div id="pinned-row" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
   </section>
@@ -27,7 +31,7 @@ description: "Free browser-only tools for Our Boighar readers — read EPUBs, ch
   <!-- EBOOK TOOLS -->
   <section class="mt-9">
     <div class="flex items-baseline justify-between mb-3 px-0.5">
-      <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="📖 ইবুক টুল" data-en="📖 Ebook Tools">📖 ইবুক টুল</h2>
+      <h2 class="serif text-xl sm:text-2xl font-semibold flex items-center gap-2"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-book-open"/></svg><span data-bn="ইবুক টুল" data-en="Ebook Tools">ইবুক টুল</span></h2>
     </div>
     <div class="tools-group grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
@@ -35,11 +39,11 @@ description: "Free browser-only tools for Our Boighar readers — read EPUBs, ch
       <article class="tool-card bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm" data-tool="epub-reader">
         <div class="flex items-start justify-between gap-2">
           <div>
-            <span class="text-2xl">📖</span>
-            <h3 class="font-extrabold mt-1" data-bn="ইপাব রিডার" data-en="EPUB Reader">ইপাব রিডার</h3>
+            <svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-book-open"/></svg>
+            <h3 class="font-semibold mt-1" data-bn="ইপাব রিডার" data-en="EPUB Reader">ইপাব রিডার</h3>
             <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="আপনার ফোনের ইপাব ফাইল ব্রাউজারেই পড়ুন — আপলোড ছাড়াই।" data-en="Read an EPUB file from your device right in the browser — no upload.">আপনার ফোনের ইপাব ফাইল ব্রাউজারেই পড়ুন — আপলোড ছাড়াই।</p>
           </div>
-          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="epub-reader" aria-label="Pin tool" title="Pin">📌</button>
+          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="epub-reader" aria-label="Pin tool" title="Pin"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-pin"/></svg></button>
         </div>
         <button class="open-btn accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" data-open="epub-reader" data-bn="খুলুন" data-en="Open">খুলুন</button>
         <div class="tool-work hidden mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-700" id="work-epub-reader">
@@ -64,11 +68,11 @@ description: "Free browser-only tools for Our Boighar readers — read EPUBs, ch
       <article class="tool-card bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm" data-tool="epub-meta">
         <div class="flex items-start justify-between gap-2">
           <div>
-            <span class="text-2xl">🏷️</span>
-            <h3 class="font-extrabold mt-1" data-bn="ইপাব তথ্য দেখুন" data-en="EPUB Metadata Viewer">ইপাব তথ্য দেখুন</h3>
+            <svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-tag"/></svg>
+            <h3 class="font-semibold mt-1" data-bn="ইপাব তথ্য দেখুন" data-en="EPUB Metadata Viewer">ইপাব তথ্য দেখুন</h3>
             <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="ইপাব ফাইলের ভেতরের শিরোনাম, লেখক, ভাষা ও প্রচ্ছদ দেখুন।" data-en="See the title, author, language and cover stored inside an EPUB file.">ইপাব ফাইলের ভেতরের শিরোনাম, লেখক, ভাষা ও প্রচ্ছদ দেখুন।</p>
           </div>
-          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="epub-meta" aria-label="Pin tool" title="Pin">📌</button>
+          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="epub-meta" aria-label="Pin tool" title="Pin"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-pin"/></svg></button>
         </div>
         <button class="open-btn accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" data-open="epub-meta" data-bn="খুলুন" data-en="Open">খুলুন</button>
         <div class="tool-work hidden mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-700" id="work-epub-meta">
@@ -83,11 +87,11 @@ description: "Free browser-only tools for Our Boighar readers — read EPUBs, ch
       <article class="tool-card bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm" data-tool="epub-txt">
         <div class="flex items-start justify-between gap-2">
           <div>
-            <span class="text-2xl">📝</span>
-            <h3 class="font-extrabold mt-1" data-bn="ইপাব থেকে টেক্সট" data-en="EPUB to TXT">ইপাব থেকে টেক্সট</h3>
+            <svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-memo"/></svg>
+            <h3 class="font-semibold mt-1" data-bn="ইপাব থেকে টেক্সট" data-en="EPUB to TXT">ইপাব থেকে টেক্সট</h3>
             <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="ইপাব থেকে শুধু লেখাটুকু বের করে .txt ফাইল হিসেবে ডাউনলোড করুন।" data-en="Extract the plain text of an EPUB and download it as a .txt file.">ইপাব থেকে শুধু লেখাটুকু বের করে .txt ফাইল হিসেবে ডাউনলোড করুন।</p>
           </div>
-          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="epub-txt" aria-label="Pin tool" title="Pin">📌</button>
+          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="epub-txt" aria-label="Pin tool" title="Pin"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-pin"/></svg></button>
         </div>
         <button class="open-btn accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" data-open="epub-txt" data-bn="খুলুন" data-en="Open">খুলুন</button>
         <div class="tool-work hidden mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-700" id="work-epub-txt">
@@ -106,7 +110,7 @@ description: "Free browser-only tools for Our Boighar readers — read EPUBs, ch
   <!-- PDF TOOLS -->
   <section class="mt-9">
     <div class="flex items-baseline justify-between mb-3 px-0.5">
-      <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="📄 পিডিএফ টুল" data-en="📄 PDF Tools">📄 পিডিএফ টুল</h2>
+      <h2 class="serif text-xl sm:text-2xl font-semibold flex items-center gap-2"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-file-text"/></svg><span data-bn="পিডিএফ টুল" data-en="PDF Tools">পিডিএফ টুল</span></h2>
     </div>
     <div class="tools-group grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
@@ -114,11 +118,11 @@ description: "Free browser-only tools for Our Boighar readers — read EPUBs, ch
       <article class="tool-card bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm" data-tool="pdf-merge">
         <div class="flex items-start justify-between gap-2">
           <div>
-            <span class="text-2xl">📎</span>
-            <h3 class="font-extrabold mt-1" data-bn="পিডিএফ জোড়া দিন" data-en="PDF Merge">পিডিএফ জোড়া দিন</h3>
+            <svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-paperclip"/></svg>
+            <h3 class="font-semibold mt-1" data-bn="পিডিএফ জোড়া দিন" data-en="PDF Merge">পিডিএফ জোড়া দিন</h3>
             <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="২টি বা তার বেশি পিডিএফ এক ফাইলে জোড়া দিন।" data-en="Combine 2 or more PDFs into a single file.">২টি বা তার বেশি পিডিএফ এক ফাইলে জোড়া দিন।</p>
           </div>
-          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="pdf-merge" aria-label="Pin tool" title="Pin">📌</button>
+          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="pdf-merge" aria-label="Pin tool" title="Pin"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-pin"/></svg></button>
         </div>
         <button class="open-btn accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" data-open="pdf-merge" data-bn="খুলুন" data-en="Open">খুলুন</button>
         <div class="tool-work hidden mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-700" id="work-pdf-merge">
@@ -134,11 +138,11 @@ description: "Free browser-only tools for Our Boighar readers — read EPUBs, ch
       <article class="tool-card bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm" data-tool="pdf-extract">
         <div class="flex items-start justify-between gap-2">
           <div>
-            <span class="text-2xl">✂️</span>
-            <h3 class="font-extrabold mt-1" data-bn="পিডিএফ পাতা বের করুন" data-en="PDF Page Extractor">পিডিএফ পাতা বের করুন</h3>
+            <svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-scissors"/></svg>
+            <h3 class="font-semibold mt-1" data-bn="পিডিএফ পাতা বের করুন" data-en="PDF Page Extractor">পিডিএফ পাতা বের করুন</h3>
             <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="পিডিএফ থেকে শুধু দরকারি পাতাগুলো নিয়ে নতুন পিডিএফ বানান।" data-en="Take only the pages you need from a PDF and make a new PDF.">পিডিএফ থেকে শুধু দরকারি পাতাগুলো নিয়ে নতুন পিডিএফ বানান।</p>
           </div>
-          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="pdf-extract" aria-label="Pin tool" title="Pin">📌</button>
+          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="pdf-extract" aria-label="Pin tool" title="Pin"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-pin"/></svg></button>
         </div>
         <button class="open-btn accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" data-open="pdf-extract" data-bn="খুলুন" data-en="Open">খুলুন</button>
         <div class="tool-work hidden mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-700" id="work-pdf-extract">
@@ -157,11 +161,11 @@ description: "Free browser-only tools for Our Boighar readers — read EPUBs, ch
       <article class="tool-card bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm" data-tool="img-pdf">
         <div class="flex items-start justify-between gap-2">
           <div>
-            <span class="text-2xl">🖼️</span>
-            <h3 class="font-extrabold mt-1" data-bn="ছবি থেকে পিডিএফ" data-en="Image to PDF">ছবি থেকে পিডিএফ</h3>
+            <svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-image"/></svg>
+            <h3 class="font-semibold mt-1" data-bn="ছবি থেকে পিডিএফ" data-en="Image to PDF">ছবি থেকে পিডিএফ</h3>
             <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="প্রচ্ছদ বা স্ক্যান করা পাতার ছবি দিয়ে পিডিএফ বানান — প্রতি ছবি এক পাতা।" data-en="Make a PDF from cover or scanned-page images — one image per page.">প্রচ্ছদ বা স্ক্যান করা পাতার ছবি দিয়ে পিডিএফ বানান — প্রতি ছবি এক পাতা।</p>
           </div>
-          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="img-pdf" aria-label="Pin tool" title="Pin">📌</button>
+          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="img-pdf" aria-label="Pin tool" title="Pin"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-pin"/></svg></button>
         </div>
         <button class="open-btn accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" data-open="img-pdf" data-bn="খুলুন" data-en="Open">খুলুন</button>
         <div class="tool-work hidden mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-700" id="work-img-pdf">
@@ -178,7 +182,7 @@ description: "Free browser-only tools for Our Boighar readers — read EPUBs, ch
   <!-- IMAGE TOOLS -->
   <section class="mt-9">
     <div class="flex items-baseline justify-between mb-3 px-0.5">
-      <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="🖼️ ছবির টুল" data-en="🖼️ Image Tool">🖼️ ছবির টুল</h2>
+      <h2 class="serif text-xl sm:text-2xl font-semibold flex items-center gap-2"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-image"/></svg><span data-bn="ছবির টুল" data-en="Image Tool">ছবির টুল</span></h2>
     </div>
     <div class="tools-group grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
@@ -186,11 +190,11 @@ description: "Free browser-only tools for Our Boighar readers — read EPUBs, ch
       <article class="tool-card bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm" data-tool="cover-resize">
         <div class="flex items-start justify-between gap-2">
           <div>
-            <span class="text-2xl">🖼️</span>
-            <h3 class="font-extrabold mt-1" data-bn="প্রচ্ছদ রিসাইজ" data-en="Cover Resizer">প্রচ্ছদ রিসাইজ</h3>
+            <svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-image"/></svg>
+            <h3 class="font-semibold mt-1" data-bn="প্রচ্ছদ রিসাইজ" data-en="Cover Resizer">প্রচ্ছদ রিসাইজ</h3>
             <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="বইয়ের প্রচ্ছদ ছবি মানসম্মত সাইজে ছোট-বড় করে ডাউনলোড করুন।" data-en="Resize a book cover image to a standard size and download it.">বইয়ের প্রচ্ছদ ছবি মানসম্মত সাইজে ছোট-বড় করে ডাউনলোড করুন।</p>
           </div>
-          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="cover-resize" aria-label="Pin tool" title="Pin">📌</button>
+          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="cover-resize" aria-label="Pin tool" title="Pin"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-pin"/></svg></button>
         </div>
         <button class="open-btn accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" data-open="cover-resize" data-bn="খুলুন" data-en="Open">খুলুন</button>
         <div class="tool-work hidden mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-700" id="work-cover-resize">
@@ -238,7 +242,7 @@ description: "Free browser-only tools for Our Boighar readers — read EPUBs, ch
   <!-- READING TOOLS -->
   <section class="mt-9">
     <div class="flex items-baseline justify-between mb-3 px-0.5">
-      <h2 class="serif text-xl sm:text-2xl font-extrabold" data-bn="📚 পড়ার অভ্যাসের টুল" data-en="📚 Reading Habit Tools">📚 পড়ার অভ্যাসের টুল</h2>
+      <h2 class="serif text-xl sm:text-2xl font-semibold flex items-center gap-2"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-book"/></svg><span data-bn="পড়ার অভ্যাসের টুল" data-en="Reading Habit Tools">পড়ার অভ্যাসের টুল</span></h2>
     </div>
     <div class="tools-group grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
@@ -246,11 +250,11 @@ description: "Free browser-only tools for Our Boighar readers — read EPUBs, ch
       <article class="tool-card bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm" data-tool="planner">
         <div class="flex items-start justify-between gap-2">
           <div>
-            <span class="text-2xl">📅</span>
-            <h3 class="font-extrabold mt-1" data-bn="পড়ার পরিকল্পনা" data-en="Reading Planner">পড়ার পরিকল্পনা</h3>
+            <svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-calendar"/></svg>
+            <h3 class="font-semibold mt-1" data-bn="পড়ার পরিকল্পনা" data-en="Reading Planner">পড়ার পরিকল্পনা</h3>
             <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="বই শেষ করার তারিখ বা দিনে কত পাতা পড়বেন — হিসাব করে পরিকল্পনা সাজান।" data-en="Plan by finish date or pages per day, and see when you'll finish the book.">বই শেষ করার তারিখ বা দিনে কত পাতা পড়বেন — হিসাব করে পরিকল্পনা সাজান।</p>
           </div>
-          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="planner" aria-label="Pin tool" title="Pin">📌</button>
+          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="planner" aria-label="Pin tool" title="Pin"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-pin"/></svg></button>
         </div>
         <button class="open-btn accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" data-open="planner" data-bn="খুলুন" data-en="Open">খুলুন</button>
         <div class="tool-work hidden mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-700" id="work-planner">
@@ -294,11 +298,11 @@ description: "Free browser-only tools for Our Boighar readers — read EPUBs, ch
       <article class="tool-card bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm" data-tool="wordcount">
         <div class="flex items-start justify-between gap-2">
           <div>
-            <span class="text-2xl">🔢</span>
-            <h3 class="font-extrabold mt-1" data-bn="শব্দ গণনা ও পড়ার সময়" data-en="Word Counter & Reading Time">শব্দ গণনা ও পড়ার সময়</h3>
+            <svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-numbers"/></svg>
+            <h3 class="font-semibold mt-1" data-bn="শব্দ গণনা ও পড়ার সময়" data-en="Word Counter & Reading Time">শব্দ গণনা ও পড়ার সময়</h3>
             <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="লেখা বসান বা ফাইল দিন — শব্দ সংখ্যা আর পড়তে কত সময় লাগবে দেখুন।" data-en="Paste text or drop a file — get the word count and estimated reading time.">লেখা বসান বা ফাইল দিন — শব্দ সংখ্যা আর পড়তে কত সময় লাগবে দেখুন।</p>
           </div>
-          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="wordcount" aria-label="Pin tool" title="Pin">📌</button>
+          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="wordcount" aria-label="Pin tool" title="Pin"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-pin"/></svg></button>
         </div>
         <button class="open-btn accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" data-open="wordcount" data-bn="খুলুন" data-en="Open">খুলুন</button>
         <div class="tool-work hidden mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-700" id="work-wordcount">
@@ -318,18 +322,18 @@ description: "Free browser-only tools for Our Boighar readers — read EPUBs, ch
       <article class="tool-card bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm" data-tool="fontlab">
         <div class="flex items-start justify-between gap-2">
           <div>
-            <span class="text-2xl">🔤</span>
-            <h3 class="font-extrabold mt-1" data-bn="ফন্ট ল্যাব" data-en="Font Lab">ফন্ট ল্যাব</h3>
+            <svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-letters"/></svg>
+            <h3 class="font-semibold mt-1" data-bn="ফন্ট ল্যাব" data-en="Font Lab">ফন্ট ল্যাব</h3>
             <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="সাইটের বাংলা-ইংরেজি ফন্টগুলো বিভিন্ন সাইজে দেখে নিন।" data-en="Preview the site's Bengali and English fonts at different sizes.">সাইটের বাংলা-ইংরেজি ফন্টগুলো বিভিন্ন সাইজে দেখে নিন।</p>
           </div>
-          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="fontlab" aria-label="Pin tool" title="Pin">📌</button>
+          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="fontlab" aria-label="Pin tool" title="Pin"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-pin"/></svg></button>
         </div>
         <button class="open-btn accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" data-open="fontlab" data-bn="খুলুন" data-en="Open">খুলুন</button>
         <div class="tool-work hidden mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-700" id="work-fontlab">
           <label class="block text-sm font-bold mb-1.5" data-bn="নমুনা লেখা" data-en="Sample text">নমুনা লেখা</label>
           <input type="text" id="fontlab-text" value="লা ইলাহা ইল্লাল্লাহ, মুহাম্মাদুর রাসূলুল্লাহ" class="w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg px-3 py-2 bg-white dark:bg-neutral-900">
           <label class="block text-sm font-bold mt-3 mb-1.5"><span data-bn="অক্ষরের সাইজ" data-en="Font size">অক্ষরের সাইজ</span> — <span id="fontlab-size-label">24px</span></label>
-          <input type="range" id="fontlab-size" min="14" max="56" value="24" class="w-full accent-[#e0521f]">
+          <input type="range" id="fontlab-size" min="14" max="56" value="24" class="w-full" style="accent-color:var(--accent)">
           <div id="fontlab-preview" class="mt-3 space-y-3"></div>
           <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-2" data-bn="“সিস্টেম ফন্ট” লেখাগুলো আপনার ডিভাইসে ইনস্টল থাকলেই দেখাবে — না থাকলে কাছাকাছি ফন্ট দেখাবে। এখান থেকে ফন্ট ডাউনলোড করা যায় না।" data-en="“System font” rows only show that font if it is installed on your device — otherwise a fallback font shows. Fonts cannot be downloaded from here.">“সিস্টেম ফন্ট” লেখাগুলো আপনার ডিভাইসে ইনস্টল থাকলেই দেখাবে — না থাকলে কাছাকাছি ফন্ট দেখাবে। এখান থেকে ফন্ট ডাউনলোড করা যায় না।</p>
         </div>
@@ -339,7 +343,7 @@ description: "Free browser-only tools for Our Boighar readers — read EPUBs, ch
 
   <!-- RELATED: OUR EBOOK MAKER -->
   <section class="mt-10 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm">
-    <h2 class="text-lg font-bold mb-2" data-bn="✒️ নিজে ইবুক বানাতে চান?" data-en="✒️ Want to make an ebook yourself?">✒️ নিজে ইবুক বানাতে চান?</h2>
+    <h2 class="text-lg font-semibold mb-2 flex items-center gap-2"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-pen-nib"/></svg><span data-bn="নিজে ইবুক বানাতে চান?" data-en="Want to make an ebook yourself?">নিজে ইবুক বানাতে চান?</span></h2>
     <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-300" data-bn="স্ক্যান করা পিডিএফ থেকে ইপাব বানানোর পুরো পথ — Our Ebook Maker-এ। শেয়ার করার আগে ১০ বছরের নিয়মটি মনে রাখবেন: শুধু ১০+ বছরের পুরোনো বই, অথবা লেখক/প্রকাশক নিজে প্রকাশ করেছেন এমন বই শেয়ার করা যায়।" data-en="The full path from a scanned PDF to an EPUB lives on Our Ebook Maker. Before sharing, remember the 10-year rule: only books 10+ years old, or books the writer/publisher published themselves, may be shared.">স্ক্যান করা পিডিএফ থেকে ইপাব বানানোর পুরো পথ — Our Ebook Maker-এ। শেয়ার করার আগে ১০ বছরের নিয়মটি মনে রাখবেন: শুধু ১০+ বছরের পুরোনো বই, অথবা লেখক/প্রকাশক নিজে প্রকাশ করেছেন এমন বই শেয়ার করা যায়।</p>
     <a class="accent-bg inline-block text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" href="https://mdtowfiqul.github.io/our-ebook-maker" target="_blank" rel="noopener" data-bn="Our Ebook Maker খুলুন →" data-en="Open Our Ebook Maker →">Our Ebook Maker খুলুন →</a>
   </section>
@@ -570,8 +574,10 @@ function getPins(){
 function paintPins(){
   var pins = getPins();
   document.querySelectorAll('.pin-btn').forEach(function(b){
-    b.textContent = pins.indexOf(b.getAttribute('data-pin')) >= 0 ? '📍' : '📌';
-    b.classList.toggle('opacity-100', pins.indexOf(b.getAttribute('data-pin')) >= 0);
+    var pinned = pins.indexOf(b.getAttribute('data-pin')) >= 0;
+    b.innerHTML = pinned ? '<svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-map-pin"/></svg>' : '<svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-pin"/></svg>';
+    b.classList.toggle('pinned', pinned);
+    b.classList.toggle('opacity-100', pinned);
   });
   var row = $('pinned-row');
   pins.forEach(function(id){
@@ -734,7 +740,7 @@ async function loadPdfDoc(file){
     list.innerHTML = '';
     Array.prototype.forEach.call(input.files || [], function(f){
       var li = document.createElement('li');
-      li.textContent = '📄 ' + f.name;
+      li.innerHTML = '<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-file-text"/></svg> ' + esc(f.name);
       list.appendChild(li);
     });
     setStatus(status, '');
@@ -806,7 +812,7 @@ async function loadPdfDoc(file){
     list.innerHTML = '';
     Array.prototype.forEach.call(input.files || [], function(f){
       var li = document.createElement('li');
-      li.textContent = '🖼️ ' + f.name;
+      li.innerHTML = '<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-image"/></svg> ' + esc(f.name);
       list.appendChild(li);
     });
     setStatus(status, '');
@@ -918,11 +924,11 @@ async function loadPdfDoc(file){
   function showPlan(p, inputs){
     if(!p.ok){ result.innerHTML = '<p class="text-red-600 dark:text-red-400 font-bold">' + esc(p.error) + '</p>'; return; }
     if(p.done){
-      result.innerHTML = '<p class="font-bold">🎉 ' + esc(t('বইটি শেষ! অভিনন্দন।', 'Book finished — congratulations!')) + '</p>';
+      result.innerHTML = '<p class="font-bold">' + esc(t('বইটি শেষ। অভিনন্দন।', 'Book finished — congratulations.')) + '</p>';
       return;
     }
     var html = '<div class="bg-neutral-50 dark:bg-neutral-900 rounded-xl p-3 space-y-1">';
-    if(inputs.title) html += '<p class="font-extrabold">📖 ' + esc(inputs.title) + '</p>';
+    if(inputs.title) html += '<p class="font-semibold">' + '<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-book-open"/></svg> ' + esc(inputs.title) + '</p>';
     html += '<p>' + esc(t('বাকি: ', 'Left: ')) + '<b>' + p.remaining + '</b> ' + esc(t('পাতা', 'pages')) + '</p>';
     html += '<p>' + esc(t('দিনে পড়তে হবে: ', 'Read per day: ')) + '<b>' + p.perDay + '</b> ' + esc(t('পাতা', 'pages')) + '</p>';
     html += '<p>' + esc(t('শেষ হবে: ', 'Finishes: ')) + '<b>' + fmtDate(p.finish) + '</b> (' + p.days + ' ' + esc(t('দিন', 'days')) + ')</p>';
@@ -938,7 +944,7 @@ async function loadPdfDoc(file){
   $('planner-save').addEventListener('click', function(){
     var inputs = readInputs();
     localStorage.setItem(PLANKEY, JSON.stringify(inputs));
-    result.innerHTML = '<p class="font-bold">✅ ' + esc(t('পরিকল্পনা সংরক্ষিত হয়েছে।', 'Plan saved.')) + '</p>';
+    result.innerHTML = '<p class="font-bold">' + esc(t('পরিকল্পনা সংরক্ষিত হয়েছে।', 'Plan saved.')) + '</p>';
   });
   document.querySelectorAll('input[name="planner-mode"]').forEach(function(r){
     r.addEventListener('change', function(){
@@ -973,11 +979,11 @@ async function loadPdfDoc(file){
     var wc = countWords(ta.value);
     function mins(m){ return m <= 0 ? '0' : (m < 60 ? m + ' ' + t('মিনিট', 'min') : Math.floor(m / 60) + ' ' + t('ঘণ্টা', 'h') + ' ' + (m % 60) + ' ' + t('মিনিট', 'min')); }
     result.innerHTML =
-      '<div class="bg-neutral-50 dark:bg-neutral-900 rounded-xl p-3"><p class="font-extrabold text-lg">' + wc.words + '</p><p>' + esc(t('শব্দ', 'Words')) + '</p></div>' +
-      '<div class="bg-neutral-50 dark:bg-neutral-900 rounded-xl p-3"><p class="font-extrabold text-lg">' + wc.charsNoSpaces + '</p><p>' + esc(t('অক্ষর (ফাঁকা ছাড়া)', 'Characters (no spaces)')) + '</p></div>' +
-      '<div class="bg-neutral-50 dark:bg-neutral-900 rounded-xl p-3"><p class="font-extrabold text-lg">' + wc.sentences + '</p><p>' + esc(t('বাক্য', 'Sentences')) + '</p></div>' +
-      '<div class="bg-neutral-50 dark:bg-neutral-900 rounded-xl p-3"><p class="font-extrabold text-lg">' + esc(mins(wc.minBn)) + '</p><p>' + esc(t('পড়ার সময় (বাংলা)', 'Reading time (Bengali)')) + '</p></div>' +
-      '<div class="bg-neutral-50 dark:bg-neutral-900 rounded-xl p-3 col-span-2"><p class="font-extrabold text-lg">' + esc(mins(wc.minEn)) + '</p><p>' + esc(t('পড়ার সময় (ইংরেজি)', 'Reading time (English)')) + '</p></div>';
+      '<div class="bg-neutral-50 dark:bg-neutral-900 rounded-xl p-3"><p class="font-semibold text-lg">' + wc.words + '</p><p>' + esc(t('শব্দ', 'Words')) + '</p></div>' +
+      '<div class="bg-neutral-50 dark:bg-neutral-900 rounded-xl p-3"><p class="font-semibold text-lg">' + wc.charsNoSpaces + '</p><p>' + esc(t('অক্ষর (ফাঁকা ছাড়া)', 'Characters (no spaces)')) + '</p></div>' +
+      '<div class="bg-neutral-50 dark:bg-neutral-900 rounded-xl p-3"><p class="font-semibold text-lg">' + wc.sentences + '</p><p>' + esc(t('বাক্য', 'Sentences')) + '</p></div>' +
+      '<div class="bg-neutral-50 dark:bg-neutral-900 rounded-xl p-3"><p class="font-semibold text-lg">' + esc(mins(wc.minBn)) + '</p><p>' + esc(t('পড়ার সময় (বাংলা)', 'Reading time (Bengali)')) + '</p></div>' +
+      '<div class="bg-neutral-50 dark:bg-neutral-900 rounded-xl p-3 col-span-2"><p class="font-semibold text-lg">' + esc(mins(wc.minEn)) + '</p><p>' + esc(t('পড়ার সময় (ইংরেজি)', 'Reading time (English)')) + '</p></div>';
   }
   ta.addEventListener('input', render);
   $('wordcount-clear').addEventListener('click', function(){ ta.value = ''; render(); });

@@ -20,8 +20,10 @@ layout: null
 <script src="{{ '/assets/js/boighar-api.js' | relative_url }}"></script>
 <style>
   :root{--bar-h:54px;--bot-h:64px}
-  body[data-theme="light"]{--bg:#e9e2cf;--surface:#ffffff;--ink:#1d241f;--muted:#5c665e;--bar:#0d5c3f;--bar-ink:#ffffff;--panel:#ffffff;--line:#e0d7bd;--accent:#0d5c3f}
-  body[data-theme="sepia"]{--bg:#e7d9bd;--surface:#f7ecd7;--ink:#43331f;--muted:#7a6748;--bar:#6d4c2f;--bar-ink:#fdf6e9;--panel:#faf0dc;--line:#dcc9a3;--accent:#8a5a2b}
+  .ob-ic{width:18px;height:18px;flex:none;vertical-align:-3px}
+  .ob-ic-sm{width:16px;height:16px}
+  body[data-theme="light"]{--bg:#e9e2cf;--surface:#ffffff;--ink:#1d241f;--muted:#5c665e;--bar:#875627;--bar-ink:#ffffff;--panel:#ffffff;--line:#e0d7bd;--accent:#875627}
+  body[data-theme="sepia"]{--bg:#e7d9bd;--surface:#f7ecd7;--ink:#43331f;--muted:#7a6748;--bar:#875627;--bar-ink:#fdf6e9;--panel:#faf0dc;--line:#dcc9a3;--accent:#875627}
   body[data-theme="dark"]{--bg:#0c0c0c;--surface:#1b1b1b;--ink:#e9e5da;--muted:#9b968a;--bar:#101010;--bar-ink:#f0ead8;--panel:#1f1f1f;--line:#3a3a3a;--accent:#d8b25c}
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{height:100%}
@@ -32,75 +34,90 @@ layout: null
   #epub-area img{max-width:100%}
   #pdf-frame{width:100%;height:100%;border:0;background:#fff}
   .msg{text-align:center;color:var(--muted);padding:80px 20px;font-size:16px}
-  .bar{position:fixed;left:12px;right:12px;z-index:20;background:var(--bar);color:var(--bar-ink);display:flex;align-items:center;gap:6px;padding:0 8px;transition:transform .25s;border-radius:999px;border:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.25)}
+  .bar{position:fixed;left:12px;right:12px;z-index:20;background:var(--bar);color:var(--bar-ink);display:flex;align-items:center;gap:6px;padding:0 8px;transition:transform .25s;border-radius:12px;border:1px solid var(--line);box-shadow:0 2px 8px rgba(0,0,0,0.08)}
   #topbar{top:10px;height:var(--bar-h)}
   #botbar{bottom:10px;height:var(--bot-h);background:var(--panel);color:var(--ink);gap:10px;padding:0 12px}
   body.chrome-off #topbar{transform:translateY(calc(-100% - 16px))}
   body.chrome-off #botbar{transform:translateY(calc(100% + 16px))}
   body[data-theme="dark"] .bar{border-color:#d8b25c}
-  .tbtn{flex:0 0 auto;border:0;background:rgba(255,255,255,.14);color:inherit;font-family:inherit;font-weight:700;font-size:15px;border-radius:9px;padding:8px 11px;cursor:pointer;text-decoration:none;line-height:1}
+  .tbtn{flex:0 0 auto;border:0;background:rgba(255,255,255,.14);color:inherit;font-family:inherit;font-weight:600;font-size:15px;border-radius:9px;padding:8px 11px;cursor:pointer;text-decoration:none;line-height:1}
   .tbtn:active{transform:scale(.96)}
   #btn-settings{font-family:"Noto Serif Bengali",serif}
   .ttitles{flex:1;min-width:0;padding:0 4px}
-  #book-title{font-weight:700;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  #chapter-title{font-size:11.5px;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .nbtn{flex:0 0 auto;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:9px 16px;font-weight:700;cursor:pointer;font-family:inherit;font-size:14px}
+  #book-title{font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #chapter-title{font-size:12px;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .nbtn{flex:0 0 auto;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:12px;padding:9px 16px;font-weight:600;cursor:pointer;font-family:inherit;font-size:14px}
   .nbtn:active{background:var(--accent);color:#fff}
   .progwrap{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
   #prog{width:100%;accent-color:var(--accent);height:22px;cursor:pointer}
   #prog:disabled{opacity:.35;cursor:wait}
-  #progtext{font-size:11.5px;color:var(--muted);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #progtext{font-size:12px;color:var(--muted);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   #scrim{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:30;opacity:0;pointer-events:none;transition:opacity .25s}
   #scrim.on{opacity:1;pointer-events:auto}
   .panel{position:fixed;z-index:31;background:var(--panel);color:var(--ink);transition:transform .28s;display:flex;flex-direction:column}
-  #drawer{top:0;bottom:0;left:0;width:min(84vw,340px);transform:translateX(-105%);box-shadow:2px 0 18px rgba(0,0,0,.25)}
+  #drawer{top:0;bottom:0;left:0;width:min(84vw,340px);transform:translateX(-105%);box-shadow:2px 0 8px rgba(0,0,0,0.08)}
   #drawer.on{transform:none}
-  #sheet{left:0;right:0;bottom:0;max-height:82vh;border-radius:18px 18px 0 0;transform:translateY(105%);box-shadow:0 -4px 24px rgba(0,0,0,.3);padding-bottom:env(safe-area-inset-bottom)}
+  #sheet{left:0;right:0;bottom:0;max-height:82vh;border-radius:18px 18px 0 0;transform:translateY(105%);box-shadow:0 -2px 8px rgba(0,0,0,0.08);padding-bottom:env(safe-area-inset-bottom)}
   #sheet.on{transform:none}
   .phead{display:flex;align-items:center;gap:8px;padding:14px 16px;border-bottom:1px solid var(--line)}
   .phead h3{flex:1;font-size:16px}
   .phead button{border:0;background:transparent;font-size:20px;cursor:pointer;color:inherit;padding:4px 8px}
   .tabs{display:flex;gap:8px}
-  .tabs button{border:1px solid var(--line);background:transparent;color:inherit;border-radius:999px;padding:6px 14px;font-family:inherit;font-weight:700;font-size:13px;cursor:pointer}
+  .tabs button{border:1px solid var(--line);background:transparent;color:inherit;border-radius:12px;padding:6px 14px;font-family:inherit;font-weight:600;font-size:13px;cursor:pointer}
   .tabs button.sel{background:var(--accent);color:#fff;border-color:var(--accent)}
   .plist{overflow-y:auto;padding:8px 0}
-  .titem{display:block;width:100%;text-align:left;border:0;background:transparent;color:inherit;font-family:inherit;font-size:14.5px;padding:10px 16px;cursor:pointer;border-bottom:1px solid var(--line)}
+  .titem{display:block;width:100%;text-align:left;border:0;background:transparent;color:inherit;font-family:inherit;font-size:15px;padding:10px 16px;cursor:pointer;border-bottom:1px solid var(--line)}
   .titem:active{background:rgba(127,127,127,.15)}
   .titem small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
   .bitem{display:flex;gap:8px;align-items:flex-start;padding:10px 16px;border-bottom:1px solid var(--line)}
-  .bitem .go{flex:1;border:0;background:transparent;color:inherit;font-family:inherit;text-align:left;cursor:pointer;font-size:14.5px}
+  .bitem .go{flex:1;border:0;background:transparent;color:inherit;font-family:inherit;text-align:left;cursor:pointer;font-size:15px}
   .bitem .del{border:0;background:transparent;color:#c0392b;font-size:16px;cursor:pointer;padding:2px 6px}
   .nform{padding:12px 16px;border-bottom:1px solid var(--line)}
-  .nform textarea{width:100%;min-height:64px;resize:vertical;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font-family:inherit;font-size:14.5px;padding:9px 11px}
-  .nform button{margin-top:8px;border:0;background:var(--accent);color:#fff;border-radius:999px;padding:9px 18px;font-family:inherit;font-weight:700;font-size:14px;cursor:pointer}
-  .nsec{padding:12px 16px 4px;font-size:12.5px;font-weight:700;color:var(--muted)}
-  .nitem{padding:10px 16px;border-bottom:1px solid var(--line);font-size:14.5px;line-height:1.55}
+  .nform textarea{width:100%;min-height:64px;resize:vertical;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font-family:inherit;font-size:15px;padding:9px 11px}
+  .nform button{margin-top:8px;border:0;background:var(--accent);color:#fff;border-radius:12px;padding:9px 18px;font-family:inherit;font-weight:600;font-size:14px;cursor:pointer}
+  .nsec{padding:12px 16px 4px;font-size:13px;font-weight:600;color:var(--muted)}
+  .nitem{padding:10px 16px;border-bottom:1px solid var(--line);font-size:15px;line-height:1.55}
   .nitem .meta{display:block;color:var(--muted);font-size:12px;margin-top:3px}
   .nitem .row{display:flex;gap:8px;align-items:flex-start}
-  .nitem .go{flex:1;border:0;background:transparent;color:inherit;font-family:inherit;text-align:left;cursor:pointer;font-size:14.5px;line-height:1.55;padding:0}
+  .nitem .go{flex:1;border:0;background:transparent;color:inherit;font-family:inherit;text-align:left;cursor:pointer;font-size:15px;line-height:1.55;padding:0}
   .nitem.hl{background:rgba(255,229,138,.28)}
   body[data-theme="dark"] .nitem.hl{background:rgba(255,229,138,.12)}
   .empty{padding:26px 16px;text-align:center;color:var(--muted);font-size:14px}
   .srow{padding:13px 16px;border-bottom:1px solid var(--line)}
-  .srow label{display:block;font-size:12.5px;font-weight:700;color:var(--muted);margin-bottom:8px}
+  .srow label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin-bottom:8px}
   .seg{display:flex;gap:8px;flex-wrap:wrap}
-  .seg button{border:1px solid var(--line);background:transparent;color:inherit;border-radius:10px;padding:8px 14px;font-family:inherit;font-weight:700;font-size:14px;cursor:pointer}
+  .seg button{border:1px solid var(--line);background:transparent;color:inherit;border-radius:10px;padding:8px 14px;font-family:inherit;font-weight:600;font-size:14px;cursor:pointer}
   .seg button.sel{background:var(--accent);color:#fff;border-color:var(--accent)}
-  .swatch{width:52px;height:38px;border-radius:10px;border:2px solid var(--line);cursor:pointer;font-family:inherit;font-weight:700;font-size:13px}
+  .swatch{width:52px;height:38px;border-radius:10px;border:2px solid var(--line);cursor:pointer;font-family:inherit;font-weight:600;font-size:13px}
   .swatch.sel{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
-  #toast{position:fixed;left:50%;bottom:calc(var(--bot-h) + 26px);transform:translateX(-50%) translateY(20px);background:#222;color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;z-index:40;opacity:0;pointer-events:none;transition:.3s;max-width:88vw;text-align:center}
+  #toast{position:fixed;left:50%;bottom:calc(var(--bot-h) + 26px);transform:translateX(-50%) translateY(20px);background:#222;color:#fff;padding:10px 18px;border-radius:12px;font-size:14px;z-index:40;opacity:0;pointer-events:none;transition:.3s;max-width:88vw;text-align:center}
   #toast.on{opacity:1;transform:translateX(-50%)}
+  /* visible keyboard focus */
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body data-theme="light">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="ob-ic-menu" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12" /><line x1="4" x2="20" y1="6" y2="6" /><line x1="4" x2="20" y1="18" y2="18" /></g></symbol>
+<symbol id="ob-ic-bookmark" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" /></g></symbol>
+<symbol id="ob-ic-bookmark-filled" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M19 21l-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></symbol>
+<symbol id="ob-ic-highlighter" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11-6 6v3h9l3-3" /><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4" /></g></symbol>
+<symbol id="ob-ic-maximize" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3" /><path d="M21 8V5a2 2 0 0 0-2-2h-3" /><path d="M3 16v3a2 2 0 0 0 2 2h3" /><path d="M16 21h3a2 2 0 0 0 2-2v-3" /></g></symbol>
+<symbol id="ob-ic-x" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></g></symbol>
+<symbol id="ob-ic-file-text" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" /><path d="M14 2v4a2 2 0 0 0 2 2h4" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></g></symbol>
+<symbol id="ob-ic-scroll" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17V5a2 2 0 0 0-2-2H4" /><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3" /></g></symbol>
+<symbol id="ob-ic-save" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" /><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7" /><path d="M7 3v4a1 1 0 0 0 1 1h7" /></g></symbol>
+<symbol id="ob-ic-memo" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h4" /><path d="M2 10h4" /><path d="M2 14h4" /><path d="M2 18h4" /><rect width="16" height="20" x="4" y="2" rx="2" /><path d="M9.5 8h5" /><path d="M9.5 12H16" /><path d="M9.5 16H14" /></g></symbol>
+</svg>
 <header class="bar" id="topbar">
   <a class="tbtn" href="{{ '/' | relative_url }}" title="বইঘরে ফিরুন">←</a>
   <div class="ttitles"><div id="book-title">অনলাইন রিডার</div><div id="chapter-title"></div></div>
-  <button class="tbtn" id="btn-toc" title="সূচিপত্র ও বুকমার্ক">☰</button>
-  <button class="tbtn" id="btn-bm" title="এই পৃষ্ঠায় বুকমার্ক">🔖</button>
-  <button class="tbtn" id="btn-hl" title="সিলেক্ট করা লেখা হাইলাইট করুন">🖍</button>
+  <button class="tbtn" id="btn-toc" aria-label="সূচিপত্র ও বুকমার্ক" title="সূচিপত্র ও বুকমার্ক"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-menu"/></svg></button>
+  <button class="tbtn" id="btn-bm" aria-label="এই পৃষ্ঠায় বুকমার্ক" title="এই পৃষ্ঠায় বুকমার্ক"><svg class="ob-ic" aria-hidden="true"><use id="bm-ic" href="#ob-ic-bookmark"/></svg></button>
+  <button class="tbtn" id="btn-hl" aria-label="সিলেক্ট করা লেখা হাইলাইট করুন" title="সিলেক্ট করা লেখা হাইলাইট করুন"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-highlighter"/></svg></button>
   <button class="tbtn" id="btn-settings" title="পড়ার সেটিংস">Aa</button>
-  <button class="tbtn" id="btn-fs" title="ফুলস্ক্রিন">⛶</button>
+  <button class="tbtn" id="btn-fs" aria-label="ফুলস্ক্রিন" title="ফুলস্ক্রিন"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-maximize"/></svg></button>
 </header>
 
 <div id="viewer"></div>
@@ -124,7 +141,7 @@ layout: null
       <button id="tab-notes">নোট</button>
     </div>
     <h3></h3>
-    <button id="drawer-x">✕</button>
+    <button id="drawer-x" aria-label="বন্ধ করুন"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-x"/></svg></button>
   </div>
   <div class="plist" id="toc-list"></div>
   <div class="plist" id="bm-list" style="display:none"></div>
@@ -132,7 +149,7 @@ layout: null
 </aside>
 
 <aside class="panel" id="sheet">
-  <div class="phead"><h3>পড়ার সেটিংস</h3><button id="sheet-x">✕</button></div>
+  <div class="phead"><h3>পড়ার সেটিংস</h3><button id="sheet-x" aria-label="বন্ধ করুন"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-x"/></svg></button></div>
   <div style="overflow-y:auto">
     <div class="srow"><label>থিম</label>
       <div class="seg">
@@ -151,7 +168,7 @@ layout: null
     <div class="srow"><label>হরফের আকার</label>
       <div class="seg" style="align-items:center">
         <button id="fs-minus" style="min-width:52px">A−</button>
-        <span id="fs-label" style="font-weight:700;min-width:64px;text-align:center">19px</span>
+        <span id="fs-label" style="font-weight:600;min-width:64px;text-align:center">19px</span>
         <button id="fs-plus" style="min-width:52px">A+</button>
       </div>
     </div>
@@ -164,8 +181,8 @@ layout: null
     </div>
     <div class="srow"><label>পড়ার ধরন</label>
       <div class="seg">
-        <button data-set-flow="paginated">📄 পৃষ্ঠা উল্টে</button>
-        <button data-set-flow="scrolled-doc">📜 স্ক্রল করে</button>
+        <button data-set-flow="paginated"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-file-text"/></svg> পৃষ্ঠা উল্টে</button>
+        <button data-set-flow="scrolled-doc"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-scroll"/></svg> স্ক্রল করে</button>
       </div>
     </div>
   </div>
@@ -208,7 +225,7 @@ layout: null
   var SETKEY = 'ob-reader-settings';
   var S = Object.assign({ theme:'light', font:'serifbn', size:19, lh:2, flow:'paginated' }, lsGet(SETKEY, {}));
   var FONTS = { serifbn:"'Noto Serif Bengali',serif", sansbn:"'Hind Siliguri',sans-serif", serifen:"'Noto Serif',Georgia,serif" };
-  var PAGE = { light:{bg:'#ffffff',ink:'#1d241f',link:'#0d5c3f'}, sepia:{bg:'#f7ecd7',ink:'#43331f',link:'#8a5a2b'}, dark:{bg:'#1b1b1b',ink:'#e9e5da',link:'#d8b25c'} };
+  var PAGE = { light:{bg:'#ffffff',ink:'#1d241f',link:'#875627'}, sepia:{bg:'#f7ecd7',ink:'#43331f',link:'#875627'}, dark:{bg:'#1b1b1b',ink:'#e9e5da',link:'#d8b25c'} };
   function saveSettings(){ lsSet(SETKEY, S); }
   function markSeg(attr, val){ document.querySelectorAll('[data-' + attr + ']').forEach(function(b){ b.classList.toggle('sel', b.getAttribute('data-' + attr) === String(val)); }); }
 
@@ -265,6 +282,7 @@ layout: null
   function onRelocated(loc){
     if(!loc || !loc.start) return;
     cur.cfi = loc.start.cfi; cur.href = loc.start.href;
+    paintBmBtn();
     cur.chapter = chapterFor(loc.start.href);
     document.getElementById('chapter-title').textContent = cur.chapter || '';
     if(locationsReady && book.locations){
@@ -292,7 +310,7 @@ layout: null
       try{ var sel = contents.window.getSelection(); txt = sel ? String(sel) : ''; }catch(e){}
       lastSel = { cfiRange: cfiRange, text: txt, contents: contents };
       document.body.classList.remove('chrome-off');
-      toast('লেখা সিলেক্ট হয়েছে — হাইলাইট করতে উপরের 🖍 চাপুন');
+      toast('লেখা সিলেক্ট হয়েছে — হাইলাইট করতে উপরের বোতামটি চাপুন');
     });
     wireContent();
     applyHighlights();
@@ -367,13 +385,20 @@ layout: null
     if(cfi) rendition.display(cfi).catch(function(){});
   });
 
+  function paintBmBtn(){
+    var ic = document.getElementById('bm-ic');
+    if(!ic) return;
+    var on = cur.cfi && myBm.some(function(b){ return b.cfi === cur.cfi; });
+    ic.setAttribute('href', on ? '#ob-ic-bookmark-filled' : '#ob-ic-bookmark');
+  }
+
   /* bookmarks */
   function renderBookmarks(){
     var el = document.getElementById('bm-list');
     myBm = (lsGet(BMKEY, {}))[file] || [];
-    if(!myBm.length){ el.innerHTML = '<div class="empty">এখনো কোনো বুকমার্ক নেই।<br>পড়ার সময় উপরের 🔖 চাপলেই এই পৃষ্ঠা বুকমার্ক হবে।</div>'; return; }
+    if(!myBm.length){ el.innerHTML = '<div class="empty">এখনো কোনো বুকমার্ক নেই।<br>পড়ার সময় উপরের বুকমার্ক বোতাম চাপলেই এই পৃষ্ঠা বুকমার্ক হবে।</div>'; return; }
     el.innerHTML = myBm.map(function(b, i){
-      return '<div class="bitem"><button class="go" data-bm="' + i + '">' + (b.chapter || 'বুকমার্ক').replace(/</g,'&lt;') + '<small style="display:block;color:var(--muted)">' + (b.pct != null ? 'মোট ' + bn(b.pct) + '% • ' : '') + b.when + '</small></button><button class="del" data-del="' + i + '" title="মুছুন">✕</button></div>';
+      return '<div class="bitem"><button class="go" data-bm="' + i + '">' + (b.chapter || 'বুকমার্ক').replace(/</g,'&lt;') + '<small style="display:block;color:var(--muted)">' + (b.pct != null ? 'মোট ' + bn(b.pct) + '% • ' : '') + b.when + '</small></button><button class="del" data-del="' + i + '" title="মুছুন">' + '<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-x"/></svg>' + '</button></div>';
     }).join('');
     el.querySelectorAll('[data-bm]').forEach(function(btn){ btn.onclick = function(){ closePanels(); rendition.display(myBm[+btn.getAttribute('data-bm')].cfi).catch(function(){}); }; });
     el.querySelectorAll('[data-del]').forEach(function(btn){ btn.onclick = function(){ myBm.splice(+btn.getAttribute('data-del'), 1); var all = lsGet(BMKEY, {}); all[file] = myBm; lsSet(BMKEY, all); renderBookmarks(); }; });
@@ -384,7 +409,8 @@ layout: null
     myBm.push({ cfi:cur.cfi, chapter:cur.chapter, pct:cur.pct, when:new Date().toLocaleDateString('bn-BD') });
     var all = lsGet(BMKEY, {}); all[file] = myBm; lsSet(BMKEY, all);
     renderBookmarks();
-    toast('🔖 বুকমার্ক যোগ হয়েছে');
+    paintBmBtn();
+    toast('বুকমার্ক যোগ হয়েছে');
   };
 
   /* notes + highlights (per book, this browser only — localStorage) */
@@ -408,16 +434,16 @@ layout: null
 
   function renderNotes(){
     var el = document.getElementById('notes-list');
-    var html = '<div class="nform"><textarea id="note-text" placeholder="এই বই নিয়ে আপনার নোট লিখুন…"></textarea><button id="note-save">💾 নোট সংরক্ষণ করুন</button></div>';
-    html += '<div class="nsec">📝 আমার নোট (' + bn(myNotes.length) + ')</div>';
+    var html = '<div class="nform"><textarea id="note-text" placeholder="এই বই নিয়ে আপনার নোট লিখুন…"></textarea><button id="note-save">' + '<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-save"/></svg>' + ' নোট সংরক্ষণ করুন</button></div>';
+    html += '<div class="nsec">' + '<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-memo"/></svg>' + ' আমার নোট (' + bn(myNotes.length) + ')</div>';
     if(!myNotes.length) html += '<div class="empty">এখনো কোনো নোট নেই।</div>';
     myNotes.forEach(function(n, i){
-      html += '<div class="nitem"><div class="row"><button class="go" data-note="' + i + '">' + escHtml(n.text) + '<span class="meta">' + escHtml(n.chapter || '') + (n.chapter ? ' • ' : '') + n.when + '</span></button><button class="del" data-delnote="' + i + '" title="মুছুন">✕</button></div></div>';
+      html += '<div class="nitem"><div class="row"><button class="go" data-note="' + i + '">' + escHtml(n.text) + '<span class="meta">' + escHtml(n.chapter || '') + (n.chapter ? ' • ' : '') + n.when + '</span></button><button class="del" data-delnote="' + i + '" title="মুছুন">' + '<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-x"/></svg>' + '</button></div></div>';
     });
-    html += '<div class="nsec">🖍 হাইলাইট (' + bn(myHl.length) + ')</div>';
-    if(!myHl.length) html += '<div class="empty">কোনো হাইলাইট নেই।<br>বইয়ের লেখা সিলেক্ট করে উপরের 🖍 চাপলেই হাইলাইট হবে।</div>';
+    html += '<div class="nsec">' + '<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-highlighter"/></svg>' + ' হাইলাইট (' + bn(myHl.length) + ')</div>';
+    if(!myHl.length) html += '<div class="empty">কোনো হাইলাইট নেই।<br>বইয়ের লেখা সিলেক্ট করে উপরের হাইলাইট বোতাম চাপলেই হাইলাইট হবে।</div>';
     myHl.forEach(function(h, i){
-      html += '<div class="nitem hl"><div class="row"><button class="go" data-hl="' + i + '">' + escHtml(h.text) + '<span class="meta">' + escHtml(h.chapter || '') + (h.chapter ? ' • ' : '') + h.when + '</span></button><button class="del" data-delhl="' + i + '" title="মুছুন">✕</button></div></div>';
+      html += '<div class="nitem hl"><div class="row"><button class="go" data-hl="' + i + '">' + escHtml(h.text) + '<span class="meta">' + escHtml(h.chapter || '') + (h.chapter ? ' • ' : '') + h.when + '</span></button><button class="del" data-delhl="' + i + '" title="মুছুন">' + '<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-x"/></svg>' + '</button></div></div>';
     });
     el.innerHTML = html;
     var saveBtn = document.getElementById('note-save');
@@ -426,7 +452,7 @@ layout: null
       var txt = ta.value.trim();
       if(!txt){ toast('নোটটি খালি'); return; }
       myNotes.unshift({ id: Date.now(), text: txt, chapter: cur.chapter, cfi: cur.cfi, when: new Date().toLocaleDateString('bn-BD') });
-      saveNotes(); renderNotes(); toast('💾 নোট সংরক্ষিত হয়েছে');
+      saveNotes(); renderNotes(); toast('নোট সংরক্ষিত হয়েছে');
     };
     el.querySelectorAll('[data-note]').forEach(function(btn){ btn.onclick = function(){ var n = myNotes[+btn.getAttribute('data-note')]; closePanels(); if(n && n.cfi && rendition) rendition.display(n.cfi).catch(function(){}); }; });
     el.querySelectorAll('[data-delnote]').forEach(function(btn){ btn.onclick = function(){ myNotes.splice(+btn.getAttribute('data-delnote'), 1); saveNotes(); renderNotes(); }; });
@@ -447,7 +473,7 @@ layout: null
     try{ if(lastSel.contents && lastSel.contents.window) lastSel.contents.window.getSelection().removeAllRanges(); }catch(e){}
     lastSel = null;
     renderNotes();
-    toast('🖍 হাইলাইট সংরক্ষিত হয়েছে');
+    toast('হাইলাইট সংরক্ষিত হয়েছে');
   };
 
   /* panels */
