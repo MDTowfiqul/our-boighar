@@ -710,6 +710,113 @@ async function handleSupport(request, env, user) {
   return json({ ok: true }, 201);
 }
 
+// ---------- native comments + Like (Like ONLY, no other reactions) ----------
+// Tables are created by the Worker itself (CREATE TABLE IF NOT EXISTS) on
+// the first request to these endpoints, so no manual D1 step is needed.
+//   comments: id, book_id, user_id, name, text, created_at
+//   likes:    book_id, user_id, created_at — PRIMARY KEY (book_id, user_id)
+//             enforces one like per user per book (the UNIQUE(book_id, user_id)).
+const COMMENT_MAX_LEN = 2000;
+const COMMENTS_PER_HOUR = 10;
+const OWNER_EMAIL = 'towfiqulislam1010@gmail.com';
+
+async function ensureCommentsLikesTables(env) {
+  await env.DB.prepare(
+    'CREATE TABLE IF NOT EXISTS comments (id INTEGER PRIMARY KEY AUTOINCREMENT, book_id TEXT NOT NULL REFERENCES books(id), user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, name TEXT NOT NULL, text TEXT NOT NULL, created_at INTEGER NOT NULL)'
+  ).run();
+  await env.DB.prepare(
+    'CREATE TABLE IF NOT EXISTS likes (book_id TEXT NOT NULL REFERENCES books(id), user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, created_at INTEGER NOT NULL, PRIMARY KEY (book_id, user_id))'
+  ).run();
+  await env.DB.prepare(
+    'CREATE INDEX IF NOT EXISTS idx_comments_book ON comments(book_id, created_at DESC)'
+  ).run();
+  await env.DB.prepare(
+    'CREATE INDEX IF NOT EXISTS idx_likes_book ON likes(book_id)'
+  ).run();
+}
+
+async function handleGetComments(env, bookId, user) {
+  await ensureCommentsLikesTables(env);
+  const rows = await env.DB.prepare(
+    'SELECT id, user_id, name, text, created_at FROM comments WHERE book_id = ? ORDER BY created_at DESC, id DESC LIMIT 200'
+  ).bind(bookId).all();
+  const countRow = await env.DB.prepare(
+    'SELECT COUNT(*) AS n FROM likes WHERE book_id = ?'
+  ).bind(bookId).first();
+  // `liked` reflects the current user; false when signed out.
+  let liked = false;
+  if (user) {
+    const row = await env.DB.prepare(
+      'SELECT 1 AS x FROM likes WHERE book_id = ? AND user_id = ?'
+    ).bind(bookId, user.id).first();
+    liked = !!row;
+  }
+  return json({
+    comments: rows.results || [],
+    likes: { count: countRow?.n || 0, liked },
+  });
+}
+
+async function handlePostComment(request, env, user, bookId) {
+  await ensureCommentsLikesTables(env);
+  if (!(await bookExists(env, bookId))) return err('Book not found.', 404);
+  const body = await readBody(request);
+  if (!body) return err('Invalid request.');
+  // Name always comes from the session — any name the client sends is ignored.
+  const text = cleanStr(body.text, COMMENT_MAX_LEN);
+  if (!text) return err('Please write a comment.');
+  // Light per-user rate limit: max 10 comments per user per hour.
+  const recent = await env.DB.prepare(
+    'SELECT COUNT(*) AS n FROM comments WHERE user_id = ? AND created_at > ?'
+  ).bind(user.id, now() - 3600000).first();
+  if ((recent?.n || 0) >= COMMENTS_PER_HOUR) {
+    return err('You are commenting too fast. Please wait a while before posting again.', 429);
+  }
+  const t = now();
+  const res = await env.DB.prepare(
+    'INSERT INTO comments (book_id, user_id, name, text, created_at) VALUES (?, ?, ?, ?, ?)'
+  ).bind(bookId, user.id, user.name, text, t).run();
+  return json({ id: res.meta.last_row_id, user_id: user.id, name: user.name, text, created_at: t }, 201);
+}
+
+async function handleToggleLike(env, user, bookId) {
+  await ensureCommentsLikesTables(env);
+  if (!(await bookExists(env, bookId))) return err('Book not found.', 404);
+  const existing = await env.DB.prepare(
+    'SELECT 1 AS x FROM likes WHERE book_id = ? AND user_id = ?'
+  ).bind(bookId, user.id).first();
+  let liked;
+  if (existing) {
+    await env.DB.prepare('DELETE FROM likes WHERE book_id = ? AND user_id = ?').bind(bookId, user.id).run();
+    liked = false;
+  } else {
+    await env.DB.prepare(
+      'INSERT INTO likes (book_id, user_id, created_at) VALUES (?, ?, ?)'
+    ).bind(bookId, user.id, now()).run();
+    liked = true;
+  }
+  const countRow = await env.DB.prepare(
+    'SELECT COUNT(*) AS n FROM likes WHERE book_id = ?'
+  ).bind(bookId).first();
+  return json({ count: countRow?.n || 0, liked });
+}
+
+async function handleDeleteComment(env, user, bookId, commentId) {
+  await ensureCommentsLikesTables(env);
+  const id = parseInt(commentId, 10);
+  if (!Number.isFinite(id)) return err('Comment not found.', 404);
+  const row = await env.DB.prepare(
+    'SELECT user_id FROM comments WHERE id = ? AND book_id = ?'
+  ).bind(id, bookId).first();
+  if (!row) return err('Comment not found.', 404);
+  const isOwner = String(user.email || '').toLowerCase() === OWNER_EMAIL;
+  if (!isOwner && row.user_id !== user.id) {
+    return err('You can only delete your own comments.', 403);
+  }
+  await env.DB.prepare('DELETE FROM comments WHERE id = ?').bind(id).run();
+  return json({ ok: true });
+}
+
 // ---------- router ----------
 function route(path) {
   // returns [handler-group, params]
@@ -778,10 +885,24 @@ export default {
       // --- public OPDS search (no sign-in; Our Reader's search box calls this) ---
       if (parts[0] === 'opds' && parts[1] === 'search' && method === 'GET') return finish(await handleOpdsSearch(request, env));
 
+      // --- public book comments + likes (works signed out; liked=false then) ---
+      if (parts[0] === 'books' && parts[2] === 'comments' && parts.length === 3 && method === 'GET') {
+        const bookId = decodeURIComponent(parts[1] || '');
+        const user = await getSessionUser(request, env); // null when signed out
+        return finish(await handleGetComments(env, bookId, user));
+      }
+
       // --- everything below needs a signed-in user ---
       const user = await getSessionUser(request, env);
       if (!user) return finish(err('Please sign in first.', 401));
 
+      if (parts[0] === 'books') {
+        const bookId = decodeURIComponent(parts[1] || '');
+        if (parts[2] === 'comments' && parts.length === 3 && method === 'POST') return finish(await handlePostComment(request, env, user, bookId));
+        if (parts[2] === 'comments' && parts.length === 4 && method === 'DELETE') return finish(await handleDeleteComment(env, user, bookId, parts[3]));
+        if (parts[2] === 'like' && parts.length === 3 && method === 'POST') return finish(await handleToggleLike(env, user, bookId));
+        return finish(err('Not found.', 404));
+      }
       if (parts[0] === 'shelves') {
         if (parts.length === 1 && method === 'GET') return finish(await handleListShelves(env, user));
         if (parts.length === 1 && method === 'POST') return finish(await handleCreateShelf(request, env, user));

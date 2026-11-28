@@ -2,7 +2,7 @@
 layout: default
 title: "আমার প্রোফাইল"
 permalink: /shelf/
-description: "Your Our Boighar profile — shelves, reading history, points and rank, notes and backup."
+description: "Your Our Boighar profile — shelves, reading history, points and rank and notes."
 ---
 
 <script>
@@ -75,6 +75,8 @@ var OB_BOOKS = [{% for b in site.books %}{
 
   <!-- ============ MY DASHBOARD (signed in or out) ============ -->
   <div id="dash-main" class="hidden">
+    <!-- Stats: always visible, above the profile card, not tab-bound -->
+    <div id="stats-grid" class="acct-only grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5"></div>
     <!-- Profile card (xKAF structure, Boighar's own look) -->
     <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm mb-5 flex items-center gap-4">
       <span id="profile-avatar" class="shrink-0 w-16 h-16 rounded-full accent-soft-bg accent-text flex items-center justify-center text-2xl font-bold overflow-hidden"><svg class="ob-ic ob-ic-lg" style="width:28px;height:28px" aria-hidden="true"><use href="#ob-ic-user"/></svg></span>
@@ -91,7 +93,7 @@ var OB_BOOKS = [{% for b in site.books %}{
 
     <!-- Tile grid: every section visible at once, no horizontal slide -->
     <div class="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-3 mb-5" id="dash-tabs">
-      <button data-tab="overview" class="dash-tab flex flex-col items-center gap-1.5 py-3 px-2 rounded-2xl font-bold accent-soft-bg accent-text"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-book-open"/></svg><span class="text-sm leading-tight text-center" data-bn="সংক্ষেপ" data-en="Overview">সংক্ষেপ</span></button>
+      <button data-tab="overview" class="dash-tab flex flex-col items-center gap-1.5 py-3 px-2 rounded-2xl font-bold accent-soft-bg accent-text"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-book-open"/></svg><span class="text-sm leading-tight text-center" data-bn="ইতিহাস" data-en="History">ইতিহাস</span></button>
       <button data-tab="shelves" class="dash-tab flex flex-col items-center gap-1.5 py-3 px-2 rounded-2xl font-bold bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-bookmark"/></svg><span class="text-sm leading-tight text-center" data-bn="তাক ও নোট" data-en="Shelf & Notes">তাক ও নোট</span></button>
       <button data-tab="ranking" class="dash-tab flex flex-col items-center gap-1.5 py-3 px-2 rounded-2xl font-bold bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-award"/></svg><span class="text-sm leading-tight text-center" data-bn="র‍্যাংকিং" data-en="Ranking">র‍্যাংকিং</span></button>
       <button data-tab="report" class="dash-tab flex flex-col items-center gap-1.5 py-3 px-2 rounded-2xl font-bold bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-alert"/></svg><span class="text-sm leading-tight text-center" data-bn="রিপোর্ট" data-en="Report">রিপোর্ট</span></button>
@@ -100,28 +102,22 @@ var OB_BOOKS = [{% for b in site.books %}{
 
     <!-- Overview -->
     <section id="panel-overview" class="dash-panel">
-      <div id="stats-grid" class="acct-only grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5"></div>
-      <div class="acct-only bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm mb-5">
-        <div class="flex justify-between items-center mb-2">
-          <h2 class="font-semibold" data-bn="আপনার র‍্যাংক" data-en="Your rank">আপনার র‍্যাংক</h2>
-          <span id="rank-next" class="text-sm text-neutral-500 dark:text-neutral-400"></span>
-        </div>
-        <div class="h-3 bg-neutral-100 dark:bg-neutral-700 rounded-full overflow-hidden">
-          <div id="rank-bar" class="h-full accent-bg rounded-full" style="width:0%"></div>
-        </div>
-        <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-2" data-bn="পয়েন্ট পাবেন: বই শুরু করলে +১, শেষ করলে +১০, রেটিং দিলে +২, তাকে রাখলে +১, প্রতিদিন পড়লে +২, তথ্য ঠিক করলে +২।" data-en="Points: +1 for starting a book, +10 for finishing, +2 for a rating, +1 for shelving, +2 per reading day, +2 for a fix report.">পয়েন্ট পাবেন: বই শুরু করলে +১, শেষ করলে +১০, রেটিং দিলে +২, তাকে রাখলে +১, প্রতিদিন পড়লে +২, তথ্য ঠিক করলে +২।</p>
-      </div>
+      <h2 class="serif text-xl font-semibold mb-4" data-bn="ইতিহাস" data-en="History">ইতিহাস</h2>
+
       <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm mb-5">
         <h2 class="font-semibold mb-3" data-bn="পড়া চালিয়ে যান" data-en="Continue reading">পড়া চালিয়ে যান</h2>
         <div id="continue-list" class="space-y-2 text-neutral-500 dark:text-neutral-400" data-bn="এখনো কোনো বই শুরু করেননি।" data-en="You have not started any book yet.">এখনো কোনো বই শুরু করেননি।</div>
+        <button id="continue-more" class="hidden mt-3 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl px-4 py-2 text-sm" data-bn="আরও দেখুন" data-en="See more">আরও দেখুন</button>
       </div>
       <div class="acct-only bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm">
         <h2 class="font-semibold mb-3" data-bn="সাম্প্রতিক কার্যকলাপ" data-en="Recent activity">সাম্প্রতিক কার্যকলাপ</h2>
         <div id="recent-history" class="space-y-2 text-neutral-500 dark:text-neutral-400"></div>
+        <button id="recent-more" class="hidden mt-3 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl px-4 py-2 text-sm" data-bn="আরও দেখুন" data-en="See more">আরও দেখুন</button>
       </div>
       <div class="acct-only bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm mt-5">
         <h2 class="font-semibold mb-3" data-bn="পড়ার ইতিহাস" data-en="Reading history">পড়ার ইতিহাস</h2>
         <div id="history-list" class="space-y-2 text-neutral-500 dark:text-neutral-400"></div>
+        <button id="history-more" class="hidden mt-3 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl px-4 py-2 text-sm" data-bn="আরও পুরনো ইতিহাস দেখুন" data-en="See older history">আরও পুরনো ইতিহাস দেখুন</button>
       </div>
     </section>
 
@@ -133,7 +129,8 @@ var OB_BOOKS = [{% for b in site.books %}{
           <button class="accent-bg text-white font-bold rounded-xl px-5" data-bn="তৈরি করুন" data-en="Create">তৈরি করুন</button>
         </form>
         <p id="shelf-err" class="hidden text-red-600 dark:text-red-400 text-sm mb-4"></p>
-        <div id="shelf-list" class="space-y-5"></div>
+        <h2 class="font-semibold mb-3" data-bn="আমার তাক" data-en="My shelves">আমার তাক</h2>
+        <div id="shelf-list" class="grid sm:grid-cols-2 gap-3"></div>
       </div>
       <p class="signed-out-only text-sm text-neutral-500 dark:text-neutral-400 mb-4" data-bn="অ্যাকাউন্টের তাক সব ডিভাইসে সিঙ্ক হয় — উপরে সাইন ইন করুন।" data-en="Account shelves sync across devices — sign in above.">অ্যাকাউন্টের তাক সব ডিভাইসে সিঙ্ক হয় — উপরে সাইন ইন করুন।</p>
       <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm mt-5">
@@ -150,13 +147,28 @@ var OB_BOOKS = [{% for b in site.books %}{
       <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm mt-5">
         <h2 class="serif text-xl font-semibold flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-file-text"/></svg> <span data-bn="আমার নোট ও হাইলাইট" data-en="My Notes & Highlights">আমার নোট ও হাইলাইট</span></h2>
         <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1" data-bn="অনলাইন রিডারে লেখা নোট ও হাইলাইট — “এই জায়গায় খুলুন” চাপলে বইটি সেই জায়গাতেই খুলবে।" data-en="Notes and highlights written in the online reader — “Open at this spot” opens the book right there.">অনলাইন রিডারে লেখা নোট ও হাইলাইট — “এই জায়গায় খুলুন” চাপলে বইটি সেই জায়গাতেই খুলবে।</p>
+        <div class="relative mt-4">
+          <input id="notes-search" type="search" autocomplete="off" placeholder="নোট বা বই খুঁজুন…" data-bn-ph="নোট বা বই খুঁজুন…" data-en-ph="Search notes or books…" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-2.5">
+        </div>
         <div id="notes-list" class="flex flex-col gap-3 mt-4"></div>
+        <p id="notes-noresult" class="hidden text-sm text-neutral-500 dark:text-neutral-400 mt-4" data-bn="খুঁজে কিছু মেলেনি।" data-en="Nothing matched your search.">খুঁজে কিছু মেলেনি।</p>
         <p id="notes-empty" class="hidden text-sm text-neutral-500 dark:text-neutral-400 mt-4" data-bn="এখনো কোনো নোট বা হাইলাইট লেখা হয়নি।" data-en="No notes or highlights written yet.">এখনো কোনো নোট বা হাইলাইট লেখা হয়নি।</p>
       </div>
     </section>
 
     <!-- Ranking -->
     <section id="panel-ranking" class="dash-panel hidden">
+      <div class="acct-only bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm mb-5">
+        <div class="flex justify-between items-center mb-2">
+          <h2 class="font-semibold" data-bn="আপনার র‍্যাংক" data-en="Your rank">আপনার র‍্যাংক</h2>
+          <span id="rank-next" class="text-sm text-neutral-500 dark:text-neutral-400"></span>
+        </div>
+        <div class="h-3 bg-neutral-100 dark:bg-neutral-700 rounded-full overflow-hidden">
+          <div id="rank-bar" class="h-full accent-bg rounded-full" style="width:0%"></div>
+        </div>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-2" data-bn="পয়েন্ট পাবেন: বই শুরু করলে +১, শেষ করলে +১০, রেটিং দিলে +২, তাকে রাখলে +১, প্রতিদিন পড়লে +২, তথ্য ঠিক করলে +২।" data-en="Points: +1 for starting a book, +10 for finishing, +2 for a rating, +1 for shelving, +2 per reading day, +2 for a fix report.">পয়েন্ট পাবেন: বই শুরু করলে +১, শেষ করলে +১০, রেটিং দিলে +২, তাকে রাখলে +১, প্রতিদিন পড়লে +২, তথ্য ঠিক করলে +২।</p>
+        <p id="my-rank-line" class="text-sm font-bold mt-2"></p>
+      </div>
       <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm">
         <h2 class="font-semibold mb-1" data-bn="সেরা পাঠক" data-en="Top readers">সেরা পাঠক</h2>
         <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-4" data-bn="শুধু নাম ও পয়েন্ট দেখানো হয় — ইমেইল কখনো প্রকাশ করা হয় না।" data-en="Only names and points are shown — emails are never public.">শুধু নাম ও পয়েন্ট দেখানো হয় — ইমেইল কখনো প্রকাশ করা হয় না।</p>
@@ -181,7 +193,10 @@ var OB_BOOKS = [{% for b in site.books %}{
           <p id="fix-err" class="hidden text-red-600 dark:text-red-400 text-sm"></p>
           <p id="fix-ok" class="hidden text-emerald-700 dark:text-emerald-400 text-sm" data-bn="ধন্যবাদ! আপনার রিপোর্ট পাঠানো হয়েছে।" data-en="Thank you! Your report has been sent.">ধন্যবাদ! আপনার রিপোর্ট পাঠানো হয়েছে।</p>
           <p id="fix-ok-link" class="hidden text-sm"><a href="https://t.me/Our_Family_bd/39" target="_blank" rel="noopener" class="accent-text font-semibold hover:underline" data-bn="টেলিগ্রামে রিপোর্টটি দেখুন" data-en="See your report on Telegram">টেলিগ্রামে রিপোর্টটি দেখুন</a></p>
-          <button class="accent-bg text-white font-bold rounded-xl px-5 py-3" data-bn="রিপোর্ট পাঠান" data-en="Send report">রিপোর্ট পাঠান</button>
+          <div class="flex flex-wrap gap-2">
+            <button type="submit" class="accent-bg text-white font-bold rounded-xl px-5 py-3" data-bn="টেলিগ্রামে রিপোর্ট পাঠান" data-en="Report to Telegram">টেলিগ্রামে রিপোর্ট পাঠান</button>
+            <a id="report-github-btn" href="https://github.com/MDTowfiqul/our-boighar/issues/new" target="_blank" rel="noopener" class="inline-flex items-center border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl px-5 py-3" data-bn="GitHub-এ রিপোর্ট করুন" data-en="Report to GitHub">GitHub-এ রিপোর্ট করুন</a>
+          </div>
         </form>
       </div>
       <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm mb-5">
@@ -205,6 +220,12 @@ var OB_BOOKS = [{% for b in site.books %}{
 
     <!-- Settings -->
     <section id="panel-settings" class="dash-panel hidden">
+      <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm mb-5">
+        <h2 class="serif text-lg sm:text-xl font-semibold flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-home"/></svg> <span data-bn="হোমপেজ সাজান" data-en="Homepage setup">হোমপেজ সাজান</span></h2>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1.5 leading-relaxed" data-bn="হোমপেজে কোন অংশ থাকবে আর কোনটা আগে আসবে, এখান থেকে ঠিক করুন। পছন্দ এই ডিভাইসেই সংরক্ষিত থাকে।" data-en="Choose which homepage sections show, and in what order. Your choice is saved on this device.">হোমপেজে কোন অংশ থাকবে আর কোনটা আগে আসবে, এখান থেকে ঠিক করুন। পছন্দ এই ডিভাইসেই সংরক্ষিত থাকে।</p>
+        <div id="home-setup-list" class="mt-4 space-y-2"></div>
+        <button id="home-setup-reset" class="mt-4 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl px-4 py-2 text-sm" data-bn="ডিফল্টে ফেরান" data-en="Reset to default">ডিফল্টে ফেরান</button>
+      </div>
       <div class="acct-only bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm space-y-5 mb-5">
         <div>
           <h2 class="font-semibold mb-2" data-bn="সিঙ্ক" data-en="Sync">সিঙ্ক</h2>
@@ -230,48 +251,6 @@ var OB_BOOKS = [{% for b in site.books %}{
           <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-3" data-bn="অ্যাকাউন্ট মুছলে আপনার তাক, ইতিহাস, পয়েন্ট ও রিপোর্ট — সব মুছে যাবে। এই কাজ ফেরানো যায় না।" data-en="Deleting your account removes your shelves, history, points and reports — everything. This cannot be undone.">অ্যাকাউন্ট মুছলে আপনার তাক, ইতিহাস, পয়েন্ট ও রিপোর্ট — সব মুছে যাবে। এই কাজ ফেরানো যায় না।</p>
           <button id="delete-btn" class="bg-red-600 text-white font-bold rounded-xl px-4 py-2" data-bn="অ্যাকাউন্ট মুছুন" data-en="Delete my account">অ্যাকাউন্ট মুছুন</button>
           <p id="delete-err" class="hidden text-red-600 dark:text-red-400 text-sm mt-2"></p>
-        </div>
-      </div>
-      <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm mb-5">
-        <h2 class="serif text-lg sm:text-xl font-semibold flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-home"/></svg> <span data-bn="হোমপেজ সাজান" data-en="Homepage setup">হোমপেজ সাজান</span></h2>
-        <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1.5 leading-relaxed" data-bn="হোমপেজে কোন অংশ থাকবে আর কোনটা আগে আসবে, এখান থেকে ঠিক করুন। পছন্দ এই ডিভাইসেই সংরক্ষিত থাকে।" data-en="Choose which homepage sections show, and in what order. Your choice is saved on this device.">হোমপেজে কোন অংশ থাকবে আর কোনটা আগে আসবে, এখান থেকে ঠিক করুন। পছন্দ এই ডিভাইসেই সংরক্ষিত থাকে।</p>
-        <div id="home-setup-list" class="mt-4 space-y-2"></div>
-        <button id="home-setup-reset" class="mt-4 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl px-4 py-2 text-sm" data-bn="ডিফল্টে ফেরান" data-en="Reset to default">ডিফল্টে ফেরান</button>
-      </div>
-      <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm mb-5">
-        <h2 class="serif text-lg sm:text-xl font-semibold flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-save"/></svg> <span data-bn="আমার তথ্যের ব্যাকআপ" data-en="Back Up My Data">আমার তথ্যের ব্যাকআপ</span></h2>
-        <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1.5 leading-relaxed" data-bn="আপনার তাকের বই, স্টার রেটিং, পড়ার অগ্রগতি, বুকমার্ক, নোট ও হাইলাইট এবং সেটিংস এই ব্রাউজারেই সংরক্ষিত থাকে। ফোন বদলালে বা ব্রাউজারের ডেটা মুছে গেলে ব্যাকআপ দিয়ে সব ফিরিয়ে আনতে পারবেন।" data-en="Your shelf, star ratings, reading progress, bookmarks, notes and highlights, and settings are stored in this browser. With a backup you can bring everything back — on a new phone or after clearing browser data.">আপনার তাকের বই, স্টার রেটিং, পড়ার অগ্রগতি, বুকমার্ক, নোট ও হাইলাইট এবং সেটিংস এই ব্রাউজারেই সংরক্ষিত থাকে। ফোন বদলালে বা ব্রাউজারের ডেটা মুছে গেলে ব্যাকআপ দিয়ে সব ফিরিয়ে আনতে পারবেন।</p>
-        <!-- Offline -->
-        <div class="mt-5">
-          <h3 class="font-semibold flex items-center gap-2"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-download"/></svg> <span data-bn="অফলাইন" data-en="Offline">অফলাইন</span></h3>
-          <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1" data-bn="ব্যাকআপ ফাইল ডাউনলোড করে রাখুন, যেকোনো সময় রিস্টোর করুন।" data-en="Download a backup file and restore it anytime.">ব্যাকআপ ফাইল ডাউনলোড করে রাখুন, যেকোনো সময় রিস্টোর করুন।</p>
-          <div class="flex flex-wrap gap-2 mt-3">
-            <button id="bk-dl" class="accent-bg text-white font-bold rounded-[10px] px-5 py-2.5 text-sm"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-download"/></svg> <span data-bn="ব্যাকআপ ডাউনলোড" data-en="Download Backup">ব্যাকআপ ডাউনলোড</span></button>
-            <label for="bk-file" class="font-bold rounded-[10px] px-5 py-2.5 text-sm border border-neutral-300 dark:border-neutral-600 cursor-pointer"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-upload"/></svg> <span data-bn="ব্যাকআপ রিস্টোর" data-en="Restore Backup">ব্যাকআপ রিস্টোর</span></label>
-            <input type="file" id="bk-file" accept=".json,application/json" class="hidden">
-          </div>
-        </div>
-        <!-- Telegram (per-user, like Our Days) -->
-        <div class="border-t border-neutral-200 dark:border-neutral-700 mt-5 pt-4">
-          <h3 class="font-semibold flex items-center gap-2"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-send"/></svg> <span data-bn="টেলিগ্রাম" data-en="Telegram">টেলিগ্রাম</span></h3>
-          <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="নিজের বট দিয়ে নিজের চ্যাটে ব্যাকআপ পাঠান — Our Days অ্যাপের মতো। বটের টোকেন আর চ্যাট আইডি শুধু এই ব্রাউজারেই থাকে, আমাদের সার্ভারে পাঠানো হয় না।" data-en="Send the backup to your own chat with your own bot — like the Our Days app. The bot token and chat ID stay in this browser only; they are never sent to our server.">নিজের বট দিয়ে নিজের চ্যাটে ব্যাকআপ পাঠান — Our Days অ্যাপের মতো। বটের টোকেন আর চ্যাট আইডি শুধু এই ব্রাউজারেই থাকে, আমাদের সার্ভারে পাঠানো হয় না।</p>
-          <div class="space-y-3 mt-3 max-w-md">
-            <input id="tg-token" type="password" autocomplete="off" placeholder="Bot token — BotFather থেকে" data-bn-ph="Bot token — BotFather থেকে" data-en-ph="Bot token — from BotFather" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3">
-            <input id="tg-chat" type="text" inputmode="numeric" autocomplete="off" placeholder="Chat ID — যেমন: 123456789" data-bn-ph="Chat ID — যেমন: 123456789" data-en-ph="Chat ID — e.g. 123456789" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3">
-            <p id="tg-status" class="hidden text-sm"></p>
-            <div class="flex flex-wrap gap-2">
-              <button id="tg-save" class="accent-bg text-white font-bold rounded-[10px] px-4 py-2 text-sm" data-bn="সংরক্ষণ করুন" data-en="Save">সংরক্ষণ করুন</button>
-              <button id="tg-test" class="border border-neutral-300 dark:border-neutral-600 font-bold rounded-[10px] px-4 py-2 text-sm" data-bn="পরীক্ষা করুন" data-en="Test">পরীক্ষা করুন</button>
-              <button id="tg-send" class="border border-neutral-300 dark:border-neutral-600 font-bold rounded-[10px] px-4 py-2 text-sm" data-bn="টেলিগ্রামে ব্যাকআপ পাঠান" data-en="Send backup to Telegram">টেলিগ্রামে ব্যাকআপ পাঠান</button>
-              <button id="tg-clear" class="font-bold rounded-[10px] px-4 py-2 text-sm text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900/60" data-bn="সংযোগ ছিন্ন করুন" data-en="Disconnect">সংযোগ ছিন্ন করুন</button>
-            </div>
-            <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed" data-bn="কীভাবে পাবেন: Telegram-এ @BotFather থেকে নতুন বট বানিয়ে token নিন, তারপর বটকে একটা মেসেজ পাঠিয়ে @userinfobot থেকে আপনার chat id নিন।" data-en="How to get them: make a bot with @BotFather on Telegram to get a token, then message your bot and get your chat ID from @userinfobot.">কীভাবে পাবেন: Telegram-এ @BotFather থেকে নতুন বট বানিয়ে token নিন, তারপর বটকে একটা মেসেজ পাঠিয়ে @userinfobot থেকে আপনার chat id নিন।</p>
-          </div>
-        </div>
-        <!-- Google Drive -->
-        <div class="border-t border-neutral-200 dark:border-neutral-700 mt-5 pt-4">
-          <h3 class="font-semibold flex items-center gap-2"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-cloud"/></svg> <span data-bn="Google Drive" data-en="Google Drive">Google Drive</span></h3>
-          <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="শীঘ্রই আসছে — Drive-এ ব্যাকআপ রাখতে Google অ্যাকাউন্ট সংযোগের কাজ চলছে। আপাতত অফলাইন ব্যাকআপ ফাইল ডাউনলোড করে Drive-এ রেখে দিন।" data-en="Coming soon — connecting your Google account for Drive backups is still being built. For now, download the offline backup file and keep it in Drive.">শীঘ্রই আসছে — Drive-এ ব্যাকআপ রাখতে Google অ্যাকাউন্ট সংযোগের কাজ চলছে। আপাতত অফলাইন ব্যাকআপ ফাইল ডাউনলোড করে Drive-এ রেখে দিন।</p>
         </div>
       </div>
       <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 shadow-sm space-y-4 leading-relaxed mb-5">
@@ -359,6 +338,7 @@ var OB_BOOKS = [{% for b in site.books %}{
     bindReportPicker();
     bindLocal();
     bindHomeSetup();
+    bindHistoryMore();
     API.getMe().then(function (u) {
       user = u;
       show($('dash-loading'), false);
@@ -454,6 +434,9 @@ var OB_BOOKS = [{% for b in site.books %}{
         .then(function () { show($('fix-ok'), true); show($('fix-ok-link'), true); $('fix-message').value = ''; loadMyFix(); })
         .catch(function (e) { showErr($('fix-err'), e.message); });
     });
+    $('fix-message').addEventListener('input', updateGithubReportLink);
+    $('report-book').addEventListener('input', updateGithubReportLink);
+    updateGithubReportLink();
     $('form-support').addEventListener('submit', function (ev) {
       ev.preventDefault();
       showErr($('support-err'), ''); show($('support-ok'), false); show($('support-ok-link'), false);
@@ -506,10 +489,84 @@ var OB_BOOKS = [{% for b in site.books %}{
     if (panel) panel.classList.remove('hidden');
     if (name === 'overview') { loadOverview(); if (user) loadHistory(); }
     if (name === 'shelves') { if (user) loadShelves(); renderDeviceShelf(); renderNotesSection(); }
-    if (name === 'ranking') loadRanking();
+    if (name === 'ranking') { loadRanking(); if (user) loadStats(); }
     if (name === 'report' && user && !loaded.report) { loadMyFix(); loaded.report = true; }
   }
+  /* ---------- history pagination: 5 at a time, "see more" per section ---------- */
+  var HIST_PAGE = 5;
+  var _contAll = [], _contShown = 0, _contKind = 'server';
+  var _recentAll = [], _recentShown = 0;
+  var _histAll = [], _histShown = 0;
+  function bindHistoryMore() {
+    var cm = $('continue-more');
+    if (cm) cm.onclick = function () { _contShown += HIST_PAGE; renderContinue(); };
+    var rm = $('recent-more');
+    if (rm) rm.onclick = function () {
+      _recentShown += HIST_PAGE;
+      renderHistory($('recent-history'), _recentAll.slice(0, _recentShown), true);
+      show(rm, _recentAll.length > _recentShown);
+    };
+    var hm = $('history-more');
+    if (hm) hm.onclick = function () {
+      _histShown += HIST_PAGE;
+      renderHistory($('history-list'), _histAll.slice(0, _histShown));
+      show(hm, _histAll.length > _histShown);
+    };
+  }
+  function renderContinue() {
+    var list = $('continue-list');
+    if (!list) return;
+    var shown = _contAll.slice(0, _contShown);
+    if (!shown.length) {
+      list.innerHTML = '<span>' + T('এখনো কোনো বই শুরু করেননি।', 'You have not started any book yet.') + '</span>';
+      show($('continue-more'), false);
+      return;
+    }
+    if (_contKind === 'local') {
+      list.innerHTML = shown.map(function (p) {
+        var b = byFile[p.f];
+        var pct = (typeof p.pct === 'number') ? p.pct : 0;
+        return '<div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-3.5 flex gap-4 items-center shadow-sm">' +
+          '<a href="' + b.url + '" class="shrink-0"><img src="' + b.cover + '" alt="" class="w-14 h-[84px] object-cover rounded-md shadow"></a>' +
+          '<div class="flex-1 min-w-0">' +
+            '<a href="' + b.url + '" class="font-semibold leading-snug line-clamp-2 hover:text-emerald-700 dark:hover:text-emerald-400">' + esc(bookTitle(b)) + '</a>' +
+            (p.chapter ? '<p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1">' + esc(p.chapter) + '</p>' : '') +
+            '<div class="h-2 rounded-full bg-neutral-200 dark:bg-neutral-700 mt-2 overflow-hidden"><div class="h-full accent-bg rounded-full" style="width:' + pct + '%"></div></div>' +
+            '<p class="text-xs font-bold text-neutral-400 mt-1">' + window.__obDigits(pct) + T('% পড়া হয়েছে', '% read') + '</p>' +
+            '<div class="flex flex-wrap gap-2 mt-2.5">' +
+              '<a href="' + READER + '?file=' + encodeURIComponent(p.f) + '&title=' + encodeURIComponent(b.title) + '" class="accent-bg text-white font-bold rounded-[10px] px-4 py-2 text-sm">' + '<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-book-open"/></svg>' + ' ' + T('পড়া চালিয়ে যান', 'Continue Reading') + '</a>' +
+              '<button data-drop="' + esc(p.f) + '" class="font-bold rounded-[10px] px-4 py-2 text-sm text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900/60">' + T('সরান', 'Remove') + '</button>' +
+            '</div>' +
+          '</div></div>';
+      }).join('');
+      list.querySelectorAll('[data-drop]').forEach(function (btn) {
+        btn.onclick = function () {
+          var all = getProg();
+          delete all[btn.getAttribute('data-drop')];
+          try { localStorage.setItem(PROG, JSON.stringify(all)); } catch (e) {}
+          renderLocalContinue();
+        };
+      });
+    } else {
+      list.innerHTML = shown.map(function (p) {
+        return '<a href="' + bookUrl(p.book_id) + '" class="flex justify-between gap-2 border-b border-neutral-100 dark:border-neutral-700 pb-2"><span class="font-bold">' + esc(p.title) + '</span><span class="text-sm">' + window.__obDigits(p.percent || 0) + '%</span></a>';
+      }).join('');
+    }
+    show($('continue-more'), _contAll.length > _contShown);
+  }
 
+
+  function updateGithubReportLink() {
+    var a = $('report-github-btn');
+    if (!a) return;
+    var name = $('report-book') ? $('report-book').value.trim() : '';
+    var msg = $('fix-message') ? $('fix-message').value.trim() : '';
+    var linkEl = $('report-book-link-a');
+    var link = (linkEl && !$('report-book-link').classList.contains('hidden')) ? linkEl.href : '';
+    var title = name ? '[Book info fix] ' + name : '[Book info fix] Our Boighar';
+    var body = (msg || '(no details yet)') + (name ? '\n\nBook: ' + name : '') + (link ? '\nLink: ' + link : '');
+    a.href = 'https://github.com/MDTowfiqul/our-boighar/issues/new?title=' + encodeURIComponent(title) + '&body=' + encodeURIComponent(body);
+  }
   /* ---------- report book picker: type a name, tap to select, fills the link ---------- */
   function bindReportPicker() {
     var inp = $('report-book'), box = $('report-book-results'), hid = $('report-book-id'),
@@ -545,6 +602,7 @@ var OB_BOOKS = [{% for b in site.books %}{
           linkA.href = location.origin + b.url;
           linkP.classList.remove('hidden');
           closeBox();
+          updateGithubReportLink();
         });
       });
     });
@@ -555,10 +613,12 @@ var OB_BOOKS = [{% for b in site.books %}{
   function statCard(num, label) {
     return '<div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-4 shadow-sm"><div class="text-2xl font-semibold">' + esc(window.__obDigits(num)) + '</div><div class="text-sm text-neutral-500 dark:text-neutral-400">' + esc(label) + '</div></div>';
   }
-  function loadOverview() {
-    if (!user) { renderLocalContinue(); return; }
+  var lastStats = null;
+  function loadStats() {
+    if (!user) return;
     API.api('/api/stats').then(function (d) {
       var s = d.stats;
+      lastStats = s;
       $('stats-grid').innerHTML =
         statCard(s.finished, T('বই শেষ', 'Books finished')) +
         statCard(s.reading, T('পড়ছি', 'Reading')) +
@@ -577,15 +637,19 @@ var OB_BOOKS = [{% for b in site.books %}{
         $('rank-bar').style.width = '100%';
       }
     }).catch(function () {});
+  }
+  function loadOverview() {
+    if (!user) { renderLocalContinue(); return; }
+    loadStats();
     API.api('/api/progress').then(function (d) {
-      var list = (d.progress || []).filter(function (p) { return p.status === 'reading'; }).slice(0, 5);
-      if (!list.length) { $('continue-list').innerHTML = '<span>' + T('এখনো কোনো বই শুরু করেননি।', 'You have not started any book yet.') + '</span>'; return; }
-      $('continue-list').innerHTML = list.map(function (p) {
-        return '<a href="' + bookUrl(p.book_id) + '" class="flex justify-between gap-2 border-b border-neutral-100 dark:border-neutral-700 pb-2"><span class="font-bold">' + esc(p.title) + '</span><span class="text-sm">' + window.__obDigits(p.percent || 0) + '%</span></a>';
-      }).join('');
+      _contAll = (d.progress || []).filter(function (p) { return p.status === 'reading'; });
+      _contKind = 'server'; _contShown = HIST_PAGE;
+      renderContinue();
     }).catch(function () {});
-    API.api('/api/history?limit=5').then(function (d) {
-      renderHistory($('recent-history'), d.history || [], true);
+    API.api('/api/history?limit=50').then(function (d) {
+      _recentAll = d.history || []; _recentShown = HIST_PAGE;
+      renderHistory($('recent-history'), _recentAll.slice(0, _recentShown), true);
+      show($('recent-more'), _recentAll.length > _recentShown);
     }).catch(function () {});
   }
   function eventLabel(ev) {
@@ -600,22 +664,47 @@ var OB_BOOKS = [{% for b in site.books %}{
     }).join('');
   }
   function loadHistory() {
-    API.api('/api/history?limit=50').then(function (d) { renderHistory($('history-list'), d.history || []); }).catch(function () {});
+    API.api('/api/history?limit=50').then(function (d) {
+      _histAll = d.history || []; _histShown = HIST_PAGE;
+      renderHistory($('history-list'), _histAll.slice(0, _histShown));
+      show($('history-more'), _histAll.length > _histShown);
+    }).catch(function () {});
   }
+  var _expandedShelves = {};
   function loadShelves() {
     API.api('/api/shelves').then(function (d) {
       var shelves = d.shelves || [];
       if (!shelves.length) { $('shelf-list').innerHTML = '<p class="text-neutral-500 dark:text-neutral-400">' + T('কোনো তাক নেই।', 'No shelves yet.') + '</p>'; return; }
-      $('shelf-list').innerHTML = shelves.map(function (s) {
-        var books = (s.books || []).map(function (b) {
+      $('shelf-list').innerHTML = shelves.map(function (sh) {
+        var books = sh.books || [];
+        var first = (books.length && byId[books[0].book_id]) ? byId[books[0].book_id] : null;
+        var cover = (first && first.cover)
+          ? '<img src="' + esc(first.cover) + '" alt="" class="w-12 h-[72px] object-cover rounded-md shadow shrink-0">'
+          : '<span class="w-12 h-[72px] rounded-md bg-neutral-100 dark:bg-neutral-700 flex items-center justify-center shrink-0"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-book"/></svg></span>';
+        var open = !!_expandedShelves[sh.id];
+        var rows = books.map(function (bk) {
           return '<div class="flex justify-between items-center gap-2 border-b border-neutral-100 dark:border-neutral-700 py-2">' +
-            '<a class="font-bold hover:underline" href="' + bookUrl(b.book_id) + '">' + esc(b.title) + '</a>' +
-            '<button class="text-red-600 dark:text-red-400 text-sm font-bold" data-shelf="' + esc(s.id) + '" data-book="' + esc(b.book_id) + '" onclick="OBDashRemove(this)"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-x"/></svg></button></div>';
-        }).join('') || '<p class="text-sm text-neutral-500 dark:text-neutral-400">' + T('এই তাকে এখনো কোনো বই নেই।', 'No books on this shelf yet.') + '</p>';
-        return '<div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm">' +
-          '<div class="flex justify-between items-center mb-2"><h3 class="font-semibold text-lg">' + esc(s.name) + ' <span class="text-sm text-neutral-500 dark:text-neutral-400">(' + window.__obDigits((s.books || []).length + '/100') + '</span></h3>' +
-          '<button class="text-red-600 dark:text-red-400 text-sm font-bold" data-shelf-del="' + esc(s.id) + '" onclick="OBDashDeleteShelf(this)">' + T('তাক মুছুন', 'Delete shelf') + '</button></div>' + books + '</div>';
+            '<a class="font-bold hover:underline" href="' + bookUrl(bk.book_id) + '">' + esc(bk.title) + '</a>' +
+            '<button class="text-red-600 dark:text-red-400 text-sm font-bold" data-shelf="' + esc(sh.id) + '" data-book="' + esc(bk.book_id) + '" onclick="OBDashRemove(this)"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-x"/></svg></button></div>';
+        }).join('') || '<p class="text-sm text-neutral-500 dark:text-neutral-400 py-2">' + T('এই তাকে এখনো কোনো বই নেই।', 'No books on this shelf yet.') + '</p>';
+        return '<div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl shadow-sm overflow-hidden">' +
+          '<button type="button" class="w-full text-left p-3.5 flex items-center gap-3" data-shelf-toggle="' + esc(sh.id) + '">' + cover +
+          '<span class="flex-1 min-w-0"><span class="block font-semibold text-[15px] truncate">' + esc(sh.name) + '</span>' +
+          '<span class="block text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">' + window.__obDigits(books.length) + ' ' + T('টি বই', 'books') + '</span></span>' +
+          '<svg class="ob-ic ob-ic-sm shelf-chev shrink-0" style="' + (open ? 'transform:rotate(180deg)' : '') + '" aria-hidden="true"><use href="#ob-ic-chevron-down"/></svg></button>' +
+          '<div class="px-4 pb-3 border-t border-neutral-100 dark:border-neutral-700 ' + (open ? '' : 'hidden') + '" data-shelf-books="' + esc(sh.id) + '">' + rows +
+          '<button class="text-red-600 dark:text-red-400 text-sm font-bold mt-2" data-shelf-del="' + esc(sh.id) + '" onclick="OBDashDeleteShelf(this)">' + T('তাক মুছুন', 'Delete shelf') + '</button></div></div>';
       }).join('');
+      $('shelf-list').querySelectorAll('[data-shelf-toggle]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var id = btn.getAttribute('data-shelf-toggle');
+          _expandedShelves[id] = !_expandedShelves[id];
+          var body = $('shelf-list').querySelector('[data-shelf-books="' + id + '"]');
+          if (body) body.classList.toggle('hidden', !_expandedShelves[id]);
+          var chev = btn.querySelector('.shelf-chev');
+          if (chev) chev.style.transform = _expandedShelves[id] ? 'rotate(180deg)' : '';
+        });
+      });
     }).catch(function () {});
   }
   window.OBDashRemove = function (btn) {
@@ -632,10 +721,22 @@ var OB_BOOKS = [{% for b in site.books %}{
     API.api('/api/ranking?limit=20').then(function (d) {
       var rows = d.ranking || [];
       if (!rows.length) { $('ranking-list').innerHTML = '<p class="text-neutral-500 dark:text-neutral-400">' + T('এখনো কেউ পয়েন্ট পাননি।', 'Nobody has earned points yet.') + '</p>'; return; }
+      var myRow = null;
+      if (user) {
+        var mine = rows.filter(function (r) { return r.name === user.name; });
+        myRow = mine.length === 1 ? mine[0] : ((mine.filter(function (r) { return lastStats && r.points === lastStats.total_points; })[0]) || mine[0] || null);
+      }
       $('ranking-list').innerHTML = rows.map(function (r) {
+        var isMe = myRow && r === myRow;
         var medal = r.place <= 3 ? '<span class="ob-rank ob-rank-' + r.place + '">' + r.place + '</span> ' : '';
-        return '<div class="flex justify-between gap-2 border-b border-neutral-100 dark:border-neutral-700 pb-2"><span>' + medal + (r.place > 3 ? '<b>#' + window.__obDigits(r.place) + '</b> ' : '') + esc(r.name) + ' <span class="text-sm text-neutral-500 dark:text-neutral-400">· ' + esc(r.rank) + '</span></span><span class="font-bold">' + window.__obDigits(r.points) + '</span></div>';
+        return '<div class="flex justify-between gap-2 border-b border-neutral-100 dark:border-neutral-700 pb-2' + (isMe ? ' accent-soft-bg accent-text rounded-lg px-2 -mx-2' : '') + '"><span>' + medal + (r.place > 3 ? '<b>#' + window.__obDigits(r.place) + '</b> ' : '') + esc(r.name) + (isMe ? ' <span class="text-xs font-bold">· ' + T('আপনি', 'You') + '</span>' : '') + ' <span class="text-sm text-neutral-500 dark:text-neutral-400">· ' + esc(r.rank) + '</span></span><span class="font-bold">' + window.__obDigits(r.points) + '</span></div>';
       }).join('');
+      var line = $('my-rank-line');
+      if (line) {
+        if (myRow) line.textContent = T('আপনি #' + window.__obDigits(myRow.place) + ' নম্বরে আছেন — ' + window.__obDigits(myRow.points) + ' পয়েন্ট', 'You are #' + myRow.place + ' — ' + myRow.points + ' points');
+        else if (user && lastStats) line.textContent = T('আপনি এখনো শীর্ষ ২০-এ নেই — ' + window.__obDigits(lastStats.total_points) + ' পয়েন্ট', 'You are not in the top 20 yet — ' + lastStats.total_points + ' points');
+        else if (user) line.textContent = '';
+      }
     }).catch(function () {});
   }
   function loadMyFix() {
@@ -650,7 +751,7 @@ var OB_BOOKS = [{% for b in site.books %}{
     }).catch(function () {});
   }
 
-  /* ---------- on this device: local shelf, progress, notes, backup ---------- */
+  /* ---------- on this device: local shelf, progress, notes ---------- */
   var READER = "{{ '/reader.html' | relative_url }}";
   var byId = {};
   var byFile = {};
@@ -659,38 +760,12 @@ var OB_BOOKS = [{% for b in site.books %}{
   var PROG = 'ob-reader-progress';
   function getProg() { try { return JSON.parse(localStorage.getItem(PROG) || '{}'); } catch (e) { return {}; } }
   function renderLocalContinue() {
-    var list = $('continue-list');
-    if (!list) return;
     var prog = getProg();
-    var items = Object.keys(prog).map(function (k) { return prog[k]; })
+    _contAll = Object.keys(prog).map(function (k) { return prog[k]; })
       .filter(function (p) { return p && p.f && byFile[p.f]; })
-      .sort(function (a, b) { return (b.ts || 0) - (a.ts || 0); })
-      .slice(0, 10);
-    if (!items.length) { list.innerHTML = '<span>' + T('এখনো কোনো বই শুরু করেননি।', 'You have not started any book yet.') + '</span>'; return; }
-    list.innerHTML = items.map(function (p) {
-      var b = byFile[p.f];
-      var pct = (typeof p.pct === 'number') ? p.pct : 0;
-      return '<div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-3.5 flex gap-4 items-center shadow-sm">' +
-        '<a href="' + b.url + '" class="shrink-0"><img src="' + b.cover + '" alt="" class="w-14 h-[84px] object-cover rounded-md shadow"></a>' +
-        '<div class="flex-1 min-w-0">' +
-          '<a href="' + b.url + '" class="font-semibold leading-snug line-clamp-2 hover:text-emerald-700 dark:hover:text-emerald-400">' + esc(bookTitle(b)) + '</a>' +
-          (p.chapter ? '<p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1">' + esc(p.chapter) + '</p>' : '') +
-          '<div class="h-2 rounded-full bg-neutral-200 dark:bg-neutral-700 mt-2 overflow-hidden"><div class="h-full accent-bg rounded-full" style="width:' + pct + '%"></div></div>' +
-          '<p class="text-xs font-bold text-neutral-400 mt-1">' + window.__obDigits(pct) + T('% পড়া হয়েছে', '% read') + '</p>' +
-          '<div class="flex flex-wrap gap-2 mt-2.5">' +
-            '<a href="' + READER + '?file=' + encodeURIComponent(p.f) + '&title=' + encodeURIComponent(b.title) + '" class="accent-bg text-white font-bold rounded-[10px] px-4 py-2 text-sm">' + '<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-book-open"/></svg>' + ' ' + T('পড়া চালিয়ে যান', 'Continue Reading') + '</a>' +
-            '<button data-drop="' + esc(p.f) + '" class="font-bold rounded-[10px] px-4 py-2 text-sm text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900/60">' + T('সরান', 'Remove') + '</button>' +
-          '</div>' +
-        '</div></div>';
-    }).join('');
-    list.querySelectorAll('[data-drop]').forEach(function (btn) {
-      btn.onclick = function () {
-        var all = getProg();
-        delete all[btn.getAttribute('data-drop')];
-        try { localStorage.setItem(PROG, JSON.stringify(all)); } catch (e) {}
-        renderLocalContinue();
-      };
-    });
+      .sort(function (x, y) { return (y.ts || 0) - (x.ts || 0); });
+    _contKind = 'local'; _contShown = HIST_PAGE;
+    renderContinue();
   }
   var BM = 'ourboighar-bookmarks';
   function getBm() { try { return JSON.parse(localStorage.getItem(BM) || '[]'); } catch (e) { return []; } }
@@ -709,7 +784,7 @@ var OB_BOOKS = [{% for b in site.books %}{
         '<a href="' + b.url + '" class="shrink-0"><img src="' + b.cover + '" alt="" class="w-14 h-[84px] object-cover rounded-md shadow"></a>' +
         '<div class="flex-1 min-w-0">' +
           '<a href="' + b.url + '" class="font-semibold leading-snug line-clamp-2 hover:text-emerald-700 dark:hover:text-emerald-400">' + esc(bookTitle(b)) + '</a>' +
-          '<p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1">' + '<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-edit"/></svg>' + ' ' + esc(b.author) + '</p>' +
+          '<p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1">' + esc(b.author) + '</p>' +
           '<p class="text-xs font-bold text-neutral-400 mt-1">' + esc(window.__obCatName ? window.__obCatName(b.category) : b.category) + ' · ' + esc(b.langlabel) + '</p>' +
           '<div class="flex flex-wrap gap-2 mt-2.5">' +
             '<a href="' + b.url + '" class="accent-bg text-white font-bold rounded-lg px-4 py-2 text-sm">' + T('খুলুন', 'Open') + '</a>' +
@@ -729,8 +804,9 @@ var OB_BOOKS = [{% for b in site.books %}{
   var NOTEKEY = 'ob-reader-notes', HLKEY = 'ob-reader-highlights';
   function getNotes() { try { return JSON.parse(localStorage.getItem(NOTEKEY) || '{}'); } catch (e) { return {}; } }
   function getHl() { try { return JSON.parse(localStorage.getItem(HLKEY) || '{}'); } catch (e) { return {}; } }
+  var _notesQuery = '';
   function renderNotesSection() {
-    var list = $('notes-list'), emptyEl = $('notes-empty');
+    var list = $('notes-list'), emptyEl = $('notes-empty'), noResEl = $('notes-noresult');
     if (!list) return;
     var items = [];
     var notes = getNotes(), hls = getHl();
@@ -744,18 +820,37 @@ var OB_BOOKS = [{% for b in site.books %}{
         if (byFile[f]) items.push({ kind: 'hl', key: HLKEY, f: f, idx: idx, b: byFile[f], text: h.text, chapter: h.chapter, when: h.when, cfi: h.cfiRange });
       });
     });
+    items.forEach(function (it, i) { it._i = i; });
+    var q = _notesQuery.trim().toLowerCase();
+    var shown = q ? items.filter(function (it) {
+      return (bookTitle(it.b) || '').toLowerCase().indexOf(q) >= 0 || (it.text || '').toLowerCase().indexOf(q) >= 0;
+    }) : items;
     if (emptyEl) emptyEl.classList.toggle('hidden', items.length > 0);
-    list.innerHTML = items.map(function (it, i) {
-      var badge = it.kind === 'note' ? '<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-file-text"/></svg>' + ' ' + T('নোট', 'Note') : '<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-edit"/></svg>' + ' ' + T('হাইলাইট', 'Highlight');
-      var link = READER + '?file=' + encodeURIComponent(it.f) + '&title=' + encodeURIComponent(it.b.title) + (it.cfi ? '&cfi=' + encodeURIComponent(it.cfi) : '');
-      return '<div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-3.5 shadow-sm">' +
-        '<p class="text-xs font-bold text-neutral-400">' + badge + ' · <a href="' + it.b.url + '" class="hover:underline">' + esc(bookTitle(it.b)) + '</a>' + (it.chapter ? ' · ' + esc(it.chapter) : '') + '</p>' +
-        '<p class="text-[15px] mt-1.5 leading-relaxed">' + esc(it.text) + '</p>' +
-        (it.when ? '<p class="text-xs text-neutral-400 mt-1">' + esc(it.when) + '</p>' : '') +
-        '<div class="flex flex-wrap gap-2 mt-2.5">' +
-          '<a href="' + link + '" class="accent-bg text-white font-bold rounded-[10px] px-4 py-2 text-sm">' + '<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-book-open"/></svg>' + ' ' + T('এই জায়গায় খুলুন', 'Open at this spot') + '</a>' +
-          '<button data-dropnote="' + i + '" class="font-bold rounded-lg px-4 py-2 text-sm text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900/60">' + T('সরান', 'Remove') + '</button>' +
-        '</div></div>';
+    if (noResEl) noResEl.classList.toggle('hidden', !(q && items.length > 0 && !shown.length));
+    var groups = [], byBook = {};
+    shown.forEach(function (it) {
+      var id = it.b.id;
+      if (!byBook[id]) { byBook[id] = { b: it.b, items: [] }; groups.push(byBook[id]); }
+      byBook[id].items.push(it);
+    });
+    list.innerHTML = groups.map(function (g) {
+      var head = '<div class="flex items-center gap-3">' +
+        '<a href="' + g.b.url + '" class="shrink-0"><img src="' + esc(g.b.cover) + '" alt="" class="w-10 h-[60px] object-cover rounded-md shadow"></a>' +
+        '<div class="min-w-0 flex-1"><a href="' + g.b.url + '" class="font-semibold leading-snug line-clamp-2 hover:underline">' + esc(bookTitle(g.b)) + '</a>' +
+        '<p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">' + window.__obDigits(g.items.length) + ' ' + T('টি নোট / হাইলাইট', 'notes / highlights') + '</p></div></div>';
+      var rows = g.items.map(function (it) {
+        var badge = it.kind === 'note' ? '<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-file-text"/></svg>' + ' ' + T('নোট', 'Note') : '<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-edit"/></svg>' + ' ' + T('হাইলাইট', 'Highlight');
+        var link = READER + '?file=' + encodeURIComponent(it.f) + '&title=' + encodeURIComponent(it.b.title) + (it.cfi ? '&cfi=' + encodeURIComponent(it.cfi) : '');
+        return '<div class="border-t border-neutral-100 dark:border-neutral-700 pt-3 mt-3">' +
+          '<p class="text-xs font-bold text-neutral-400">' + badge + (it.chapter ? ' · ' + esc(it.chapter) : '') + '</p>' +
+          '<p class="text-[15px] mt-1.5 leading-relaxed">' + esc(it.text) + '</p>' +
+          (it.when ? '<p class="text-xs text-neutral-400 mt-1">' + esc(it.when) + '</p>' : '') +
+          '<div class="flex flex-wrap gap-2 mt-2.5">' +
+            '<a href="' + link + '" class="accent-bg text-white font-bold rounded-[10px] px-4 py-2 text-sm">' + '<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-book-open"/></svg>' + ' ' + T('এই জায়গায় খুলুন', 'Open at this spot') + '</a>' +
+            '<button data-dropnote="' + it._i + '" class="font-bold rounded-lg px-4 py-2 text-sm text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900/60">' + T('সরান', 'Remove') + '</button>' +
+          '</div></div>';
+      }).join('');
+      return '<div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-3.5 shadow-sm">' + head + rows + '</div>';
     }).join('');
     list.querySelectorAll('[data-dropnote]').forEach(function (btn) {
       btn.onclick = function () {
@@ -773,12 +868,10 @@ var OB_BOOKS = [{% for b in site.books %}{
     renderDeviceShelf();
     renderNotesSection();
   }
-  var BK_KEYS = ['ourboighar-bookmarks', 'ourboighar-ratings', 'ob-reader-progress', 'ob-reader-bookmarks', 'ob-reader-notes', 'ob-reader-highlights', 'ob-reader-settings', 'ob-lang', 'ob-theme', 'ob-color', 'ob-fontscale', 'ob-home-sections'];
   /* ---------- homepage setup: which sections show, in what order ---------- */
   var HOME_SECS = [
     { k: 'continue', bn: 'পড়ছিলেন', en: 'Continue Reading' },
     { k: 'top100', bn: 'সেরা ১০০', en: 'Top 100' },
-    { k: 'recent', bn: 'সম্প্রতি আপলোড', en: 'Recently Uploaded' },
     { k: 'popular', bn: 'সব বই', en: 'All Books' },
     { k: 'new', bn: 'নতুন যুক্ত হয়েছে', en: 'Newly Added' },
     { k: 'foryou', bn: 'আপনার জন্য', en: 'For You' },
@@ -836,108 +929,9 @@ var OB_BOOKS = [{% for b in site.books %}{
       renderHomeSetup();
     });
   }
-  function buildBackupPayload() {
-    var data = {};
-    BK_KEYS.forEach(function (k) { var v = null; try { v = localStorage.getItem(k); } catch (e) {} if (v !== null) data[k] = v; });
-    return { app: 'our-boighar', version: 1, exported: new Date().toISOString(), data: data };
-  }
-  /* ---------- Telegram backup (per-user, Our Days pattern) ---------- */
-  // Each user connects their OWN bot (BotFather token + chat id), stored in
-  // this browser only. Backups go straight from the browser to api.telegram.org
-  // as a document in the user's own chat — the token never touches our server.
-  var TG_KEY = 'ob-tg-backup';
-  function tgCreds() { try { return JSON.parse(localStorage.getItem(TG_KEY) || 'null') || {}; } catch (e) { return {}; } }
-  function tgStatus(msg, ok) {
-    var el = $('tg-status');
-    if (!el) return;
-    el.textContent = msg;
-    el.className = 'text-sm ' + (ok ? 'text-emerald-700 dark:text-emerald-400' : 'text-red-600 dark:text-red-400');
-  }
-  function tgCall(token, method, formData, onOk, onFail) {
-    fetch('https://api.telegram.org/bot' + token + '/' + method, { method: 'POST', body: formData })
-      .then(function (r) { return r.json(); })
-      .then(function (d) {
-        if (d && d.ok) onOk();
-        else onFail((d && d.description) || T('টোকেন বা চ্যাট আইডি ভুল।', 'Wrong token or chat ID.'));
-      })
-      .catch(function () { onFail(T('টেলিগ্রামে পৌঁছানো যাচ্ছে না — ইন্টারনেট দেখুন।', 'Cannot reach Telegram — check your connection.')); });
-  }
-  function bindTelegramBackup() {
-    var tokenEl = $('tg-token'), chatEl = $('tg-chat');
-    if (!tokenEl || !chatEl) return;
-    var c = tgCreds();
-    if (c.token) tokenEl.value = c.token;
-    if (c.chatId) chatEl.value = c.chatId;
-    $('tg-save').onclick = function () {
-      var t = tokenEl.value.trim(), ch = chatEl.value.trim();
-      if (!t || !ch) { tgStatus(T('টোকেন আর চ্যাট আইডি — দুটোই দিন।', 'Enter both the token and the chat ID.'), false); return; }
-      try { localStorage.setItem(TG_KEY, JSON.stringify({ token: t, chatId: ch })); } catch (e) {}
-      tgStatus(T('সংরক্ষণ হয়েছে — এখন পরীক্ষা করুন।', 'Saved — now send a test.'), true);
-    };
-    $('tg-test').onclick = function () {
-      var t = tokenEl.value.trim(), ch = chatEl.value.trim();
-      if (!t || !ch) { tgStatus(T('আগে টোকেন আর চ্যাট আইডি দিন।', 'Enter the token and chat ID first.'), false); return; }
-      tgStatus(T('পাঠানো হচ্ছে…', 'Sending…'), true);
-      var fd = new FormData();
-      fd.append('chat_id', ch);
-      fd.append('text', 'Our Boighar: Telegram backup is set up.');
-      tgCall(t, 'sendMessage', fd,
-        function () { tgStatus(T('পরীক্ষা সফল — আপনার টেলিগ্রামে মেসেজ গেছে।', 'Test worked — the message reached your Telegram.'), true); },
-        function (why) { tgStatus(T('হয়নি: ', 'Failed: ') + why, false); });
-    };
-    $('tg-send').onclick = function () {
-      var t = tokenEl.value.trim(), ch = chatEl.value.trim();
-      if (!t || !ch) { tgStatus(T('আগে টোকেন আর চ্যাট আইডি দিন।', 'Enter the token and chat ID first.'), false); return; }
-      tgStatus(T('ব্যাকআপ পাঠানো হচ্ছে…', 'Sending backup…'), true);
-      var blob = new Blob([JSON.stringify(buildBackupPayload(), null, 2)], { type: 'application/json' });
-      var fd = new FormData();
-      fd.append('chat_id', ch);
-      fd.append('caption', 'our-boighar-backup ' + new Date().toISOString().slice(0, 10));
-      fd.append('document', blob, 'our-boighar-backup.json');
-      tgCall(t, 'sendDocument', fd,
-        function () { tgStatus(T('ব্যাকআপ আপনার টেলিগ্রাম চ্যাটে পাঠানো হয়েছে।', 'Backup sent to your Telegram chat.'), true); },
-        function (why) { tgStatus(T('হয়নি: ', 'Failed: ') + why, false); });
-    };
-    $('tg-clear').onclick = function () {
-      try { localStorage.removeItem(TG_KEY); } catch (e) {}
-      tokenEl.value = ''; chatEl.value = '';
-      tgStatus(T('টেলিগ্রাম সংযোগ ছিন্ন হয়েছে।', 'Telegram disconnected.'), true);
-    };
-  }
   function bindLocal() {
-    var dlBtn = $('bk-dl');
-    if (dlBtn) dlBtn.onclick = function () {
-      var blob = new Blob([JSON.stringify(buildBackupPayload(), null, 2)], { type: 'application/json' });
-      var a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'our-boighar-backup.json';
-      document.body.appendChild(a); a.click(); a.remove();
-      setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
-    };
-    var fileInput = $('bk-file');
-    if (fileInput) fileInput.addEventListener('change', function () {
-      var f = fileInput.files && fileInput.files[0];
-      if (!f) return;
-      var reader = new FileReader();
-      reader.onload = function () {
-        try {
-          var payload = JSON.parse(String(reader.result || ''));
-          if (!payload || payload.app !== 'our-boighar' || !payload.data || typeof payload.data !== 'object') throw new Error('bad');
-          if (!window.confirm(T('ব্যাকআপ রিস্টোর করলে এই ব্রাউজারের বর্তমান তাক, রেটিং ও পড়ার অগ্রগতি ব্যাকআপের তথ্য দিয়ে বদলে যাবে। এগিয়ে যাবেন?', 'Restoring will replace this browser’s current shelf, ratings and reading progress with the backup. Continue?'))) return;
-          BK_KEYS.forEach(function (k) {
-            if (Object.prototype.hasOwnProperty.call(payload.data, k)) {
-              var v = payload.data[k];
-              try { localStorage.setItem(k, typeof v === 'string' ? v : JSON.stringify(v)); } catch (e) {}
-            }
-          });
-          alert(T('ব্যাকআপ রিস্টোর হয়েছে। পেজটি আবার লোড হচ্ছে…', 'Backup restored. Reloading…'));
-          location.reload();
-        } catch (e) { alert(T('এটি সঠিক Our Boighar ব্যাকআপ ফাইল নয়।', 'This is not a valid Our Boighar backup file.')); }
-        fileInput.value = '';
-      };
-      reader.readAsText(f);
-    });
-    bindTelegramBackup();
+    var ns = $('notes-search');
+    if (ns) ns.addEventListener('input', function () { _notesQuery = ns.value; renderNotesSection(); });
     window.addEventListener('ob-lang', function () { renderLocal(); showTab(currentTab); renderHomeSetup(); });
   }
 

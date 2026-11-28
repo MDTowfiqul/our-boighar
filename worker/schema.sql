@@ -111,3 +111,21 @@ CREATE TABLE IF NOT EXISTS rate_limits (
   count INTEGER NOT NULL DEFAULT 1,
   PRIMARY KEY (ip, scope, window_start)
 );
+
+CREATE TABLE IF NOT EXISTS comments (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  book_id TEXT REFERENCES books(id),
+  user_id TEXT REFERENCES users(id) ON DELETE CASCADE,
+  name TEXT,
+  text TEXT,
+  created_at INTEGER
+);
+CREATE INDEX IF NOT EXISTS idx_comments_book ON comments(book_id, created_at DESC);
+
+CREATE TABLE IF NOT EXISTS likes (
+  book_id TEXT REFERENCES books(id),
+  user_id TEXT REFERENCES users(id) ON DELETE CASCADE,
+  created_at INTEGER,
+  PRIMARY KEY (book_id, user_id)
+);
+CREATE INDEX IF NOT EXISTS idx_likes_book ON likes(book_id);

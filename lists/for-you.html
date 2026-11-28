@@ -14,7 +14,7 @@ permalink: /lists/for-you/
 
   <p id="foryou-note" class="text-sm text-neutral-500 dark:text-neutral-400 mt-7 hidden"></p>
   <p id="foryou-loading" class="text-sm text-neutral-500 dark:text-neutral-400 mt-7" data-bn="সুপারিশ তৈরি হচ্ছে…" data-en="Preparing recommendations…">সুপারিশ তৈরি হচ্ছে…</p>
-  <div id="foryou-grid" class="grid grid-cols-[repeat(auto-fill,152px)] sm:grid-cols-[repeat(auto-fill,176px)] gap-4 sm:gap-5 mt-7"></div>
+  <div id="foryou-grid" class="grid grid-cols-3 sm:grid-cols-[repeat(auto-fill,176px)] gap-3 sm:gap-5 mt-7"></div>
 </main>
 
 <script>
@@ -77,7 +77,7 @@ permalink: /lists/for-you/
         '<div class="relative rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]">' +
         '<img src="' + b.cover + '" alt="' + esc(title) + '" class="w-full h-full object-cover transition-[filter] duration-200 group-hover:brightness-105"></div>' +
         '<h3 class="font-semibold text-sm sm:text-[15px] leading-snug min-h-[2.75em] mt-2 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400">' + esc(title) + '</h3>' +
-        '<p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-edit"/></svg> ' + esc(b.author) + '</p></a>';
+        '<p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1">' + esc(b.author) + '</p></a>';
     }).join('');
   }).catch(function(){
     document.getElementById('foryou-loading').textContent = lang() === 'en' ? 'Could not load recommendations.' : 'সুপারিশ লোড করা যায়নি।';

@@ -43,7 +43,7 @@ series_desc_en: "Biographies of the Companions of the Prophet (peace be upon him
         {% if b.price %}<span class="absolute top-2 right-2 bg-amber-600 text-white text-xs font-bold px-2 py-0.5 rounded shadow" data-bn="প্রিমিয়াম" data-en="Premium">প্রিমিয়াম</span>{% endif %}
       </div>
       <h3 class="font-semibold text-sm sm:text-[15px] leading-snug min-h-[2.75em] mt-2 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400" data-bn="{{ b.title }}" data-en="{{ b.title_en | default: b.title }}">{{ b.title }}</h3>
-      <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-edit"/></svg> {{ b.author }}</p>
+      <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1">{{ b.author }}</p>
     </a>
     {% endfor %}
   </div>
