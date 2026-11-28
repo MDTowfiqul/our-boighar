@@ -64,7 +64,7 @@ for path in sorted(glob.glob(os.path.join(OUT, "*.xml"))):
     root, _ = parse(fname)
     feeds[fname] = root
 
-# --- 2. all-books pagination: 475 unique, 50/50/.../25, sorted ----------
+# --- 2. all-books pagination: 479 unique, 50/50/.../29, sorted ----------
 all_ids = []
 for n in range(1, 11):
     root = feeds.get(f"all-{n}.xml")
@@ -72,7 +72,7 @@ for n in range(1, 11):
     if root is None:
         continue
     es = entries(root)
-    expect = 50 if n < 10 else 25
+    expect = 50 if n < 10 else 29
     check(len(es) == expect, f"all-{n}.xml has {len(es)} entries, expected {expect}")
     all_ids.extend(entry_ids(root))
     # pagination links
@@ -85,8 +85,8 @@ for n in range(1, 11):
         check(rels.get("next") == f"{BASE}/opds/all-{n+1}.xml", f"all-{n}.xml next wrong")
     check(root.findtext(ATOM + "title") == f"Our Boighar — All Books (page {n} of 10)",
           f"all-{n}.xml title wrong")
-check(len(all_ids) == 475, f"all-books total entries {len(all_ids)}, expected 475")
-check(len(set(all_ids)) == 475, "all-books has duplicate entry ids")
+check(len(all_ids) == 479, f"all-books total entries {len(all_ids)}, expected 479")
+check(len(set(all_ids)) == 479, "all-books has duplicate entry ids")
 expected_urls = {f"{BASE}/books/{b}/" for b in BOOKS}
 check(set(all_ids) == expected_urls, "all-books entry ids != book page URLs")
 titles = []
@@ -126,11 +126,11 @@ for n in range(1, 11):
         a = e.find(ATOM + "author/" + ATOM + "name")
         check(a is not None and (a.text or "").strip(), "entry missing author name")
         # no raw '<' inside summary text (would have broken parsing anyway)
-check(n_acq == 475, f"acquisition links: {n_acq}/475")
-check(n_img == 475, f"image links: {n_img}/475")
-check(n_lang == 475, f"language elements: {n_lang}/475")
-notes.append(f"dc:creator present on {n_creator}/475, dc:contributor on {n_contrib}/475, "
-             f"non-empty summary on {n_summary}/475")
+check(n_acq == 479, f"acquisition links: {n_acq}/479")
+check(n_img == 479, f"image links: {n_img}/479")
+check(n_lang == 479, f"language elements: {n_lang}/479")
+notes.append(f"dc:creator present on {n_creator}/479, dc:contributor on {n_contrib}/479, "
+             f"non-empty summary on {n_summary}/479")
 
 # --- 4. catalog / categories / authors navigation feeds --------------------
 root = feeds["catalog.xml"]
@@ -166,8 +166,8 @@ for c, n in sorted(cat_expected.items()):
     got = len(entries(root))
     check(got == n, f"{fname}: {got} entries, expected {n} for {c!r}")
     total_cat_entries += got
-notes.append(f"category feeds total {total_cat_entries} entries (475 books, "
-             f"{total_cat_entries - 475} in a 2nd category)")
+notes.append(f"category feeds total {total_cat_entries} entries (479 books, "
+             f"{total_cat_entries - 479} in a 2nd category)")
 
 # --- 6. author feeds ---------------------------------------------------------
 auth_expected = collections.Counter(b["author"] for b in SITE["books"])

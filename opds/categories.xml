@@ -9,6 +9,7 @@ layout: null
   <author><name>Our Boighar</name><uri>{{ '/' | absolute_url }}</uri></author>
   <link rel="self" type="application/atom+xml;profile=opds-catalog;kind=navigation" href="{{ '/opds/categories.xml' | absolute_url }}"/>
   <link rel="start" type="application/atom+xml;profile=opds-catalog;kind=navigation" title="Our Boighar OPDS Catalog" href="{{ '/opds/catalog.xml' | absolute_url }}"/>
+  <link rel="search" type="application/atom+xml" title="Search Our Boighar" href="{{ site.boighar_api_base | default: 'https://our-boighar-api.towfiqulislam1010.workers.dev' }}/api/opds/search?q={searchTerms}"/>
   {%- assign _cats = "Aqeedah,Biography,Dawah,Dua,Economics & Politics,Family,Fiqh,Hadith,Health,History,Islamic Q&A,Manners & Character,Prophetic Medicine,Qur'an,Seerah,Spirituality,Tafsir,Women" | split: "," -%}
   {%- comment -%} If a new category is added to the library, add it here AND run
   scripts/generate-opds.py to create its feed file. {%- endcomment -%}

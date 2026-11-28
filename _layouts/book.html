@@ -1,9 +1,13 @@
 ---
 layout: default
 ---
+<style>
+  /* Tailwind preflight sets every svg to display:block, which stacks each
+     icon above its label. On book pages the icons stay inline with text. */
+  .ob-ic{display:inline-block}
+</style>
 {% assign bookfile = page.file %}{% if bookfile %}{% unless bookfile contains '://' %}{% assign bookfile = bookfile | relative_url %}{% endunless %}{% endif %}
-{% assign _catslug = page.category | slugify %}
-{% assign _opdsfeed = '/opds/category-' | append: _catslug | append: '.xml' | absolute_url %}
+{% assign _opdsfeed = '/opds/book-' | append: page.book_id | append: '.xml' | absolute_url %}
 <main class="max-w-4xl mx-auto px-3 sm:px-4 py-5">
   <p class="text-[13px] text-neutral-500 dark:text-neutral-400 mb-3">
     <a href="{{ '/' | relative_url }}" class="hover:underline" data-bn="হোম" data-en="Home">হোম</a> /
@@ -48,13 +52,12 @@ layout: default
           <a id="continue-btn" href="{{ '/reader.html' | relative_url }}?file={{ bookfile | url_encode }}&title={{ page.title | url_encode }}" class="accent-bg col-span-2 hidden items-center justify-center gap-2 text-white font-bold rounded-[10px] py-3 px-4"><span data-bn="পড়া চালিয়ে যান" data-en="Continue Reading">পড়া চালিয়ে যান</span> · <span id="continue-pct"></span></a>
           <a href="{{ '/reader.html' | relative_url }}?file={{ bookfile | url_encode }}&title={{ page.title | url_encode }}" class="accent-bg col-span-2 flex items-center justify-center gap-2 text-white font-bold rounded-[10px] py-3 px-4"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-book-open"/></svg> <span data-bn="অনলাইনে পড়ুন" data-en="Read Online">অনলাইনে পড়ুন</span></a>
           <a href="https://our-reader.vercel.app/opds?url={{ _opdsfeed | url_encode }}" target="_blank" rel="noopener" class="col-span-2 flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border-2 border-emerald-600 dark:border-emerald-500 text-emerald-800 dark:text-emerald-300 font-bold rounded-[10px] py-3 px-4"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-book"/></svg> <span data-bn="Our Reader-এ খুলুন" data-en="Open in Our Reader">Our Reader-এ খুলুন</span></a>
-          <p class="col-span-2 text-[13px] text-neutral-500 dark:text-neutral-400 -mt-1" data-bn="Our Reader-এ বইঘরের ক্যাটালগ খুলবে — বইটি খুঁজে Download চাপলেই আপনার Our Reader লাইব্রেরিতে যোগ হবে।" data-en="Opens the Our Boighar catalog in Our Reader — find the book and tap Download to add it to your Our Reader library.">Our Reader-এ বইঘরের ক্যাটালগ খুলবে — বইটি খুঁজে Download চাপলেই আপনার Our Reader লাইব্রেরিতে যোগ হবে।</p>
+          <p class="col-span-2 text-[13px] text-neutral-500 dark:text-neutral-400 -mt-1" data-bn="Our Reader-এ এই বইটিই খুলবে — Download চাপলেই আপনার Our Reader লাইব্রেরিতে যোগ হবে।" data-en="Opens this book in Our Reader — tap Download to add it to your Our Reader library.">Our Reader-এ এই বইটিই খুলবে — Download চাপলেই আপনার Our Reader লাইব্রেরিতে যোগ হবে।</p>
           <a href="{{ bookfile }}" download class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-[10px] py-3 px-4"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-download"/></svg> <span data-bn="ডাউনলোড" data-en="Download">ডাউনলোড</span></a>
           {% elsif page.gumroad %}
           <a href="{{ page.gumroad }}" target="_blank" rel="noopener" class="accent-bg col-span-2 flex items-center justify-center gap-2 text-white font-bold rounded-[10px] py-3 px-4"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-cart"/></svg> Gumroad থেকে নিন{% if page.price %} · {{ page.price }}{% endif %}</a>
           {% endif %}
-          <button id="bm-btn" class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-[10px] py-3 px-4"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-bookmark"/></svg> <span>তাকে রাখুন</span></button>
-          {% if page.file %}<button id="share-btn" class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-[10px] py-3 px-4" ><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-upload"/></svg> <span data-bn="শেয়ার" data-en="Share">শেয়ার</span></button>{% else %}<button id="share-btn" class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-[10px] py-3 px-4" ><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-upload"/></svg> <span data-bn="শেয়ার" data-en="Share">শেয়ার</span></button>{% endif %}
+          <button id="bm-btn" class="{% unless page.file %}col-span-2 {% endunless %}flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-[10px] py-3 px-4"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-bookmark"/></svg> <span>তাকে রাখুন</span></button>
           <div id="ob-server-shelf" class="col-span-2 hidden items-center gap-2">
             <select id="ob-shelf-select" class="flex-1 min-w-0 border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-700 rounded-xl px-3 py-3 font-bold"></select>
             <button id="ob-shelf-add" class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border-2 border-emerald-600 dark:border-emerald-500 text-emerald-800 dark:text-emerald-300 font-bold rounded-[10px] py-3 px-4"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-cloud"/></svg> <span data-bn="তাকে সংরক্ষণ করুন" data-en="Save to shelf">তাকে সংরক্ষণ করুন</span></button>
@@ -100,23 +103,25 @@ layout: default
   <!-- SHARE + QR -->
   <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 mt-4">
     <h2 class="text-lg font-semibold mb-2" data-bn="শেয়ার করুন" data-en="Share This Book">শেয়ার করুন</h2>
-    <div class="flex flex-col sm:flex-row items-start gap-5">
-      <div class="flex-1 min-w-0">
-        <p class="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed" data-bn="এই বইটি বন্ধুদের সঙ্গে শেয়ার করুন — লিংক কপি করুন বা QR কোডটি স্ক্যান করতে দিন।" data-en="Share this book with friends — copy the link or let them scan the QR code.">এই বইটি বন্ধুদের সঙ্গে শেয়ার করুন — লিংক কপি করুন বা QR কোডটি স্ক্যান করতে দিন।</p>
-        <div class="flex flex-wrap gap-2.5 mt-4">
-          <button id="copy-link-btn" class="accent-bg text-white font-bold rounded-[10px] px-4 py-2.5 text-sm"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-link"/></svg> <span data-bn="লিংক কপি করুন" data-en="Copy Link">লিংক কপি করুন</span></button>
-          <button id="copy-opds-btn" class="bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-[10px] px-4 py-2.5 text-sm"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-rss"/></svg> <span data-bn="OPDS লিংক কপি" data-en="Copy OPDS Link">OPDS লিংক কপি</span></button>
-          <button id="share2-btn" class="bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-[10px] px-4 py-2.5 text-sm" ><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-upload"/></svg> <span data-bn="শেয়ার" data-en="Share">শেয়ার</span></button>
-        </div>
-        <p id="copy-ok" class="hidden text-sm font-bold text-emerald-700 dark:text-emerald-400 mt-2"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-check"/></svg> <span data-bn="লিংক কপি হয়েছে" data-en="Link copied">লিংক কপি হয়েছে</span></p>
-        <p id="copy-opds-ok" class="hidden text-sm font-bold text-emerald-700 dark:text-emerald-400 mt-2"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-check"/></svg> <span data-bn="OPDS লিংক কপি হয়েছে — KOReader বা Our Reader-এর OPDS ক্যাটালগে যোগ করুন" data-en="OPDS link copied — add it as an OPDS catalog in KOReader or Our Reader">OPDS লিংক কপি হয়েছে — KOReader বা Our Reader-এর OPDS ক্যাটালগে যোগ করুন</span></p>
-      </div>
-      <div id="qr-box" class="flex-shrink-0 text-center">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&margin=6&data={{ page.url | absolute_url | url_encode }}" alt="QR code" width="160" height="160" class="rounded-lg border border-neutral-200 dark:border-neutral-600 bg-white p-1" onerror="document.getElementById('qr-box').style.display='none'">
-        <p class="text-xs font-bold text-neutral-400 mt-1" data-bn="QR কোড স্ক্যান করুন" data-en="Scan the QR code">QR কোড স্ক্যান করুন</p>
-      </div>
+    <p class="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed" data-bn="এই বইটি বন্ধুদের সঙ্গে শেয়ার করুন — লিংক কপি করুন বা QR কোডটি স্ক্যান করতে দিন।" data-en="Share this book with friends — copy the link or let them scan the QR code.">এই বইটি বন্ধুদের সঙ্গে শেয়ার করুন — লিংক কপি করুন বা QR কোডটি স্ক্যান করতে দিন।</p>
+    <div class="flex flex-wrap items-center gap-2.5 mt-4">
+      <button id="copy-link-btn" class="accent-bg text-white font-bold rounded-[10px] px-4 py-2.5 text-sm"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-link"/></svg> <span data-bn="লিংক কপি করুন" data-en="Copy Link">লিংক কপি করুন</span></button>
+      <button id="copy-opds-btn" class="bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-[10px] px-4 py-2.5 text-sm"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-rss"/></svg> <span data-bn="OPDS লিংক কপি" data-en="Copy OPDS Link">OPDS লিংক কপি</span></button>
+      <button id="share2-btn" class="bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-[10px] px-4 py-2.5 text-sm" ><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-upload"/></svg> <span data-bn="শেয়ার" data-en="Share">শেয়ার</span></button>
+      <button id="qr-btn" type="button" class="bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 rounded-[10px] p-[5px] leading-none" title="QR কোড বড় করুন" aria-label="QR কোড বড় করে দেখুন"><img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&margin=4&data={{ page.url | absolute_url | url_encode }}" alt="QR কোড" width="28" height="28" class="block rounded" onerror="document.getElementById('qr-btn').style.display='none'"></button>
     </div>
+    <p id="copy-ok" class="hidden text-sm font-bold text-emerald-700 dark:text-emerald-400 mt-2"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-check"/></svg> <span data-bn="লিংক কপি হয়েছে" data-en="Link copied">লিংক কপি হয়েছে</span></p>
+    <p id="copy-opds-ok" class="hidden text-sm font-bold text-emerald-700 dark:text-emerald-400 mt-2"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-check"/></svg> <span data-bn="OPDS লিংক কপি হয়েছে — KOReader বা Our Reader-এর OPDS ক্যাটালগে যোগ করুন" data-en="OPDS link copied — add it as an OPDS catalog in KOReader or Our Reader">OPDS লিংক কপি হয়েছে — KOReader বা Our Reader-এর OPDS ক্যাটালগে যোগ করুন</span></p>
   </section>
+
+  <!-- QR LIGHTBOX -->
+  <div id="qr-lightbox" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/70 p-6" role="dialog" aria-modal="true" aria-label="QR কোড">
+    <div class="bg-white rounded-2xl p-4 text-center w-full max-w-[320px]">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=280x280&margin=10&data={{ page.url | absolute_url | url_encode }}" alt="QR কোড" width="280" height="280" class="w-full h-auto rounded-lg">
+      <p class="text-sm font-bold text-neutral-700 mt-3" data-bn="QR কোড স্ক্যান করুন" data-en="Scan the QR code">QR কোড স্ক্যান করুন</p>
+      <button id="qr-close" type="button" class="mt-3 w-full accent-bg text-white font-bold rounded-[10px] py-2.5 text-sm" data-bn="বন্ধ করুন" data-en="Close">বন্ধ করুন</button>
+    </div>
+  </div>
 
   <!-- INFO TABLE -->
   <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 mt-4">
@@ -189,6 +194,7 @@ layout: default
     <div id="fb-root"></div>
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v21.0"></script>
     <div class="fb-comments" data-href="{{ page.url | absolute_url }}" data-width="100%" data-numposts="5"></div>
+    <p id="fb-comments-fallback" class="hidden text-sm text-neutral-600 dark:text-neutral-300 mt-3"><span data-bn="মন্তব্য দেখা যাচ্ছে না? আপনার ব্রাউজার Facebook ব্লক করছে (অ্যাড-ব্লকার বা ট্র্যাকিং সুরক্ষা) —" data-en="Comments not showing? Your browser is blocking Facebook (ad-blocker or tracking protection) —">মন্তব্য দেখা যাচ্ছে না? আপনার ব্রাউজার Facebook ব্লক করছে (অ্যাড-ব্লকার বা ট্র্যাকিং সুরক্ষা) —</span> <a class="accent-text font-bold hover:underline" href="https://www.facebook.com/plugins/comments.php?href={{ page.url | absolute_url | url_encode }}" target="_blank" rel="noopener" data-bn="Facebook-এ মন্তব্য দেখুন" data-en="View comments on Facebook">Facebook-এ মন্তব্য দেখুন</a></p>
   </section>
 
   {% assign same_author = site.books | where: "author", page.author %}
@@ -213,7 +219,7 @@ layout: default
   <!-- READERS ALSO READ (same category, excluding this book) -->
   <section class="mt-8">
     <h2 class="serif text-xl font-semibold mb-3 flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-book-open"/></svg> <span data-bn="পাঠকরা আরও পড়ছেন" data-en="Readers Also Read">পাঠকরা আরও পড়ছেন</span></h2>
-    <div class="flex gap-4 overflow-x-auto no-scrollbar snap-x pb-2 -mx-3 px-3 sm:mx-0 sm:px-0">
+    <div class="flex gap-4 overflow-x-auto no-scrollbar snap-x scroll-pl-3 sm:scroll-pl-0 pb-2 -mx-3 px-3 sm:mx-0 sm:px-0">
       {% assign shown = 0 %}
       {% for r in related %}{% unless r.url == page.url %}{% assign shown = shown | plus: 1 %}{% if shown > 12 %}{% break %}{% endif %}
       <a href="{{ r.url | relative_url }}" class="snap-start shrink-0 w-[132px] sm:w-[152px] group">
@@ -322,10 +328,17 @@ layout: default
     else { done(); }
   };
 
-  document.getElementById('share-btn').onclick = function(){
-    if (navigator.share) navigator.share({title: document.title, url: location.href}).catch(function(){});
-    else if (navigator.clipboard){ navigator.clipboard.writeText(location.href); this.innerHTML = '<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-check"/></svg> ' + (en() ? 'Link copied' : 'লিংক কপি হয়েছে'); }
-  };
+  /* QR lightbox: the small QR beside the Share button, tap to enlarge */
+  (function(){
+    var btn = document.getElementById('qr-btn'), box = document.getElementById('qr-lightbox');
+    if (!btn || !box) return;
+    function open(){ box.classList.remove('hidden'); box.classList.add('flex'); }
+    function close(){ box.classList.add('hidden'); box.classList.remove('flex'); }
+    btn.onclick = open;
+    document.getElementById('qr-close').onclick = close;
+    box.addEventListener('click', function(e){ if (e.target === box) close(); });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+  })();
 
   /* personal 1-10 rating */
   function getRatings(){ try{ return JSON.parse(localStorage.getItem(RKEY)||'{}'); }catch(e){ return {}; } }
@@ -347,6 +360,23 @@ layout: default
   paintRating();
   window.addEventListener('ob-lang', function(){ paint(); paintRating(); });
 
-  window.addEventListener('load', function(){ if (window.FB && FB.XFBML && FB.XFBML.parse) FB.XFBML.parse(); });
+  /* Facebook comments: the SDK auto-parses (xfbml=1), but on phones it is
+     often blocked by tracking protection or loads late — retry parsing for
+     a few seconds, and if nothing renders, show the fallback link. */
+  (function(){
+    var tries = 0;
+    var timer = setInterval(function(){
+      var box = document.querySelector('.fb-comments');
+      if (box && box.querySelector('iframe')) { clearInterval(timer); return; }
+      if (window.FB && FB.XFBML && FB.XFBML.parse) FB.XFBML.parse();
+      if (++tries >= 20) {
+        clearInterval(timer);
+        if (box && !box.querySelector('iframe')) {
+          var fb = document.getElementById('fb-comments-fallback');
+          if (fb) fb.classList.remove('hidden');
+        }
+      }
+    }, 500);
+  })();
 })();
 </script>

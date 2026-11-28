@@ -1,0 +1,30 @@
+---
+layout: default
+title: "নতুন যুক্ত হয়েছে"
+permalink: /lists/newly-added/
+---
+<main class="max-w-6xl mx-auto px-3 sm:px-4 mt-6">
+  <p class="text-[13px] text-neutral-500 dark:text-neutral-400 mb-3">
+    <a href="{{ '/' | relative_url }}" class="hover:underline" data-bn="হোম" data-en="Home">হোম</a> /
+    <span class="font-semibold text-neutral-700 dark:text-neutral-200" data-bn="নতুন যুক্ত হয়েছে" data-en="Newly Added">নতুন যুক্ত হয়েছে</span>
+  </p>
+
+  <h1 class="serif text-2xl sm:text-3xl font-semibold" data-bn="নতুন যুক্ত হয়েছে" data-en="Newly Added">নতুন যুক্ত হয়েছে</h1>
+  <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1" data-bn="লাইব্রেরিতে সদ্য যুক্ত হওয়া সব বই — নতুন থেকে পুরনো ক্রমে" data-en="Every book newly added to the library — newest first">লাইব্রেরিতে সদ্য যুক্ত হওয়া সব বই — নতুন থেকে পুরনো ক্রমে</p>
+
+  <div class="grid grid-cols-[repeat(auto-fill,152px)] sm:grid-cols-[repeat(auto-fill,176px)] gap-4 sm:gap-5 mt-7">
+    {% for rid in site.data.recent %}
+    {% assign b = site.books | where: "book_id", rid | first %}
+    {% if b %}
+    <a href="{{ b.url | relative_url }}" class="group">
+      <div class="relative rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]">
+        <img src="{{ b.cover | relative_url }}" alt="{{ b.title }}" class="w-full h-full object-cover transition-[filter] duration-200 group-hover:brightness-105">
+        <span class="absolute top-2 left-2 bg-rose-600 text-white text-xs font-bold px-2 py-0.5 rounded shadow" data-bn="নতুন" data-en="New">নতুন</span>
+      </div>
+      <h3 class="font-semibold text-sm sm:text-[15px] leading-snug min-h-[2.75em] mt-2 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400" data-bn="{{ b.title }}" data-en="{{ b.title_en | default: b.title }}">{{ b.title }}</h3>
+      <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-edit"/></svg> {{ b.author }}</p>
+    </a>
+    {% endif %}
+    {% endfor %}
+  </div>
+</main>

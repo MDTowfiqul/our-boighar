@@ -6,6 +6,14 @@
   <author><name>Our Boighar</name><uri>{{ '/' | absolute_url }}</uri></author>
   <link rel="self" type="application/atom+xml;profile=opds-catalog;kind={{ include.kind }}" href="{{ include.self_href | absolute_url }}"/>
   <link rel="start" type="application/atom+xml;profile=opds-catalog;kind=navigation" title="Our Boighar OPDS Catalog" href="{{ '/opds/catalog.xml' | absolute_url }}"/>
+  {%- comment -%} Catalogue search (OPDS 1.2): readers show a search box when a
+  feed carries a rel="search" link. The type must stay exactly
+  "application/atom+xml" (no profile parameter) and the href must keep the
+  literal {searchTerms} placeholder: Our Reader replaces it with the typed
+  query before fetching. Served by the Worker, not the static site:
+  GET /api/opds/search?q=<term> must answer with an Atom acquisition feed
+  of the matching books (same entry shape as this feed). {%- endcomment -%}
+  <link rel="search" type="application/atom+xml" title="Search Our Boighar" href="{{ site.boighar_api_base | default: 'https://our-boighar-api.towfiqulislam1010.workers.dev' }}/api/opds/search?q={searchTerms}"/>
   {%- if include.first_href -%}
   <link rel="first" type="application/atom+xml;profile=opds-catalog;kind={{ include.kind }}" href="{{ include.first_href | absolute_url }}"/>
   {%- endif -%}

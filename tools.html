@@ -7,9 +7,17 @@ description: "Free browser-only tools for Our Boighar readers — read EPUBs, ch
 <style>
 .pin-btn .ob-ic{color:var(--muted)}
 .pin-btn.pinned .ob-ic{color:var(--gold)}
+/* accordions (B6): one button per tool group, all collapsed by default */
+.acc-head{display:flex;align-items:center;justify-content:space-between;width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid var(--line,#e7e0cf);padding:2px 2px 10px;cursor:pointer;font-family:inherit;color:inherit}
+.acc-head .acc-title{display:flex;align-items:center;gap:8px}
+.acc-head .acc-count{font-size:12px;color:var(--muted);font-weight:600;margin-left:2px}
+.acc-chev{transition:transform .25s}
+.acc-head[aria-expanded="true"] .acc-chev{transform:rotate(180deg)}
+/* ebook-maker workflow steps (B5) */
+.em-step{display:flex;flex-direction:column;gap:6px}
+.em-num{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:9999px;background:var(--gold,#b98a1d);color:#fff;font-weight:700;font-size:15px}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/epubjs@0.3.93/dist/epub.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 
 <main class="max-w-6xl mx-auto px-3 sm:px-4">
@@ -18,6 +26,35 @@ description: "Free browser-only tools for Our Boighar readers — read EPUBs, ch
     <h1 class="serif text-2xl sm:text-3xl font-semibold flex items-center gap-2"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-wrench"/></svg><span data-bn="বইঘর টুলস" data-en="Boighar Tools">বইঘর টুলস</span></h1>
     <p class="mt-2 text-white/90 text-sm sm:text-base leading-relaxed max-w-2xl" data-bn="পড়া, সাজানো আর বই বানানোর কাজের টুল — সব আপনার ব্রাউজারেই চলে। কোনো লগইন লাগে না, ফাইল কোথাও আপলোড হয় না।" data-en="Tools for reading, organising and making books — everything runs in your browser. No login needed, no file is ever uploaded anywhere.">পড়া, সাজানো আর বই বানানোর কাজের টুল — সব আপনার ব্রাউজারেই চলে। কোনো লগইন লাগে না, ফাইল কোথাও আপলোড হয় না।</p>
     <p class="mt-3 inline-flex items-center gap-2 bg-white/15 rounded-lg px-3 py-1.5 text-xs sm:text-sm font-bold"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-lock"/></svg><span data-bn="আপনার ফাইল আপনার ডিভাইসেই থাকে — কিছুই সার্ভারে যায় না" data-en="Your files stay on your device — nothing goes to any server">আপনার ফাইল আপনার ডিভাইসেই থাকে — কিছুই সার্ভারে যায় না</span></p>
+  </section>
+
+  <!-- MAKE AN EBOOK (first in the list) -->
+  <section class="mt-9 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm">
+    <h2 class="text-lg font-semibold flex items-center gap-2"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-pen-nib"/></svg><span data-bn="নিজে ইবুক বানাতে চান?" data-en="Want to make an ebook yourself?">নিজে ইবুক বানাতে চান?</span></h2>
+    <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-300 mt-1" data-bn="নিজের বইয়ের ইপাব বানানো মাত্র তিন ধাপে — শুরু থেকে বইঘরে শেয়ার করা পর্যন্ত।" data-en="Making an EPUB of your own book takes just three steps — from the first file to sharing it on Boighar.">নিজের বইয়ের ইপাব বানানো মাত্র তিন ধাপে — শুরু থেকে বইঘরে শেয়ার করা পর্যন্ত।</p>
+    <ol class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4 list-none">
+      <li class="em-step rounded-xl bg-neutral-50 dark:bg-neutral-900 border border-neutral-100 dark:border-neutral-700 p-4">
+        <span class="em-num">১</span>
+        <svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-file-text"/></svg>
+        <p class="font-semibold text-sm" data-bn="ফাইল তৈরি করুন" data-en="Prepare your file">ফাইল তৈরি করুন</p>
+        <p class="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed" data-bn="পুরোনো বইয়ের পাতাগুলো স্ক্যান করুন বা ছবি তুলুন, অথবা পিডিএফ / ডক ফাইলটি হাতের কাছে রাখুন।" data-en="Scan or photograph the pages of the old book, or keep its PDF / DOC file ready.">পুরোনো বইয়ের পাতাগুলো স্ক্যান করুন বা ছবি তুলুন, অথবা পিডিএফ / ডক ফাইলটি হাতের কাছে রাখুন।</p>
+      </li>
+      <li class="em-step rounded-xl bg-neutral-50 dark:bg-neutral-900 border border-neutral-100 dark:border-neutral-700 p-4">
+        <span class="em-num">২</span>
+        <svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-wrench"/></svg>
+        <p class="font-semibold text-sm" data-bn="Our Ebook Maker-এ রূপান্তর করুন" data-en="Convert it on Our Ebook Maker">Our Ebook Maker-এ রূপান্তর করুন</p>
+        <p class="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed" data-bn="আপনার ফাইলটি Our Ebook Maker-এ দিয়ে ধাপে ধাপে সুন্দর ইপাব বানান — কোনো সফটওয়্যার ইনস্টল করতে হয় না।" data-en="Take your file to Our Ebook Maker and turn it into a clean EPUB step by step — no software to install.">আপনার ফাইলটি Our Ebook Maker-এ দিয়ে ধাপে ধাপে সুন্দর ইপাব বানান — কোনো সফটওয়্যার ইনস্টল করতে হয় না।</p>
+        <a class="accent-bg inline-block self-start text-white text-sm font-bold rounded-lg px-4 py-2 mt-1" href="https://mdtowfiqul.github.io/our-ebook-maker" target="_blank" rel="noopener" data-bn="Our Ebook Maker খুলুন →" data-en="Open Our Ebook Maker →">Our Ebook Maker খুলুন →</a>
+      </li>
+      <li class="em-step rounded-xl bg-neutral-50 dark:bg-neutral-900 border border-neutral-100 dark:border-neutral-700 p-4">
+        <span class="em-num">৩</span>
+        <svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-book-open"/></svg>
+        <p class="font-semibold text-sm" data-bn="ইপাব পান, বইঘরে শেয়ার করুন" data-en="Get your EPUB, share it on Boighar">ইপাব পান, বইঘরে শেয়ার করুন</p>
+        <p class="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed" data-bn="তৈরি ইপাবটি ডাউনলোড করুন — তারপর বইঘরে পাঠিয়ে সবার সঙ্গে শেয়ার করুন, যেন আরও পাঠক পড়তে পারে।" data-en="Download the finished EPUB — then send it to Boighar and share it with everyone, so more readers can read it.">তৈরি ইপাবটি ডাউনলোড করুন — তারপর বইঘরে পাঠিয়ে সবার সঙ্গে শেয়ার করুন, যেন আরও পাঠক পড়তে পারে।</p>
+        <a class="inline-block self-start text-sm font-bold rounded-lg px-4 py-2 mt-1 border border-neutral-300 dark:border-neutral-600" href="{{ '/' | relative_url }}" data-bn="বইঘরে যান →" data-en="Go to Boighar →">বইঘরে যান →</a>
+      </li>
+    </ol>
+    <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-300 mt-4" data-bn="শেয়ার করার আগে ১০ বছরের নিয়মটি মনে রাখবেন: শুধু ১০+ বছরের পুরোনো বই, অথবা লেখক/প্রকাশক নিজে প্রকাশ করেছেন এমন বই শেয়ার করা যায়।" data-en="Before sharing, remember the 10-year rule: only books 10+ years old, or books the writer/publisher published themselves, may be shared.">শেয়ার করার আগে ১০ বছরের নিয়মটি মনে রাখবেন: শুধু ১০+ বছরের পুরোনো বই, অথবা লেখক/প্রকাশক নিজে প্রকাশ করেছেন এমন বই শেয়ার করা যায়।</p>
   </section>
 
   <!-- PINNED TOOLS (xKAF style) -->
@@ -30,9 +67,11 @@ description: "Free browser-only tools for Our Boighar readers — read EPUBs, ch
 
   <!-- EBOOK TOOLS -->
   <section class="mt-9">
-    <div class="flex items-baseline justify-between mb-3 px-0.5">
-      <h2 class="serif text-xl sm:text-2xl font-semibold flex items-center gap-2"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-book-open"/></svg><span data-bn="ইবুক টুল" data-en="Ebook Tools">ইবুক টুল</span></h2>
-    </div>
+    <button type="button" class="acc-head" aria-expanded="false" aria-controls="acc-ebook">
+      <span class="acc-title serif text-xl sm:text-2xl font-semibold"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-book-open"/></svg><span data-bn="ইবুক টুল" data-en="Ebook Tools">ইবুক টুল</span><span class="acc-count">· ৩</span></span>
+      <svg class="ob-ic acc-chev" aria-hidden="true"><use href="#ob-ic-chevron-down"/></svg>
+    </button>
+    <div class="acc-body hidden mt-3" id="acc-ebook">
     <div class="tools-group grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
       <!-- 1. EPUB READER -->
@@ -45,32 +84,17 @@ description: "Free browser-only tools for Our Boighar readers — read EPUBs, ch
           </div>
           <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="epub-reader" aria-label="Pin tool" title="Pin"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-pin"/></svg></button>
         </div>
-        <button class="open-btn accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" data-open="epub-reader" data-bn="খুলুন" data-en="Open">খুলুন</button>
-        <div class="tool-work hidden mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-700" id="work-epub-reader">
-          <label class="block text-sm font-bold mb-1.5" data-bn="ইপাব ফাইল বেছে নিন" data-en="Choose an EPUB file">ইপাব ফাইল বেছে নিন</label>
-          <input type="file" id="epub-reader-file" accept=".epub" class="block w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg p-2 bg-white dark:bg-neutral-900">
-          <p class="tool-status text-sm text-neutral-500 dark:text-neutral-400 mt-2" id="epub-reader-status" role="status"></p>
-          <div id="epub-reader-controls" class="hidden mt-3">
-            <div class="flex flex-wrap items-center gap-2">
-              <button id="epub-reader-prev" class="border border-neutral-300 dark:border-neutral-600 rounded-lg px-3 py-1.5 text-sm font-bold">← <span data-bn="আগের" data-en="Prev">আগের</span></button>
-              <button id="epub-reader-next" class="border border-neutral-300 dark:border-neutral-600 rounded-lg px-3 py-1.5 text-sm font-bold"><span data-bn="পরের" data-en="Next">পরের</span> →</button>
-              <select id="epub-reader-toc" class="flex-1 min-w-[140px] border border-neutral-300 dark:border-neutral-600 rounded-lg px-2 py-1.5 text-sm bg-white dark:bg-neutral-900"></select>
-              <button id="epub-reader-smaller" class="border border-neutral-300 dark:border-neutral-600 rounded-lg px-3 py-1.5 text-sm font-bold" title="Smaller text">A−</button>
-              <button id="epub-reader-bigger" class="border border-neutral-300 dark:border-neutral-600 rounded-lg px-3 py-1.5 text-sm font-bold" title="Bigger text">A+</button>
-            </div>
-            <div id="epub-reader-area" class="mt-3 bg-white rounded-xl border border-neutral-200 dark:border-neutral-700 overflow-hidden" style="height:460px"></div>
-            <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-2" data-bn="পূর্ণ পড়ার অভিজ্ঞতা (অগ্রগতি সংরক্ষণসহ) চাইলে বইয়ের পাতার “অনলাইনে পড়ুন” ব্যবহার করুন।" data-en="For the full reading experience (with saved progress), use “Read Online” on the book's page.">পূর্ণ পড়ার অভিজ্ঞতা (অগ্রগতি সংরক্ষণসহ) চাইলে বইয়ের পাতার “অনলাইনে পড়ুন” ব্যবহার করুন।</p>
-          </div>
-        </div>
+        <a class="accent-bg inline-block text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" href="{{ '/reader.html' | relative_url }}" data-bn="রিডারে খুলুন →" data-en="Open in Reader →">রিডারে খুলুন →</a>
+        <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-2 leading-relaxed" data-bn="রিডারে আপনার ফোনের ইপাব ফাইল বেছে নিন, অথবা বইয়ের পাতা থেকে সরাসরি পড়ুন — পড়ার অগ্রগতি, বুকমার্ক ও নোট সংরক্ষিত থাকে।" data-en="In the Reader, pick an EPUB from your device, or read straight from a book's page — your progress, bookmarks and notes are saved.">রিডারে আপনার ফোনের ইপাব ফাইল বেছে নিন, অথবা বইয়ের পাতা থেকে সরাসরি পড়ুন — পড়ার অগ্রগতি, বুকমার্ক ও নোট সংরক্ষিত থাকে।</p>
       </article>
 
       <!-- 2. EPUB METADATA VIEWER -->
       <article class="tool-card bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm" data-tool="epub-meta">
         <div class="flex items-start justify-between gap-2">
           <div>
-            <svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-tag"/></svg>
-            <h3 class="font-semibold mt-1" data-bn="ইপাব তথ্য দেখুন" data-en="EPUB Metadata Viewer">ইপাব তথ্য দেখুন</h3>
-            <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="ইপাব ফাইলের ভেতরের শিরোনাম, লেখক, ভাষা ও প্রচ্ছদ দেখুন।" data-en="See the title, author, language and cover stored inside an EPUB file.">ইপাব ফাইলের ভেতরের শিরোনাম, লেখক, ভাষা ও প্রচ্ছদ দেখুন।</p>
+            <svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-edit"/></svg>
+            <h3 class="font-semibold mt-1" data-bn="ইপাব তথ্য সম্পাদনা" data-en="EPUB Metadata Editor">ইপাব তথ্য সম্পাদনা</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="ইপাব ফাইলের শিরোনাম, লেখক, ভাষা বদলে সম্পাদিত ইপাব ডাউনলোড করুন — প্রচ্ছদ আগের মতোই থাকবে।" data-en="Change an EPUB's title, author and language, then download the edited EPUB — the cover stays exactly as it is.">ইপাব ফাইলের শিরোনাম, লেখক, ভাষা বদলে সম্পাদিত ইপাব ডাউনলোড করুন — প্রচ্ছদ আগের মতোই থাকবে।</p>
           </div>
           <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="epub-meta" aria-label="Pin tool" title="Pin"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-pin"/></svg></button>
         </div>
@@ -79,7 +103,37 @@ description: "Free browser-only tools for Our Boighar readers — read EPUBs, ch
           <label class="block text-sm font-bold mb-1.5" data-bn="ইপাব ফাইল বেছে নিন" data-en="Choose an EPUB file">ইপাব ফাইল বেছে নিন</label>
           <input type="file" id="epub-meta-file" accept=".epub" class="block w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg p-2 bg-white dark:bg-neutral-900">
           <p class="tool-status text-sm text-neutral-500 dark:text-neutral-400 mt-2" id="epub-meta-status" role="status"></p>
-          <div id="epub-meta-result" class="hidden mt-3"></div>
+          <div id="epub-meta-editor" class="hidden mt-3 space-y-3">
+            <div id="epub-meta-cover"></div>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400" data-bn="প্রচ্ছদ বদলানো যায় না — আগের প্রচ্ছদই থাকবে।" data-en="The cover cannot be changed here — the original cover stays.">প্রচ্ছদ বদলানো যায় না — আগের প্রচ্ছদই থাকবে।</p>
+            <div>
+              <label class="block text-sm font-bold mb-1" data-bn="শিরোনাম" data-en="Title">শিরোনাম</label>
+              <input type="text" id="epub-meta-title" class="w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg px-3 py-2 bg-white dark:bg-neutral-900">
+            </div>
+            <div>
+              <label class="block text-sm font-bold mb-1" data-bn="লেখক" data-en="Author">লেখক</label>
+              <input type="text" id="epub-meta-creator" class="w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg px-3 py-2 bg-white dark:bg-neutral-900">
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-sm font-bold mb-1" data-bn="ভাষা" data-en="Language">ভাষা</label>
+                <input type="text" id="epub-meta-language" class="w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg px-3 py-2 bg-white dark:bg-neutral-900">
+              </div>
+              <div>
+                <label class="block text-sm font-bold mb-1" data-bn="শনাক্তকারী" data-en="Identifier">শনাক্তকারী</label>
+                <input type="text" id="epub-meta-identifier" class="w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg px-3 py-2 bg-white dark:bg-neutral-900">
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-bold mb-1" data-bn="প্রকাশক" data-en="Publisher">প্রকাশক</label>
+              <input type="text" id="epub-meta-publisher" class="w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg px-3 py-2 bg-white dark:bg-neutral-900">
+            </div>
+            <div>
+              <label class="block text-sm font-bold mb-1" data-bn="বিবরণ" data-en="Description">বিবরণ</label>
+              <textarea id="epub-meta-description" rows="3" class="w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg px-3 py-2 bg-white dark:bg-neutral-900"></textarea>
+            </div>
+            <button id="epub-meta-download" class="accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5" data-bn="সম্পাদিত ইপাব ডাউনলোড করুন" data-en="Download edited EPUB">সম্পাদিত ইপাব ডাউনলোড করুন</button>
+          </div>
         </div>
       </article>
 
@@ -105,85 +159,23 @@ description: "Free browser-only tools for Our Boighar readers — read EPUBs, ch
         </div>
       </article>
     </div>
+    </div>
   </section>
 
-  <!-- PDF TOOLS -->
-  <section class="mt-9">
-    <div class="flex items-baseline justify-between mb-3 px-0.5">
-      <h2 class="serif text-xl sm:text-2xl font-semibold flex items-center gap-2"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-file-text"/></svg><span data-bn="পিডিএফ টুল" data-en="PDF Tools">পিডিএফ টুল</span></h2>
-    </div>
-    <div class="tools-group grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-
-      <!-- 4. PDF MERGE -->
-      <article class="tool-card bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm" data-tool="pdf-merge">
-        <div class="flex items-start justify-between gap-2">
-          <div>
-            <svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-paperclip"/></svg>
-            <h3 class="font-semibold mt-1" data-bn="পিডিএফ জোড়া দিন" data-en="PDF Merge">পিডিএফ জোড়া দিন</h3>
-            <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="২টি বা তার বেশি পিডিএফ এক ফাইলে জোড়া দিন।" data-en="Combine 2 or more PDFs into a single file.">২টি বা তার বেশি পিডিএফ এক ফাইলে জোড়া দিন।</p>
-          </div>
-          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="pdf-merge" aria-label="Pin tool" title="Pin"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-pin"/></svg></button>
-        </div>
-        <button class="open-btn accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" data-open="pdf-merge" data-bn="খুলুন" data-en="Open">খুলুন</button>
-        <div class="tool-work hidden mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-700" id="work-pdf-merge">
-          <label class="block text-sm font-bold mb-1.5" data-bn="পিডিএফ ফাইলগুলো বেছে নিন (কমপক্ষে ২টি)" data-en="Choose the PDF files (at least 2)">পিডিএফ ফাইলগুলো বেছে নিন (কমপক্ষে ২টি)</label>
-          <input type="file" id="pdf-merge-files" accept=".pdf,application/pdf" multiple class="block w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg p-2 bg-white dark:bg-neutral-900">
-          <ul id="pdf-merge-list" class="text-sm mt-2 space-y-1 text-neutral-600 dark:text-neutral-300"></ul>
-          <p class="tool-status text-sm text-neutral-500 dark:text-neutral-400 mt-2" id="pdf-merge-status" role="status"></p>
-          <button id="pdf-merge-go" class="accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-2" data-bn="জোড়া দিয়ে ডাউনলোড করুন" data-en="Merge & download">জোড়া দিয়ে ডাউনলোড করুন</button>
-        </div>
-      </article>
-
-      <!-- 5. PDF PAGE EXTRACTOR -->
-      <article class="tool-card bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm" data-tool="pdf-extract">
-        <div class="flex items-start justify-between gap-2">
-          <div>
-            <svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-scissors"/></svg>
-            <h3 class="font-semibold mt-1" data-bn="পিডিএফ পাতা বের করুন" data-en="PDF Page Extractor">পিডিএফ পাতা বের করুন</h3>
-            <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="পিডিএফ থেকে শুধু দরকারি পাতাগুলো নিয়ে নতুন পিডিএফ বানান।" data-en="Take only the pages you need from a PDF and make a new PDF.">পিডিএফ থেকে শুধু দরকারি পাতাগুলো নিয়ে নতুন পিডিএফ বানান।</p>
-          </div>
-          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="pdf-extract" aria-label="Pin tool" title="Pin"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-pin"/></svg></button>
-        </div>
-        <button class="open-btn accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" data-open="pdf-extract" data-bn="খুলুন" data-en="Open">খুলুন</button>
-        <div class="tool-work hidden mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-700" id="work-pdf-extract">
-          <label class="block text-sm font-bold mb-1.5" data-bn="পিডিএফ ফাইল বেছে নিন" data-en="Choose a PDF file">পিডিএফ ফাইল বেছে নিন</label>
-          <input type="file" id="pdf-extract-file" accept=".pdf,application/pdf" class="block w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg p-2 bg-white dark:bg-neutral-900">
-          <p class="tool-status text-sm text-neutral-500 dark:text-neutral-400 mt-2" id="pdf-extract-status" role="status"></p>
-          <div id="pdf-extract-controls" class="hidden mt-3">
-            <label class="block text-sm font-bold mb-1.5" data-bn="কোন পাতাগুলো নেবেন? (যেমন: 1-3, 5, 8-10)" data-en="Which pages? (e.g. 1-3, 5, 8-10)">কোন পাতাগুলো নেবেন? (যেমন: 1-3, 5, 8-10)</label>
-            <input type="text" id="pdf-extract-pages" placeholder="1-3, 5" class="w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg px-3 py-2 bg-white dark:bg-neutral-900">
-            <button id="pdf-extract-go" class="accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-2" data-bn="নতুন পিডিএফ ডাউনলোড করুন" data-en="Download new PDF">নতুন পিডিএফ ডাউনলোড করুন</button>
-          </div>
-        </div>
-      </article>
-
-      <!-- 6. IMAGE TO PDF -->
-      <article class="tool-card bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm" data-tool="img-pdf">
-        <div class="flex items-start justify-between gap-2">
-          <div>
-            <svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-image"/></svg>
-            <h3 class="font-semibold mt-1" data-bn="ছবি থেকে পিডিএফ" data-en="Image to PDF">ছবি থেকে পিডিএফ</h3>
-            <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="প্রচ্ছদ বা স্ক্যান করা পাতার ছবি দিয়ে পিডিএফ বানান — প্রতি ছবি এক পাতা।" data-en="Make a PDF from cover or scanned-page images — one image per page.">প্রচ্ছদ বা স্ক্যান করা পাতার ছবি দিয়ে পিডিএফ বানান — প্রতি ছবি এক পাতা।</p>
-          </div>
-          <button class="pin-btn text-xl leading-none p-1 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700" data-pin="img-pdf" aria-label="Pin tool" title="Pin"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-pin"/></svg></button>
-        </div>
-        <button class="open-btn accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" data-open="img-pdf" data-bn="খুলুন" data-en="Open">খুলুন</button>
-        <div class="tool-work hidden mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-700" id="work-img-pdf">
-          <label class="block text-sm font-bold mb-1.5" data-bn="ছবিগুলো বেছে নিন (JPG / PNG)" data-en="Choose the images (JPG / PNG)">ছবিগুলো বেছে নিন (JPG / PNG)</label>
-          <input type="file" id="img-pdf-files" accept="image/jpeg,image/png" multiple class="block w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg p-2 bg-white dark:bg-neutral-900">
-          <ul id="img-pdf-list" class="text-sm mt-2 space-y-1 text-neutral-600 dark:text-neutral-300"></ul>
-          <p class="tool-status text-sm text-neutral-500 dark:text-neutral-400 mt-2" id="img-pdf-status" role="status"></p>
-          <button id="img-pdf-go" class="accent-bg text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-2" data-bn="পিডিএফ বানিয়ে ডাউনলোড করুন" data-en="Make PDF & download">পিডিএফ বানিয়ে ডাউনলোড করুন</button>
-        </div>
-      </article>
-    </div>
+  <!-- PDF TOOLS — moved to Our Ebook Maker (B7) -->
+  <section class="mt-9 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm">
+    <h2 class="text-lg font-semibold flex items-center gap-2"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-file-text"/></svg><span data-bn="পিডিএফ টুল" data-en="PDF Tools">পিডিএফ টুল</span></h2>
+    <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-300 mt-1" data-bn="পিডিএফ জোড়া দেওয়া, পাতা বের করা আর ছবি থেকে পিডিএফ বানানো — সব এখন Our Ebook Maker-এ।" data-en="Merging PDFs, extracting pages and making PDFs from images — all of these now live on Our Ebook Maker.">পিডিএফ জোড়া দেওয়া, পাতা বের করা আর ছবি থেকে পিডিএফ বানানো — সব এখন Our Ebook Maker-এ।</p>
+    <a class="accent-bg inline-block text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" href="https://mdtowfiqul.github.io/our-ebook-maker" target="_blank" rel="noopener" data-bn="Our Ebook Maker-এ পিডিএফ টুল খুলুন →" data-en="Open the PDF tools on Our Ebook Maker →">Our Ebook Maker-এ পিডিএফ টুল খুলুন →</a>
   </section>
 
   <!-- IMAGE TOOLS -->
   <section class="mt-9">
-    <div class="flex items-baseline justify-between mb-3 px-0.5">
-      <h2 class="serif text-xl sm:text-2xl font-semibold flex items-center gap-2"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-image"/></svg><span data-bn="ছবির টুল" data-en="Image Tool">ছবির টুল</span></h2>
-    </div>
+    <button type="button" class="acc-head" aria-expanded="false" aria-controls="acc-image">
+      <span class="acc-title serif text-xl sm:text-2xl font-semibold"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-image"/></svg><span data-bn="ছবির টুল" data-en="Image Tool">ছবির টুল</span><span class="acc-count">· ১</span></span>
+      <svg class="ob-ic acc-chev" aria-hidden="true"><use href="#ob-ic-chevron-down"/></svg>
+    </button>
+    <div class="acc-body hidden mt-3" id="acc-image">
     <div class="tools-group grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
       <!-- 7. COVER RESIZER -->
@@ -237,13 +229,16 @@ description: "Free browser-only tools for Our Boighar readers — read EPUBs, ch
         </div>
       </article>
     </div>
+    </div>
   </section>
 
   <!-- READING TOOLS -->
   <section class="mt-9">
-    <div class="flex items-baseline justify-between mb-3 px-0.5">
-      <h2 class="serif text-xl sm:text-2xl font-semibold flex items-center gap-2"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-book"/></svg><span data-bn="পড়ার অভ্যাসের টুল" data-en="Reading Habit Tools">পড়ার অভ্যাসের টুল</span></h2>
-    </div>
+    <button type="button" class="acc-head" aria-expanded="false" aria-controls="acc-reading">
+      <span class="acc-title serif text-xl sm:text-2xl font-semibold"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-book"/></svg><span data-bn="পড়ার অভ্যাসের টুল" data-en="Reading Habit Tools">পড়ার অভ্যাসের টুল</span><span class="acc-count">· ৩</span></span>
+      <svg class="ob-ic acc-chev" aria-hidden="true"><use href="#ob-ic-chevron-down"/></svg>
+    </button>
+    <div class="acc-body hidden mt-3" id="acc-reading">
     <div class="tools-group grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
       <!-- 8. READING PLANNER -->
@@ -260,6 +255,11 @@ description: "Free browser-only tools for Our Boighar readers — read EPUBs, ch
         <div class="tool-work hidden mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-700" id="work-planner">
           <label class="block text-sm font-bold mb-1.5" data-bn="বইয়ের নাম (ঐচ্ছিক)" data-en="Book name (optional)">বইয়ের নাম (ঐচ্ছিক)</label>
           <input type="text" id="planner-title" class="w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg px-3 py-2 bg-white dark:bg-neutral-900">
+          <div class="mt-3">
+            <label class="block text-sm font-bold mb-1.5" data-bn="বা ফাইল থেকে হিসাব নিন" data-en="Or count from a file">বা ফাইল থেকে হিসাব নিন</label>
+            <input type="file" id="planner-file" accept=".pdf,.epub" class="block w-full text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg p-2 bg-white dark:bg-neutral-900">
+            <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1.5" id="planner-file-status" role="status"></p>
+          </div>
           <div class="grid grid-cols-2 gap-3 mt-3">
             <div>
               <label class="block text-sm font-bold mb-1.5" data-bn="মোট পাতা" data-en="Total pages">মোট পাতা</label>
@@ -339,13 +339,7 @@ description: "Free browser-only tools for Our Boighar readers — read EPUBs, ch
         </div>
       </article>
     </div>
-  </section>
-
-  <!-- RELATED: OUR EBOOK MAKER -->
-  <section class="mt-10 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm">
-    <h2 class="text-lg font-semibold mb-2 flex items-center gap-2"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-pen-nib"/></svg><span data-bn="নিজে ইবুক বানাতে চান?" data-en="Want to make an ebook yourself?">নিজে ইবুক বানাতে চান?</span></h2>
-    <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-300" data-bn="স্ক্যান করা পিডিএফ থেকে ইপাব বানানোর পুরো পথ — Our Ebook Maker-এ। শেয়ার করার আগে ১০ বছরের নিয়মটি মনে রাখবেন: শুধু ১০+ বছরের পুরোনো বই, অথবা লেখক/প্রকাশক নিজে প্রকাশ করেছেন এমন বই শেয়ার করা যায়।" data-en="The full path from a scanned PDF to an EPUB lives on Our Ebook Maker. Before sharing, remember the 10-year rule: only books 10+ years old, or books the writer/publisher published themselves, may be shared.">স্ক্যান করা পিডিএফ থেকে ইপাব বানানোর পুরো পথ — Our Ebook Maker-এ। শেয়ার করার আগে ১০ বছরের নিয়মটি মনে রাখবেন: শুধু ১০+ বছরের পুরোনো বই, অথবা লেখক/প্রকাশক নিজে প্রকাশ করেছেন এমন বই শেয়ার করা যায়।</p>
-    <a class="accent-bg inline-block text-white text-sm font-bold rounded-lg px-5 py-2.5 mt-4" href="https://mdtowfiqul.github.io/our-ebook-maker" target="_blank" rel="noopener" data-bn="Our Ebook Maker খুলুন →" data-en="Open Our Ebook Maker →">Our Ebook Maker খুলুন →</a>
+    </div>
   </section>
 </main>
 
@@ -528,7 +522,7 @@ async function loadEpub(buf){
     var it = manifest[refs[k].getAttribute('idref')];
     if(it && it.type === 'application/xhtml+xml') spine.push(base + decodeURIComponent(it.href));
   }
-  return {zip: zip, meta: meta, coverBlob: coverBlob, spine: spine};
+  return {zip: zip, meta: meta, coverBlob: coverBlob, spine: spine, opfPath: rootPath, opfDoc: opf, base: base};
 }
 async function extractEpubText(buf){
   var ep = await loadEpub(buf);
@@ -605,93 +599,98 @@ document.querySelectorAll('.pin-btn').forEach(function(btn){
 });
 paintPins();
 
-/* ================= 1. EPUB READER ================= */
-(function(){
-  var fileInput = $('epub-reader-file'), status = $('epub-reader-status');
-  var book = null, rendition = null, fontSize = 18, curCfi = null;
-  function needLib(){
-    if(typeof ePub === 'undefined'){ setStatus(status, libMissing('EPUB.js')); return false; }
-    return true;
-  }
-  fileInput.addEventListener('change', async function(){
-    var f = fileInput.files && fileInput.files[0];
-    if(!f) return;
-    if(!needLib()) return;
-    setStatus(status, t('খুলছি…', 'Opening…'));
-    try{
-      if(rendition){ rendition.destroy(); rendition = null; }
-      var buf = await f.arrayBuffer();
-      book = ePub(buf);
-      var area = $('epub-reader-area');
-      area.innerHTML = '';
-      rendition = book.renderTo(area, {width: '100%', height: 460, flow: 'paginated', spread: 'none'});
-      rendition.themes.fontSize(fontSize + 'px');
-      rendition.on('relocated', function(loc){ if(loc && loc.start) curCfi = loc.start.cfi; });
-      await rendition.display(curCfi || undefined);
-      var nav = await book.loaded.navigation;
-      var toc = $('epub-reader-toc');
-      toc.innerHTML = '';
-      function addToc(items, depth){
-        items.forEach(function(it){
-          var o = document.createElement('option');
-          o.value = it.href;
-          o.textContent = new Array(depth + 1).join('— ') + it.label;
-          toc.appendChild(o);
-          if(it.subitems && it.subitems.length) addToc(it.subitems, depth + 1);
-        });
-      }
-      addToc(nav.toc || [], 0);
-      $('epub-reader-controls').classList.remove('hidden');
-      setStatus(status, t('খোলা হয়েছে: ', 'Opened: ') + f.name);
-    }catch(e){
-      setStatus(status, t('ইপাবটি খোলা যায়নি। ফাইলটি ঠিক আছে কি না দেখুন।', 'Could not open this EPUB. Please check the file.'));
-    }
+/* ================= accordions (B6): one button per tool group, all collapsed by default ================= */
+document.querySelectorAll('.acc-head').forEach(function(head){
+  head.addEventListener('click', function(){
+    var body = $(head.getAttribute('aria-controls'));
+    if(!body) return;
+    var nowHidden = body.classList.toggle('hidden');
+    head.setAttribute('aria-expanded', nowHidden ? 'false' : 'true');
   });
-  $('epub-reader-prev').addEventListener('click', function(){ if(rendition) rendition.prev(); });
-  $('epub-reader-next').addEventListener('click', function(){ if(rendition) rendition.next(); });
-  $('epub-reader-toc').addEventListener('change', function(e){
-    if(rendition && e.target.value) rendition.display(e.target.value);
-  });
-  $('epub-reader-smaller').addEventListener('click', function(){
-    fontSize = Math.max(12, fontSize - 2);
-    if(rendition) rendition.themes.fontSize(fontSize + 'px');
-  });
-  $('epub-reader-bigger').addEventListener('click', function(){
-    fontSize = Math.min(32, fontSize + 2);
-    if(rendition) rendition.themes.fontSize(fontSize + 'px');
-  });
-})();
+});
 
-/* ================= 2. EPUB METADATA ================= */
+/* ================= 2. EPUB METADATA EDITOR ================= */
 (function(){
-  var fileInput = $('epub-meta-file'), status = $('epub-meta-status'), result = $('epub-meta-result');
+  var DCNS = 'http://purl.org/dc/elements/1.1/';
+  var FIELDS = [
+    ['title', 'dc:title', 'epub-meta-title'],
+    ['creator', 'dc:creator', 'epub-meta-creator'],
+    ['language', 'dc:language', 'epub-meta-language'],
+    ['identifier', 'dc:identifier', 'epub-meta-identifier'],
+    ['publisher', 'dc:publisher', 'epub-meta-publisher'],
+    ['description', 'dc:description', 'epub-meta-description']
+  ];
+  function setDc(doc, tag, value){
+    /* set (or add, or remove when empty) one Dublin Core element in the OPF */
+    var md = doc.getElementsByTagName('metadata')[0];
+    if(!md) throw new Error(t('মেটাডেটা পাওয়া যায়নি।', 'No metadata found.'));
+    var els = doc.getElementsByTagName(tag);
+    var v = String(value == null ? '' : value).trim();
+    if(els.length){
+      if(!v){ md.removeChild(els[0]); return; }
+      els[0].textContent = v;
+      return;
+    }
+    if(!v) return;
+    var el = doc.createElementNS(DCNS, tag);
+    el.textContent = v;
+    var firstMeta = doc.getElementsByTagName('meta')[0];
+    if(firstMeta) md.insertBefore(el, firstMeta); else md.appendChild(el);
+  }
+  function cleanMeta(m){
+    /* placeholder strings like "(no title)" must not land in the inputs */
+    var PLACEHOLDERS = ['(শিরোনাম নেই)', '(লেখক নেই)', '(no title)', '(no author)', '—', ''];
+    var out = {};
+    Object.keys(m).forEach(function(k){
+      var v = m[k];
+      out[k] = (PLACEHOLDERS.indexOf(v) >= 0) ? '' : v;
+    });
+    return out;
+  }
+  window.__obTools.setDc = setDc;
+  var fileInput = $('epub-meta-file'), status = $('epub-meta-status'), editor = $('epub-meta-editor');
+  var curEp = null, fileName = 'book.epub';
   fileInput.addEventListener('change', async function(){
     var f = fileInput.files && fileInput.files[0];
     if(!f) return;
     setStatus(status, t('পড়ছি…', 'Reading…'));
-    result.classList.add('hidden');
+    editor.classList.add('hidden');
+    curEp = null;
     try{
       var ep = await loadEpub(await f.arrayBuffer());
-      var m = ep.meta;
-      var coverHtml = '';
-      if(ep.coverBlob){
-        var url = URL.createObjectURL(ep.coverBlob);
-        coverHtml = '<img src="' + esc(url) + '" alt="" class="w-28 rounded-xl shadow mb-3">';
+      curEp = ep;
+      fileName = f.name;
+      var m = cleanMeta(ep.meta);
+      FIELDS.forEach(function(fd){ $(fd[2]).value = m[fd[0]] || ''; });
+      var cover = $('epub-meta-cover');
+      try{
+        if(ep.coverBlob){
+          var url = URL.createObjectURL(ep.coverBlob);
+          cover.innerHTML = '<img src="' + esc(url) + '" alt="" class="w-28 rounded-xl shadow">';
+        } else {
+          cover.innerHTML = '<p class="text-sm text-neutral-500 dark:text-neutral-400">' + esc(t('এই ইপাবে কোনো প্রচ্ছদ নেই।', 'This EPUB has no cover.')) + '</p>';
+        }
+      }catch(e){
+        cover.innerHTML = '<p class="text-sm text-neutral-500 dark:text-neutral-400">' + esc(t('প্রচ্ছদ দেখানো যায়নি।', 'The cover could not be shown.')) + '</p>';
       }
-      var rows = [
-        [t('শিরোনাম', 'Title'), m.title], [t('লেখক', 'Author'), m.creator],
-        [t('ভাষা', 'Language'), m.language], [t('প্রকাশক', 'Publisher'), m.publisher || '—'],
-        [t('শনাক্তকারী', 'Identifier'), m.identifier]
-      ];
-      var html = coverHtml + '<dl class="text-sm space-y-1.5">';
-      rows.forEach(function(r){ html += '<div class="flex gap-2"><dt class="font-bold w-24 shrink-0">' + esc(r[0]) + '</dt><dd class="break-words">' + esc(r[1]) + '</dd></div>'; });
-      html += '</dl>';
-      if(m.description) html += '<p class="text-sm text-neutral-600 dark:text-neutral-300 mt-3 leading-relaxed">' + esc(m.description) + '</p>';
-      result.innerHTML = html;
-      result.classList.remove('hidden');
-      setStatus(status, t('তথ্য পাওয়া গেছে।', 'Metadata found.'));
+      editor.classList.remove('hidden');
+      setStatus(status, t('তথ্য পাওয়া গেছে — বদলে নিচের বোতাম চাপুন।', 'Metadata loaded — edit it, then press the button below.'));
     }catch(e){
       setStatus(status, e.message || t('ফাইলটি পড়া যায়নি।', 'Could not read the file.'));
+    }
+  });
+  $('epub-meta-download').addEventListener('click', async function(){
+    if(!curEp) return;
+    setStatus(status, t('বানাচ্ছি…', 'Building…'));
+    try{
+      FIELDS.forEach(function(fd){ setDc(curEp.opfDoc, fd[1], $(fd[2]).value); });
+      var xml = new XMLSerializer().serializeToString(curEp.opfDoc);
+      curEp.zip.file(curEp.opfPath, xml);
+      var blob = await curEp.zip.generateAsync({type: 'blob', mimeType: 'application/epub+zip'});
+      downloadBlob(blob, fileName);
+      setStatus(status, t('হয়ে গেছে — সম্পাদিত ইপাব ডাউনলোড হয়েছে। প্রচ্ছদ অপরিবর্তিত আছে।', 'Done — the edited EPUB downloaded. The cover is unchanged.'));
+    }catch(e){
+      setStatus(status, e.message || t('বানানো যায়নি।', 'Could not build the EPUB.'));
     }
   });
 })();
@@ -732,121 +731,6 @@ async function loadPdfDoc(file){
   var bytes = await file.arrayBuffer();
   return await PDFLib.PDFDocument.load(bytes, {ignoreEncryption: true});
 }
-
-/* ================= 4. PDF MERGE ================= */
-(function(){
-  var input = $('pdf-merge-files'), list = $('pdf-merge-list'), status = $('pdf-merge-status');
-  input.addEventListener('change', function(){
-    list.innerHTML = '';
-    Array.prototype.forEach.call(input.files || [], function(f){
-      var li = document.createElement('li');
-      li.innerHTML = '<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-file-text"/></svg> ' + esc(f.name);
-      list.appendChild(li);
-    });
-    setStatus(status, '');
-  });
-  $('pdf-merge-go').addEventListener('click', async function(){
-    var files = Array.prototype.slice.call(input.files || []);
-    if(files.length < 2){ setStatus(status, t('কমপক্ষে ২টি পিডিএফ বেছে নিন।', 'Choose at least 2 PDFs.')); return; }
-    if(!needPdfLib(status)) return;
-    setStatus(status, t('জোড়া দিচ্ছি…', 'Merging…'));
-    try{
-      var out = await PDFLib.PDFDocument.create();
-      for(var i = 0; i < files.length; i++){
-        var src = await loadPdfDoc(files[i]);
-        var pages = await out.copyPages(src, src.getPageIndices());
-        pages.forEach(function(p){ out.addPage(p); });
-      }
-      var bytes = await out.save();
-      downloadBlob(new Blob([bytes], {type: 'application/pdf'}), 'merged.pdf');
-      setStatus(status, t('হয়ে গেছে — merged.pdf ডাউনলোড হয়েছে।', 'Done — merged.pdf downloaded.'));
-    }catch(e){
-      setStatus(status, t('জোড়া দেওয়া যায়নি। ফাইলগুলো বৈধ পিডিএফ কি না দেখুন।', 'Could not merge. Please check the files are valid PDFs.'));
-    }
-  });
-})();
-
-/* ================= 5. PDF PAGE EXTRACTOR ================= */
-(function(){
-  var input = $('pdf-extract-file'), status = $('pdf-extract-status'),
-      controls = $('pdf-extract-controls');
-  var srcDoc = null, total = 0, fileName = 'extracted.pdf';
-  input.addEventListener('change', async function(){
-    var f = input.files && input.files[0];
-    if(!f) return;
-    if(!needPdfLib(status)) return;
-    setStatus(status, t('পড়ছি…', 'Reading…'));
-    controls.classList.add('hidden');
-    try{
-      srcDoc = await loadPdfDoc(f);
-      total = srcDoc.getPageCount();
-      fileName = f.name.replace(/\.pdf$/i, '') + '-pages.pdf';
-      controls.classList.remove('hidden');
-      setStatus(status, t('মোট পাতা: ', 'Total pages: ') + total);
-    }catch(e){
-      setStatus(status, t('পিডিএফটি খোলা যায়নি।', 'Could not open this PDF.'));
-    }
-  });
-  $('pdf-extract-go').addEventListener('click', async function(){
-    if(!srcDoc) return;
-    var r = parsePageRanges($('pdf-extract-pages').value, total);
-    if(!r.ok){ setStatus(status, r.error); return; }
-    setStatus(status, t('বানাচ্ছি…', 'Building…'));
-    try{
-      var out = await PDFLib.PDFDocument.create();
-      var pages = await out.copyPages(srcDoc, r.pages.map(function(p){ return p - 1; }));
-      pages.forEach(function(p){ out.addPage(p); });
-      var bytes = await out.save();
-      downloadBlob(new Blob([bytes], {type: 'application/pdf'}), fileName);
-      setStatus(status, t('হয়ে গেছে — ', 'Done — ') + r.pages.length + t(' পাতার পিডিএফ ডাউনলোড হয়েছে।', ' pages downloaded.'));
-    }catch(e){
-      setStatus(status, t('বানানো যায়নি।', 'Could not build the PDF.'));
-    }
-  });
-})();
-
-/* ================= 6. IMAGE TO PDF ================= */
-(function(){
-  var input = $('img-pdf-files'), list = $('img-pdf-list'), status = $('img-pdf-status');
-  input.addEventListener('change', function(){
-    list.innerHTML = '';
-    Array.prototype.forEach.call(input.files || [], function(f){
-      var li = document.createElement('li');
-      li.innerHTML = '<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-image"/></svg> ' + esc(f.name);
-      list.appendChild(li);
-    });
-    setStatus(status, '');
-  });
-  $('img-pdf-go').addEventListener('click', async function(){
-    var files = Array.prototype.slice.call(input.files || []);
-    if(files.length < 1){ setStatus(status, t('কমপক্ষে ১টি ছবি বেছে নিন।', 'Choose at least 1 image.')); return; }
-    if(!needPdfLib(status)) return;
-    setStatus(status, t('বানাচ্ছি…', 'Building…'));
-    try{
-      var out = await PDFLib.PDFDocument.create();
-      for(var i = 0; i < files.length; i++){
-        var f = files[i];
-        var bytes = await f.arrayBuffer();
-        var img, dims;
-        if(/png/i.test(f.type)){
-          img = await out.embedPng(bytes);
-        } else {
-          img = await out.embedJpg(bytes);
-        }
-        dims = img.scale(1);
-        var maxW = 595, maxH = 842, s = Math.min(maxW / dims.width, maxH / dims.height, 1);
-        var w = dims.width * s, h = dims.height * s;
-        var page = out.addPage([w, h]);
-        page.drawImage(img, {x: 0, y: 0, width: w, height: h});
-      }
-      var pdfBytes = await out.save();
-      downloadBlob(new Blob([pdfBytes], {type: 'application/pdf'}), 'images.pdf');
-      setStatus(status, t('হয়ে গেছে — images.pdf ডাউনলোড হয়েছে।', 'Done — images.pdf downloaded.'));
-    }catch(e){
-      setStatus(status, t('বানানো যায়নি। JPG/PNG ছবি ব্যবহার করুন।', 'Could not build it. Please use JPG/PNG images.'));
-    }
-  });
-})();
 
 /* ================= 7. COVER RESIZER ================= */
 (function(){
@@ -936,6 +820,35 @@ async function loadPdfDoc(file){
     html += '</div>';
     result.innerHTML = html;
   }
+  /* count from a file: PDF → pages, EPUB → words (≈250 words/page) */
+  var WORDS_PER_PAGE = 250;
+  $('planner-file').addEventListener('change', async function(){
+    var f = $('planner-file').files && $('planner-file').files[0];
+    var st = $('planner-file-status');
+    if(!f) return;
+    try{
+      if(/\.pdf$/i.test(f.name)){
+        if(!needPdfLib(st)) return;
+        setStatus(st, t('পাতা গুনছি…', 'Counting pages…'));
+        var doc = await loadPdfDoc(f);
+        var n = doc.getPageCount();
+        $('planner-total').value = n;
+        setStatus(st, t('মোট পাতা: ', 'Total pages: ') + n);
+      } else if(/\.epub$/i.test(f.name)){
+        setStatus(st, t('শব্দ গুনছি…', 'Counting words…'));
+        var r = await extractEpubText(await f.arrayBuffer());
+        var wc = countWords(r.text);
+        var pages = Math.max(1, Math.ceil(wc.words / WORDS_PER_PAGE));
+        $('planner-total').value = pages;
+        if(!$('planner-title').value.trim() && r.meta.title && r.meta.title.charAt(0) !== '(') $('planner-title').value = r.meta.title;
+        setStatus(st, t('মোট শব্দ: ', 'Total words: ') + wc.words + ' (' + t('প্রায় ', 'about ') + pages + ' ' + t('পাতা, ২৫০ শব্দ/পাতা ধরে', 'pages at 250 words/page') + ')');
+      } else {
+        setStatus(st, t('পিডিএফ বা ইপাব ফাইল দিন।', 'Please choose a PDF or EPUB file.'));
+      }
+    }catch(e){
+      setStatus(st, e.message || t('ফাইলটি পড়া যায়নি।', 'Could not read the file.'));
+    }
+  });
   $('planner-go').addEventListener('click', function(){
     var inputs = readInputs();
     var p = planReading(inputs.total, inputs.done, inputs.mode, inputs.perDay, inputs.endDate, inputs.boost, new Date());

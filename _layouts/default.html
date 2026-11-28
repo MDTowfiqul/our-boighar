@@ -209,7 +209,7 @@
       <a href="{{ '/browse/' | relative_url }}" class="hover:opacity-70" data-bn="সব বই" data-en="All Books">সব বই</a>
       <a href="{{ '/authors/' | relative_url }}" class="hover:opacity-70" data-bn="লেখক" data-en="Authors">লেখক</a>
       <a href="{{ '/' | relative_url }}#categories" class="hover:opacity-70" data-bn="বিষয়" data-en="Categories">বিষয়</a>
-      <a href="{{ '/shelf/' | relative_url }}" class="hover:opacity-70" data-bn="আমার ড্যাশবোর্ড" data-en="My Dashboard">আমার ড্যাশবোর্ড</a>
+      <a href="{{ '/shelf/' | relative_url }}" class="hover:opacity-70" data-bn="আমার প্রোফাইল" data-en="My Profile">আমার প্রোফাইল</a>
       <a href="{{ '/tools/' | relative_url }}" class="hover:opacity-70" data-bn="টুলস" data-en="Tools">টুলস</a>
     </nav>
     <span class="flex-1"></span>
@@ -221,7 +221,7 @@
       <svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-globe"/></svg>
       <span id="lang-label">BN</span>
     </button>
-    <a href="{{ '/shelf/' | relative_url }}" class="border rounded-[10px] w-10 h-10 flex items-center justify-center text-base transition-opacity hover:opacity-75" style="border-color:var(--line);background:var(--surface)" title="My Dashboard / আমার ড্যাশবোর্ড" aria-label="My Dashboard"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-user"/></svg></a>
+    <a href="{{ '/shelf/' | relative_url }}" class="border rounded-[10px] w-10 h-10 flex items-center justify-center text-base transition-opacity hover:opacity-75" style="border-color:var(--line);background:var(--surface)" title="My Profile / আমার প্রোফাইল" aria-label="My Profile"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-user"/></svg></a>
   </div>
 </header>
 
@@ -233,11 +233,14 @@
       <span class="font-semibold text-xl flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-bookmark"/></svg><span data-bn="আমাদের বইঘর" data-en="Our Boighar">আমাদের বইঘর</span></span>
       <button id="drawer-close" class="w-10 h-10 rounded-[10px] font-semibold flex items-center justify-center" style="background:var(--surface);border:1px solid var(--line)" aria-label="Close"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-x"/></svg></button>
     </div>
-    <a href="{{ '/shelf/' | relative_url }}" class="drawer-link ob-card mt-5 px-4 py-3.5 flex items-center gap-3">
-      <span class="ob-chip-ic" style="background:var(--gold-soft)"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-user"/></svg></span>
+    <p class="font-semibold mt-5 mb-2.5" data-bn="ড্যাশবোর্ড" data-en="Dashboard">ড্যাশবোর্ড</p>
+    <a href="{{ '/shelf/' | relative_url }}" id="drawer-account-card" class="drawer-link ob-card px-4 py-3.5 flex items-center gap-3">
+      <span id="drawer-acct-avatar" class="ob-chip-ic font-bold" style="background:var(--gold-soft)"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-user"/></svg></span>
       <span class="min-w-0">
-        <span class="block font-bold" data-bn="সাইন ইন করুন" data-en="Sign in">সাইন ইন করুন</span>
-        <span class="block text-sm" style="color:var(--muted)" data-bn="নিজের তাক, ইতিহাস আর পয়েন্ট" data-en="Your shelves, history and points">নিজের তাক, ইতিহাস আর পয়েন্ট</span>
+        <span class="block font-bold truncate drawer-acct-signedout" data-bn="সাইন ইন করুন" data-en="Sign in">সাইন ইন করুন</span>
+        <span id="drawer-acct-name" class="hidden font-bold truncate"></span>
+        <span class="block text-sm truncate drawer-acct-signedout" style="color:var(--muted)" data-bn="নিজের তাক, ইতিহাস আর পয়েন্ট" data-en="Your shelves, history and points">নিজের তাক, ইতিহাস আর পয়েন্ট</span>
+        <span id="drawer-acct-sub" class="hidden text-sm truncate" style="color:var(--muted)"></span>
       </span>
       <span class="flex-1"></span><span aria-hidden="true">›</span>
     </a>
@@ -259,7 +262,7 @@
       <a href="{{ '/browse/' | relative_url }}" class="drawer-link flex items-center gap-3 px-4 py-3.5 font-semibold"><span class="ob-chip-ic" style="background:var(--gold-soft)"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-tag"/></svg></span><span data-bn="ধরন" data-en="Categories">ধরন</span></a>
       <a href="{{ '/authors/' | relative_url }}" class="drawer-link flex items-center gap-3 px-4 py-3.5 font-semibold"><span class="ob-chip-ic" style="background:var(--gold-soft)"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-edit"/></svg></span><span data-bn="লেখক" data-en="Authors">লেখক</span></a>
       <a href="{{ '/' | relative_url }}#popular" class="drawer-link flex items-center gap-3 px-4 py-3.5 font-semibold"><span class="ob-chip-ic" style="background:var(--gold-soft)"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-award"/></svg></span><span data-bn="জনপ্রিয় বই" data-en="Popular Books">জনপ্রিয় বই</span></a>
-      <a href="{{ '/shelf/' | relative_url }}" class="drawer-link flex items-center gap-3 px-4 py-3.5 font-semibold"><span class="ob-chip-ic" style="background:var(--gold-soft)"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-bar-chart"/></svg></span><span data-bn="আমার ড্যাশবোর্ড" data-en="My Dashboard">আমার ড্যাশবোর্ড</span></a>
+      <a href="{{ '/shelf/' | relative_url }}" class="drawer-link flex items-center gap-3 px-4 py-3.5 font-semibold"><span class="ob-chip-ic" style="background:var(--gold-soft)"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-bar-chart"/></svg></span><span data-bn="আমার প্রোফাইল" data-en="My Profile">আমার প্রোফাইল</span></a>
       <a href="{{ '/tools/' | relative_url }}" class="drawer-link flex items-center gap-3 px-4 py-3.5 font-semibold"><span class="ob-chip-ic" style="background:var(--gold-soft)"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-settings"/></svg></span><span data-bn="টুলস" data-en="Tools">টুলস</span></a>
     </nav>
     <p class="font-semibold mt-6 mb-2.5" data-bn="থিমের রং" data-en="Theme Colour">থিমের রং</p>
@@ -345,10 +348,26 @@
   </div>
 </div>
 
+<!-- GLOBAL SEARCH OVERLAY — live results on any page -->
+<div id="ob-search-overlay" class="fixed inset-0 z-[70] hidden" role="dialog" aria-label="Search">
+  <div id="ob-search-scrim" class="absolute inset-0 bg-black/45"></div>
+  <div class="relative max-w-xl mx-auto mt-16 sm:mt-24 px-3">
+    <div class="rounded-2xl ob-shadow overflow-hidden" style="background:var(--surface);border:1px solid var(--line)">
+      <div class="flex items-center gap-2 px-4 py-3 border-b" style="border-color:var(--line)">
+        <svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-search"/></svg>
+        <input id="ob-search-input" type="search" autocomplete="off" placeholder="বই, লেখক খুঁজুন…" data-bn-ph="বই, লেখক খুঁজুন…" data-en-ph="Search books, authors…" class="flex-1 min-w-0 bg-transparent outline-none text-base py-1" aria-label="Search books">
+        <button id="ob-search-close" class="w-9 h-9 rounded-[10px] font-semibold flex items-center justify-center shrink-0" style="background:var(--gold-soft)" aria-label="Close"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-x"/></svg></button>
+      </div>
+      <div id="ob-search-results" class="max-h-[60vh] overflow-y-auto"></div>
+      <p id="ob-search-hint" class="px-4 py-3 text-sm" style="color:var(--muted)" data-bn="বইয়ের নাম বা লেখকের নাম লিখুন — ফলাফল এখানেই দেখাবে।" data-en="Type a book or author name — results appear here.">বইয়ের নাম বা লেখকের নাম লিখুন — ফলাফল এখানেই দেখাবে।</p>
+    </div>
+  </div>
+</div>
+
 {{ content }}
 
 <footer class="max-w-6xl mx-auto px-4 mt-14 pb-4 text-center text-sm" style="color:var(--muted)">
-  <p class="font-bold mb-2" style="color:var(--ink)"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-bookmark"/></svg> <span data-bn="আমাদের বইঘর (Our Boighar) — বাংলা ও ইংরেজি ইসলামিক বইয়ের উন্মুক্ত লাইব্রেরি" data-en="Our Boighar — an open library of Bengali & English Islamic books">আমাদের বইঘর (Our Boighar) — বাংলা ও ইংরেজি ইসলামিক বইয়ের উন্মুক্ত লাইব্রেরি</span></p>
+  <p class="font-bold mb-2 flex items-center justify-center gap-2" style="color:var(--ink)"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-bookmark"/></svg> <span data-bn="আমাদের বইঘর (Our Boighar) — বাংলা ও ইংরেজি ইসলামিক বইয়ের উন্মুক্ত লাইব্রেরি" data-en="Our Boighar — an open library of Bengali & English Islamic books">আমাদের বইঘর (Our Boighar) — বাংলা ও ইংরেজি ইসলামিক বইয়ের উন্মুক্ত লাইব্রেরি</span></p>
   <p class="mb-2"><a class="font-semibold hover:underline" href="{{ '/about/' | relative_url }}" data-bn="আমাদের সম্পর্কে" data-en="About Us">আমাদের সম্পর্কে</a> · <a class="font-semibold hover:underline" href="{{ '/authors/' | relative_url }}" data-bn="লেখক" data-en="Authors">লেখক</a> · <a class="font-semibold hover:underline" href="{{ '/tools/' | relative_url }}" data-bn="টুলস" data-en="Tools">টুলস</a> · <a class="font-semibold hover:underline" href="{{ '/opds/' | relative_url }}" data-bn="OPDS ক্যাটালগ" data-en="OPDS Catalog">OPDS ক্যাটালগ</a> · <a class="font-semibold hover:underline" href="{{ '/guide/' | relative_url }}" data-bn="পড়ার নির্দেশিকা" data-en="Reading Guide">পড়ার নির্দেশিকা</a> · <a class="font-semibold hover:underline" href="{{ '/policies/' | relative_url }}" data-bn="নীতিমালা" data-en="Policies">নীতিমালা</a> · <a class="font-semibold hover:underline" href="{{ '/policies/' | relative_url }}#dmca">DMCA</a></p>
   <p class="mb-2"><span data-bn="Our Family-তে যুক্ত হোন:" data-en="Join Our Family:">Join Our Family:</span> <a class="font-semibold hover:underline" href="https://www.facebook.com/FBOurFamily" target="_blank" rel="noopener">Facebook</a> · <a class="font-semibold hover:underline" href="https://t.me/ourfamilybd" target="_blank" rel="noopener">Telegram Channel</a> · <a class="font-semibold hover:underline" href="https://t.me/Our_Family_bd" target="_blank" rel="noopener">Telegram Group</a> · <a class="font-semibold hover:underline" href="https://t.me/OurfamilyBDBot" target="_blank" rel="noopener">Telegram Bot</a> · <a class="font-semibold hover:underline" href="https://mdtowfiqul.github.io/our-family/">Our Family Hub</a></p>
   <p>© মোঃ তৌফিকুল ইসলাম · <a class="accent-text font-semibold hover:underline" href="https://mdtowfiqul.github.io/Our-Days/">Our Days</a> · <a class="accent-text font-semibold hover:underline" href="https://github.com/MDTowfiqul">GitHub</a></p>
@@ -437,17 +456,63 @@
   document.getElementById('theme-close').addEventListener('click', closeTheme);
   tscrim.addEventListener('click', closeTheme);
 
-  /* top search: focus the homepage search, or go there */
-  document.getElementById('top-search').addEventListener('click', function(){
-    var inp = document.getElementById('f-search');
-    if (inp) {
-      var box = document.getElementById('searchbox');
-      if (box) box.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      setTimeout(function(){ inp.focus({ preventScroll: true }); }, 350);
-    } else {
-      location.href = "{{ '/' | relative_url }}#searchbox";
+  /* global search overlay: live results on any page (search.json) */
+  var searchOverlay = document.getElementById('ob-search-overlay'),
+      searchInput = document.getElementById('ob-search-input'),
+      searchResults = document.getElementById('ob-search-results'),
+      searchHint = document.getElementById('ob-search-hint'),
+      searchBooks = null, searchLoading = null;
+  function escHtml(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function loadSearchBooks(){
+    if (searchBooks) return Promise.resolve(searchBooks);
+    if (searchLoading) return searchLoading;
+    searchLoading = fetch('{{ "/search.json" | relative_url }}').then(function(r){ return r.ok ? r.json() : []; }).then(function(d){ searchBooks = Array.isArray(d) ? d : []; return searchBooks; }).catch(function(){ searchBooks = []; return searchBooks; });
+    return searchLoading;
+  }
+  function renderSearch(q){
+    var query = (q || '').trim().toLowerCase();
+    if (query.length < 2) {
+      searchResults.innerHTML = '';
+      searchHint.classList.remove('hidden');
+      return;
     }
-  });
+    searchHint.classList.add('hidden');
+    loadSearchBooks().then(function(books){
+      var hits = books.filter(function(b){
+        return (b.title && b.title.toLowerCase().indexOf(query) >= 0) ||
+          (b.title_en && b.title_en.toLowerCase().indexOf(query) >= 0) ||
+          (b.author && b.author.toLowerCase().indexOf(query) >= 0);
+      }).slice(0, 8);
+      if (!hits.length) {
+        searchResults.innerHTML = '<p class="px-4 py-6 text-center text-sm" style="color:var(--muted)">' + (window.__obLang === 'en' ? 'No book matched.' : 'কোনো বই মেলেনি।') + '</p>';
+        return;
+      }
+      searchResults.innerHTML = hits.map(function(b){
+        var cover = b.cover ? '<img src="' + escHtml(b.cover) + '" alt="" class="w-10 h-[60px] object-cover rounded-md shrink-0">' : '';
+        return '<a href="' + escHtml(b.url) + '" class="flex items-center gap-3 px-4 py-2.5 hover:bg-black/5 dark:hover:bg-white/5 border-b" style="border-color:var(--line)">' + cover +
+          '<span class="min-w-0"><span class="block font-bold truncate">' + escHtml(b.title) + '</span>' +
+          '<span class="block text-sm truncate" style="color:var(--muted)">' + escHtml(b.author || '') + '</span></span></a>';
+      }).join('');
+    });
+  }
+  function openSearch(){
+    searchOverlay.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    loadSearchBooks();
+    setTimeout(function(){ searchInput.focus(); }, 50);
+  }
+  function closeSearch(){
+    searchOverlay.classList.add('hidden');
+    document.body.style.overflow = '';
+    searchInput.value = '';
+    searchResults.innerHTML = '';
+    searchHint.classList.remove('hidden');
+  }
+  document.getElementById('top-search').addEventListener('click', openSearch);
+  document.getElementById('ob-search-close').addEventListener('click', closeSearch);
+  document.getElementById('ob-search-scrim').addEventListener('click', closeSearch);
+  searchInput.addEventListener('input', function(){ renderSearch(searchInput.value); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !searchOverlay.classList.contains('hidden')) closeSearch(); });
 
   /* language bn / en */
   window.__obLang = read('ob-lang') || 'bn';
@@ -512,13 +577,61 @@
     a.addEventListener('click', closeDrawer);
   });
 
+  /* drawer account card: show the signed-in profile, never "Sign in" (D1).
+     The layout never loads the API client, so the session is shared through
+     localStorage 'ob_me' — shelf.html writes {name, email, avatar_url}
+     whenever it confirms the session, and clears it on sign-out. Here we
+     paint from that cache at once, then revalidate with /api/auth/me when a
+     session may exist (token in localStorage, or the HttpOnly cookie). A
+     failed fetch (offline) keeps the cached card; only a 401 clears it. */
+  var OB_API_BASE = '{{ site.boighar_api_base }}';
+  var drawerName = document.getElementById('drawer-acct-name'),
+      drawerSub = document.getElementById('drawer-acct-sub'),
+      drawerAvatar = document.getElementById('drawer-acct-avatar');
+  var drawerAvatarDefault = drawerAvatar ? drawerAvatar.innerHTML : '';
+  function paintDrawerAccount(me){
+    var signedIn = !!(me && me.name);
+    Array.prototype.forEach.call(document.querySelectorAll('.drawer-acct-signedout'), function(el){ el.classList.toggle('hidden', signedIn); });
+    if (drawerName) { drawerName.textContent = signedIn ? me.name : ''; drawerName.classList.toggle('hidden', !signedIn); }
+    if (drawerSub) { drawerSub.textContent = signedIn ? (me.email || '') : ''; drawerSub.classList.toggle('hidden', !signedIn); }
+    if (drawerAvatar) {
+      if (signedIn && me.avatar_url) drawerAvatar.innerHTML = '<img src="' + String(me.avatar_url).replace(/"/g, '') + '" alt="" class="w-full h-full object-cover rounded-xl">';
+      else if (signedIn) drawerAvatar.textContent = me.name.trim().charAt(0);
+      else drawerAvatar.innerHTML = drawerAvatarDefault;
+    }
+  }
+  function readMeCache(){
+    try { return JSON.parse(read('ob_me') || 'null'); } catch (e) { return null; }
+  }
+  paintDrawerAccount(readMeCache());
+  (function(){
+    var tok = read('ob_api_token') || '';
+    if (!tok && !read('ob_me')) return; // definitely signed out: no call
+    var headers = {};
+    if (tok) headers.Authorization = 'Bearer ' + tok;
+    fetch(OB_API_BASE + '/api/auth/me', { headers: headers, credentials: 'include' }).then(function(r){
+      if (r.status === 401) {
+        try { localStorage.removeItem('ob_me'); } catch (e) {}
+        paintDrawerAccount(null);
+        return null;
+      }
+      if (!r.ok) return null; // offline / server error: keep the cached card
+      return r.json();
+    }).then(function(d){
+      if (d && d.user) {
+        store('ob_me', JSON.stringify({ name: d.user.name, email: d.user.email, avatar_url: d.user.avatar_url || null }));
+        paintDrawerAccount(d.user);
+      }
+    }).catch(function(){ /* keep the cached card */ });
+  })();
+
   /* intro guide — 5 pages, first visit only (own words, own mockups) */
   var GUIDE = [
     { mock: 'home', bn: { t: 'হোমপেজে যা আছে', d: 'উপরের ট্যাব দিয়ে লাইব্রেরি, সেরা বই, বুকশেলফ আর টুলস — সব পাতায় যাবেন। মাঝের বড় প্রচ্ছদটি আজকের সেরা বই।' }, en: { t: 'What is on the homepage', d: 'The top tabs take you to the library, best books, bookshelf and tools. The big cover in the middle is today\u2019s best book.' } },
     { mock: 'rows', bn: { t: 'বইয়ের সারি', d: 'প্রতিটি সারি আঙুলে পাশে সরিয়ে আরও বই দেখুন। যেকোনো প্রচ্ছদে চাপ দিলে বইয়ের বিবরণ, ডাউনলোড আর পড়ার বোতাম পাবেন।' }, en: { t: 'Book rows', d: 'Swipe each row sideways to see more books. Tap any cover for the book\u2019s details, download and read buttons.' } },
     { mock: 'nav', bn: { t: 'নিচের বাটনগুলো', d: 'হোম, ফোরাম আর অডিও — যেকোনো পাতা থেকে এক চাপেই। মেনু খুলতে উপরের মেনু বোতাম চাপুন, আর খুঁজতে উপরের খোঁজার বোতাম।' }, en: { t: 'The bottom buttons', d: 'Home, Forum and Audio — one tap from any page. Tap the menu button at the top, and the search button to search.' } },
     { mock: 'read', bn: { t: 'বই পড়ার সময়', d: 'পাতার মাঝখানে একবার চাপ দিলে নিচে বাটন আসবে: অধ্যায়, থিম, লেখা, আলো। যেখানে পড়া থামাবেন, পরের বার সেখান থেকেই শুরু হবে।' }, en: { t: 'While reading', d: 'Tap the middle of a page and a toolbar appears below: chapters, theme, text and light. Wherever you stop, reading resumes from there next time.' } },
-    { mock: 'custom', bn: { t: 'নিজের পছন্দে সাজান', d: 'উপরের থিম বোতাম চেপে থিম আর লেখার আকার বদলান। হোমপেজে কোন অংশ থাকবে আর কোনটা আগে আসবে, ঠিক করুন আমার ড্যাশবোর্ডের হোমপেজ সাজান থেকে।' }, en: { t: 'Make it your own', d: 'Tap the theme button up top to change the theme and text size. Choose which homepage sections show, and in what order, from Homepage setup in My Dashboard.' } }
+    { mock: 'custom', bn: { t: 'নিজের পছন্দে সাজান', d: 'উপরের থিম বোতাম চেপে থিম আর লেখার আকার বদলান। হোমপেজে কোন অংশ থাকবে আর কোনটা আগে আসবে, ঠিক করুন আমার প্রোফাইলের হোমপেজ সাজান থেকে।' }, en: { t: 'Make it your own', d: 'Tap the theme button up top to change the theme and text size. Choose which homepage sections show, and in what order, from Homepage setup in My Profile.' } }
   ];
   function mockHTML(kind){
     var gold = 'background:var(--gold)', soft = 'background:var(--gold-soft)', surf = 'background:var(--surface);border:1px solid var(--line)';

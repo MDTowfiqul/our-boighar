@@ -1,0 +1,33 @@
+---
+layout: default
+title: "বইয়ের সিরিজ"
+permalink: /series/
+---
+{% assign series_groups = site.books | group_by: "series" | sort: "name" %}
+<main class="max-w-6xl mx-auto px-3 sm:px-4 mt-6">
+  <p class="text-[13px] text-neutral-500 dark:text-neutral-400 mb-3">
+    <a href="{{ '/' | relative_url }}" class="hover:underline" data-bn="হোম" data-en="Home">হোম</a> /
+    <span class="font-semibold text-neutral-700 dark:text-neutral-200" data-bn="বইয়ের সিরিজ" data-en="Book Series">বইয়ের সিরিজ</span>
+  </p>
+
+  <h1 class="serif text-2xl sm:text-3xl font-semibold flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-book"/></svg><span data-bn="বইয়ের সিরিজ" data-en="Book Series">বইয়ের সিরিজ</span></h1>
+  <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1" data-bn="একই সিরিজের সব খণ্ড একসাথে — সিরিজ খুলে পছন্দের খণ্ডটি বেছে নিন" data-en="Every volume of a series together — open a series and pick the volume you want">একই সিরিজের সব খণ্ড একসাথে — সিরিজ খুলে পছন্দের খণ্ডটি বেছে নিন</p>
+
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-5 mt-7">
+    {% for g in series_groups %}{% if g.name and g.name != "" and g.size > 1 %}
+    {% assign sbooks = g.items | sort: "series_order" %}
+    {% assign first = sbooks | first %}
+    {% assign sen = "" %}{% for sb in sbooks %}{% if sb.series_en %}{% assign sen = sb.series_en %}{% break %}{% endif %}{% endfor %}
+    <a href="{{ '/series/' | relative_url }}{{ sen | slugify }}/" class="group">
+      <div class="relative aspect-[2/3] mx-2">
+        {% if sbooks.size > 2 %}{% assign third = sbooks[2] %}<img src="{{ third.cover | relative_url }}" alt="" class="absolute inset-0 w-full h-full object-cover rounded-xl shadow rotate-[6deg] translate-x-2">{% endif %}
+        {% if sbooks.size > 1 %}{% assign second = sbooks[1] %}<img src="{{ second.cover | relative_url }}" alt="" class="absolute inset-0 w-full h-full object-cover rounded-xl shadow rotate-[-5deg] -translate-x-1.5">{% endif %}
+        <img src="{{ first.cover | relative_url }}" alt="{{ g.name }}" class="absolute inset-0 w-full h-full object-cover rounded-xl shadow-lg">
+        <span class="absolute -bottom-2 right-0 accent-bg text-white text-xs font-bold rounded-md px-2 py-0.5 shadow"><span data-bn-digits="{{ g.size }}">{{ g.size }}</span> <span data-bn="টি বই" data-en="books">টি বই</span></span>
+      </div>
+      <h3 class="font-semibold text-sm sm:text-[15px] leading-snug min-h-[2.75em] mt-3.5 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400" data-bn="{{ g.name }}" data-en="{{ first.series_en | default: g.name }}">{{ g.name }}</h3>
+      <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-edit"/></svg> {{ first.author }}</p>
+    </a>
+    {% endif %}{% endfor %}
+  </div>
+</main>
