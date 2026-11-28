@@ -232,14 +232,28 @@ function rankFor(points) {
   return { tier: tier + 1, name, points, next_tier_at: next };
 }
 
-// ---------- optional Telegram forward (support / fix reports) ----------
-async function forwardToTelegram(env, text) {
-  if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_ADMIN_ID) return;
+// ---------- Telegram forward for reports (fix reports + support) ----------
+// Reports go to the "Issue/Report a Problem" topic (id 39) of the Our Family
+// Telegram group via @our_boighar_bot — the same bot/chat the new-book
+// announcements use (TELEGRAM_CHAT_ID / TELEGRAM_TOPIC_ID there).
+// Env overrides: TELEGRAM_REPORT_CHAT_ID, TELEGRAM_REPORT_TOPIC_ID.
+// The defaults are the live group/topic so reports work even before the
+// secrets are set; TELEGRAM_BOT_TOKEN is still required.
+const REPORT_CHAT_ID = '-1004423692844'; // Our Family group (@Our_Family_bd)
+const REPORT_TOPIC_ID = 39;              // "Issue/Report a Problem"
+async function forwardReportToTelegram(env, text) {
+  if (!env.TELEGRAM_BOT_TOKEN) return;
   try {
+    const payload = {
+      chat_id: env.TELEGRAM_REPORT_CHAT_ID || REPORT_CHAT_ID,
+      text: text.slice(0, 4000),
+    };
+    const topic = parseInt(env.TELEGRAM_REPORT_TOPIC_ID || String(REPORT_TOPIC_ID), 10);
+    if (topic) payload.message_thread_id = topic;
     await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: env.TELEGRAM_ADMIN_ID, text: text.slice(0, 4000) }),
+      body: JSON.stringify(payload),
     });
   } catch { /* never fail the user request */ }
 }
@@ -579,6 +593,80 @@ async function handleRanking(request, env) {
   return json({ ranking });
 }
 
+// ---------- public OPDS search ----------
+// GET /api/opds/search?q=<term> — Atom acquisition feed of matching books.
+// This is what Our Reader calls from its OPDS search box: the catalog feeds
+// carry rel="search" (type application/atom+xml, href
+// .../api/opds/search?q={searchTerms}), Our Reader replaces {searchTerms}
+// with the typed query and fetches this URL (server-side, through its own
+// proxy — no browser CORS involved). Public: no sign-in.
+// Entries mirror _includes/opds-entry.xml. The D1 books table only stores
+// id/title/writer/category/language, so cover, EPUB file and page URLs are
+// derived from the site conventions: every book's file is /books/<id>.epub
+// and its cover /img/cover-<id>.jpg (verified across all 479 books, with
+// the one exception listed in OPDS_COVER_EXCEPTIONS). The D1 table holds no
+// description, so <summary> is the writer + categories line.
+const OPDS_SEARCH_LIMIT = 50;
+const OPDS_COVER_EXCEPTIONS = { 'islam-objections-bn': '/img/cover.jpg' };
+function xmlEscape(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' }[c];
+  });
+}
+function opdsSlug(s) {
+  return String(s || '').toLowerCase().replace(/[\s_]+/g, '-').replace(/[^a-z0-9-]/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '');
+}
+function opdsEntry(row, updated) {
+  const page = SITE_URL + '/books/' + row.id + '/';
+  const cover = SITE_URL + (OPDS_COVER_EXCEPTIONS[row.id] || ('/img/cover-' + row.id + '.jpg'));
+  const cats = String(row.category || '').split(',').map(function (c) { return c.trim(); }).filter(Boolean);
+  const summary = [row.writer, row.category].filter(Boolean).join(' · ');
+  return '  <entry>\n' +
+    '    <title>' + xmlEscape(row.title) + '</title>\n' +
+    '    <id>' + xmlEscape(page) + '</id>\n' +
+    '    <updated>' + updated + '</updated>\n' +
+    '    <author><name>' + xmlEscape(row.writer || '') + '</name></author>\n' +
+    '    <dc:creator>' + xmlEscape(row.writer || '') + '</dc:creator>\n' +
+    '    <dc:identifier>' + xmlEscape(row.id) + '</dc:identifier>\n' +
+    '    <dc:language>' + xmlEscape(row.language || '') + '</dc:language>\n' +
+    (summary ? '    <summary type="text">' + xmlEscape(summary) + '</summary>\n' : '') +
+    cats.map(function (c) { return '    <category term="' + xmlEscape(opdsSlug(c)) + '" label="' + xmlEscape(c) + '"/>\n'; }).join('') +
+    '    <link rel="http://opds-spec.org/image" type="image/jpeg" href="' + xmlEscape(cover) + '"/>\n' +
+    '    <link rel="http://opds-spec.org/image/thumbnail" type="image/jpeg" href="' + xmlEscape(cover) + '"/>\n' +
+    '    <link rel="alternate" type="text/html" href="' + xmlEscape(page) + '"/>\n' +
+    '    <link rel="http://opds-spec.org/acquisition" type="application/epub+zip" href="' + xmlEscape(SITE_URL + '/books/' + row.id + '.epub') + '"/>\n' +
+    '  </entry>\n';
+}
+async function handleOpdsSearch(request, env) {
+  const url = new URL(request.url);
+  const q = (url.searchParams.get('q') || '').trim().slice(0, 100);
+  const updated = new Date().toISOString();
+  const selfHref = url.origin + '/api/opds/search?q=' + encodeURIComponent(q);
+  const searchHref = url.origin + '/api/opds/search?q={searchTerms}';
+  let rows = [];
+  if (q) {
+    // Escape LIKE wildcards so a typed % or _ matches literally.
+    const like = '%' + q.replace(/\\/g, '\\\\').replace(/%/g, '\\%').replace(/_/g, '\\_') + '%';
+    const res = await env.DB.prepare(
+      "SELECT id, title, writer, category, language FROM books WHERE title LIKE ? ESCAPE '\\' OR writer LIKE ? ESCAPE '\\' OR category LIKE ? ESCAPE '\\' ORDER BY title ASC LIMIT ?"
+    ).bind(like, like, like, OPDS_SEARCH_LIMIT).all();
+    rows = res.results || [];
+  }
+  const title = q ? 'Search results for "' + q + '"' : 'Search Our Boighar';
+  const xml = '<?xml version="1.0" encoding="UTF-8"?>\n' +
+    '<feed xmlns="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/terms/" xmlns:opds="http://opds-spec.org/2010/catalog">\n' +
+    '  <id>' + xmlEscape(selfHref) + '</id>\n' +
+    '  <title>' + xmlEscape(title) + '</title>\n' +
+    '  <updated>' + updated + '</updated>\n' +
+    '  <author><name>Our Boighar</name><uri>' + xmlEscape(SITE_URL) + '</uri></author>\n' +
+    '  <link rel="self" type="application/atom+xml;profile=opds-catalog;kind=acquisition" href="' + xmlEscape(selfHref) + '"/>\n' +
+    '  <link rel="start" type="application/atom+xml;profile=opds-catalog;kind=navigation" title="Our Boighar OPDS Catalog" href="' + xmlEscape(SITE_URL + '/opds/catalog.xml') + '"/>\n' +
+    '  <link rel="search" type="application/atom+xml" title="Search Our Boighar" href="' + xmlEscape(searchHref) + '"/>\n' +
+    rows.map(function (r) { return opdsEntry(r, updated); }).join('') +
+    '</feed>\n';
+  return new Response(xml, { headers: { 'Content-Type': 'application/atom+xml; charset=utf-8' } });
+}
+
 // ---------- fix reports + support ----------
 const FIX_FIELDS = ['title', 'writer', 'creator', 'category', 'language', 'cover', 'file', 'other'];
 
@@ -586,17 +674,19 @@ async function handleFixReport(request, env, user) {
   const body = await readBody(request);
   if (!body) return err('Invalid request.');
   const bookId = cleanStr(body.book_id, 120);
-  const field = cleanStr(body.field, 20);
+  // The report form no longer asks which field is wrong (2 boxes only:
+  // book + what's wrong) — anything sent without a valid field is 'other'.
+  const rawField = cleanStr(body.field, 20);
+  const field = FIX_FIELDS.includes(rawField) ? rawField : 'other';
   const message = cleanStr(body.message, 2000);
   if (!bookId || !(await bookExists(env, bookId))) return err('Book not found.', 404);
-  if (!FIX_FIELDS.includes(field)) return err('Invalid field.', 400);
   if (!message) return err('Please describe what is wrong.');
   const res = await env.DB.prepare(
     'INSERT INTO fix_reports (user_id, book_id, field, message, status, created_at) VALUES (?, ?, ?, ?, ?, ?)'
   ).bind(user.id, bookId, field, message, 'open', now()).run();
   await awardPoints(env, user.id, 'fix', bookId);
   const book = await env.DB.prepare('SELECT title FROM books WHERE id = ?').bind(bookId).first();
-  forwardToTelegram(env, `📚 Boighar fix report\nBook: ${book?.title || bookId}\nField: ${field}\nFrom: ${user.name} (${user.email})\n${message}`);
+  forwardReportToTelegram(env, `Boighar fix report\nBook: ${book?.title || bookId}\nLink: ${SITE_URL}/books/${bookId}/\nField: ${field}\nFrom: ${user.name} (${user.email})\n${message}`);
   return json({ ok: true, id: res.meta.last_row_id }, 201);
 }
 
@@ -616,7 +706,7 @@ async function handleSupport(request, env, user) {
   await env.DB.prepare(
     'INSERT INTO support_messages (user_id, subject, message, created_at) VALUES (?, ?, ?, ?)'
   ).bind(user.id, subject || null, message, now()).run();
-  forwardToTelegram(env, `💬 Boighar support\nFrom: ${user.name} (${user.email})\nSubject: ${subject || '(none)'}\n${message}`);
+  forwardReportToTelegram(env, `Boighar support\nFrom: ${user.name} (${user.email})\nSubject: ${subject || '(none)'}\n${message}`);
   return json({ ok: true }, 201);
 }
 
@@ -684,6 +774,9 @@ export default {
 
       // --- public ranking ---
       if (parts[0] === 'ranking' && method === 'GET') return finish(await handleRanking(request, env));
+
+      // --- public OPDS search (no sign-in; Our Reader's search box calls this) ---
+      if (parts[0] === 'opds' && parts[1] === 'search' && method === 'GET') return finish(await handleOpdsSearch(request, env));
 
       // --- everything below needs a signed-in user ---
       const user = await getSessionUser(request, env);

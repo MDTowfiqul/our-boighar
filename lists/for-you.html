@@ -1,0 +1,86 @@
+---
+layout: default
+title: "আপনার জন্য"
+permalink: /lists/for-you/
+---
+<main class="max-w-6xl mx-auto px-3 sm:px-4 mt-6">
+  <p class="text-[13px] text-neutral-500 dark:text-neutral-400 mb-3">
+    <a href="{{ '/' | relative_url }}" class="hover:underline" data-bn="হোম" data-en="Home">হোম</a> /
+    <span class="font-semibold text-neutral-700 dark:text-neutral-200" data-bn="আপনার জন্য" data-en="For You">আপনার জন্য</span>
+  </p>
+
+  <h1 class="serif text-2xl sm:text-3xl font-semibold flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-heart"/></svg><span data-bn="আপনার জন্য" data-en="For You">আপনার জন্য</span></h1>
+  <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1" data-bn="আপনার তাক, রেটিং ও পড়ার ইতিহাস থেকে বাছাই — শুধু এই ব্রাউজারে" data-en="Picked from your shelf, ratings and reading history — only in this browser">আপনার তাক, রেটিং ও পড়ার ইতিহাস থেকে বাছাই — শুধু এই ব্রাউজারে</p>
+
+  <p id="foryou-note" class="text-sm text-neutral-500 dark:text-neutral-400 mt-7 hidden"></p>
+  <p id="foryou-loading" class="text-sm text-neutral-500 dark:text-neutral-400 mt-7" data-bn="সুপারিশ তৈরি হচ্ছে…" data-en="Preparing recommendations…">সুপারিশ তৈরি হচ্ছে…</p>
+  <div id="foryou-grid" class="grid grid-cols-[repeat(auto-fill,152px)] sm:grid-cols-[repeat(auto-fill,176px)] gap-4 sm:gap-5 mt-7"></div>
+</main>
+
+<script>
+(function(){
+  function lang(){ return window.__obLang || 'bn'; }
+  function esc(s){ return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+  function arr(key){
+    try { var v = JSON.parse(localStorage.getItem(key) || '[]'); return Array.isArray(v) ? v : []; } catch (e) { return []; }
+  }
+  function obj(key){
+    try { var v = JSON.parse(localStorage.getItem(key) || '{}'); return (v && typeof v === 'object') ? v : {}; } catch (e) { return {}; }
+  }
+  Promise.all([
+    fetch('{{ "/search.json" | relative_url }}').then(function(r){ return r.ok ? r.json() : []; }),
+    fetch('{{ "/popular.json" | relative_url }}', { cache:'no-cache' }).then(function(r){ return r.ok ? r.json() : {}; })
+  ]).then(function(parts){
+    var books = parts[0] || [], ranks = parts[1] || {};
+    var byId = {};
+    books.forEach(function(b){
+      b._rank = (typeof ranks[b.book_id] === 'number') ? ranks[b.book_id] : Infinity;
+      byId[b.book_id] = b;
+    });
+    var seenArr = arr('ourboighar-seen'), shelfArr = arr('ourboighar-bookmarks'), rated = obj('ourboighar-ratings');
+    var seen = {}, shelf = {};
+    seenArr.forEach(function(id){ seen[id] = 1; });
+    shelfArr.forEach(function(id){ shelf[id] = 1; });
+    var hasLocal = seenArr.length || shelfArr.length || Object.keys(rated).length;
+    var catScore = {};
+    function boost(id, w){
+      var b = byId[id];
+      if (!b || !b.categories) return;
+      b.categories.forEach(function(c){ catScore[c] = (catScore[c] || 0) + w; });
+    }
+    shelfArr.forEach(function(id){ boost(id, 2); });
+    Object.keys(rated).forEach(function(id){ if (rated[id] >= 8) boost(id, 1); });
+    seenArr.forEach(function(id){ boost(id, 1); });
+    var topCats = Object.keys(catScore).sort(function(a, b){ return catScore[b] - catScore[a]; }).slice(0, 2);
+    var sorted = books.slice().sort(function(a, b){ return a._rank - b._rank; });
+    var picks = [];
+    if (hasLocal && topCats.length){
+      picks = sorted.filter(function(b){
+        return !shelf[b.book_id] && !seen[b.book_id] && b.categories &&
+          b.categories.some(function(c){ return topCats.indexOf(c) >= 0; });
+      }).slice(0, 24);
+    }
+    if (!picks.length){
+      picks = sorted.filter(function(b){ return !shelf[b.book_id] && !seen[b.book_id]; }).slice(0, 24);
+    }
+    document.getElementById('foryou-loading').remove();
+    if (!hasLocal){
+      var note = document.getElementById('foryou-note');
+      note.textContent = lang() === 'en'
+        ? 'No shelf, ratings or reading history in this browser yet — showing the most-read books instead. Save a book to your shelf and recommendations will follow your taste.'
+        : 'এই ব্রাউজারে এখনো তাক, রেটিং বা পড়ার ইতিহাস নেই — তাই সবচেয়ে বেশি পড়া বইগুলো দেখানো হচ্ছে। কোনো বই তাকে রাখলে সুপারিশ আপনার পছন্দ অনুযায়ী হবে।';
+      note.classList.remove('hidden');
+    }
+    document.getElementById('foryou-grid').innerHTML = picks.map(function(b){
+      var title = lang() === 'en' ? (b.title_en || b.title) : b.title;
+      return '<a href="' + b.url + '" class="group">' +
+        '<div class="relative rounded-xl overflow-hidden shadow bg-neutral-100 dark:bg-neutral-700 aspect-[2/3]">' +
+        '<img src="' + b.cover + '" alt="' + esc(title) + '" class="w-full h-full object-cover transition-[filter] duration-200 group-hover:brightness-105"></div>' +
+        '<h3 class="font-semibold text-sm sm:text-[15px] leading-snug min-h-[2.75em] mt-2 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400">' + esc(title) + '</h3>' +
+        '<p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-edit"/></svg> ' + esc(b.author) + '</p></a>';
+    }).join('');
+  }).catch(function(){
+    document.getElementById('foryou-loading').textContent = lang() === 'en' ? 'Could not load recommendations.' : 'সুপারিশ লোড করা যায়নি।';
+  });
+})();
+</script>

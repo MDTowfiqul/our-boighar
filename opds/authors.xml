@@ -10,6 +10,7 @@ layout: null
   <author><name>Our Boighar</name><uri>{{ '/' | absolute_url }}</uri></author>
   <link rel="self" type="application/atom+xml;profile=opds-catalog;kind=navigation" href="{{ '/opds/authors.xml' | absolute_url }}"/>
   <link rel="start" type="application/atom+xml;profile=opds-catalog;kind=navigation" title="Our Boighar OPDS Catalog" href="{{ '/opds/catalog.xml' | absolute_url }}"/>
+  <link rel="search" type="application/atom+xml" title="Search Our Boighar" href="https://our-boighar-api.towfiqulislam1010.workers.dev/api/opds/search?q={searchTerms}"/>
   <entry>
     <title>মুহাম্মাদ সালেহ আল-মুনাজ্জিদ (12)</title>
     <id>{{ '/opds/author-মুহাম্মাদ-সালেহ-আল-মুনাজ্জিদ.xml' | absolute_url }}</id>
@@ -60,18 +61,18 @@ layout: null
     <link rel="subsection" type="application/atom+xml;profile=opds-catalog;kind=acquisition" href="{{ '/opds/author-ibn-katheer.xml' | absolute_url }}"/>
   </entry>
   <entry>
+    <title>ইবনে কাসীর আদ-দামেশকী (র) (6)</title>
+    <id>{{ '/opds/author-ইবনে-কাসীর-আদ-দামেশকী-র.xml' | absolute_url }}</id>
+    <updated>{{ site.time | date_to_xmlschema }}</updated>
+    <content type="text">6 book(s) by ইবনে কাসীর আদ-দামেশকী (র).</content>
+    <link rel="subsection" type="application/atom+xml;profile=opds-catalog;kind=acquisition" href="{{ '/opds/author-ইবনে-কাসীর-আদ-দামেশকী-র.xml' | absolute_url }}"/>
+  </entry>
+  <entry>
     <title>Imran (5)</title>
     <id>{{ '/opds/author-imran.xml' | absolute_url }}</id>
     <updated>{{ site.time | date_to_xmlschema }}</updated>
     <content type="text">5 book(s) by Imran.</content>
     <link rel="subsection" type="application/atom+xml;profile=opds-catalog;kind=acquisition" href="{{ '/opds/author-imran.xml' | absolute_url }}"/>
-  </entry>
-  <entry>
-    <title>ইবনে কাসীর আদ-দামেশকী (র) (5)</title>
-    <id>{{ '/opds/author-ইবনে-কাসীর-আদ-দামেশকী-র.xml' | absolute_url }}</id>
-    <updated>{{ site.time | date_to_xmlschema }}</updated>
-    <content type="text">5 book(s) by ইবনে কাসীর আদ-দামেশকী (র).</content>
-    <link rel="subsection" type="application/atom+xml;profile=opds-catalog;kind=acquisition" href="{{ '/opds/author-ইবনে-কাসীর-আদ-দামেশকী-র.xml' | absolute_url }}"/>
   </entry>
   <entry>
     <title>এনায়েতুল্লাহ (5)</title>

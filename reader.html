@@ -34,6 +34,12 @@ layout: null
   #epub-area img{max-width:100%}
   #pdf-frame{width:100%;height:100%;border:0;background:#fff}
   .msg{text-align:center;color:var(--muted);padding:80px 20px;font-size:16px}
+  .pick-wrap{text-align:center;color:var(--muted);padding:70px 20px}
+  .pick-wrap .pick-ic{width:44px;height:44px;color:var(--accent);margin-bottom:14px}
+  .pick-wrap h2{font-size:19px;color:var(--ink);margin-bottom:6px}
+  .pick-wrap p{font-size:15px;line-height:1.6;max-width:420px;margin:0 auto}
+  .pick-btn{display:inline-block;margin-top:18px;background:var(--accent);color:#fff;border:0;border-radius:12px;padding:12px 22px;font-weight:600;cursor:pointer;font-family:inherit;font-size:15px;text-decoration:none}
+  .pick-btn:active{transform:scale(.97)}
   .bar{position:fixed;left:12px;right:12px;z-index:20;background:var(--bar);color:var(--bar-ink);display:flex;align-items:center;gap:6px;padding:0 8px;transition:transform .25s;border-radius:12px;border:1px solid var(--line);box-shadow:0 2px 8px rgba(0,0,0,0.08)}
   #topbar{top:10px;height:var(--bar-h)}
   #botbar{bottom:10px;height:var(--bot-h);background:var(--panel);color:var(--ink);gap:10px;padding:0 12px}
@@ -209,7 +215,18 @@ layout: null
     viewer.innerHTML = '<iframe id="pdf-frame" src="https://drive.google.com/file/d/' + encodeURIComponent(drive) + '/preview" allow="autoplay"></iframe>';
     return;
   }
-  if(!file){ viewer.innerHTML = '<div class="msg">কোনো বইয়ের ফাইল পাওয়া যায়নি।</div>'; return; }
+  if(!file){
+    viewer.innerHTML = '<div class="pick-wrap"><svg class="pick-ic" aria-hidden="true"><use href="#ob-ic-file-text"/></svg><h2>ইপাব ফাইল পড়ুন</h2><p>আপনার ফোনের কোনো ইপাব ফাইল বেছে নিন — ফাইলটি আপনার ডিভাইসেই থাকবে, কোথাও আপলোড হবে না।</p><label class="pick-btn" for="reader-pick">ইপাব ফাইল বেছে নিন</label><input type="file" id="reader-pick" accept=".epub" hidden></div>';
+    document.getElementById('progtext').textContent = 'একটি ইপাব ফাইল বেছে নিন';
+    document.getElementById('reader-pick').addEventListener('change', function(){
+      var f = this.files && this.files[0];
+      if(!f) return;
+      title = f.name.replace(/\.epub$/i, '');
+      document.getElementById('book-title').textContent = title;
+      f.arrayBuffer().then(function(buf){ bootEpub(buf, 'local:' + f.name); });
+    });
+    return;
+  }
   if(/\.pdf(\?|$)/i.test(file)){
     document.getElementById('botbar').style.display = 'none';
     viewer.style.bottom = '0';
@@ -221,6 +238,11 @@ layout: null
     return;
   }
 
+  bootEpub(file, file);
+
+  /* One reader everywhere: boots an EPUB from a URL (?file=) or from a
+     file the reader picked on their own device (ArrayBuffer + 'local:' key). */
+  function bootEpub(srcUrl, storeKey){
   /* ---------- settings ---------- */
   var SETKEY = 'ob-reader-settings';
   var S = Object.assign({ theme:'light', font:'serifbn', size:19, lh:2, flow:'paginated' }, lsGet(SETKEY, {}));
@@ -233,22 +255,22 @@ layout: null
   var PROGKEY = 'ob-reader-progress', BMKEY = 'ob-reader-bookmarks';
   var progress = lsGet(PROGKEY, {});
   var bookmarks = lsGet(BMKEY, {});
-  var myBm = bookmarks[file] || [];
+  var myBm = bookmarks[storeKey] || [];
   var cur = { cfi:null, href:null, chapter:'', pct:null };
 
   function saveProgress(){
     if(!cur.cfi) return;
-    progress[file] = { t:title, f:file, cfi:cur.cfi, chapter:cur.chapter, pct:cur.pct, ts:Date.now() };
+    progress[storeKey] = { t:title, f:storeKey, cfi:cur.cfi, chapter:cur.chapter, pct:cur.pct, ts:Date.now() };
     var keys = Object.keys(progress).sort(function(a,b){ return (progress[b].ts||0) - (progress[a].ts||0); });
     keys.slice(30).forEach(function(k){ delete progress[k]; });
     lsSet(PROGKEY, progress);
     /* Phase 4: sync progress to the account when signed in (debounced, EPUBs only) */
-    if (window.OBApi && /\.epub$/i.test(file)) OBApi.syncProgress(file, cur.pct || 0, cur.cfi);
+    if (window.OBApi && /\.epub$/i.test(srcUrl)) OBApi.syncProgress(storeKey, cur.pct || 0, cur.cfi);
   }
 
   /* ---------- epub.js ---------- */
   var book, rendition = null, tocFlat = [], locationsReady = false;
-  try{ book = ePub(file); }catch(e){ viewer.innerHTML = '<div class="msg">ইপাব ফাইলটি খোলা সম্ভব হয়নি। অনুগ্রহ করে ডাউনলোড করে পড়ুন।</div>'; return; }
+  try{ book = ePub(srcUrl); }catch(e){ viewer.innerHTML = '<div class="msg">ইপাব ফাইলটি খোলা সম্ভব হয়নি। অনুগ্রহ করে ডাউনলোড করে পড়ুন।</div>'; return; }
   viewer.innerHTML = '<div id="epub-area"></div>';
 
   function themeRules(){
@@ -366,7 +388,7 @@ layout: null
   }).catch(function(){ document.getElementById('toc-list').innerHTML = '<div class="empty">সূচিপত্র লোড করা যায়নি।</div>'; });
 
   /* Locations (for % + slider), cached per book */
-  var locCacheKey = 'ob-loc-' + file.length + '-' + file.split('/').pop();
+  var locCacheKey = 'ob-loc-' + storeKey.length + '-' + storeKey.split('/').pop();
   book.ready.then(function(){
     var cached = null;
     try{ cached = localStorage.getItem(locCacheKey); }catch(e){}
@@ -395,19 +417,19 @@ layout: null
   /* bookmarks */
   function renderBookmarks(){
     var el = document.getElementById('bm-list');
-    myBm = (lsGet(BMKEY, {}))[file] || [];
+    myBm = (lsGet(BMKEY, {}))[storeKey] || [];
     if(!myBm.length){ el.innerHTML = '<div class="empty">এখনো কোনো বুকমার্ক নেই।<br>পড়ার সময় উপরের বুকমার্ক বোতাম চাপলেই এই পৃষ্ঠা বুকমার্ক হবে।</div>'; return; }
     el.innerHTML = myBm.map(function(b, i){
       return '<div class="bitem"><button class="go" data-bm="' + i + '">' + (b.chapter || 'বুকমার্ক').replace(/</g,'&lt;') + '<small style="display:block;color:var(--muted)">' + (b.pct != null ? 'মোট ' + bn(b.pct) + '% • ' : '') + b.when + '</small></button><button class="del" data-del="' + i + '" title="মুছুন">' + '<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-x"/></svg>' + '</button></div>';
     }).join('');
     el.querySelectorAll('[data-bm]').forEach(function(btn){ btn.onclick = function(){ closePanels(); rendition.display(myBm[+btn.getAttribute('data-bm')].cfi).catch(function(){}); }; });
-    el.querySelectorAll('[data-del]').forEach(function(btn){ btn.onclick = function(){ myBm.splice(+btn.getAttribute('data-del'), 1); var all = lsGet(BMKEY, {}); all[file] = myBm; lsSet(BMKEY, all); renderBookmarks(); }; });
+    el.querySelectorAll('[data-del]').forEach(function(btn){ btn.onclick = function(){ myBm.splice(+btn.getAttribute('data-del'), 1); var all = lsGet(BMKEY, {}); all[storeKey] = myBm; lsSet(BMKEY, all); renderBookmarks(); }; });
   }
   document.getElementById('btn-bm').onclick = function(){
     if(!cur.cfi){ toast('পৃষ্ঠা লোড হোক আগে'); return; }
     if(myBm.some(function(b){ return b.cfi === cur.cfi; })){ toast('এই পৃষ্ঠা আগেই বুকমার্ক করা আছে'); return; }
     myBm.push({ cfi:cur.cfi, chapter:cur.chapter, pct:cur.pct, when:new Date().toLocaleDateString('bn-BD') });
-    var all = lsGet(BMKEY, {}); all[file] = myBm; lsSet(BMKEY, all);
+    var all = lsGet(BMKEY, {}); all[storeKey] = myBm; lsSet(BMKEY, all);
     renderBookmarks();
     paintBmBtn();
     toast('বুকমার্ক যোগ হয়েছে');
@@ -415,10 +437,10 @@ layout: null
 
   /* notes + highlights (per book, this browser only — localStorage) */
   var NOTEKEY = 'ob-reader-notes', HLKEY = 'ob-reader-highlights';
-  var myNotes = (lsGet(NOTEKEY, {}))[file] || [];
-  var myHl = (lsGet(HLKEY, {}))[file] || [];
-  function saveNotes(){ var all = lsGet(NOTEKEY, {}); all[file] = myNotes; lsSet(NOTEKEY, all); }
-  function saveHl(){ var all = lsGet(HLKEY, {}); all[file] = myHl; lsSet(HLKEY, all); }
+  var myNotes = (lsGet(NOTEKEY, {}))[storeKey] || [];
+  var myHl = (lsGet(HLKEY, {}))[storeKey] || [];
+  function saveNotes(){ var all = lsGet(NOTEKEY, {}); all[storeKey] = myNotes; lsSet(NOTEKEY, all); }
+  function saveHl(){ var all = lsGet(HLKEY, {}); all[storeKey] = myHl; lsSet(HLKEY, all); }
   var lastSel = null; /* {cfiRange, text, contents} from rendition 'selected' */
   function escHtml(s){ return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
   function shortToast(s){ return s.length > 120 ? s.slice(0, 120) + '…' : s; }
@@ -526,13 +548,14 @@ layout: null
   document.getElementById('fs-plus').onclick = function(){ if(S.size < 30){ S.size += 1; saveSettings(); applyLook(); } };
 
   /* start: resume where the reader left off */
-  var saved = progress[file];
+  var saved = progress[storeKey];
   var jumpCfi = q.get('cfi');
   buildRendition(jumpCfi || (saved && saved.cfi ? saved.cfi : null));
   if(!jumpCfi && saved && saved.cfi) setTimeout(function(){ toast('আগের জায়গা থেকে শুরু হচ্ছে'); }, 600);
   renderBookmarks();
   renderNotes();
   keepAwake();
+  }
 })();
 </script>
 </body>

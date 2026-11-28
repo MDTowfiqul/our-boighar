@@ -6,13 +6,9 @@ permalink: /browse/
 {% assign cats = "" | split: "" %}
 {% for b in site.books %}{% for c in b.categories %}{% unless cats contains c %}{% assign cats = cats | push: c %}{% endunless %}{% endfor %}{% endfor %}
 {% assign cats = cats | sort %}
+{% assign ag = site.books | group_by: "author" | sort: "size" | reverse %}
 
 <style>
-#browse-grid.list-view{grid-template-columns:1fr}
-#browse-grid.list-view .book-card a.block{display:grid;grid-template-columns:64px 1fr;column-gap:12px;align-items:start}
-#browse-grid.list-view .book-card a.block>div{grid-row:1/span 3}
-#browse-grid.list-view .book-card a.accent-bg{display:none}
-#author-facets .facet-author.chip-on,#search-tools .lang-chip.chip-on{background-color:var(--accent);color:#fff;border-color:var(--accent)}
 #cat-bar .catpill-gold{background:var(--gold-soft)}
 #cat-bar .catpill:not(.on):hover{background-color:var(--accent-soft)}
 .dark #cat-bar .catpill:not(.on):hover{background-color:rgba(255,255,255,.09)}
@@ -30,32 +26,11 @@ permalink: /browse/
     <input id="b-search" type="search" class="flex-1 px-2 py-2.5 bg-transparent text-base min-w-0" placeholder="বই বা লেখকের নাম দিয়ে খুঁজুন..." data-bn-ph="বই বা লেখকের নাম দিয়ে খুঁজুন..." data-en-ph="Search by book or author name...">
   </div>
 
-  <!-- SEARCH TOOLS: recent + popular searches, author facets, format/language, grid/list -->
+  <!-- SEARCH TOOLS: recent searches only -->
   <section class="mt-4 space-y-3" id="search-tools">
     <div id="recent-row" class="hidden">
       <p class="text-xs font-semibold text-neutral-500 dark:text-neutral-400 mb-1.5 flex items-center gap-1.5"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-clock"/></svg><span data-bn="সাম্প্রতিক খোঁজ" data-en="Recent searches">সাম্প্রতিক খোঁজ</span></p>
       <div id="recent-chips" class="flex flex-wrap gap-2"></div>
-    </div>
-    <div id="popular-row" class="hidden">
-      <p class="text-xs font-semibold text-neutral-500 dark:text-neutral-400 mb-1.5 flex items-center gap-1.5"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-fire"/></svg><span data-bn="জনপ্রিয় খোঁজ" data-en="Popular searches">জনপ্রিয় খোঁজ</span></p>
-      <div id="popular-chips" class="flex flex-wrap gap-2"></div>
-    </div>
-    <div>
-      <p class="text-xs font-semibold text-neutral-500 dark:text-neutral-400 mb-1.5 flex items-center gap-1.5"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-edit"/></svg><span data-bn="জনপ্রিয় লেখক" data-en="Top authors">জনপ্রিয় লেখক</span></p>
-      <div id="author-facets" class="flex flex-wrap gap-2">
-        {% assign ag = site.books | group_by: "author" | sort: "size" | reverse %}
-        {% for g in ag limit: 8 %}
-        <button class="facet-author bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-600 rounded-lg px-3 py-1 font-bold text-xs sm:text-sm transition" data-author="{{ g.name }}">{{ g.name }} <span data-bn-digits="{{ g.size }}">({{ g.size }})</span></button>
-        {% endfor %}
-      </div>
-    </div>
-    <div class="flex flex-wrap items-center gap-2">
-      <span class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-600 rounded-lg px-3 py-1 font-bold text-xs sm:text-sm inline-flex items-center gap-1.5"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-file-text"/></svg><span data-bn="EPUB" data-en="EPUB">EPUB</span></span>
-      <button class="lang-chip bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-600 rounded-lg px-3 py-1 font-bold text-xs sm:text-sm transition" data-flang="" data-bn="সব ভাষা" data-en="All languages">সব ভাষা</button>
-      <button class="lang-chip bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-600 rounded-lg px-3 py-1 font-bold text-xs sm:text-sm transition" data-flang="bn" data-bn="বাংলা" data-en="Bengali">বাংলা</button>
-      <button class="lang-chip bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-600 rounded-lg px-3 py-1 font-bold text-xs sm:text-sm transition" data-flang="en" data-bn="ইংরেজি" data-en="English">ইংরেজি</button>
-      <span class="flex-1"></span>
-      <button id="view-toggle" class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-600 rounded-lg px-3 py-1 font-bold text-xs sm:text-sm transition inline-flex items-center gap-1.5"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use id="view-ic" href="#ob-ic-list"/></svg><span id="view-label" data-bn="তালিকা" data-en="List">তালিকা</span></button>
     </div>
   </section>
 
@@ -85,7 +60,7 @@ permalink: /browse/
     <span id="b-count" class="text-sm font-bold text-neutral-500 dark:text-neutral-400" data-bn-digits="{{ site.books.size }}">{{ site.books.size }}</span>
   </div>
 
-  <div id="browse-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-5">
+  <div id="browse-grid" class="grid grid-cols-[repeat(auto-fill,152px)] sm:grid-cols-[repeat(auto-fill,176px)] gap-4 sm:gap-5">
     {% for b in site.books %}
     <div class="book-card" data-id="{{ b.book_id }}" data-alpha="{{ b.alphabet }}" data-lang="{{ b.language }}" data-author="{{ b.author }}" data-cats="{{ b.categories | join: '|' }}" data-hay="{{ b.title }} {{ b.title_en }} {{ b.author }} {{ b.creator }} {{ b.category }}">
       <a href="{{ b.url | relative_url }}" class="block group">
@@ -95,10 +70,9 @@ permalink: /browse/
           <span class="absolute top-2 right-2 bg-black/55 text-white text-[10px] font-bold px-2 py-0.5 rounded">{{ b.language_label }}</span>
         </div>
         <span class="block text-[11px] font-bold accent-text mt-2" data-cat="{{ b.category }}">{{ b.category }}</span>
-        <h3 class="font-semibold text-sm sm:text-[15px] leading-snug line-clamp-2 ob-accent-hover" data-bn="{{ b.title }}" data-en="{{ b.title_en | default: b.title }}">{{ b.title }}</h3>
+        <h3 class="font-semibold text-sm sm:text-[15px] leading-snug min-h-[2.75em] line-clamp-2 ob-accent-hover" data-bn="{{ b.title }}" data-en="{{ b.title_en | default: b.title }}">{{ b.title }}</h3>
         <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-edit"/></svg> {{ b.author }}</p>
       </a>
-      <a href="{{ b.url | relative_url }}" class="accent-bg block text-center text-white text-xs sm:text-sm font-bold py-2 rounded-lg mt-2 transition">{% if b.file %}<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-book-open"/></svg> <span data-bn="পড়ুন / ডাউনলোড" data-en="Read / Download">পড়ুন / ডাউনলোড</span>{% else %}<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-cart"/></svg> <span data-bn="বিস্তারিত দেখুন" data-en="View Details">বিস্তারিত দেখুন</span>{% endif %}</a>
     </div>
     {% endfor %}
   </div>
@@ -185,16 +159,6 @@ permalink: /browse/
       b.classList.toggle('on', on);
     });
   }
-  function syncFacets(){
-    document.querySelectorAll('#author-facets .facet-author').forEach(function(b){
-      b.classList.toggle('chip-on', state.authors.indexOf(b.getAttribute('data-author')) >= 0);
-    });
-  }
-  function syncLangChips(){
-    document.querySelectorAll('.lang-chip').forEach(function(b){
-      b.classList.toggle('chip-on', (b.getAttribute('data-flang') || '') === state.lang);
-    });
-  }
   function apply(){
     var visible = 0;
     cards.forEach(function(card){
@@ -212,7 +176,7 @@ permalink: /browse/
     else if (state.cats.length === 1) headingEl.textContent = t.cat + window.__obCatName(state.cats[0]);
     else if (state.q) headingEl.textContent = t.search + '"' + search.value + '"';
     else headingEl.textContent = t.all;
-    syncPills(); syncFacets(); syncLangChips();
+    syncPills();
     updateDialogCount();
   }
   function resetAll(){ state.q=''; state.cats=[]; state.authors=[]; state.lang=''; state.shelf=false; search.value=''; apply(); }
@@ -268,61 +232,6 @@ permalink: /browse/
   });
   search.addEventListener('keydown', function(e){ if (e.key === 'Enter') saveRecent(search.value); });
   renderRecentChips();
-
-  /* ---------- popular searches (top titles by popular.json rank) ---------- */
-  fetch('{{ "/search.json" | relative_url }}').then(function(r){ return r.ok ? r.json() : []; })
-    .then(function(books){
-      return fetch('{{ "/popular.json" | relative_url }}', { cache:'no-cache' })
-        .then(function(r){ return r.ok ? r.json() : {}; })
-        .then(function(ranks){
-          var byId = {};
-          books.forEach(function(b){ byId[b.book_id] = b; });
-          var top = Object.keys(ranks)
-            .filter(function(id){ return typeof ranks[id] === 'number' && byId[id]; })
-            .sort(function(a, b){ return ranks[a] - ranks[b]; })
-            .slice(0, 6)
-            .map(function(id){ return byId[id].title; });
-          if (!top.length) return;
-          document.getElementById('popular-row').classList.remove('hidden');
-          document.getElementById('popular-chips').innerHTML = top.map(chipHTML).join('');
-          bindChips(document.getElementById('popular-chips'));
-        });
-    }).catch(function(){});
-
-  /* ---------- author facets (top 8) ---------- */
-  document.querySelectorAll('#author-facets .facet-author').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var a = btn.getAttribute('data-author');
-      if (state.authors.length === 1 && state.authors[0] === a) state.authors = [];
-      else state.authors = [a];
-      apply();
-    });
-  });
-
-  /* ---------- language chips ---------- */
-  document.querySelectorAll('.lang-chip').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      state.lang = btn.getAttribute('data-flang') || '';
-      apply();
-    });
-  });
-
-  /* ---------- grid / list view ---------- */
-  var viewBtn = document.getElementById('view-toggle');
-  function paintView(){
-    var list = gridEl.classList.contains('list-view');
-    var ic = document.getElementById('view-ic'), lb = document.getElementById('view-label');
-    if (list){ ic.setAttribute('href', '#ob-ic-grid'); lb.setAttribute('data-bn', 'গ্রিড'); lb.setAttribute('data-en', 'Grid'); }
-    else { ic.setAttribute('href', '#ob-ic-list'); lb.setAttribute('data-bn', 'তালিকা'); lb.setAttribute('data-en', 'List'); }
-    lb.textContent = lang() === 'en' ? lb.getAttribute('data-en') : lb.getAttribute('data-bn');
-  }
-  if (localStorage.getItem('ourboighar-browse-view') === 'list') gridEl.classList.add('list-view');
-  viewBtn.addEventListener('click', function(){
-    gridEl.classList.toggle('list-view');
-    try { localStorage.setItem('ourboighar-browse-view', gridEl.classList.contains('list-view') ? 'list' : 'grid'); } catch (e) {}
-    paintView();
-  });
-  paintView();
 
   /* ---------- filter dialog ---------- */
   var dialog = document.getElementById('filter-dialog');

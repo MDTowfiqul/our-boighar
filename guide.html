@@ -1,7 +1,7 @@
 ---
 layout: default
-title: "পড়ার নির্দেশিকা"
-description: "EPUB কী, কীভাবে ডাউনলোড করবেন, আর Google Play Books অ্যাপে ধাপে ধাপে কীভাবে পড়বেন — ছবিসহ নির্দেশিকা।"
+title: "ইবুক কীভাবে পড়বেন"
+description: "EPUB কী, কীভাবে ডাউনলোড করবেন, আর চারভাবে কীভাবে পড়বেন — বিল্ট-ইন অনলাইন রিডার, Our Reader, Google Play Books (মোবাইলের জন্য সেরা) ও অন্যান্য রিডার অ্যাপ — ছবিসহ নির্দেশিকা।"
 permalink: /guide/
 ---
 <style>
@@ -15,11 +15,15 @@ permalink: /guide/
   .phone .scr{padding:8px 9px 12px}
   .hl{outline:3px solid #f59e0b;outline-offset:1px;border-radius:6px}
   .prow{display:flex;align-items:center;gap:6px;padding:5px 6px;border-radius:6px;background:#f4f4f5;margin-top:5px}
-  .dark .prow{background:#26262b}
+  .acc summary{list-style:none}
+  .acc summary::-webkit-details-marker{display:none}
+  .acc summary .acc-chev{transition:transform .2s ease;flex:none}
+  .acc[open ] summary .acc-chev{transform:rotate(180deg)}
+  .acc summary:focus-visible{outline:2px solid #f59e0b;outline-offset:2px;border-radius:12px}
 </style>
 <main class="max-w-4xl mx-auto px-3 sm:px-4 mt-6">
-  <h1 class="serif text-2xl sm:text-3xl font-semibold flex items-center gap-2"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-book-open"/></svg><span data-bn="পড়ার নির্দেশিকা" data-en="Reading Guide">পড়ার নির্দেশিকা</span></h1>
-  <p class="text-neutral-500 dark:text-neutral-400 mt-1" data-bn="ইবুক (EPUB) কী, কীভাবে ডাউনলোড করবেন, আর Play Books অ্যাপে কীভাবে পড়বেন — নতুনদের জন্য" data-en="What an ebook (EPUB) is, how to download, and how to read in the Play Books app — for beginners">ইবুক (EPUB) কী, কীভাবে ডাউনলোড করবেন, আর Play Books অ্যাপে কীভাবে পড়বেন — নতুনদের জন্য</p>
+  <h1 class="serif text-2xl sm:text-3xl font-semibold flex items-center gap-2"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-book-open"/></svg><span data-bn="ইবুক কীভাবে পড়বেন" data-en="How to read ebooks">ইবুক কীভাবে পড়বেন</span></h1>
+  <p class="text-neutral-500 dark:text-neutral-400 mt-1" data-bn="ইবুক (EPUB) কী, কীভাবে ডাউনলোড করবেন, আর চারভাবে কীভাবে পড়বেন — বিল্ট-ইন অনলাইন রিডার, Our Reader, Google Play Books (মোবাইলের জন্য সেরা) ও অন্যান্য রিডার অ্যাপ — নতুনদের জন্য" data-en="What an ebook (EPUB) is, how to download it, and four ways to read — the built-in online reader, Our Reader, Google Play Books (best for mobile) and other reader apps — for beginners">ইবুক (EPUB) কী, কীভাবে ডাউনলোড করবেন, আর চারভাবে কীভাবে পড়বেন — বিল্ট-ইন অনলাইন রিডার, Our Reader, Google Play Books (মোবাইলের জন্য সেরা) ও অন্যান্য রিডার অ্যাপ — নতুনদের জন্য</p>
 
   <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 shadow-sm mt-6">
     <h2 class="serif text-xl font-semibold mb-3" data-bn="ইবুক (EPUB) কী?" data-en="What is an ebook (EPUB)?">ইবুক (EPUB) কী?</h2>
@@ -59,8 +63,56 @@ permalink: /guide/
     </ol>
   </section>
 
-  <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 shadow-sm mt-5">
-    <h2 class="serif text-xl font-semibold" data-bn="Google Play Books দিয়ে পড়ুন" data-en="Read with Google Play Books">Google Play Books দিয়ে পড়ুন</h2>
+  <details class="acc bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl shadow-sm mt-5" open>
+    <summary class="flex items-center gap-3 p-5 sm:p-6 cursor-pointer">
+      <svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-book-open"/></svg>
+      <span class="flex-1 min-w-0">
+        <span class="serif text-xl font-semibold block" data-bn="বিল্ট-ইন অনলাইন রিডার" data-en="Built-in online reader">বিল্ট-ইন অনলাইন রিডার</span>
+        <span class="text-sm text-neutral-500 dark:text-neutral-400 block" data-bn="ডাউনলোড বা অ্যাপ ছাড়াই ব্রাউজারেই পড়ুন" data-en="Read right in your browser — no download or app needed">ডাউনলোড বা অ্যাপ ছাড়াই ব্রাউজারেই পড়ুন</span>
+      </span>
+      <svg class="ob-ic acc-chev" aria-hidden="true"><use href="#ob-ic-chevron-down"/></svg>
+    </summary>
+    <div class="px-5 sm:px-6 pb-5 sm:pb-6">
+      <p class="leading-relaxed text-base" data-bn="এই সাইটের প্রতিটি বইয়ের পেজেই “অনলাইনে পড়ুন” বোতাম আছে — চাপ দিলেই ব্রাউজারেই বইটি খুলে যাবে। ফাইল ডাউনলোড করতে হবে না, কোনো অ্যাপ ইনস্টল করতেও হবে না।" data-en="Every book page on this site has a “Read Online” button — tap it and the book opens right in your browser. No file to download, no app to install.">এই সাইটের প্রতিটি বইয়ের পেজেই “অনলাইনে পড়ুন” বোতাম আছে — চাপ দিলেই ব্রাউজারেই বইটি খুলে যাবে। ফাইল ডাউনলোড করতে হবে না, কোনো অ্যাপ ইনস্টল করতেও হবে না।</p>
+      <ol class="space-y-2.5 leading-relaxed text-base list-decimal list-inside mt-3">
+        <li data-bn="যে বইটি পড়তে চান, তার পেজটি খুলুন।" data-en="Open the page of the book you want to read.">যে বইটি পড়তে চান, তার পেজটি খুলুন।</li>
+        <li data-bn="“অনলাইনে পড়ুন” বোতামে চাপ দিন।" data-en="Tap the “Read Online” button.">“অনলাইনে পড়ুন” বোতামে চাপ দিন।</li>
+        <li data-bn="বইটি ব্রাউজারেই খুলবে — পাতা উল্টে পড়তে থাকুন।" data-en="The book opens in your browser — turn the pages and keep reading.">বইটি ব্রাউজারেই খুলবে — পাতা উল্টে পড়তে থাকুন।</li>
+      </ol>
+      <p class="leading-relaxed text-base mt-3" data-bn="টিপস: সাইন ইন করে পড়লে আপনার পড়ার অগ্রগতি, বুকমার্ক ও নোট সংরক্ষিত থাকে — ফোন বদলালেও হারায় না।" data-en="Tip: if you sign in while reading, your progress, bookmarks and notes are saved — they stay even if you change phones.">টিপস: সাইন ইন করে পড়লে আপনার পড়ার অগ্রগতি, বুকমার্ক ও নোট সংরক্ষিত থাকে — ফোন বদলালেও হারায় না।</p>
+    </div>
+  </details>
+
+  <details class="acc bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl shadow-sm mt-5">
+    <summary class="flex items-center gap-3 p-5 sm:p-6 cursor-pointer">
+      <svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-smartphone"/></svg>
+      <span class="flex-1 min-w-0">
+        <span class="serif text-xl font-semibold block" data-bn="Our Reader" data-en="Our Reader">Our Reader</span>
+        <span class="text-sm text-neutral-500 dark:text-neutral-400 block" data-bn="আমাদের নিজস্ব রিডার — বইয়ের পেজ থেকেই খুলুন" data-en="Our own reader — open it straight from the book page">আমাদের নিজস্ব রিডার — বইয়ের পেজ থেকেই খুলুন</span>
+      </span>
+      <svg class="ob-ic acc-chev" aria-hidden="true"><use href="#ob-ic-chevron-down"/></svg>
+    </summary>
+    <div class="px-5 sm:px-6 pb-5 sm:pb-6">
+      <p class="leading-relaxed text-base" data-bn="Our Reader আমাদের নিজস্ব ইবুক রিডার। বইঘরের যেকোনো বই এখান থেকে সরাসরি খোলা যায় — আলাদা করে ফাইল ডাউনলোড করতে হয় না।" data-en="Our Reader is our own ebook reader. Any book from Boighar can be opened here directly — no need to download the file separately.">Our Reader আমাদের নিজস্ব ইবুক রিডার। বইঘরের যেকোনো বই এখান থেকে সরাসরি খোলা যায় — আলাদা করে ফাইল ডাউনলোড করতে হয় না।</p>
+      <ol class="space-y-2.5 leading-relaxed text-base list-decimal list-inside mt-3">
+        <li data-bn="যে বইটি পড়তে চান, তার পেজটি খুলুন।" data-en="Open the page of the book you want to read.">যে বইটি পড়তে চান, তার পেজটি খুলুন।</li>
+        <li data-bn="“Our Reader-এ খুলুন” বোতামে চাপ দিন — বইটি Our Reader-এ খুলে যাবে।" data-en="Tap the “Open in Our Reader” button — the book will open in Our Reader.">“Our Reader-এ খুলুন” বোতামে চাপ দিন — বইটি Our Reader-এ খুলে যাবে।</li>
+        <li><span data-bn="চাইলে সরাসরি " data-en="Or open ">চাইলে সরাসরি </span><a class="underline underline-offset-2" href="https://our-reader.vercel.app" target="_blank" rel="noopener">our-reader.vercel.app</a><span data-bn=" খুলেও বই খুঁজে পড়তে পারবেন।" data-en=" directly and find a book to read there."> খুলেও বই খুঁজে পড়তে পারবেন।</span></li>
+      </ol>
+    </div>
+  </details>
+
+  <details class="acc bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl shadow-sm mt-5">
+    <summary class="flex items-center gap-3 p-5 sm:p-6 cursor-pointer">
+      <svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-play"/></svg>
+      <span class="flex-1 min-w-0">
+        <span class="serif text-xl font-semibold block" data-bn="Google Play Books দিয়ে পড়ুন" data-en="Read with Google Play Books">Google Play Books দিয়ে পড়ুন</span>
+        <span class="text-sm text-neutral-500 dark:text-neutral-400 block" data-bn="বই আপনার Google অ্যাকাউন্টে থেকে যায় — ফোন বদলালেও হারায় না" data-en="The book stays in your Google account — it stays even if you change phones">বই আপনার Google অ্যাকাউন্টে থেকে যায় — ফোন বদলালেও হারায় না</span>
+      </span>
+      <span class="accent-bg text-white rounded-full px-2.5 py-0.5 text-xs font-semibold whitespace-nowrap" data-bn="মোবাইলের জন্য সেরা" data-en="Best for mobile">মোবাইলের জন্য সেরা</span>
+      <svg class="ob-ic acc-chev" aria-hidden="true"><use href="#ob-ic-chevron-down"/></svg>
+    </summary>
+    <div class="px-5 sm:px-6 pb-5 sm:pb-6">
     <p class="leading-relaxed text-base mt-2" data-bn="Play Books প্রায় সব Android ফোনেই আগে থেকে থাকে (না থাকলে Play Store থেকে “Google Play Books” ফ্রি ইনস্টল করুন)। একবার বই আপলোড করলে তা আপনার Google অ্যাকাউন্টে থেকে যায় — ফোন বদলালেও বই হারায় না, বুকমার্কও সিঙ্ক হয়।" data-en="Play Books comes pre-installed on almost every Android phone (if not, install “Google Play Books” free from the Play Store). Once uploaded, the book stays in your Google account — change your phone and the book, with its bookmarks, is still there.">Play Books প্রায় সব Android ফোনেই আগে থেকে থাকে (না থাকলে Play Store থেকে “Google Play Books” ফ্রি ইনস্টল করুন)। একবার বই আপলোড করলে তা আপনার Google অ্যাকাউন্টে থেকে যায় — ফোন বদলালেও বই হারায় না, বুকমার্কও সিঙ্ক হয়।</p>
 
     <!-- STEP 1 -->
@@ -156,27 +208,32 @@ permalink: /guide/
         <p style="margin-top:6px"><b>তাফসীর আস-সা‘দী</b><br><span class="pmut">Uploaded</span></p>
       </div></div>
     </div>
-  </section>
-
-  <!-- VIDEO PLACEHOLDER: when a tutorial video is ready, delete the dashed box below and paste a YouTube embed here, e.g.
-  <div class="mt-5"><iframe class="w-full rounded-2xl" style="aspect-ratio:16/9" src="https://www.youtube.com/embed/VIDEO_ID" title="Reading guide video" frameborder="0" allowfullscreen></iframe></div>
-  -->
-  <section class="mt-5">
-    <div class="border-2 border-dashed border-neutral-300 dark:border-neutral-600 rounded-2xl py-12 px-5 text-center bg-white/60 dark:bg-neutral-800/60">
-      <p class="mb-3"><svg class="ob-ic" style="width:48px;height:48px;color:var(--muted)" aria-hidden="true"><use href="#ob-ic-video"/></svg></p>
-      <p class="font-semibold text-lg" data-bn="ভিডিও টিউটোরিয়াল — শীঘ্রই আসছে" data-en="Video tutorial — coming soon">ভিডিও টিউটোরিয়াল — শীঘ্রই আসছে</p>
-      <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1" data-bn="ওপরের ধাপগুলো ভিডিওতে দেখানো হবে, যাতে একদম নতুনরাও সহজে শিখতে পারেন।" data-en="The steps above will be shown in a video, so complete beginners can follow along easily.">ওপরের ধাপগুলো ভিডিওতে দেখানো হবে, যাতে একদম নতুনরাও সহজে শিখতে পারেন।</p>
     </div>
-  </section>
+  </details>
 
-  <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 shadow-sm mt-5">
-    <h2 class="serif text-xl font-semibold mb-3" data-bn="অন্যান্য রিডার অ্যাপ" data-en="Other reader apps">অন্যান্য রিডার অ্যাপ</h2>
+  <details class="acc bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl shadow-sm mt-5">
+    <summary class="flex items-center gap-3 p-5 sm:p-6 cursor-pointer">
+      <svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-book"/></svg>
+      <span class="flex-1 min-w-0">
+        <span class="serif text-xl font-semibold block" data-bn="অন্যান্য রিডার অ্যাপ" data-en="Other reader apps">অন্যান্য রিডার অ্যাপ</span>
+        <span class="text-sm text-neutral-500 dark:text-neutral-400 block" data-bn="আপনার পছন্দের যেকোনো EPUB রিডারেই পড়তে পারবেন" data-en="You can read in any EPUB reader you like">আপনার পছন্দের যেকোনো EPUB রিডারেই পড়তে পারবেন</span>
+      </span>
+      <svg class="ob-ic acc-chev" aria-hidden="true"><use href="#ob-ic-chevron-down"/></svg>
+    </summary>
+    <div class="px-5 sm:px-6 pb-5 sm:pb-6">
     <ul class="space-y-2.5 leading-relaxed text-base">
       <li><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-moon"/></svg> <b>Moon+ Reader</b> — <span data-bn="সবচেয়ে জনপ্রিয় EPUB রিডার; ফিচার প্রচুর।" data-en="The most popular EPUB reader; packed with features.">সবচেয়ে জনপ্রিয় EPUB রিডার; ফিচার প্রচুর।</span></li>
       <li><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-book-open"/></svg> <b>ReadEra</b> — <span data-bn="ফ্রি, বিজ্ঞাপনহীন, সহজ ইন্টারফেস।" data-en="Free, no ads, simple interface.">ফ্রি, বিজ্ঞাপনহীন, সহজ ইন্টারফেস।</span></li>
       <li><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-leaf"/></svg> <b>Lithium</b> — <span data-bn="হালকা ও মিনিমাল, শুধু EPUB-এর জন্য।" data-en="Light and minimal, EPUB only.">হালকা ও মিনিমাল, শুধু EPUB-এর জন্য।</span></li>
       <li><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-apple"/></svg> <b>Apple Books</b> — <span data-bn="iPhone/iPad ব্যবহারকারীদের জন্য ফোনেই থাকে।" data-en="Built into every iPhone/iPad.">iPhone/iPad ব্যবহারকারীদের জন্য ফোনেই থাকে।</span></li>
     </ul>
-    <p class="leading-relaxed text-base mt-3" data-bn="আর ডাউনলোড না করেও এই সাইটের প্রতিটি বইয়ের পেজে “অনলাইনে পড়ুন” চেপে সরাসরি ব্রাউজারেই পড়তে পারবেন।" data-en="And without downloading anything, you can read right in your browser — just tap “Read Online” on any book's page on this site.">আর ডাউনলোড না করেও এই সাইটের প্রতিটি বইয়ের পেজে “অনলাইনে পড়ুন” চেপে সরাসরি ব্রাউজারেই পড়তে পারবেন।</p>
+    </div>
+  </details>
+
+  <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 shadow-sm mt-5">
+    <h2 class="serif text-xl font-semibold" data-bn="ভিডিও টিউটোরিয়াল" data-en="Video tutorial">ভিডিও টিউটোরিয়াল</h2>
+    <p class="leading-relaxed text-base mt-2" data-bn="ওপরের ধাপগুলো ভিডিওতে দেখানো হয়েছে, যাতে একদম নতুনরাও সহজে শিখতে পারেন।" data-en="The steps above are shown in this video, so complete beginners can follow along easily.">ওপরের ধাপগুলো ভিডিওতে দেখানো হয়েছে, যাতে একদম নতুনরাও সহজে শিখতে পারেন।</p>
+    <div class="mt-4"><iframe class="w-full rounded-2xl" style="aspect-ratio:16/9" src="https://www.youtube.com/embed/1-gWU9eOR98" title="ইবুক কীভাবে পড়বেন — আমাদের বইঘর | How to Read Ebooks" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
+    <p class="text-sm mt-3"><a class="underline underline-offset-2" href="https://youtu.be/1-gWU9eOR98" target="_blank" rel="noopener" data-bn="YouTube-এ দেখুন" data-en="Watch on YouTube">YouTube-এ দেখুন</a></p>
   </section>
 </main>

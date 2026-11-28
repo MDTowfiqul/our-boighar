@@ -1,8 +1,8 @@
 ---
 layout: default
-title: "আমার ড্যাশবোর্ড"
+title: "আমার প্রোফাইল"
 permalink: /shelf/
-description: "Your Our Boighar dashboard — shelves, reading history, points and rank, notes and backup."
+description: "Your Our Boighar profile — shelves, reading history, points and rank, notes and backup."
 ---
 
 <script>
@@ -75,23 +75,27 @@ var OB_BOOKS = [{% for b in site.books %}{
 
   <!-- ============ MY DASHBOARD (signed in or out) ============ -->
   <div id="dash-main" class="hidden">
-    <div class="flex flex-wrap items-center gap-3 mb-1">
-      <h1 class="serif text-2xl sm:text-3xl font-semibold" data-bn="আমার ড্যাশবোর্ড" data-en="My Dashboard">আমার ড্যাশবোর্ড</h1>
-      <span id="user-rank-badge" class="acct-only accent-soft-bg accent-text text-sm font-bold rounded-[8px] px-3 py-1 inline-flex items-center gap-1.5"></span>
+    <!-- Profile card (xKAF structure, Boighar's own look) -->
+    <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm mb-5 flex items-center gap-4">
+      <span id="profile-avatar" class="shrink-0 w-16 h-16 rounded-full accent-soft-bg accent-text flex items-center justify-center text-2xl font-bold overflow-hidden"><svg class="ob-ic ob-ic-lg" style="width:28px;height:28px" aria-hidden="true"><use href="#ob-ic-user"/></svg></span>
+      <div class="min-w-0 flex-1">
+        <div class="flex flex-wrap items-center gap-2">
+          <h1 class="serif text-2xl sm:text-3xl font-semibold" data-bn="আমার প্রোফাইল" data-en="My Profile">আমার প্রোফাইল</h1>
+          <span id="user-rank-badge" class="acct-only accent-soft-bg accent-text text-sm font-bold rounded-[8px] px-3 py-1 inline-flex items-center gap-1.5"></span>
+        </div>
+        <p class="acct-only text-neutral-500 dark:text-neutral-400 truncate"><span id="user-name" class="font-bold" style="color:var(--ink)"></span> <span id="user-handle"></span></p>
+        <p class="acct-only text-sm text-neutral-500 dark:text-neutral-400 truncate"><span id="user-email"></span> · <span id="user-points"></span></p>
+        <p class="signed-out-only text-sm text-neutral-500 dark:text-neutral-400 mt-1" data-bn="অ্যাকাউন্ট খুললে আপনার তাক, পড়ার ইতিহাস, পয়েন্ট ও র‍্যাংক সব ডিভাইসে সিঙ্ক হবে। পড়া ও ডাউনলোড অ্যাকাউন্ট ছাড়াই ফ্রি থাকবে।" data-en="With an account, your shelves, reading history, points and rank sync across devices. Reading and downloads stay free without an account.">অ্যাকাউন্ট খুললে আপনার তাক, পড়ার ইতিহাস, পয়েন্ট ও র‍্যাংক সব ডিভাইসে সিঙ্ক হবে। পড়া ও ডাউনলোড অ্যাকাউন্ট ছাড়াই ফ্রি থাকবে।</p>
+      </div>
     </div>
-    <p class="acct-only text-neutral-500 dark:text-neutral-400 mb-5"><span id="user-name"></span> · <span id="user-email"></span> · <span id="user-points"></span></p>
-    <p class="signed-out-only text-neutral-500 dark:text-neutral-400 mb-5" data-bn="অ্যাকাউন্ট খুললে আপনার তাক, পড়ার ইতিহাস, পয়েন্ট ও র‍্যাংক সব ডিভাইসে সিঙ্ক হবে। পড়া ও ডাউনলোড অ্যাকাউন্ট ছাড়াই ফ্রি থাকবে।" data-en="With an account, your shelves, reading history, points and rank sync across devices. Reading and downloads stay free without an account.">অ্যাকাউন্ট খুললে আপনার তাক, পড়ার ইতিহাস, পয়েন্ট ও র‍্যাংক সব ডিভাইসে সিঙ্ক হবে। পড়া ও ডাউনলোড অ্যাকাউন্ট ছাড়াই ফ্রি থাকবে।</p>
 
-    <div class="flex gap-2 overflow-x-auto no-scrollbar pb-2 mb-5" id="dash-tabs">
-      <button data-tab="overview" class="dash-tab whitespace-nowrap px-4 py-2 rounded-[10px] font-bold accent-soft-bg accent-text" data-bn="সংক্ষেপ" data-en="Overview">সংক্ষেপ</button>
-      <button data-tab="shelves" class="dash-tab whitespace-nowrap px-4 py-2 rounded-[10px] font-bold bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700" data-bn="আমার তাক" data-en="Shelves">আমার তাক</button>
-      <button data-tab="history" class="dash-tab whitespace-nowrap px-4 py-2 rounded-[10px] font-bold bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700" data-bn="ইতিহাস" data-en="History">ইতিহাস</button>
-      <button data-tab="ranking" class="dash-tab whitespace-nowrap px-4 py-2 rounded-[10px] font-bold bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700" data-bn="র‍্যাংকিং" data-en="Ranking">র‍্যাংকিং</button>
-      <button data-tab="notes" class="dash-tab whitespace-nowrap px-4 py-2 rounded-[10px] font-bold bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700" data-bn="নোট" data-en="Notes">নোট</button>
-      <button data-tab="fix" class="dash-tab whitespace-nowrap px-4 py-2 rounded-[10px] font-bold bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700" data-bn="তথ্য ঠিক করুন" data-en="Fix Info">তথ্য ঠিক করুন</button>
-      <button data-tab="support" class="dash-tab whitespace-nowrap px-4 py-2 rounded-[10px] font-bold bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700" data-bn="সহায়তা" data-en="Support">সহায়তা</button>
-      <button data-tab="guide" class="dash-tab whitespace-nowrap px-4 py-2 rounded-[10px] font-bold bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700" data-bn="নির্দেশিকা" data-en="Guide">নির্দেশিকা</button>
-      <button data-tab="settings" class="dash-tab whitespace-nowrap px-4 py-2 rounded-[10px] font-bold bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700" data-bn="সেটিংস" data-en="Settings">সেটিংস</button>
+    <!-- Tile grid: every section visible at once, no horizontal slide -->
+    <div class="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-3 mb-5" id="dash-tabs">
+      <button data-tab="overview" class="dash-tab flex flex-col items-center gap-1.5 py-3 px-2 rounded-2xl font-bold accent-soft-bg accent-text"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-book-open"/></svg><span class="text-sm leading-tight text-center" data-bn="সংক্ষেপ" data-en="Overview">সংক্ষেপ</span></button>
+      <button data-tab="shelves" class="dash-tab flex flex-col items-center gap-1.5 py-3 px-2 rounded-2xl font-bold bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-bookmark"/></svg><span class="text-sm leading-tight text-center" data-bn="তাক ও নোট" data-en="Shelf & Notes">তাক ও নোট</span></button>
+      <button data-tab="ranking" class="dash-tab flex flex-col items-center gap-1.5 py-3 px-2 rounded-2xl font-bold bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-award"/></svg><span class="text-sm leading-tight text-center" data-bn="র‍্যাংকিং" data-en="Ranking">র‍্যাংকিং</span></button>
+      <button data-tab="report" class="dash-tab flex flex-col items-center gap-1.5 py-3 px-2 rounded-2xl font-bold bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-alert"/></svg><span class="text-sm leading-tight text-center" data-bn="রিপোর্ট" data-en="Report">রিপোর্ট</span></button>
+      <button data-tab="settings" class="dash-tab flex flex-col items-center gap-1.5 py-3 px-2 rounded-2xl font-bold bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-settings"/></svg><span class="text-sm leading-tight text-center" data-bn="সেটিংস" data-en="Settings">সেটিংস</span></button>
     </div>
 
     <!-- Overview -->
@@ -115,9 +119,13 @@ var OB_BOOKS = [{% for b in site.books %}{
         <h2 class="font-semibold mb-3" data-bn="সাম্প্রতিক কার্যকলাপ" data-en="Recent activity">সাম্প্রতিক কার্যকলাপ</h2>
         <div id="recent-history" class="space-y-2 text-neutral-500 dark:text-neutral-400"></div>
       </div>
+      <div class="acct-only bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm mt-5">
+        <h2 class="font-semibold mb-3" data-bn="পড়ার ইতিহাস" data-en="Reading history">পড়ার ইতিহাস</h2>
+        <div id="history-list" class="space-y-2 text-neutral-500 dark:text-neutral-400"></div>
+      </div>
     </section>
 
-    <!-- Shelves -->
+    <!-- Shelves & Notes -->
     <section id="panel-shelves" class="dash-panel hidden">
       <div class="acct-only">
         <form id="form-shelf" class="flex gap-2 mb-5">
@@ -139,13 +147,11 @@ var OB_BOOKS = [{% for b in site.books %}{
           <a href="{{ '/browse/' | relative_url }}" class="accent-bg inline-block mt-5 text-white font-bold text-sm px-6 py-2.5 rounded-lg" data-bn="বই ব্রাউজ করুন" data-en="Browse Books">বই ব্রাউজ করুন</a>
         </div>
       </div>
-    </section>
-
-    <!-- History -->
-    <section id="panel-history" class="dash-panel hidden">
-      <p class="signed-out-only text-sm text-neutral-500 dark:text-neutral-400 mb-4" data-bn="পড়ার ইতিহাস অ্যাকাউন্টে সংরক্ষিত হয় — উপরে সাইন ইন করুন।" data-en="Reading history is kept on your account — sign in above.">পড়ার ইতিহাস অ্যাকাউন্টে সংরক্ষিত হয় — উপরে সাইন ইন করুন।</p>
-      <div class="acct-only bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm">
-        <div id="history-list" class="space-y-2 text-neutral-500 dark:text-neutral-400"></div>
+      <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm mt-5">
+        <h2 class="serif text-xl font-semibold flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-file-text"/></svg> <span data-bn="আমার নোট ও হাইলাইট" data-en="My Notes & Highlights">আমার নোট ও হাইলাইট</span></h2>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1" data-bn="অনলাইন রিডারে লেখা নোট ও হাইলাইট — “এই জায়গায় খুলুন” চাপলে বইটি সেই জায়গাতেই খুলবে।" data-en="Notes and highlights written in the online reader — “Open at this spot” opens the book right there.">অনলাইন রিডারে লেখা নোট ও হাইলাইট — “এই জায়গায় খুলুন” চাপলে বইটি সেই জায়গাতেই খুলবে।</p>
+        <div id="notes-list" class="flex flex-col gap-3 mt-4"></div>
+        <p id="notes-empty" class="hidden text-sm text-neutral-500 dark:text-neutral-400 mt-4" data-bn="এখনো কোনো নোট বা হাইলাইট লেখা হয়নি।" data-en="No notes or highlights written yet.">এখনো কোনো নোট বা হাইলাইট লেখা হয়নি।</p>
       </div>
     </section>
 
@@ -158,41 +164,35 @@ var OB_BOOKS = [{% for b in site.books %}{
       </div>
     </section>
 
-    <!-- Notes & Highlights (on this device) -->
-    <section id="panel-notes" class="dash-panel hidden">
-      <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm">
-        <h2 class="serif text-xl font-semibold flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-file-text"/></svg> <span data-bn="আমার নোট ও হাইলাইট" data-en="My Notes & Highlights">আমার নোট ও হাইলাইট</span></h2>
-        <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1" data-bn="অনলাইন রিডারে লেখা নোট ও হাইলাইট — “এই জায়গায় খুলুন” চাপলে বইটি সেই জায়গাতেই খুলবে।" data-en="Notes and highlights written in the online reader — “Open at this spot” opens the book right there.">অনলাইন রিডারে লেখা নোট ও হাইলাইট — “এই জায়গায় খুলুন” চাপলে বইটি সেই জায়গাতেই খুলবে।</p>
-        <div id="notes-list" class="flex flex-col gap-3 mt-4"></div>
-        <p id="notes-empty" class="hidden text-sm text-neutral-500 dark:text-neutral-400 mt-4" data-bn="এখনো কোনো নোট বা হাইলাইট লেখা হয়নি।" data-en="No notes or highlights written yet.">এখনো কোনো নোট বা হাইলাইট লেখা হয়নি।</p>
-      </div>
-    </section>
-
-    <!-- Fix Info -->
-    <section id="panel-fix" class="dash-panel hidden">
-      <p class="signed-out-only text-sm text-neutral-500 dark:text-neutral-400 mb-4" data-bn="ভুল তথ্য জানাতে সাইন ইন করুন — উপরে সাইন ইন করুন।" data-en="Sign in to report wrong info — sign in above.">ভুল তথ্য জানাতে সাইন ইন করুন — উপরে সাইন ইন করুন।</p>
+    <!-- Report & Support (merged) -->
+    <section id="panel-report" class="dash-panel hidden">
+      <p class="signed-out-only text-sm text-neutral-500 dark:text-neutral-400 mb-4" data-bn="রিপোর্ট পাঠাতে সাইন ইন করুন — উপরে সাইন ইন করুন।" data-en="Sign in to send a report — sign in above.">রিপোর্ট পাঠাতে সাইন ইন করুন — উপরে সাইন ইন করুন।</p>
       <div class="acct-only">
       <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm mb-5">
         <h2 class="font-semibold mb-3" data-bn="বইয়ের তথ্যে ভুল জানান" data-en="Report wrong book info">বইয়ের তথ্যে ভুল জানান</h2>
         <form id="form-fix" class="space-y-3">
-          <input id="fix-book" list="fix-books" required placeholder="Book title / বইয়ের নাম" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3">
-          <datalist id="fix-books">
-            {% for b in site.books %}<option value="{{ b.title | escape }}">{{ b.book_id }}</option>{% endfor %}
-          </datalist>
-          <select id="fix-field" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3">
-            <option value="title">Title / শিরোনাম</option>
-            <option value="writer">Writer / লেখক</option>
-            <option value="creator">Ebook creator / ইবুক নির্মাতা</option>
-            <option value="category">Category / বিষয়</option>
-            <option value="language">Language / ভাষা</option>
-            <option value="cover">Cover / প্রচ্ছদ</option>
-            <option value="file">File / ফাইল</option>
-            <option value="other">Other / অন্যান্য</option>
-          </select>
+          <div class="relative">
+            <input id="report-book" type="text" autocomplete="off" required placeholder="বইয়ের নাম লিখুন…" data-bn-ph="বইয়ের নাম লিখুন…" data-en-ph="Type the book name…" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3">
+            <div id="report-book-results" class="hidden absolute z-10 inset-x-0 top-full mt-1 bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-600 rounded-xl shadow-lg overflow-hidden"></div>
+          </div>
+          <input type="hidden" id="report-book-id">
+          <p id="report-book-link" class="hidden text-sm text-neutral-500 dark:text-neutral-400"><span data-bn="বইয়ের লিংক:" data-en="Book link:">বইয়ের লিংক:</span> <a id="report-book-link-a" href="#" target="_blank" rel="noopener" class="accent-text font-semibold hover:underline break-all"></a></p>
           <textarea id="fix-message" required rows="3" placeholder="What is wrong? / কী ভুল আছে?" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3"></textarea>
           <p id="fix-err" class="hidden text-red-600 dark:text-red-400 text-sm"></p>
           <p id="fix-ok" class="hidden text-emerald-700 dark:text-emerald-400 text-sm" data-bn="ধন্যবাদ! আপনার রিপোর্ট পাঠানো হয়েছে।" data-en="Thank you! Your report has been sent.">ধন্যবাদ! আপনার রিপোর্ট পাঠানো হয়েছে।</p>
+          <p id="fix-ok-link" class="hidden text-sm"><a href="https://t.me/Our_Family_bd/39" target="_blank" rel="noopener" class="accent-text font-semibold hover:underline" data-bn="টেলিগ্রামে রিপোর্টটি দেখুন" data-en="See your report on Telegram">টেলিগ্রামে রিপোর্টটি দেখুন</a></p>
           <button class="accent-bg text-white font-bold rounded-xl px-5 py-3" data-bn="রিপোর্ট পাঠান" data-en="Send report">রিপোর্ট পাঠান</button>
+        </form>
+      </div>
+      <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm mb-5">
+        <h2 class="font-semibold mb-3" data-bn="সহায়তা চান" data-en="Ask for support">সহায়তা চান</h2>
+        <form id="form-support" class="space-y-3">
+          <input id="support-subject" type="text" maxlength="120" placeholder="Subject (optional) / বিষয় (ঐচ্ছিক)" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3">
+          <textarea id="support-message" required rows="4" placeholder="Write your message / আপনার বার্তা লিখুন" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3"></textarea>
+          <p id="support-err" class="hidden text-red-600 dark:text-red-400 text-sm"></p>
+          <p id="support-ok" class="hidden text-emerald-700 dark:text-emerald-400 text-sm" data-bn="ধন্যবাদ! আপনার বার্তা পাঠানো হয়েছে।" data-en="Thank you! Your message has been sent.">ধন্যবাদ! আপনার বার্তা পাঠানো হয়েছে।</p>
+          <p id="support-ok-link" class="hidden text-sm"><a href="https://t.me/Our_Family_bd/39" target="_blank" rel="noopener" class="accent-text font-semibold hover:underline" data-bn="টেলিগ্রামে বার্তাটি দেখুন" data-en="See your message on Telegram">টেলিগ্রামে বার্তাটি দেখুন</a></p>
+          <button class="accent-bg text-white font-bold rounded-xl px-5 py-3" data-bn="বার্তা পাঠান" data-en="Send message">বার্তা পাঠান</button>
         </form>
       </div>
       <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm">
@@ -202,43 +202,6 @@ var OB_BOOKS = [{% for b in site.books %}{
       </div>
     </section>
 
-    <!-- Support -->
-    <section id="panel-support" class="dash-panel hidden">
-      <p class="signed-out-only text-sm text-neutral-500 dark:text-neutral-400 mb-4" data-bn="সহায়তা চাইতে সাইন ইন করুন — উপরে সাইন ইন করুন।" data-en="Sign in to ask for support — sign in above.">সহায়তা চাইতে সাইন ইন করুন — উপরে সাইন ইন করুন।</p>
-      <div class="acct-only bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm">
-        <h2 class="font-semibold mb-3" data-bn="সহায়তা চান" data-en="Ask for support">সহায়তা চান</h2>
-        <form id="form-support" class="space-y-3">
-          <input id="support-subject" type="text" maxlength="120" placeholder="Subject (optional) / বিষয় (ঐচ্ছিক)" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3">
-          <textarea id="support-message" required rows="4" placeholder="Write your message / আপনার বার্তা লিখুন" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3"></textarea>
-          <p id="support-err" class="hidden text-red-600 dark:text-red-400 text-sm"></p>
-          <p id="support-ok" class="hidden text-emerald-700 dark:text-emerald-400 text-sm" data-bn="ধন্যবাদ! আপনার বার্তা পাঠানো হয়েছে।" data-en="Thank you! Your message has been sent.">ধন্যবাদ! আপনার বার্তা পাঠানো হয়েছে।</p>
-          <button class="accent-bg text-white font-bold rounded-xl px-5 py-3" data-bn="বার্তা পাঠান" data-en="Send message">বার্তা পাঠান</button>
-        </form>
-      </div>
-    </section>
-
-    <!-- Guide -->
-    <section id="panel-guide" class="dash-panel hidden">
-      <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 shadow-sm space-y-4 leading-relaxed">
-        <h2 class="serif text-xl font-semibold" data-bn="নির্দেশিকা" data-en="Guide">নির্দেশিকা</h2>
-        <div>
-          <h3 class="font-semibold" data-bn="অ্যাকাউন্ট কেন খুলবো?" data-en="Why make an account?">অ্যাকাউন্ট কেন খুলবো?</h3>
-          <p class="text-neutral-600 dark:text-neutral-300" data-bn="অ্যাকাউন্ট ছাড়াই সব বই পড়া ও ডাউনলোড করা যায়। অ্যাকাউন্ট শুধু আপনার তাক, পড়ার ইতিহাস, পয়েন্ট ও র‍্যাংক সব ডিভাইসে সিঙ্ক রাখে।" data-en="Every book can be read and downloaded without an account. An account only keeps your shelves, reading history, points and rank in sync across devices.">অ্যাকাউন্ট ছাড়াই সব বই পড়া ও ডাউনলোড করা যায়। অ্যাকাউন্ট শুধু আপনার তাক, পড়ার ইতিহাস, পয়েন্ট ও র‍্যাংক সব ডিভাইসে সিঙ্ক রাখে।</p>
-        </div>
-        <div>
-          <h3 class="font-semibold" data-bn="পয়েন্ট ও র‍্যাংক কীভাবে কাজ করে?" data-en="How do points and ranks work?">পয়েন্ট ও র‍্যাংক কীভাবে কাজ করে?</h3>
-          <p class="text-neutral-600 dark:text-neutral-300" data-bn="বই শুরু করলে +১, শেষ করলে +১০, রেটিং দিলে +২, তাকে রাখলে +১, প্রতিদিন পড়লে +২, ভুল তথ্য জানালে +২। মোট ২০টি ধাপ আছে — সন্ধানী থেকে ইলমের ভান্ডার পর্যন্ত। উঁচু ধাপ শুধু বাড়তি সম্মান দেয়, নিচু ধাপের কোনো সুবিধা কেড়ে নেয় না।" data-en="Starting a book gives +1, finishing +10, rating +2, shelving +1, reading on a day +2, reporting wrong info +2. There are 20 tiers, from সন্ধানী to ইলমের ভান্ডার. Higher tiers only add recognition — they never take anything away from new readers.">বই শুরু করলে +১, শেষ করলে +১০, রেটিং দিলে +২, তাকে রাখলে +১, প্রতিদিন পড়লে +২, ভুল তথ্য জানালে +২। মোট ২০টি ধাপ আছে — সন্ধানী থেকে ইলমের ভান্ডার পর্যন্ত। উঁচু ধাপ শুধু বাড়তি সম্মান দেয়, নিচু ধাপের কোনো সুবিধা কেড়ে নেয় না।</p>
-        </div>
-        <div>
-          <h3 class="font-semibold" data-bn="আমার তথ্য কি নিরাপদ?" data-en="Is my data safe?">আমার তথ্য কি নিরাপদ?</h3>
-          <p class="text-neutral-600 dark:text-neutral-300" data-bn="আপনার ইমেইল কখনো প্রকাশ করা হয় না। র‍্যাংকিংয়ে শুধু নাম দেখায়। সেটিংস থেকে যেকোনো সময় অ্যাকাউন্ট মুছে ফেলতে পারবেন — তখন আপনার সব তথ্য মুছে যাবে।" data-en="Your email is never shown publicly. The ranking shows names only. You can delete your account any time from Settings — all your data is deleted with it.">আপনার ইমেইল কখনো প্রকাশ করা হয় না। র‍্যাংকিংয়ে শুধু নাম দেখায়। সেটিংস থেকে যেকোনো সময় অ্যাকাউন্ট মুছে ফেলতে পারবেন — তখন আপনার সব তথ্য মুছে যাবে।</p>
-        </div>
-        <div>
-          <h3 class="font-semibold" data-bn="অফলাইনে পড়া যাবে?" data-en="Can I read offline?">অফলাইনে পড়া যাবে?</h3>
-          <p class="text-neutral-600 dark:text-neutral-300" data-bn="হ্যাঁ — একবার খোলা বই অফলাইনে পড়া যায়। অ্যাকাউন্ট থাকলে অনলাইনে ফিরলে আপনার পড়ার অগ্রগতি সিঙ্ক হয়ে যাবে।" data-en="Yes — a book you have opened can be read offline. With an account, your progress syncs when you are back online.">হ্যাঁ — একবার খোলা বই অফলাইনে পড়া যায়। অ্যাকাউন্ট থাকলে অনলাইনে ফিরলে আপনার পড়ার অগ্রগতি সিঙ্ক হয়ে যাবে।</p>
-        </div>
-      </div>
-    </section>
 
     <!-- Settings -->
     <section id="panel-settings" class="dash-panel hidden">
@@ -275,13 +238,59 @@ var OB_BOOKS = [{% for b in site.books %}{
         <div id="home-setup-list" class="mt-4 space-y-2"></div>
         <button id="home-setup-reset" class="mt-4 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl px-4 py-2 text-sm" data-bn="ডিফল্টে ফেরান" data-en="Reset to default">ডিফল্টে ফেরান</button>
       </div>
-      <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm">
+      <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm mb-5">
         <h2 class="serif text-lg sm:text-xl font-semibold flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-save"/></svg> <span data-bn="আমার তথ্যের ব্যাকআপ" data-en="Back Up My Data">আমার তথ্যের ব্যাকআপ</span></h2>
-        <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1.5 leading-relaxed" data-bn="আপনার তাকের বই, স্টার রেটিং, পড়ার অগ্রগতি, বুকমার্ক, নোট ও হাইলাইট এবং সেটিংস এই ব্রাউজারেই সংরক্ষিত থাকে। ফোন বদলালে বা ব্রাউজারের ডেটা মুছে গেলে ব্যাকআপ ফাইল দিয়ে সব ফিরিয়ে আনতে পারবেন।" data-en="Your shelf, star ratings, reading progress, bookmarks, notes and highlights, and settings are stored in this browser. Download a backup file and restore it anytime — on a new phone or after clearing browser data.">আপনার তাকের বই, স্টার রেটিং, পড়ার অগ্রগতি, বুকমার্ক, নোট ও হাইলাইট এবং সেটিংস এই ব্রাউজারেই সংরক্ষিত থাকে। ফোন বদলালে বা ব্রাউজারের ডেটা মুছে গেলে ব্যাকআপ ফাইল দিয়ে সব ফিরিয়ে আনতে পারবেন।</p>
-        <div class="flex flex-wrap gap-2 mt-4">
-          <button id="bk-dl" class="accent-bg text-white font-bold rounded-[10px] px-5 py-2.5 text-sm"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-download"/></svg> <span data-bn="ব্যাকআপ ডাউনলোড" data-en="Download Backup">ব্যাকআপ ডাউনলোড</span></button>
-          <label for="bk-file" class="font-bold rounded-[10px] px-5 py-2.5 text-sm border border-neutral-300 dark:border-neutral-600 cursor-pointer"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-upload"/></svg> <span data-bn="ব্যাকআপ রিস্টোর" data-en="Restore Backup">ব্যাকআপ রিস্টোর</span></label>
-          <input type="file" id="bk-file" accept=".json,application/json" class="hidden">
+        <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1.5 leading-relaxed" data-bn="আপনার তাকের বই, স্টার রেটিং, পড়ার অগ্রগতি, বুকমার্ক, নোট ও হাইলাইট এবং সেটিংস এই ব্রাউজারেই সংরক্ষিত থাকে। ফোন বদলালে বা ব্রাউজারের ডেটা মুছে গেলে ব্যাকআপ দিয়ে সব ফিরিয়ে আনতে পারবেন।" data-en="Your shelf, star ratings, reading progress, bookmarks, notes and highlights, and settings are stored in this browser. With a backup you can bring everything back — on a new phone or after clearing browser data.">আপনার তাকের বই, স্টার রেটিং, পড়ার অগ্রগতি, বুকমার্ক, নোট ও হাইলাইট এবং সেটিংস এই ব্রাউজারেই সংরক্ষিত থাকে। ফোন বদলালে বা ব্রাউজারের ডেটা মুছে গেলে ব্যাকআপ দিয়ে সব ফিরিয়ে আনতে পারবেন।</p>
+        <!-- Offline -->
+        <div class="mt-5">
+          <h3 class="font-semibold flex items-center gap-2"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-download"/></svg> <span data-bn="অফলাইন" data-en="Offline">অফলাইন</span></h3>
+          <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1" data-bn="ব্যাকআপ ফাইল ডাউনলোড করে রাখুন, যেকোনো সময় রিস্টোর করুন।" data-en="Download a backup file and restore it anytime.">ব্যাকআপ ফাইল ডাউনলোড করে রাখুন, যেকোনো সময় রিস্টোর করুন।</p>
+          <div class="flex flex-wrap gap-2 mt-3">
+            <button id="bk-dl" class="accent-bg text-white font-bold rounded-[10px] px-5 py-2.5 text-sm"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-download"/></svg> <span data-bn="ব্যাকআপ ডাউনলোড" data-en="Download Backup">ব্যাকআপ ডাউনলোড</span></button>
+            <label for="bk-file" class="font-bold rounded-[10px] px-5 py-2.5 text-sm border border-neutral-300 dark:border-neutral-600 cursor-pointer"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-upload"/></svg> <span data-bn="ব্যাকআপ রিস্টোর" data-en="Restore Backup">ব্যাকআপ রিস্টোর</span></label>
+            <input type="file" id="bk-file" accept=".json,application/json" class="hidden">
+          </div>
+        </div>
+        <!-- Telegram (per-user, like Our Days) -->
+        <div class="border-t border-neutral-200 dark:border-neutral-700 mt-5 pt-4">
+          <h3 class="font-semibold flex items-center gap-2"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-send"/></svg> <span data-bn="টেলিগ্রাম" data-en="Telegram">টেলিগ্রাম</span></h3>
+          <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="নিজের বট দিয়ে নিজের চ্যাটে ব্যাকআপ পাঠান — Our Days অ্যাপের মতো। বটের টোকেন আর চ্যাট আইডি শুধু এই ব্রাউজারেই থাকে, আমাদের সার্ভারে পাঠানো হয় না।" data-en="Send the backup to your own chat with your own bot — like the Our Days app. The bot token and chat ID stay in this browser only; they are never sent to our server.">নিজের বট দিয়ে নিজের চ্যাটে ব্যাকআপ পাঠান — Our Days অ্যাপের মতো। বটের টোকেন আর চ্যাট আইডি শুধু এই ব্রাউজারেই থাকে, আমাদের সার্ভারে পাঠানো হয় না।</p>
+          <div class="space-y-3 mt-3 max-w-md">
+            <input id="tg-token" type="password" autocomplete="off" placeholder="Bot token — BotFather থেকে" data-bn-ph="Bot token — BotFather থেকে" data-en-ph="Bot token — from BotFather" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3">
+            <input id="tg-chat" type="text" inputmode="numeric" autocomplete="off" placeholder="Chat ID — যেমন: 123456789" data-bn-ph="Chat ID — যেমন: 123456789" data-en-ph="Chat ID — e.g. 123456789" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3">
+            <p id="tg-status" class="hidden text-sm"></p>
+            <div class="flex flex-wrap gap-2">
+              <button id="tg-save" class="accent-bg text-white font-bold rounded-[10px] px-4 py-2 text-sm" data-bn="সংরক্ষণ করুন" data-en="Save">সংরক্ষণ করুন</button>
+              <button id="tg-test" class="border border-neutral-300 dark:border-neutral-600 font-bold rounded-[10px] px-4 py-2 text-sm" data-bn="পরীক্ষা করুন" data-en="Test">পরীক্ষা করুন</button>
+              <button id="tg-send" class="border border-neutral-300 dark:border-neutral-600 font-bold rounded-[10px] px-4 py-2 text-sm" data-bn="টেলিগ্রামে ব্যাকআপ পাঠান" data-en="Send backup to Telegram">টেলিগ্রামে ব্যাকআপ পাঠান</button>
+              <button id="tg-clear" class="font-bold rounded-[10px] px-4 py-2 text-sm text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900/60" data-bn="সংযোগ ছিন্ন করুন" data-en="Disconnect">সংযোগ ছিন্ন করুন</button>
+            </div>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed" data-bn="কীভাবে পাবেন: Telegram-এ @BotFather থেকে নতুন বট বানিয়ে token নিন, তারপর বটকে একটা মেসেজ পাঠিয়ে @userinfobot থেকে আপনার chat id নিন।" data-en="How to get them: make a bot with @BotFather on Telegram to get a token, then message your bot and get your chat ID from @userinfobot.">কীভাবে পাবেন: Telegram-এ @BotFather থেকে নতুন বট বানিয়ে token নিন, তারপর বটকে একটা মেসেজ পাঠিয়ে @userinfobot থেকে আপনার chat id নিন।</p>
+          </div>
+        </div>
+        <!-- Google Drive -->
+        <div class="border-t border-neutral-200 dark:border-neutral-700 mt-5 pt-4">
+          <h3 class="font-semibold flex items-center gap-2"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-cloud"/></svg> <span data-bn="Google Drive" data-en="Google Drive">Google Drive</span></h3>
+          <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-relaxed" data-bn="শীঘ্রই আসছে — Drive-এ ব্যাকআপ রাখতে Google অ্যাকাউন্ট সংযোগের কাজ চলছে। আপাতত অফলাইন ব্যাকআপ ফাইল ডাউনলোড করে Drive-এ রেখে দিন।" data-en="Coming soon — connecting your Google account for Drive backups is still being built. For now, download the offline backup file and keep it in Drive.">শীঘ্রই আসছে — Drive-এ ব্যাকআপ রাখতে Google অ্যাকাউন্ট সংযোগের কাজ চলছে। আপাতত অফলাইন ব্যাকআপ ফাইল ডাউনলোড করে Drive-এ রেখে দিন।</p>
+        </div>
+      </div>
+      <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 shadow-sm space-y-4 leading-relaxed mb-5">
+        <h2 class="serif text-xl font-semibold" data-bn="নির্দেশিকা" data-en="Guide">নির্দেশিকা</h2>
+        <div>
+          <h3 class="font-semibold" data-bn="অ্যাকাউন্ট কেন খুলবো?" data-en="Why make an account?">অ্যাকাউন্ট কেন খুলবো?</h3>
+          <p class="text-neutral-600 dark:text-neutral-300" data-bn="অ্যাকাউন্ট ছাড়াই সব বই পড়া ও ডাউনলোড করা যায়। অ্যাকাউন্ট শুধু আপনার তাক, পড়ার ইতিহাস, পয়েন্ট ও র‍্যাংক সব ডিভাইসে সিঙ্ক রাখে।" data-en="Every book can be read and downloaded without an account. An account only keeps your shelves, reading history, points and rank in sync across devices.">অ্যাকাউন্ট ছাড়াই সব বই পড়া ও ডাউনলোড করা যায়। অ্যাকাউন্ট শুধু আপনার তাক, পড়ার ইতিহাস, পয়েন্ট ও র‍্যাংক সব ডিভাইসে সিঙ্ক রাখে।</p>
+        </div>
+        <div>
+          <h3 class="font-semibold" data-bn="পয়েন্ট ও র‍্যাংক কীভাবে কাজ করে?" data-en="How do points and ranks work?">পয়েন্ট ও র‍্যাংক কীভাবে কাজ করে?</h3>
+          <p class="text-neutral-600 dark:text-neutral-300" data-bn="বই শুরু করলে +১, শেষ করলে +১০, রেটিং দিলে +২, তাকে রাখলে +১, প্রতিদিন পড়লে +২, ভুল তথ্য জানালে +২। মোট ২০টি ধাপ আছে — সন্ধানী থেকে ইলমের ভান্ডার পর্যন্ত। উঁচু ধাপ শুধু বাড়তি সম্মান দেয়, নিচু ধাপের কোনো সুবিধা কেড়ে নেয় না।" data-en="Starting a book gives +1, finishing +10, rating +2, shelving +1, reading on a day +2, reporting wrong info +2. There are 20 tiers, from সন্ধানী to ইলমের ভান্ডার. Higher tiers only add recognition — they never take anything away from new readers.">বই শুরু করলে +১, শেষ করলে +১০, রেটিং দিলে +২, তাকে রাখলে +১, প্রতিদিন পড়লে +২, ভুল তথ্য জানালে +২। মোট ২০টি ধাপ আছে — সন্ধানী থেকে ইলমের ভান্ডার পর্যন্ত। উঁচু ধাপ শুধু বাড়তি সম্মান দেয়, নিচু ধাপের কোনো সুবিধা কেড়ে নেয় না।</p>
+        </div>
+        <div>
+          <h3 class="font-semibold" data-bn="আমার তথ্য কি নিরাপদ?" data-en="Is my data safe?">আমার তথ্য কি নিরাপদ?</h3>
+          <p class="text-neutral-600 dark:text-neutral-300" data-bn="আপনার ইমেইল কখনো প্রকাশ করা হয় না। র‍্যাংকিংয়ে শুধু নাম দেখায়। সেটিংস থেকে যেকোনো সময় অ্যাকাউন্ট মুছে ফেলতে পারবেন — তখন আপনার সব তথ্য মুছে যাবে।" data-en="Your email is never shown publicly. The ranking shows names only. You can delete your account any time from Settings — all your data is deleted with it.">আপনার ইমেইল কখনো প্রকাশ করা হয় না। র‍্যাংকিংয়ে শুধু নাম দেখায়। সেটিংস থেকে যেকোনো সময় অ্যাকাউন্ট মুছে ফেলতে পারবেন — তখন আপনার সব তথ্য মুছে যাবে।</p>
+        </div>
+        <div>
+          <h3 class="font-semibold" data-bn="অফলাইনে পড়া যাবে?" data-en="Can I read offline?">অফলাইনে পড়া যাবে?</h3>
+          <p class="text-neutral-600 dark:text-neutral-300" data-bn="হ্যাঁ — একবার খোলা বই অফলাইনে পড়া যায়। অ্যাকাউন্ট থাকলে অনলাইনে ফিরলে আপনার পড়ার অগ্রগতি সিঙ্ক হয়ে যাবে।" data-en="Yes — a book you have opened can be read offline. With an account, your progress syncs when you are back online.">হ্যাঁ — একবার খোলা বই অফলাইনে পড়া যায়। অ্যাকাউন্ট থাকলে অনলাইনে ফিরলে আপনার পড়ার অগ্রগতি সিঙ্ক হয়ে যাবে।</p>
         </div>
       </div>
     </section>
@@ -314,6 +323,26 @@ var OB_BOOKS = [{% for b in site.books %}{
     document.querySelectorAll('.acct-only').forEach(function (el) { el.classList.toggle('hidden', !on); });
     document.querySelectorAll('.signed-out-only').forEach(function (el) { el.classList.toggle('hidden', on); });
   }
+  /* ---------- profile card + drawer session cache (D1) ---------- */
+  // The drawer (default.html) paints the signed-in profile from this cache:
+  // shelf.html is the only page that talks to the API, so it shares what it
+  // learns. The cache holds name/email/avatar only — never the token.
+  function cacheMe(u) {
+    try {
+      if (u) localStorage.setItem('ob_me', JSON.stringify({ name: u.name, email: u.email, avatar_url: u.avatar_url || null }));
+      else localStorage.removeItem('ob_me');
+    } catch (e) {}
+  }
+  function paintProfile(u) {
+    var av = $('profile-avatar');
+    if (av) {
+      if (u && u.avatar_url) av.innerHTML = '<img src="' + esc(u.avatar_url) + '" alt="" class="w-full h-full object-cover">';
+      else if (u && u.name) av.textContent = u.name.trim().charAt(0);
+      else av.innerHTML = '<svg class="ob-ic ob-ic-lg" style="width:28px;height:28px" aria-hidden="true"><use href="#ob-ic-user"/></svg>';
+    }
+    var h = $('user-handle');
+    if (h) h.textContent = (u && u.email) ? '@' + u.email.split('@')[0] : '';
+  }
   function init() {
     var params = new URLSearchParams(location.search);
     var loginState = params.get('login');
@@ -327,6 +356,7 @@ var OB_BOOKS = [{% for b in site.books %}{
     $('google-btn').href = API.base + '/api/auth/google';
     bindAuthForms();
     bindTabs();
+    bindReportPicker();
     bindLocal();
     bindHomeSetup();
     API.getMe().then(function (u) {
@@ -334,6 +364,7 @@ var OB_BOOKS = [{% for b in site.books %}{
       show($('dash-loading'), false);
       setSignedIn(!!u);
       if (!u) {
+        paintProfile(null); cacheMe(null);
         show($('dash-signed-out'), true);
         show($('dash-main'), true);
         renderLocal();
@@ -343,6 +374,7 @@ var OB_BOOKS = [{% for b in site.books %}{
       show($('dash-main'), true);
       $('user-name').textContent = u.name;
       $('user-email').textContent = u.email;
+      paintProfile(u); cacheMe(u);
       if (!u.has_password) { var b = $('change-pw-box'); if (b) b.style.display = 'none'; }
       if (loginState === 'ok') {
         // First sign-in: push this device's reading progress to the account.
@@ -415,19 +447,18 @@ var OB_BOOKS = [{% for b in site.books %}{
     });
     $('form-fix').addEventListener('submit', function (ev) {
       ev.preventDefault();
-      showErr($('fix-err'), ''); show($('fix-ok'), false);
-      var title = $('fix-book').value.trim();
-      var bookId = titleToId(title);
-      if (!bookId) { showErr($('fix-err'), T('বইটি তালিকায় পাওয়া যায়নি — নামটি তালিকা থেকে বেছে নিন।', 'That book was not found in the list — pick the name from the list.')); return; }
-      API.api('/api/fix', { method: 'POST', body: { book_id: bookId, field: $('fix-field').value, message: $('fix-message').value.trim() } })
-        .then(function () { show($('fix-ok'), true); $('fix-message').value = ''; loadMyFix(); })
+      showErr($('fix-err'), ''); show($('fix-ok'), false); show($('fix-ok-link'), false);
+      var bookId = $('report-book-id').value.trim();
+      if (!bookId) { showErr($('fix-err'), T('বইটি বেছে নিন — নাম লিখে তালিকা থেকে চাপ দিন।', 'Pick the book — type its name and tap it in the list.')); return; }
+      API.api('/api/fix', { method: 'POST', body: { book_id: bookId, message: $('fix-message').value.trim() } })
+        .then(function () { show($('fix-ok'), true); show($('fix-ok-link'), true); $('fix-message').value = ''; loadMyFix(); })
         .catch(function (e) { showErr($('fix-err'), e.message); });
     });
     $('form-support').addEventListener('submit', function (ev) {
       ev.preventDefault();
-      showErr($('support-err'), ''); show($('support-ok'), false);
+      showErr($('support-err'), ''); show($('support-ok'), false); show($('support-ok-link'), false);
       API.api('/api/support', { method: 'POST', body: { subject: $('support-subject').value.trim(), message: $('support-message').value.trim() } })
-        .then(function () { show($('support-ok'), true); $('support-subject').value = ''; $('support-message').value = ''; })
+        .then(function () { show($('support-ok'), true); show($('support-ok-link'), true); $('support-subject').value = ''; $('support-message').value = ''; })
         .catch(function (e) { showErr($('support-err'), e.message); });
     });
     $('form-password').addEventListener('submit', function (ev) {
@@ -446,7 +477,7 @@ var OB_BOOKS = [{% for b in site.books %}{
       }).catch(function () { $('sync-status').textContent = T('সিঙ্ক হয়নি — আবার চেষ্টা করুন।', 'Sync failed — please try again.'); });
     };
     $('signout-btn').onclick = function () {
-      API.api('/api/auth/logout', { method: 'POST', body: {} }).finally(function () { API.clearMe(); API.clearToken(); location.search = ''; });
+      API.api('/api/auth/logout', { method: 'POST', body: {} }).finally(function () { API.clearMe(); API.clearToken(); cacheMe(null); location.search = ''; });
     };
     $('delete-btn').onclick = function () {
       if (!confirm(T('আপনার অ্যাকাউন্ট ও সব তথ্য মুছে যাবে। আপনি কি নিশ্চিত?', 'Your account and all your data will be deleted. Are you sure?'))) return;
@@ -457,7 +488,7 @@ var OB_BOOKS = [{% for b in site.books %}{
         body = { password: pw };
       }
       API.api('/api/auth/delete', { method: 'POST', body: body })
-        .then(function () { API.clearMe(); location.href = '{{ "/" | relative_url }}'; })
+        .then(function () { API.clearMe(); cacheMe(null); location.href = '{{ "/" | relative_url }}'; })
         .catch(function (e) { showErr($('delete-err'), e.message); });
     };
   }
@@ -466,27 +497,58 @@ var OB_BOOKS = [{% for b in site.books %}{
     currentTab = name;
     document.querySelectorAll('.dash-tab').forEach(function (b) {
       var on = b.getAttribute('data-tab') === name;
-      b.className = 'dash-tab whitespace-nowrap px-4 py-2 rounded-[10px] font-bold ' + (on
+      b.className = 'dash-tab flex flex-col items-center gap-1.5 py-3 px-2 rounded-2xl font-bold ' + (on
         ? 'accent-soft-bg accent-text'
         : 'bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700');
     });
     document.querySelectorAll('.dash-panel').forEach(function (p) { p.classList.add('hidden'); });
     var panel = $('panel-' + name);
     if (panel) panel.classList.remove('hidden');
-    if (name === 'overview') loadOverview();
-    if (name === 'shelves') { if (user) loadShelves(); renderDeviceShelf(); }
-    if (name === 'history' && user) loadHistory();
+    if (name === 'overview') { loadOverview(); if (user) loadHistory(); }
+    if (name === 'shelves') { if (user) loadShelves(); renderDeviceShelf(); renderNotesSection(); }
     if (name === 'ranking') loadRanking();
-    if (name === 'notes') renderNotesSection();
-    if (name === 'fix' && user && !loaded.fix) { loadMyFix(); loaded.fix = true; }
+    if (name === 'report' && user && !loaded.report) { loadMyFix(); loaded.report = true; }
   }
 
-  function titleToId(title) {
-    var opts = document.querySelectorAll('#fix-books option');
-    for (var i = 0; i < opts.length; i++) {
-      if (opts[i].value === title) return opts[i].textContent.trim();
-    }
-    return '';
+  /* ---------- report book picker: type a name, tap to select, fills the link ---------- */
+  function bindReportPicker() {
+    var inp = $('report-book'), box = $('report-book-results'), hid = $('report-book-id'),
+        linkP = $('report-book-link'), linkA = $('report-book-link-a');
+    if (!inp || !box) return;
+    function closeBox() { box.classList.add('hidden'); box.innerHTML = ''; }
+    inp.addEventListener('input', function () {
+      var q = inp.value.trim().toLowerCase();
+      hid.value = '';
+      linkP.classList.add('hidden');
+      if (q.length < 2) { closeBox(); return; }
+      var hits = OB_BOOKS.filter(function (b) {
+        return (b.title && b.title.toLowerCase().indexOf(q) >= 0) ||
+          (b.title_en && b.title_en.toLowerCase().indexOf(q) >= 0) ||
+          (b.author && b.author.toLowerCase().indexOf(q) >= 0);
+      }).slice(0, 6);
+      if (!hits.length) {
+        box.innerHTML = '<p class="px-4 py-3 text-sm text-neutral-500 dark:text-neutral-400">' + T('কোনো বই মেলেনি।', 'No book matched.') + '</p>';
+        box.classList.remove('hidden');
+        return;
+      }
+      box.innerHTML = hits.map(function (b) {
+        return '<button type="button" class="w-full text-left px-4 py-2.5 hover:bg-neutral-50 dark:hover:bg-neutral-800 border-b border-neutral-100 dark:border-neutral-700 last:border-b-0" data-pick="' + esc(b.id) + '"><span class="block font-bold text-[15px]">' + esc(bookTitle(b)) + '</span><span class="block text-xs text-neutral-500 dark:text-neutral-400">' + esc(b.author || '') + '</span></button>';
+      }).join('');
+      box.classList.remove('hidden');
+      box.querySelectorAll('[data-pick]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var b = byId[btn.getAttribute('data-pick')];
+          if (!b) return;
+          hid.value = b.id;
+          inp.value = bookTitle(b);
+          linkA.textContent = location.origin + b.url;
+          linkA.href = location.origin + b.url;
+          linkP.classList.remove('hidden');
+          closeBox();
+        });
+      });
+    });
+    inp.addEventListener('blur', function () { setTimeout(closeBox, 200); });
   }
 
   /* ---------- loaders ---------- */
@@ -717,7 +779,7 @@ var OB_BOOKS = [{% for b in site.books %}{
     { k: 'continue', bn: 'পড়ছিলেন', en: 'Continue Reading' },
     { k: 'top100', bn: 'সেরা ১০০', en: 'Top 100' },
     { k: 'recent', bn: 'সম্প্রতি আপলোড', en: 'Recently Uploaded' },
-    { k: 'popular', bn: 'জনপ্রিয় এখন', en: 'Popular Now' },
+    { k: 'popular', bn: 'সব বই', en: 'All Books' },
     { k: 'new', bn: 'নতুন যুক্ত হয়েছে', en: 'Newly Added' },
     { k: 'foryou', bn: 'আপনার জন্য', en: 'For You' },
     { k: 'cats', bn: 'ধরন অনুযায়ী বই', en: 'Books by Category' }
@@ -774,13 +836,78 @@ var OB_BOOKS = [{% for b in site.books %}{
       renderHomeSetup();
     });
   }
+  function buildBackupPayload() {
+    var data = {};
+    BK_KEYS.forEach(function (k) { var v = null; try { v = localStorage.getItem(k); } catch (e) {} if (v !== null) data[k] = v; });
+    return { app: 'our-boighar', version: 1, exported: new Date().toISOString(), data: data };
+  }
+  /* ---------- Telegram backup (per-user, Our Days pattern) ---------- */
+  // Each user connects their OWN bot (BotFather token + chat id), stored in
+  // this browser only. Backups go straight from the browser to api.telegram.org
+  // as a document in the user's own chat — the token never touches our server.
+  var TG_KEY = 'ob-tg-backup';
+  function tgCreds() { try { return JSON.parse(localStorage.getItem(TG_KEY) || 'null') || {}; } catch (e) { return {}; } }
+  function tgStatus(msg, ok) {
+    var el = $('tg-status');
+    if (!el) return;
+    el.textContent = msg;
+    el.className = 'text-sm ' + (ok ? 'text-emerald-700 dark:text-emerald-400' : 'text-red-600 dark:text-red-400');
+  }
+  function tgCall(token, method, formData, onOk, onFail) {
+    fetch('https://api.telegram.org/bot' + token + '/' + method, { method: 'POST', body: formData })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (d && d.ok) onOk();
+        else onFail((d && d.description) || T('টোকেন বা চ্যাট আইডি ভুল।', 'Wrong token or chat ID.'));
+      })
+      .catch(function () { onFail(T('টেলিগ্রামে পৌঁছানো যাচ্ছে না — ইন্টারনেট দেখুন।', 'Cannot reach Telegram — check your connection.')); });
+  }
+  function bindTelegramBackup() {
+    var tokenEl = $('tg-token'), chatEl = $('tg-chat');
+    if (!tokenEl || !chatEl) return;
+    var c = tgCreds();
+    if (c.token) tokenEl.value = c.token;
+    if (c.chatId) chatEl.value = c.chatId;
+    $('tg-save').onclick = function () {
+      var t = tokenEl.value.trim(), ch = chatEl.value.trim();
+      if (!t || !ch) { tgStatus(T('টোকেন আর চ্যাট আইডি — দুটোই দিন।', 'Enter both the token and the chat ID.'), false); return; }
+      try { localStorage.setItem(TG_KEY, JSON.stringify({ token: t, chatId: ch })); } catch (e) {}
+      tgStatus(T('সংরক্ষণ হয়েছে — এখন পরীক্ষা করুন।', 'Saved — now send a test.'), true);
+    };
+    $('tg-test').onclick = function () {
+      var t = tokenEl.value.trim(), ch = chatEl.value.trim();
+      if (!t || !ch) { tgStatus(T('আগে টোকেন আর চ্যাট আইডি দিন।', 'Enter the token and chat ID first.'), false); return; }
+      tgStatus(T('পাঠানো হচ্ছে…', 'Sending…'), true);
+      var fd = new FormData();
+      fd.append('chat_id', ch);
+      fd.append('text', 'Our Boighar: Telegram backup is set up.');
+      tgCall(t, 'sendMessage', fd,
+        function () { tgStatus(T('পরীক্ষা সফল — আপনার টেলিগ্রামে মেসেজ গেছে।', 'Test worked — the message reached your Telegram.'), true); },
+        function (why) { tgStatus(T('হয়নি: ', 'Failed: ') + why, false); });
+    };
+    $('tg-send').onclick = function () {
+      var t = tokenEl.value.trim(), ch = chatEl.value.trim();
+      if (!t || !ch) { tgStatus(T('আগে টোকেন আর চ্যাট আইডি দিন।', 'Enter the token and chat ID first.'), false); return; }
+      tgStatus(T('ব্যাকআপ পাঠানো হচ্ছে…', 'Sending backup…'), true);
+      var blob = new Blob([JSON.stringify(buildBackupPayload(), null, 2)], { type: 'application/json' });
+      var fd = new FormData();
+      fd.append('chat_id', ch);
+      fd.append('caption', 'our-boighar-backup ' + new Date().toISOString().slice(0, 10));
+      fd.append('document', blob, 'our-boighar-backup.json');
+      tgCall(t, 'sendDocument', fd,
+        function () { tgStatus(T('ব্যাকআপ আপনার টেলিগ্রাম চ্যাটে পাঠানো হয়েছে।', 'Backup sent to your Telegram chat.'), true); },
+        function (why) { tgStatus(T('হয়নি: ', 'Failed: ') + why, false); });
+    };
+    $('tg-clear').onclick = function () {
+      try { localStorage.removeItem(TG_KEY); } catch (e) {}
+      tokenEl.value = ''; chatEl.value = '';
+      tgStatus(T('টেলিগ্রাম সংযোগ ছিন্ন হয়েছে।', 'Telegram disconnected.'), true);
+    };
+  }
   function bindLocal() {
     var dlBtn = $('bk-dl');
     if (dlBtn) dlBtn.onclick = function () {
-      var data = {};
-      BK_KEYS.forEach(function (k) { var v = null; try { v = localStorage.getItem(k); } catch (e) {} if (v !== null) data[k] = v; });
-      var payload = { app: 'our-boighar', version: 1, exported: new Date().toISOString(), data: data };
-      var blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      var blob = new Blob([JSON.stringify(buildBackupPayload(), null, 2)], { type: 'application/json' });
       var a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
       a.download = 'our-boighar-backup.json';
@@ -810,6 +937,7 @@ var OB_BOOKS = [{% for b in site.books %}{
       };
       reader.readAsText(f);
     });
+    bindTelegramBackup();
     window.addEventListener('ob-lang', function () { renderLocal(); showTab(currentTab); renderHomeSetup(); });
   }
 
