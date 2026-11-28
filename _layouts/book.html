@@ -61,10 +61,7 @@ layout: default
           <a href="{{ page.gumroad }}" target="_blank" rel="noopener" class="accent-bg col-span-2 flex items-center justify-center gap-2 text-white font-bold rounded-[10px] py-3 px-4"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-cart"/></svg> Gumroad থেকে নিন{% if page.price %} · {{ page.price }}{% endif %}</a>
           {% endif %}
           <button id="bm-btn" class="{% unless page.file %}col-span-2 {% endunless %}ob-hero-btn bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-bookmark"/></svg> <span>তাকে রাখুন</span></button>
-          <div id="ob-server-shelf" class="col-span-2 flex items-center gap-2">
-            <select id="ob-shelf-select" class="hidden flex-1 min-w-0 border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-700 rounded-xl px-3 py-3 font-bold"></select>
-            <button id="share-btn" type="button" class="ob-hero-btn flex-1 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-upload"/></svg> <span data-bn="শেয়ার" data-en="Share">শেয়ার</span></button>
-          </div>
+          <button id="share-btn" type="button" class="col-span-2 ob-hero-btn bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-upload"/></svg> <span data-bn="শেয়ার" data-en="Share">শেয়ার</span></button>
           <p id="ob-server-shelf-login" class="col-span-2 hidden text-[13px] text-neutral-500 dark:text-neutral-400 text-center"><a class="accent-text font-bold hover:underline" href="{{ '/shelf/' | relative_url }}" data-bn="সাইন ইন করুন" data-en="Sign in">সাইন ইন করুন</a> <span data-bn="— বইটি আপনার অ্যাকাউন্টের তাকে সংরক্ষণ করতে।" data-en="to save this book to your account shelves.">— বইটি আপনার অ্যাকাউন্টের তাকে সংরক্ষণ করতে।</span></p>
         </div>
       </div>
@@ -230,15 +227,14 @@ layout: default
   /* serverShelfId: the account shelf (if any) that already holds this book —
      found from GET /api/shelves, whose shelves carry their books arrays. */
   var serverShelfId = null;
+  var firstShelfId = null;
   var meUser = null;
   function savedLocal(){ return get().indexOf(BID) >= 0; }
   function isSaved(){ return savedLocal() || !!serverShelfId; }
   function paint(){ var on = isSaved(); btn.innerHTML = '<svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-bookmark"/></svg><span>' + (on ? (en() ? 'On Shelf' : 'তাকে আছে') : (en() ? 'Add to Shelf' : 'তাকে রাখুন')) + '</span>'; btn.classList.toggle('ring-2', on); }
   function shelfIdForSave(){
-    var sel = document.getElementById('ob-shelf-select');
-    if (sel && sel.value) return sel.value;
     if (serverShelfId) return serverShelfId;
-    if (sel && sel.options.length) return sel.options[0].value;
+    if (firstShelfId) return firstShelfId;
     return null;
   }
   btn.onclick = function(){
@@ -266,18 +262,19 @@ layout: default
   };
   paint();
 
-  /* account shelves (Phase 4): load the shelf picker + learn whether this
-     book is already on a server shelf, so bm-btn reflects the combined state */
+  /* account shelves (Phase 4): learn whether this book is already on a
+     server shelf, so bm-btn reflects the combined state. No shelf picker
+     on this page any more (round 4): a new save goes to the shelf that
+     already holds the book, else the first shelf (the default reading shelf). */
   (function(){
-    var sel = document.getElementById('ob-shelf-select'), login = document.getElementById('ob-server-shelf-login');
-    if (!sel || !window.OBApi) return;
+    var login = document.getElementById('ob-server-shelf-login');
+    if (!login || !window.OBApi) return;
     OBApi.getMe().then(function(u){
       if (!u) { login.classList.remove('hidden'); return; }
       meUser = u;
-      sel.classList.remove('hidden');
       OBApi.api('/api/shelves').then(function(d){
         (d.shelves || []).forEach(function(s){
-          var o = document.createElement('option'); o.value = s.id; o.textContent = s.name; sel.appendChild(o);
+          if (!firstShelfId) firstShelfId = s.id;
           (s.books || []).forEach(function(b){ if (b.book_id === BID) serverShelfId = s.id; });
         });
         paint();

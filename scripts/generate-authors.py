@@ -62,7 +62,7 @@ author_slug: "{slug}"
     </div>
   </section>
 
-  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-5 mt-7">
+  <div class="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-5 mt-7">
     {{% for b in author_books %}}
     <div class="book-card">
       <a href="{{{{ b.url | relative_url }}}}" class="block group">

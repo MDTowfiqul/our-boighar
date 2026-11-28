@@ -8,14 +8,6 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
 
 <!-- HERO (BDeBooks style) -->
 <div class="max-w-6xl mx-auto px-3 sm:px-4">
-  <!-- TOP PILL TABS -->
-  <div class="flex gap-2 overflow-x-auto no-scrollbar mt-3 sm:mt-4 pb-1">
-    <a href="{{ '/' | relative_url }}" class="ob-pilltab on" data-bn="লাইব্রেরি" data-en="Library">লাইব্রেরি</a>
-    <a href="{{ '/lists/top-100/' | relative_url }}" class="ob-pilltab" data-bn="সেরা বই" data-en="Best Books">সেরা বই</a>
-    <a href="{{ '/shelf/' | relative_url }}" class="ob-pilltab" data-bn="বুকশেলফ" data-en="Bookshelf">বুকশেলফ</a>
-    <a href="{{ '/tools/' | relative_url }}" class="ob-pilltab" data-bn="টুলস" data-en="Tools">টুলস</a>
-    <a href="{{ '/authors/' | relative_url }}" class="ob-pilltab" data-bn="লেখক" data-en="Authors">লেখক</a>
-  </div>
   <section class="hero-bg text-white rounded-[20px] mt-3 sm:mt-4 px-4 py-5 sm:px-8 sm:py-7 relative ring-1 ring-white/10">
     <span class="inline-flex items-center gap-2 bg-white/12 border border-white/20 text-amber-200 text-xs sm:text-sm font-bold px-3 sm:px-4 py-1 sm:py-1.5 rounded-[10px]" style="background:rgba(255,255,255,.12)">
       <span class="w-2 h-2 rounded-full hero-accent" style="background:var(--accent-bright)"></span>
@@ -68,7 +60,7 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   <section id="continue-sec" class="mt-9 hidden" data-home-sec="continue">
     <div class="flex items-baseline justify-between mb-3 px-0.5">
       <h2 class="serif text-xl sm:text-2xl font-semibold flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-book-open"/></svg> <span data-bn="পড়ছিলেন" data-en="Continue Reading">পড়ছিলেন</span></h2>
-      <a href="{{ '/shelf/' | relative_url }}" class="accent-text text-sm font-semibold hover:underline" data-bn="আমার প্রোফাইল →" data-en="My Profile →">আমার প্রোফাইল →</a>
+      <a href="{{ '/shelf/?tab=history' | relative_url }}" class="accent-text text-sm font-semibold hover:underline" data-bn="পড়ার ইতিহাস →" data-en="Reading history →">পড়ার ইতিহাস →</a>
     </div>
     <div id="continue-list" class="grid grid-cols-1 gap-4"></div>
   </section>
@@ -211,22 +203,11 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
     </div>
   </section>
 
-  <!-- ABOUT & PUBLISH -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
-    <section id="about" class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm">
-      <h2 class="text-lg font-semibold mb-2 flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-book-open"/></svg> <span data-bn="আমাদের বইঘর (Our Boighar) সম্পর্কে" data-en="About Our Boighar">আমাদের বইঘর (Our Boighar) সম্পর্কে</span></h2>
-      <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-300" data-bn="Our Boighar (আমাদের বইঘর) হলো মোঃ তৌফিকুল ইসলাম-এর তৈরি একটি উন্মুক্ত ডিজিটাল লাইব্রেরি — যেখানে বাংলা ও ইংরেজি ইসলামিক বই, অনুবাদ ও ইপাব সংস্করণ সংরক্ষিত রয়েছে। ফ্রি বইগুলো সরাসরি ব্রাউজারেই পড়া বা ডাউনলোড করা যায়।" data-en="Our Boighar is an open digital library created by Md. Towfiqul Islam — Bengali & English Islamic books, translations and EPUB editions. Free books can be read in the browser or downloaded.">Our Boighar (আমাদের বইঘর) হলো মোঃ তৌফিকুল ইসলাম-এর তৈরি একটি উন্মুক্ত ডিজিটাল লাইব্রেরি — যেখানে বাংলা ও ইংরেজি ইসলামিক বই, অনুবাদ ও ইপাব সংস্করণ সংরক্ষিত রয়েছে। ফ্রি বইগুলো সরাসরি ব্রাউজারেই পড়া বা ডাউনলোড করা যায়।</p>
-    </section>
-    <section id="publish" class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm flex flex-col justify-between">
-      <div>
-        <h2 class="text-lg font-semibold mb-2 flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-upload"/></svg> <span data-bn="আপনার বই যুক্ত করুন" data-en="Add Your Book">আপনার বই যুক্ত করুন</span></h2>
-        <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-300 mb-4" data-bn="আপনার অনুবাদকৃত বা রচিত কোনো ইসলামিক বই এই লাইব্রেরিতে বিনামূল্যে পাঠকদের জন্য উন্মুক্ত করতে চাইলে আমাদের GitHub রিপোজিটরিতে পাঠাতে পারেন।" data-en="Want to share your translated or authored Islamic book with readers for free? Send it via our GitHub repository.">আপনার অনুবাদকৃত বা রচিত কোনো ইসলামিক বই এই লাইব্রেরিতে বিনামূল্যে পাঠকদের জন্য উন্মুক্ত করতে চাইলে আমাদের GitHub রিপোজিটরিতে পাঠাতে পারেন।</p>
-      </div>
-      <div>
-        <a class="accent-bg inline-block text-white text-sm font-bold rounded-lg px-5 py-2.5 transition-colors" href="https://github.com/MDTowfiqul/our-boighar" target="_blank" rel="noopener" data-bn="GitHub-এ যোগাযোগ করুন →" data-en="Contact on GitHub →">GitHub-এ যোগাযোগ করুন →</a>
-      </div>
-    </section>
-  </div>
+  <!-- ABOUT -->
+  <section id="about" class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm mt-10">
+    <h2 class="text-lg font-semibold mb-2 flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-book-open"/></svg> <span data-bn="আমাদের বইঘর (Our Boighar) সম্পর্কে" data-en="About Our Boighar">আমাদের বইঘর (Our Boighar) সম্পর্কে</span></h2>
+    <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-300" data-bn="Our Boighar (আমাদের বইঘর) হলো মোঃ তৌফিকুল ইসলাম-এর তৈরি একটি উন্মুক্ত ডিজিটাল লাইব্রেরি — যেখানে বাংলা ও ইংরেজি ইসলামিক বই, অনুবাদ ও ইপাব সংস্করণ সংরক্ষিত রয়েছে। ফ্রি বইগুলো সরাসরি ব্রাউজারেই পড়া বা ডাউনলোড করা যায়।" data-en="Our Boighar is an open digital library created by Md. Towfiqul Islam — Bengali & English Islamic books, translations and EPUB editions. Free books can be read in the browser or downloaded.">Our Boighar (আমাদের বইঘর) হলো মোঃ তৌফিকুল ইসলাম-এর তৈরি একটি উন্মুক্ত ডিজিটাল লাইব্রেরি — যেখানে বাংলা ও ইংরেজি ইসলামিক বই, অনুবাদ ও ইপাব সংস্করণ সংরক্ষিত রয়েছে। ফ্রি বইগুলো সরাসরি ব্রাউজারেই পড়া বা ডাউনলোড করা যায়।</p>
+  </section>
 
   <span id="shelf"></span>
 </main>
@@ -246,7 +227,6 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
   var countEl = document.getElementById('result-count');
   var search = document.getElementById('f-search');
 
-  function syncPills(){ /* filter pills moved to the Browse page; hero pills stay visual */ }
 
   function apply(){
     var visible = 0;
@@ -268,7 +248,6 @@ title: "বাংলা ইসলামিক পিডিএফ ও ইপা�
     else if (state.alpha) headingEl.textContent = t.alpha + state.alpha;
     else if (state.q) headingEl.textContent = t.search + '"' + search.value + '"';
     else headingEl.textContent = t.all;
-    syncPills();
   }
 
   function scrollPopular(){ document.getElementById('popular').scrollIntoView({behavior:'smooth'}); }

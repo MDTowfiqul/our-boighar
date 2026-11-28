@@ -13,7 +13,7 @@ permalink: /series/
   <h1 class="serif text-2xl sm:text-3xl font-semibold flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-book"/></svg><span data-bn="বইয়ের সিরিজ" data-en="Book Series">বইয়ের সিরিজ</span></h1>
   <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1" data-bn="একই সিরিজের সব খণ্ড একসাথে — সিরিজ খুলে পছন্দের খণ্ডটি বেছে নিন" data-en="Every volume of a series together — open a series and pick the volume you want">একই সিরিজের সব খণ্ড একসাথে — সিরিজ খুলে পছন্দের খণ্ডটি বেছে নিন</p>
 
-  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-5 mt-7">
+  <div class="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-5 mt-7">
     {% for g in series_groups %}{% if g.name and g.name != "" and g.size > 1 %}
     {% assign sbooks = g.items | sort: "series_order" %}
     {% assign first = sbooks | first %}
