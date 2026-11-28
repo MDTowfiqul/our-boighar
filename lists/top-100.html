@@ -16,7 +16,7 @@ permalink: /lists/top-100/
   <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1" data-bn="পাঠকদের সবচেয়ে বেশি পড়া ১০০টি বই — পাঠ-সংখ্যার ক্রমে" data-en="The 100 most-read books by our readers — in order of reads">পাঠকদের সবচেয়ে বেশি পড়া ১০০টি বই — পাঠ-সংখ্যার ক্রমে</p>
 
   <p id="top100-loading" class="text-sm text-neutral-500 dark:text-neutral-400 mt-7" data-bn="তালিকা লোড হচ্ছে…" data-en="Loading the list…">তালিকা লোড হচ্ছে…</p>
-  <div id="top100-grid" class="grid grid-cols-[repeat(auto-fill,152px)] sm:grid-cols-[repeat(auto-fill,176px)] gap-4 sm:gap-5 mt-7"></div>
+  <div id="top100-grid" class="grid grid-cols-3 sm:grid-cols-[repeat(auto-fill,176px)] gap-3 sm:gap-5 mt-7"></div>
 </main>
 
 <script>
@@ -40,7 +40,7 @@ permalink: /lists/top-100/
         '<img src="' + b.cover + '" alt="' + esc(title) + '" class="w-full h-full object-cover transition-[filter] duration-200 group-hover:brightness-105">' +
         '<span class="absolute bottom-0.5 left-2 serif text-[42px] leading-none font-bold text-white" style="text-shadow:0 2px 8px rgba(0,0,0,.7)">' + window.__obDigits(i + 1) + '</span></div>' +
         '<h3 class="font-semibold text-sm sm:text-[15px] leading-snug min-h-[2.75em] mt-2 line-clamp-2 group-hover:text-emerald-700 dark:group-hover:text-emerald-400">' + esc(title) + '</h3>' +
-        '<p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-edit"/></svg> ' + esc(b.author) + '</p></a>';
+        '<p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1">' + esc(b.author) + '</p></a>';
     }).join('');
   }).catch(function(){
     document.getElementById('top100-loading').textContent = lang() === 'en' ? 'Could not load the list.' : 'তালিকা লোড করা যায়নি।';

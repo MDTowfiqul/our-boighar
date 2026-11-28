@@ -5,6 +5,9 @@ layout: default
   /* Tailwind preflight sets every svg to display:block, which stacks each
      icon above its label. On book pages the icons stay inline with text. */
   .ob-ic{display:inline-block}
+  /* One shared size for the four hero buttons (Download, Read, Save, Share):
+     same height + padding; colour/border classes on each button stay separate. */
+  .ob-hero-btn{display:flex;align-items:center;justify-content:center;gap:.5rem;font-weight:700;border-radius:10px;padding:.75rem 1rem;}
 </style>
 {% assign bookfile = page.file %}{% if bookfile %}{% unless bookfile contains '://' %}{% assign bookfile = bookfile | relative_url %}{% endunless %}{% endif %}
 {% assign _opdsfeed = '/opds/book-' | append: page.book_id | append: '.xml' | absolute_url %}
@@ -31,7 +34,7 @@ layout: default
         <h1 class="serif text-2xl sm:text-[28px] font-semibold leading-snug">{{ page.title }}</h1>
         {% if page.title_en %}<p class="font-semibold text-neutral-600 dark:text-neutral-300 mt-1">{{ page.title_en }}</p>{% endif %}
         {% assign aslug = site.data.author_slugs[page.author] %}
-        <p class="mt-3 text-[15px]"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-edit"/></svg> <span data-bn="লেখক" data-en="Writer">লেখক</span>: {% if aslug %}<a class="font-bold text-emerald-800 dark:text-emerald-300" href="{{ '/authors/' | relative_url }}{{ aslug }}/">{{ page.author }}</a>{% else %}<a class="font-bold text-emerald-800 dark:text-emerald-300" href="{{ '/' | relative_url }}?q={{ page.author | url_encode }}">{{ page.author }}</a>{% endif %}</p>
+        <p class="mt-3 text-[15px]"><span data-bn="লেখক" data-en="Writer">লেখক</span>: {% if aslug %}<a class="font-bold text-emerald-800 dark:text-emerald-300" href="{{ '/authors/' | relative_url }}{{ aslug }}/">{{ page.author }}</a>{% else %}<a class="font-bold text-emerald-800 dark:text-emerald-300" href="{{ '/' | relative_url }}?q={{ page.author | url_encode }}">{{ page.author }}</a>{% endif %}</p>
         <p class="text-[15px]"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-book"/></svg> <span data-bn="ইবুক নির্মাতা" data-en="Ebook creator">ইবুক নির্মাতা</span>: <span class="font-semibold">{{ page.creator }}</span></p>
         <div class="flex flex-wrap gap-x-5 gap-y-1 mt-3 text-sm font-semibold text-neutral-600 dark:text-neutral-300">
           <span><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-globe"/></svg> {{ page.language_label }}</span>
@@ -50,17 +53,17 @@ layout: default
         <div class="grid grid-cols-2 gap-2.5 mt-5">
           {% if page.file %}
           <a id="continue-btn" href="{{ '/reader.html' | relative_url }}?file={{ bookfile | url_encode }}&title={{ page.title | url_encode }}" class="accent-bg col-span-2 hidden items-center justify-center gap-2 text-white font-bold rounded-[10px] py-3 px-4"><span data-bn="পড়া চালিয়ে যান" data-en="Continue Reading">পড়া চালিয়ে যান</span> · <span id="continue-pct"></span></a>
-          <a href="{{ '/reader.html' | relative_url }}?file={{ bookfile | url_encode }}&title={{ page.title | url_encode }}" class="accent-bg col-span-2 flex items-center justify-center gap-2 text-white font-bold rounded-[10px] py-3 px-4"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-book-open"/></svg> <span data-bn="অনলাইনে পড়ুন" data-en="Read Online">অনলাইনে পড়ুন</span></a>
+          <a href="{{ '/reader.html' | relative_url }}?file={{ bookfile | url_encode }}&title={{ page.title | url_encode }}" class="accent-bg col-span-2 ob-hero-btn text-white"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-book-open"/></svg> <span data-bn="অনলাইনে পড়ুন" data-en="Read Online">অনলাইনে পড়ুন</span></a>
           <a href="https://our-reader.vercel.app/opds?url={{ _opdsfeed | url_encode }}" target="_blank" rel="noopener" class="col-span-2 flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border-2 border-emerald-600 dark:border-emerald-500 text-emerald-800 dark:text-emerald-300 font-bold rounded-[10px] py-3 px-4"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-book"/></svg> <span data-bn="Our Reader-এ খুলুন" data-en="Open in Our Reader">Our Reader-এ খুলুন</span></a>
           <p class="col-span-2 text-[13px] text-neutral-500 dark:text-neutral-400 -mt-1" data-bn="Our Reader-এ এই বইটিই খুলবে — Download চাপলেই আপনার Our Reader লাইব্রেরিতে যোগ হবে।" data-en="Opens this book in Our Reader — tap Download to add it to your Our Reader library.">Our Reader-এ এই বইটিই খুলবে — Download চাপলেই আপনার Our Reader লাইব্রেরিতে যোগ হবে।</p>
-          <a href="{{ bookfile }}" download class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-[10px] py-3 px-4"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-download"/></svg> <span data-bn="ডাউনলোড" data-en="Download">ডাউনলোড</span></a>
+          <a href="{{ bookfile }}" download class="ob-hero-btn bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-download"/></svg> <span data-bn="ডাউনলোড" data-en="Download">ডাউনলোড</span></a>
           {% elsif page.gumroad %}
           <a href="{{ page.gumroad }}" target="_blank" rel="noopener" class="accent-bg col-span-2 flex items-center justify-center gap-2 text-white font-bold rounded-[10px] py-3 px-4"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-cart"/></svg> Gumroad থেকে নিন{% if page.price %} · {{ page.price }}{% endif %}</a>
           {% endif %}
-          <button id="bm-btn" class="{% unless page.file %}col-span-2 {% endunless %}flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-[10px] py-3 px-4"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-bookmark"/></svg> <span>তাকে রাখুন</span></button>
-          <div id="ob-server-shelf" class="col-span-2 hidden items-center gap-2">
-            <select id="ob-shelf-select" class="flex-1 min-w-0 border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-700 rounded-xl px-3 py-3 font-bold"></select>
-            <button id="ob-shelf-add" class="flex items-center justify-center gap-2 bg-white dark:bg-neutral-700 border-2 border-emerald-600 dark:border-emerald-500 text-emerald-800 dark:text-emerald-300 font-bold rounded-[10px] py-3 px-4"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-cloud"/></svg> <span data-bn="তাকে সংরক্ষণ করুন" data-en="Save to shelf">তাকে সংরক্ষণ করুন</span></button>
+          <button id="bm-btn" class="{% unless page.file %}col-span-2 {% endunless %}ob-hero-btn bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-bookmark"/></svg> <span>তাকে রাখুন</span></button>
+          <div id="ob-server-shelf" class="col-span-2 flex items-center gap-2">
+            <select id="ob-shelf-select" class="hidden flex-1 min-w-0 border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-700 rounded-xl px-3 py-3 font-bold"></select>
+            <button id="share-btn" type="button" class="ob-hero-btn flex-1 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600"><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-upload"/></svg> <span data-bn="শেয়ার" data-en="Share">শেয়ার</span></button>
           </div>
           <p id="ob-server-shelf-login" class="col-span-2 hidden text-[13px] text-neutral-500 dark:text-neutral-400 text-center"><a class="accent-text font-bold hover:underline" href="{{ '/shelf/' | relative_url }}" data-bn="সাইন ইন করুন" data-en="Sign in">সাইন ইন করুন</a> <span data-bn="— বইটি আপনার অ্যাকাউন্টের তাকে সংরক্ষণ করতে।" data-en="to save this book to your account shelves.">— বইটি আপনার অ্যাকাউন্টের তাকে সংরক্ষণ করতে।</span></p>
         </div>
@@ -74,54 +77,12 @@ layout: default
     <div class="text-[15px] text-neutral-700 dark:text-neutral-200 leading-relaxed">{{ content }}</div>
   </section>
 
-  {% if page.file %}
-  <!-- READ / DOWNLOAD -->
-  <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 mt-4">
-    <h2 class="text-lg font-semibold mb-2" data-bn="পড়ুন বা ডাউনলোড করুন" data-en="Read or Download">পড়ুন বা ডাউনলোড করুন</h2>
-    <div class="flex items-center gap-3 border border-neutral-200 dark:border-neutral-600 rounded-xl p-3 mt-2">
-      <span class="accent-soft-bg accent-text font-semibold rounded-lg px-3 py-2 text-sm">{{ page.format }}</span>
-      <span class="flex-1 text-sm"><strong>{{ page.file_size }}</strong><br>
-      <span class="text-neutral-500 dark:text-neutral-400" data-bn="Our Boighar থেকে সরাসরি ডাউনলোড" data-en="Direct download from Our Boighar">Our Boighar থেকে সরাসরি ডাউনলোড</span></span>
-      <a href="{{ bookfile }}" download class="accent-bg text-white font-bold rounded-lg px-4 py-2 text-sm" data-bn="ডাউনলোড" data-en="Download">ডাউনলোড</a>
-    </div>
-    <div class="flex items-center gap-3 border border-neutral-200 dark:border-neutral-600 rounded-xl p-3 mt-2">
-      <span class="accent-soft-bg accent-text font-semibold rounded-lg px-3 py-2 text-sm">WEB</span>
-      <span class="flex-1 text-sm"><strong data-bn="অনলাইন রিডার" data-en="Online Reader">অনলাইন রিডার</strong><br>
-      <span class="text-neutral-500 dark:text-neutral-400" data-bn="ডাউনলোড ছাড়াই ব্রাউজারে পড়ুন" data-en="Read in your browser, no download needed">ডাউনলোড ছাড়াই ব্রাউজারে পড়ুন</span></span>
-      <a href="{{ '/reader.html' | relative_url }}?file={{ bookfile | url_encode }}&title={{ page.title | url_encode }}" class="accent-bg text-white font-bold rounded-lg px-4 py-2 text-sm" data-bn="পড়ুন" data-en="Read">পড়ুন</a>
-    </div>
-    <p class="text-[13px] text-neutral-500 dark:text-neutral-400 mt-3"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-check"/></svg> <span data-bn="ফ্রি বই — অনলাইনে পড়ুন, ডাউনলোড করুন, শেয়ার করুন।" data-en="Free book — read online, download, share.">ফ্রি বই — অনলাইনে পড়ুন, ডাউনলোড করুন, শেয়ার করুন।</span>
-    · <a class="accent-text font-semibold hover:underline" href="https://github.com/MDTowfiqul/our-boighar/issues" target="_blank" rel="noopener" data-bn="তথ্যে ভুল থাকলে জানান" data-en="Report an error">তথ্যে ভুল থাকলে জানান</a></p>
-  </section>
-  {% elsif page.gumroad %}
+  {% if page.gumroad %}
   <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 mt-4">
     <h2 class="text-lg font-semibold mb-2" data-bn="কীভাবে পাবেন" data-en="How to Get It">কীভাবে পাবেন</h2>
     <p class="text-[15px]" data-bn="এটি একটি পেইড সংস্করণ — পুরো ইবুকটি Gumroad থেকে কেনার পর ডেলিভারি পাবেন।" data-en="This is a paid edition — the full ebook is delivered after purchase on Gumroad.">এটি একটি পেইড সংস্করণ — পুরো ইবুকটি Gumroad থেকে কেনার পর ডেলিভারি পাবেন।</p>
   </section>
   {% endif %}
-
-  <!-- SHARE + QR -->
-  <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 mt-4">
-    <h2 class="text-lg font-semibold mb-2" data-bn="শেয়ার করুন" data-en="Share This Book">শেয়ার করুন</h2>
-    <p class="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed" data-bn="এই বইটি বন্ধুদের সঙ্গে শেয়ার করুন — লিংক কপি করুন বা QR কোডটি স্ক্যান করতে দিন।" data-en="Share this book with friends — copy the link or let them scan the QR code.">এই বইটি বন্ধুদের সঙ্গে শেয়ার করুন — লিংক কপি করুন বা QR কোডটি স্ক্যান করতে দিন।</p>
-    <div class="flex flex-wrap items-center gap-2.5 mt-4">
-      <button id="copy-link-btn" class="accent-bg text-white font-bold rounded-[10px] px-4 py-2.5 text-sm"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-link"/></svg> <span data-bn="লিংক কপি করুন" data-en="Copy Link">লিংক কপি করুন</span></button>
-      <button id="copy-opds-btn" class="bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-[10px] px-4 py-2.5 text-sm"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-rss"/></svg> <span data-bn="OPDS লিংক কপি" data-en="Copy OPDS Link">OPDS লিংক কপি</span></button>
-      <button id="share2-btn" class="bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-[10px] px-4 py-2.5 text-sm" ><svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-upload"/></svg> <span data-bn="শেয়ার" data-en="Share">শেয়ার</span></button>
-      <button id="qr-btn" type="button" class="bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 rounded-[10px] p-[5px] leading-none" title="QR কোড বড় করুন" aria-label="QR কোড বড় করে দেখুন"><img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&margin=4&data={{ page.url | absolute_url | url_encode }}" alt="QR কোড" width="28" height="28" class="block rounded" onerror="document.getElementById('qr-btn').style.display='none'"></button>
-    </div>
-    <p id="copy-ok" class="hidden text-sm font-bold text-emerald-700 dark:text-emerald-400 mt-2"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-check"/></svg> <span data-bn="লিংক কপি হয়েছে" data-en="Link copied">লিংক কপি হয়েছে</span></p>
-    <p id="copy-opds-ok" class="hidden text-sm font-bold text-emerald-700 dark:text-emerald-400 mt-2"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-check"/></svg> <span data-bn="OPDS লিংক কপি হয়েছে — KOReader বা Our Reader-এর OPDS ক্যাটালগে যোগ করুন" data-en="OPDS link copied — add it as an OPDS catalog in KOReader or Our Reader">OPDS লিংক কপি হয়েছে — KOReader বা Our Reader-এর OPDS ক্যাটালগে যোগ করুন</span></p>
-  </section>
-
-  <!-- QR LIGHTBOX -->
-  <div id="qr-lightbox" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/70 p-6" role="dialog" aria-modal="true" aria-label="QR কোড">
-    <div class="bg-white rounded-2xl p-4 text-center w-full max-w-[320px]">
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=280x280&margin=10&data={{ page.url | absolute_url | url_encode }}" alt="QR কোড" width="280" height="280" class="w-full h-auto rounded-lg">
-      <p class="text-sm font-bold text-neutral-700 mt-3" data-bn="QR কোড স্ক্যান করুন" data-en="Scan the QR code">QR কোড স্ক্যান করুন</p>
-      <button id="qr-close" type="button" class="mt-3 w-full accent-bg text-white font-bold rounded-[10px] py-2.5 text-sm" data-bn="বন্ধ করুন" data-en="Close">বন্ধ করুন</button>
-    </div>
-  </div>
 
   <!-- INFO TABLE -->
   <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 mt-4">
@@ -187,14 +148,25 @@ layout: default
   {% endif %}
   {% endif %}
 
-  <!-- COMMENTS -->
+  <!-- COMMENTS (native — no Facebook) -->
   <section class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 mt-4">
     <h2 class="text-lg font-semibold mb-1 flex items-center gap-2"><svg class="ob-ic ob-ic-lg" aria-hidden="true"><use href="#ob-ic-message"/></svg> <span data-bn="পাঠকের মন্তব্য ও রিঅ্যাকশন" data-en="Reader Comments & Reactions">পাঠকের মন্তব্য ও রিঅ্যাকশন</span></h2>
-    <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-4" data-bn="এই বই নিয়ে আপনার মতামত জানান — আপনার Facebook অ্যাকাউন্ট দিয়ে মন্তব্য করুন।" data-en="Share your thoughts on this book — comment with your Facebook account.">এই বই নিয়ে আপনার মতামত জানান — আপনার Facebook অ্যাকাউন্ট দিয়ে মন্তব্য করুন।</p>
-    <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v21.0"></script>
-    <div class="fb-comments" data-href="{{ page.url | absolute_url }}" data-width="100%" data-numposts="5"></div>
-    <p id="fb-comments-fallback" class="hidden text-sm text-neutral-600 dark:text-neutral-300 mt-3"><span data-bn="মন্তব্য দেখা যাচ্ছে না? আপনার ব্রাউজার Facebook ব্লক করছে (অ্যাড-ব্লকার বা ট্র্যাকিং সুরক্ষা) —" data-en="Comments not showing? Your browser is blocking Facebook (ad-blocker or tracking protection) —">মন্তব্য দেখা যাচ্ছে না? আপনার ব্রাউজার Facebook ব্লক করছে (অ্যাড-ব্লকার বা ট্র্যাকিং সুরক্ষা) —</span> <a class="accent-text font-bold hover:underline" href="https://www.facebook.com/plugins/comments.php?href={{ page.url | absolute_url | url_encode }}" target="_blank" rel="noopener" data-bn="Facebook-এ মন্তব্য দেখুন" data-en="View comments on Facebook">Facebook-এ মন্তব্য দেখুন</a></p>
+    <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-4" data-bn="এই বই নিয়ে আপনার মতামত জানান।" data-en="Share your thoughts on this book.">এই বই নিয়ে আপনার মতামত জানান।</p>
+    <div class="mb-4">
+      <button id="ob-like-btn" type="button" class="flex items-center gap-2 bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 font-bold rounded-[10px] px-4 py-2.5 text-sm" aria-pressed="false"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-heart"/></svg> <span data-bn="ভালো লেগেছে" data-en="Like">ভালো লেগেছে</span> · <span id="ob-like-count">০</span></button>
+    </div>
+    <div id="ob-comment-form" class="hidden mb-4">
+      <label for="ob-comment-text" class="sr-only" data-bn="মন্তব্য লিখুন" data-en="Write a comment">মন্তব্য লিখুন</label>
+      <textarea id="ob-comment-text" rows="3" maxlength="2000" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-700 rounded-xl px-3 py-2.5 text-[15px]" placeholder="মন্তব্য লিখুন…"></textarea>
+      <div class="flex items-center gap-3 mt-2">
+        <button id="ob-comment-post" type="button" class="accent-bg text-white font-bold rounded-[10px] px-4 py-2.5 text-sm" data-bn="মন্তব্য করুন" data-en="Post comment">মন্তব্য করুন</button>
+        <p id="ob-comment-status" class="hidden text-sm font-bold text-emerald-700 dark:text-emerald-400"></p>
+      </div>
+    </div>
+    <p id="ob-comments-login" class="hidden text-sm text-neutral-600 dark:text-neutral-300 mb-4"><a class="accent-text font-bold hover:underline" href="{{ '/shelf/' | relative_url }}" data-bn="সাইন ইন করুন" data-en="Sign in">সাইন ইন করুন</a> <span data-bn="— মন্তব্য করতে বা লাইক দিতে।" data-en="to comment or like.">— মন্তব্য করতে বা লাইক দিতে।</span></p>
+    <div id="ob-comments-list" class="divide-y divide-neutral-100 dark:divide-neutral-700"></div>
+    <p id="ob-comments-empty" class="hidden text-sm text-neutral-500 dark:text-neutral-400 py-2" data-bn="এখনো কোনো মন্তব্য নেই — প্রথম মন্তব্যটি করুন।" data-en="No comments yet — be the first to comment.">এখনো কোনো মন্তব্য নেই — প্রথম মন্তব্যটি করুন।</p>
+    <p id="ob-comments-error" class="hidden text-sm font-bold text-red-600 dark:text-red-400 mt-2"></p>
   </section>
 
   {% assign same_author = site.books | where: "author", page.author %}
@@ -255,33 +227,62 @@ layout: default
   function set(l){ try{ localStorage.setItem(KEY, JSON.stringify(l)); }catch(e){} }
   function en(){ return localStorage.getItem('ob-lang') === 'en'; }
   var btn = document.getElementById('bm-btn');
-  function paint(){ var on = get().indexOf(BID) >= 0; btn.innerHTML = '<svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-bookmark"/></svg><span>' + (on ? (en() ? 'On Shelf' : 'তাকে আছে') : (en() ? 'Add to Shelf' : 'তাকে রাখুন')) + '</span>'; btn.classList.toggle('ring-2', on); }
-  btn.onclick = function(){ var l = get(), i = l.indexOf(BID); if(i>=0) l.splice(i,1); else l.push(BID); set(l); paint(); };
+  /* serverShelfId: the account shelf (if any) that already holds this book —
+     found from GET /api/shelves, whose shelves carry their books arrays. */
+  var serverShelfId = null;
+  var meUser = null;
+  function savedLocal(){ return get().indexOf(BID) >= 0; }
+  function isSaved(){ return savedLocal() || !!serverShelfId; }
+  function paint(){ var on = isSaved(); btn.innerHTML = '<svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-bookmark"/></svg><span>' + (on ? (en() ? 'On Shelf' : 'তাকে আছে') : (en() ? 'Add to Shelf' : 'তাকে রাখুন')) + '</span>'; btn.classList.toggle('ring-2', on); }
+  function shelfIdForSave(){
+    var sel = document.getElementById('ob-shelf-select');
+    if (sel && sel.value) return sel.value;
+    if (serverShelfId) return serverShelfId;
+    if (sel && sel.options.length) return sel.options[0].value;
+    return null;
+  }
+  btn.onclick = function(){
+    var l = get(), i = l.indexOf(BID);
+    if (i >= 0) {
+      /* removing: local + the server shelf it lives on (if signed in) */
+      l.splice(i, 1); set(l);
+      var sid = serverShelfId;
+      serverShelfId = null; paint();
+      if (meUser && sid) {
+        OBApi.api('/api/shelves/' + encodeURIComponent(sid) + '/books/' + encodeURIComponent(BID), { method: 'DELETE' }).catch(function(){});
+      }
+    } else {
+      /* saving: local always; server too when signed in */
+      l.push(BID); set(l); paint();
+      if (meUser) {
+        var sid2 = shelfIdForSave();
+        if (sid2) {
+          OBApi.api('/api/shelves/' + encodeURIComponent(sid2) + '/books', { method: 'POST', body: { book_id: BID } })
+            .then(function(){ serverShelfId = sid2; paint(); })
+            .catch(function(e){ if (e && e.status === 409) { serverShelfId = sid2; paint(); } /* other errors: stays local-only */ });
+        }
+      }
+    }
+  };
   paint();
 
-  /* account shelves (Phase 4): save this book to a server shelf when signed in */
+  /* account shelves (Phase 4): load the shelf picker + learn whether this
+     book is already on a server shelf, so bm-btn reflects the combined state */
   (function(){
-    var wrap = document.getElementById('ob-server-shelf'), login = document.getElementById('ob-server-shelf-login');
-    if (!wrap || !window.OBApi) return;
+    var sel = document.getElementById('ob-shelf-select'), login = document.getElementById('ob-server-shelf-login');
+    if (!sel || !window.OBApi) return;
     OBApi.getMe().then(function(u){
       if (!u) { login.classList.remove('hidden'); return; }
-      wrap.classList.remove('hidden'); wrap.classList.add('flex');
+      meUser = u;
+      sel.classList.remove('hidden');
       OBApi.api('/api/shelves').then(function(d){
-        var sel = document.getElementById('ob-shelf-select');
         (d.shelves || []).forEach(function(s){
           var o = document.createElement('option'); o.value = s.id; o.textContent = s.name; sel.appendChild(o);
+          (s.books || []).forEach(function(b){ if (b.book_id === BID) serverShelfId = s.id; });
         });
+        paint();
       }).catch(function(){});
     }).catch(function(){ login.classList.remove('hidden'); });
-    document.getElementById('ob-shelf-add').onclick = function(){
-      var sel = document.getElementById('ob-shelf-select');
-      if (!sel.value) return;
-      var btn = document.getElementById('ob-shelf-add');
-      btn.disabled = true;
-      OBApi.api('/api/shelves/' + encodeURIComponent(sel.value) + '/books', { method: 'POST', body: { book_id: BID } })
-        .then(function(){ btn.innerHTML = '<svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-check"/></svg> ' + (en() ? 'Saved' : 'সংরক্ষিত'); })
-        .catch(function(e){ btn.textContent = e.message; setTimeout(function(){ btn.disabled = false; btn.innerHTML = '<svg class="ob-ic" aria-hidden="true"><use href="#ob-ic-cloud"/></svg> <span>' + (en() ? 'Save to shelf' : 'তাকে সংরক্ষণ করুন') + '</span>'; }, 2500); });
-    };
   })();
 
   /* mark this book as seen (feeds homepage For You + Unseen logic) */
@@ -306,39 +307,20 @@ layout: default
     }
   })();
 
-  /* share + copy link */
-  function doShare(){
+  /* share: Web Share API, else copy the link (label confirms it briefly) */
+  var shareBtn = document.getElementById('share-btn');
+  if (shareBtn) shareBtn.onclick = function(){
+    function copied(){
+      var span = shareBtn.querySelector('span');
+      if (!span) return;
+      var old = span.textContent;
+      span.textContent = en() ? 'Link copied' : 'লিংক কপি হয়েছে';
+      setTimeout(function(){ span.textContent = old; }, 2000);
+    }
     if (navigator.share) navigator.share({title: document.title, url: location.href}).catch(function(){});
-    else if (navigator.clipboard){ navigator.clipboard.writeText(location.href); document.getElementById('copy-ok').classList.remove('hidden'); }
-  }
-  var share2 = document.getElementById('share2-btn');
-  if (share2) share2.onclick = doShare;
-  var copyBtn = document.getElementById('copy-link-btn');
-  if (copyBtn) copyBtn.onclick = function(){
-    if (navigator.clipboard){ navigator.clipboard.writeText(location.href).then(function(){ document.getElementById('copy-ok').classList.remove('hidden'); }); }
-    else { document.getElementById('copy-ok').classList.remove('hidden'); }
+    else if (navigator.clipboard){ navigator.clipboard.writeText(location.href).then(copied, copied); }
+    else copied();
   };
-
-  /* copy OPDS catalog link (for KOReader / any OPDS reader) */
-  var OPDS_URL = '{{ '/opds/catalog.xml' | absolute_url }}';
-  var opdsBtn = document.getElementById('copy-opds-btn');
-  if (opdsBtn) opdsBtn.onclick = function(){
-    function done(){ document.getElementById('copy-opds-ok').classList.remove('hidden'); }
-    if (navigator.clipboard){ navigator.clipboard.writeText(OPDS_URL).then(done, done); }
-    else { done(); }
-  };
-
-  /* QR lightbox: the small QR beside the Share button, tap to enlarge */
-  (function(){
-    var btn = document.getElementById('qr-btn'), box = document.getElementById('qr-lightbox');
-    if (!btn || !box) return;
-    function open(){ box.classList.remove('hidden'); box.classList.add('flex'); }
-    function close(){ box.classList.add('hidden'); box.classList.remove('flex'); }
-    btn.onclick = open;
-    document.getElementById('qr-close').onclick = close;
-    box.addEventListener('click', function(e){ if (e.target === box) close(); });
-    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
-  })();
 
   /* personal 1-10 rating */
   function getRatings(){ try{ return JSON.parse(localStorage.getItem(RKEY)||'{}'); }catch(e){ return {}; } }
@@ -360,23 +342,133 @@ layout: default
   paintRating();
   window.addEventListener('ob-lang', function(){ paint(); paintRating(); });
 
-  /* Facebook comments: the SDK auto-parses (xfbml=1), but on phones it is
-     often blocked by tracking protection or loads late — retry parsing for
-     a few seconds, and if nothing renders, show the fallback link. */
+  /* native comments + Like (Like ONLY, no other reactions).
+     API contract (Worker):
+       GET  /api/books/<book-id>/comments -> {comments:[{id,user_id,name,text,created_at}], likes:{count, liked}}
+       POST /api/books/<book-id>/comments {text} (auth; 201 with the new comment)
+       POST /api/books/<book-id>/like (toggle; -> {count, liked})
+       DELETE /api/books/<book-id>/comments/<comment-id> (owner only in the UI)
+     Book id = BID, the same id the shelf/save calls use. Auth reuses OBApi
+     (session cookie + Bearer token) — no new login. Order: newest first.
+     Posting: optimistic add, then refetch on success so the real id/date show. */
+  var OWNER_EMAIL = 'towfiqulislam1010@gmail.com';
   (function(){
-    var tries = 0;
-    var timer = setInterval(function(){
-      var box = document.querySelector('.fb-comments');
-      if (box && box.querySelector('iframe')) { clearInterval(timer); return; }
-      if (window.FB && FB.XFBML && FB.XFBML.parse) FB.XFBML.parse();
-      if (++tries >= 20) {
-        clearInterval(timer);
-        if (box && !box.querySelector('iframe')) {
-          var fb = document.getElementById('fb-comments-fallback');
-          if (fb) fb.classList.remove('hidden');
-        }
+    if (!window.OBApi) return;
+    var listEl = document.getElementById('ob-comments-list'),
+        emptyEl = document.getElementById('ob-comments-empty'),
+        errEl = document.getElementById('ob-comments-error'),
+        likeBtn = document.getElementById('ob-like-btn'),
+        likeCount = document.getElementById('ob-like-count'),
+        formEl = document.getElementById('ob-comment-form'),
+        loginEl = document.getElementById('ob-comments-login'),
+        textEl = document.getElementById('ob-comment-text'),
+        postBtn = document.getElementById('ob-comment-post'),
+        statusEl = document.getElementById('ob-comment-status');
+    if (!listEl) return;
+    var me = null;
+    var commentsBase = '/api/books/' + encodeURIComponent(BID) + '/comments';
+
+    function fmtDate(ms){
+      var d = new Date(ms);
+      if (isNaN(d.getTime())) return '';
+      try { return d.toLocaleDateString(en() ? 'en-GB' : 'bn-BD', { day: 'numeric', month: 'short', year: 'numeric' }); }
+      catch (e) { return d.toLocaleDateString(); }
+    }
+    function digits(n){ return (typeof window.__obDigits === 'function') ? window.__obDigits(n) : String(n); }
+    function paintLike(count, liked){
+      likeCount.textContent = digits(count);
+      likeBtn.setAttribute('aria-pressed', liked ? 'true' : 'false');
+      likeBtn.classList.toggle('ring-2', !!liked);
+      likeBtn.classList.toggle('text-red-600', !!liked);
+      likeBtn.classList.toggle('dark:text-red-400', !!liked);
+    }
+    function showErr(msg){ errEl.textContent = msg || ''; errEl.classList.toggle('hidden', !msg); }
+    function commentEl(c){
+      var wrap = document.createElement('div');
+      wrap.className = 'py-3';
+      wrap.setAttribute('data-comment-id', c.id);
+      var head = document.createElement('div');
+      head.className = 'flex items-baseline gap-2 flex-wrap';
+      var name = document.createElement('span');
+      name.className = 'font-bold text-[15px]';
+      name.textContent = c.name || '';
+      head.appendChild(name);
+      var date = document.createElement('span');
+      date.className = 'text-xs text-neutral-500 dark:text-neutral-400';
+      date.textContent = fmtDate(c.created_at);
+      head.appendChild(date);
+      /* delete: only the site owner sees it (backend also allows the author) */
+      if (me && me.email && String(me.email).toLowerCase() === OWNER_EMAIL) {
+        var del = document.createElement('button');
+        del.type = 'button';
+        del.className = 'text-xs font-bold text-red-600 dark:text-red-400 hover:underline ml-auto';
+        del.textContent = en() ? 'Delete' : 'মুছুন';
+        del.onclick = function(){
+          del.disabled = true;
+          OBApi.api(commentsBase + '/' + encodeURIComponent(c.id), { method: 'DELETE' })
+            .then(function(){ wrap.remove(); if (!listEl.children.length) emptyEl.classList.remove('hidden'); })
+            .catch(function(e){ del.disabled = false; showErr(e.message); });
+        };
+        head.appendChild(del);
       }
-    }, 500);
+      var body = document.createElement('p');
+      body.className = 'text-[15px] text-neutral-700 dark:text-neutral-200 mt-1 whitespace-pre-wrap break-words';
+      body.textContent = c.text || '';
+      wrap.appendChild(head);
+      wrap.appendChild(body);
+      return wrap;
+    }
+    function render(d){
+      listEl.innerHTML = '';
+      var comments = (d && d.comments) || [];
+      comments.forEach(function(c){ listEl.appendChild(commentEl(c)); });
+      emptyEl.classList.toggle('hidden', comments.length > 0);
+      var likes = (d && d.likes) || {};
+      paintLike(likes.count || 0, !!likes.liked);
+    }
+    function load(){
+      return OBApi.api(commentsBase).then(render).catch(function(e){ showErr(e.message); });
+    }
+
+    likeBtn.onclick = function(){
+      if (!me) { loginEl.classList.remove('hidden'); return; }
+      likeBtn.disabled = true;
+      OBApi.api('/api/books/' + encodeURIComponent(BID) + '/like', { method: 'POST' })
+        .then(function(d){ paintLike(d.count || 0, !!d.liked); })
+        .catch(function(e){ showErr(e.message); })
+        .then(function(){ likeBtn.disabled = false; });
+    };
+
+    postBtn.onclick = function(){
+      var text = (textEl.value || '').trim();
+      if (!text || !me) return;
+      postBtn.disabled = true;
+      showErr('');
+      statusEl.classList.add('hidden');
+      /* optimistic add (newest first, so it goes on top) */
+      var tmp = { id: 'tmp-' + Date.now(), user_id: me.id, name: me.name, text: text, created_at: Date.now() };
+      var node = commentEl(tmp);
+      listEl.insertBefore(node, listEl.firstChild);
+      emptyEl.classList.add('hidden');
+      textEl.value = '';
+      OBApi.api(commentsBase, { method: 'POST', body: { text: text } })
+        .then(function(){ return load(); })
+        .then(function(){
+          statusEl.textContent = en() ? 'Comment posted' : 'মন্তব্য প্রকাশিত হয়েছে';
+          statusEl.classList.remove('hidden');
+          setTimeout(function(){ statusEl.classList.add('hidden'); }, 3000);
+        })
+        .catch(function(e){ node.remove(); if (!listEl.children.length) emptyEl.classList.remove('hidden'); showErr(e.message); })
+        .then(function(){ postBtn.disabled = false; });
+    };
+
+    OBApi.getMe().then(function(u){
+      me = u;
+      if (u) formEl.classList.remove('hidden');
+      else loginEl.classList.remove('hidden');
+    }).catch(function(){
+      loginEl.classList.remove('hidden');
+    }).then(load);
   })();
 })();
 </script>

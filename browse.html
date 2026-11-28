@@ -71,7 +71,7 @@ permalink: /browse/
         </div>
         <span class="block text-[11px] font-bold accent-text mt-2" data-cat="{{ b.category }}">{{ b.category }}</span>
         <h3 class="font-semibold text-sm sm:text-[15px] leading-snug min-h-[2.75em] line-clamp-2 ob-accent-hover" data-bn="{{ b.title }}" data-en="{{ b.title_en | default: b.title }}">{{ b.title }}</h3>
-        <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-edit"/></svg> {{ b.author }}</p>
+        <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-1">{{ b.author }}</p>
       </a>
     </div>
     {% endfor %}
