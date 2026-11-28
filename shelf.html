@@ -75,8 +75,6 @@ var OB_BOOKS = [{% for b in site.books %}{
 
   <!-- ============ MY DASHBOARD (signed in or out) ============ -->
   <div id="dash-main" class="hidden">
-    <!-- Stats: always visible, above the profile card, not tab-bound -->
-    <div id="stats-grid" class="acct-only grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5"></div>
     <!-- Profile card (xKAF structure, Boighar's own look) -->
     <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm mb-5 flex items-center gap-4">
       <span id="profile-avatar" class="shrink-0 w-16 h-16 rounded-full accent-soft-bg accent-text flex items-center justify-center text-2xl font-bold overflow-hidden"><svg class="ob-ic ob-ic-lg" style="width:28px;height:28px" aria-hidden="true"><use href="#ob-ic-user"/></svg></span>
@@ -104,18 +102,16 @@ var OB_BOOKS = [{% for b in site.books %}{
     <section id="panel-overview" class="dash-panel">
       <h2 class="serif text-xl font-semibold mb-4" data-bn="ইতিহাস" data-en="History">ইতিহাস</h2>
 
+      <!-- Stats: inside the ইতিহাস tab, above পড়া চালিয়ে যান -->
+      <div id="stats-grid" class="acct-only grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5"></div>
+
       <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm mb-5">
         <h2 class="font-semibold mb-3" data-bn="পড়া চালিয়ে যান" data-en="Continue reading">পড়া চালিয়ে যান</h2>
         <div id="continue-list" class="space-y-2 text-neutral-500 dark:text-neutral-400" data-bn="এখনো কোনো বই শুরু করেননি।" data-en="You have not started any book yet.">এখনো কোনো বই শুরু করেননি।</div>
         <button id="continue-more" class="hidden mt-3 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl px-4 py-2 text-sm" data-bn="আরও দেখুন" data-en="See more">আরও দেখুন</button>
       </div>
-      <div class="acct-only bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm">
-        <h2 class="font-semibold mb-3" data-bn="সাম্প্রতিক কার্যকলাপ" data-en="Recent activity">সাম্প্রতিক কার্যকলাপ</h2>
-        <div id="recent-history" class="space-y-2 text-neutral-500 dark:text-neutral-400"></div>
-        <button id="recent-more" class="hidden mt-3 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl px-4 py-2 text-sm" data-bn="আরও দেখুন" data-en="See more">আরও দেখুন</button>
-      </div>
       <div class="acct-only bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm mt-5">
-        <h2 class="font-semibold mb-3" data-bn="পড়ার ইতিহাস" data-en="Reading history">পড়ার ইতিহাস</h2>
+        <h2 id="history-heading" class="font-semibold mb-3" data-bn="পড়ার ইতিহাস" data-en="Reading history">পড়ার ইতিহাস</h2>
         <div id="history-list" class="space-y-2 text-neutral-500 dark:text-neutral-400"></div>
         <button id="history-more" class="hidden mt-3 border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl px-4 py-2 text-sm" data-bn="আরও পুরনো ইতিহাস দেখুন" data-en="See older history">আরও পুরনো ইতিহাস দেখুন</button>
       </div>
@@ -191,8 +187,9 @@ var OB_BOOKS = [{% for b in site.books %}{
           <p id="report-book-link" class="hidden text-sm text-neutral-500 dark:text-neutral-400"><span data-bn="বইয়ের লিংক:" data-en="Book link:">বইয়ের লিংক:</span> <a id="report-book-link-a" href="#" target="_blank" rel="noopener" class="accent-text font-semibold hover:underline break-all"></a></p>
           <textarea id="fix-message" required rows="3" placeholder="What is wrong? / কী ভুল আছে?" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3"></textarea>
           <p id="fix-err" class="hidden text-red-600 dark:text-red-400 text-sm"></p>
-          <p id="fix-ok" class="hidden text-emerald-700 dark:text-emerald-400 text-sm" data-bn="ধন্যবাদ! আপনার রিপোর্ট পাঠানো হয়েছে।" data-en="Thank you! Your report has been sent.">ধন্যবাদ! আপনার রিপোর্ট পাঠানো হয়েছে।</p>
-          <p id="fix-ok-link" class="hidden text-sm"><a href="https://t.me/Our_Family_bd/39" target="_blank" rel="noopener" class="accent-text font-semibold hover:underline" data-bn="টেলিগ্রামে রিপোর্টটি দেখুন" data-en="See your report on Telegram">টেলিগ্রামে রিপোর্টটি দেখুন</a></p>
+          <p id="fix-tg-note" class="hidden text-emerald-700 dark:text-emerald-400 text-sm"></p>
+          <textarea id="fix-tg-text" readonly rows="5" class="hidden w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3 text-sm"></textarea>
+          <p id="fix-tg-open" class="hidden text-sm"><a href="https://t.me/Our_Family_bd/39" target="_blank" rel="noopener" class="accent-text font-semibold hover:underline" data-bn="টেলিগ্রাম টপিক খুলুন" data-en="Open the Telegram topic">টেলিগ্রাম টপিক খুলুন</a></p>
           <div class="flex flex-wrap gap-2">
             <button type="submit" class="accent-bg text-white font-bold rounded-xl px-5 py-3" data-bn="টেলিগ্রামে রিপোর্ট পাঠান" data-en="Report to Telegram">টেলিগ্রামে রিপোর্ট পাঠান</button>
             <a id="report-github-btn" href="https://github.com/MDTowfiqul/our-boighar/issues/new" target="_blank" rel="noopener" class="inline-flex items-center border border-neutral-300 dark:border-neutral-600 font-bold rounded-xl px-5 py-3" data-bn="GitHub-এ রিপোর্ট করুন" data-en="Report to GitHub">GitHub-এ রিপোর্ট করুন</a>
@@ -205,9 +202,10 @@ var OB_BOOKS = [{% for b in site.books %}{
           <input id="support-subject" type="text" maxlength="120" placeholder="Subject (optional) / বিষয় (ঐচ্ছিক)" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3">
           <textarea id="support-message" required rows="4" placeholder="Write your message / আপনার বার্তা লিখুন" class="w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3"></textarea>
           <p id="support-err" class="hidden text-red-600 dark:text-red-400 text-sm"></p>
-          <p id="support-ok" class="hidden text-emerald-700 dark:text-emerald-400 text-sm" data-bn="ধন্যবাদ! আপনার বার্তা পাঠানো হয়েছে।" data-en="Thank you! Your message has been sent.">ধন্যবাদ! আপনার বার্তা পাঠানো হয়েছে।</p>
-          <p id="support-ok-link" class="hidden text-sm"><a href="https://t.me/Our_Family_bd/39" target="_blank" rel="noopener" class="accent-text font-semibold hover:underline" data-bn="টেলিগ্রামে বার্তাটি দেখুন" data-en="See your message on Telegram">টেলিগ্রামে বার্তাটি দেখুন</a></p>
-          <button class="accent-bg text-white font-bold rounded-xl px-5 py-3" data-bn="বার্তা পাঠান" data-en="Send message">বার্তা পাঠান</button>
+          <p id="support-tg-note" class="hidden text-emerald-700 dark:text-emerald-400 text-sm"></p>
+          <textarea id="support-tg-text" readonly rows="5" class="hidden w-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 rounded-xl px-4 py-3 text-sm"></textarea>
+          <p id="support-tg-open" class="hidden text-sm"><a href="https://t.me/Our_Family_bd/39" target="_blank" rel="noopener" class="accent-text font-semibold hover:underline" data-bn="টেলিগ্রাম টপিক খুলুন" data-en="Open the Telegram topic">টেলিগ্রাম টপিক খুলুন</a></p>
+          <button class="accent-bg text-white font-bold rounded-xl px-5 py-3" data-bn="টেলিগ্রামে বার্তা পাঠান" data-en="Send via Telegram">টেলিগ্রামে বার্তা পাঠান</button>
         </form>
       </div>
       <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 shadow-sm">
@@ -325,6 +323,7 @@ var OB_BOOKS = [{% for b in site.books %}{
   function init() {
     var params = new URLSearchParams(location.search);
     var loginState = params.get('login');
+    _deepLinkHistory = params.get('tab') === 'history';
     if (loginState === 'error') {
       show($('dash-loading'), false);
       show($('dash-signed-out'), true);
@@ -348,7 +347,7 @@ var OB_BOOKS = [{% for b in site.books %}{
         show($('dash-signed-out'), true);
         show($('dash-main'), true);
         renderLocal();
-        showTab('overview');
+        showInitialTab();
         return;
       }
       show($('dash-main'), true);
@@ -364,14 +363,14 @@ var OB_BOOKS = [{% for b in site.books %}{
       }
       bindAccountForms();
       renderLocal();
-      showTab('overview');
+      showInitialTab();
     }).catch(function () {
       show($('dash-loading'), false);
       setSignedIn(false);
       show($('dash-signed-out'), true);
       show($('dash-main'), true);
       renderLocal();
-      showTab('overview');
+      showInitialTab();
       var m2 = $('login-msg');
       m2.textContent = T('সার্ভারে পৌঁছানো যাচ্ছে না। পরে আবার চেষ্টা করুন।', 'Cannot reach the server. Please try again later.');
       m2.classList.remove('hidden');
@@ -417,6 +416,36 @@ var OB_BOOKS = [{% for b in site.books %}{
       btn.onclick = function () { showTab(btn.getAttribute('data-tab')); };
     });
   }
+  /* ---------- Telegram prefilled link (report + support) ---------- */
+  // No auto-send: the worker's Telegram forward silently drops reports when
+  // TELEGRAM_BOT_TOKEN is unset, so the user pastes the text in the topic.
+  var TG_TOPIC = 'https://t.me/Our_Family_bd/39';
+  function sendViaTelegram(text, noteEl, boxEl, openEl) {
+    // Open first, inside the submit gesture, so no popup blocker blocks it.
+    window.open(TG_TOPIC, '_blank');
+    function done(ok) {
+      if (ok) {
+        if (noteEl) { noteEl.textContent = T('কপি হয়েছে — টেলিগ্রাম টপিকে পেস্ট করে পাঠান।', 'Copied — paste it in the Telegram topic and send.'); noteEl.classList.remove('hidden'); }
+        show(boxEl, false);
+      } else {
+        if (noteEl) { noteEl.textContent = T('কপি হয়নি — নিচের লেখাটি কপি করে টেলিগ্রাম টপিকে পেস্ট করে পাঠান।', 'Copy did not work — copy the text below, paste it in the Telegram topic and send.'); noteEl.classList.remove('hidden'); }
+        if (boxEl) { boxEl.value = text; boxEl.classList.remove('hidden'); }
+      }
+      show(openEl, true);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
+    } else {
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        var ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+        done(!!ok);
+      } catch (e) { done(false); }
+    }
+  }
   function bindAccountForms() {
     $('form-shelf').addEventListener('submit', function (ev) {
       ev.preventDefault();
@@ -427,22 +456,30 @@ var OB_BOOKS = [{% for b in site.books %}{
     });
     $('form-fix').addEventListener('submit', function (ev) {
       ev.preventDefault();
-      showErr($('fix-err'), ''); show($('fix-ok'), false); show($('fix-ok-link'), false);
+      showErr($('fix-err'), ''); show($('fix-tg-note'), false); show($('fix-tg-text'), false); show($('fix-tg-open'), false);
       var bookId = $('report-book-id').value.trim();
       if (!bookId) { showErr($('fix-err'), T('বইটি বেছে নিন — নাম লিখে তালিকা থেকে চাপ দিন।', 'Pick the book — type its name and tap it in the list.')); return; }
-      API.api('/api/fix', { method: 'POST', body: { book_id: bookId, message: $('fix-message').value.trim() } })
-        .then(function () { show($('fix-ok'), true); show($('fix-ok-link'), true); $('fix-message').value = ''; loadMyFix(); })
-        .catch(function (e) { showErr($('fix-err'), e.message); });
+      var b = byId[bookId];
+      var title = b ? bookTitle(b) : $('report-book').value.trim();
+      var link = b ? (location.origin + b.url) : '';
+      var text = T('বইয়ের তথ্যে ভুল', 'Wrong book info') + '\n' +
+        T('বই: ', 'Book: ') + title + '\n' +
+        (link ? T('লিংক: ', 'Link: ') + link + '\n' : '') +
+        T('ভুল: ', 'What is wrong: ') + $('fix-message').value.trim();
+      sendViaTelegram(text, $('fix-tg-note'), $('fix-tg-text'), $('fix-tg-open'));
+      $('fix-message').value = '';
     });
     $('fix-message').addEventListener('input', updateGithubReportLink);
     $('report-book').addEventListener('input', updateGithubReportLink);
     updateGithubReportLink();
     $('form-support').addEventListener('submit', function (ev) {
       ev.preventDefault();
-      showErr($('support-err'), ''); show($('support-ok'), false); show($('support-ok-link'), false);
-      API.api('/api/support', { method: 'POST', body: { subject: $('support-subject').value.trim(), message: $('support-message').value.trim() } })
-        .then(function () { show($('support-ok'), true); show($('support-ok-link'), true); $('support-subject').value = ''; $('support-message').value = ''; })
-        .catch(function (e) { showErr($('support-err'), e.message); });
+      showErr($('support-err'), ''); show($('support-tg-note'), false); show($('support-tg-text'), false); show($('support-tg-open'), false);
+      var text = T('সহায়তা চান', 'Support request') + '\n' +
+        T('বিষয়: ', 'Subject: ') + ($('support-subject').value.trim() || '—') + '\n' +
+        T('বার্তা: ', 'Message: ') + $('support-message').value.trim();
+      sendViaTelegram(text, $('support-tg-note'), $('support-tg-text'), $('support-tg-open'));
+      $('support-subject').value = ''; $('support-message').value = '';
     });
     $('form-password').addEventListener('submit', function (ev) {
       ev.preventDefault();
@@ -476,6 +513,19 @@ var OB_BOOKS = [{% for b in site.books %}{
     };
   }
   var currentTab = 'overview';
+  var _deepLinkHistory = false;
+  function scrollToHistoryHeading() {
+    var h = $('history-heading');
+    if (h) h.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  // Page-load tab: /shelf/?tab=history opens ইতিহাস and scrolls to পড়ার ইতিহাস.
+  function showInitialTab() {
+    showTab('overview');
+    if (_deepLinkHistory) {
+      setTimeout(scrollToHistoryHeading, 400);
+      setTimeout(function () { _deepLinkHistory = false; }, 5000);
+    }
+  }
   function showTab(name) {
     currentTab = name;
     document.querySelectorAll('.dash-tab').forEach(function (b) {
@@ -495,17 +545,10 @@ var OB_BOOKS = [{% for b in site.books %}{
   /* ---------- history pagination: 5 at a time, "see more" per section ---------- */
   var HIST_PAGE = 5;
   var _contAll = [], _contShown = 0, _contKind = 'server';
-  var _recentAll = [], _recentShown = 0;
   var _histAll = [], _histShown = 0;
   function bindHistoryMore() {
     var cm = $('continue-more');
     if (cm) cm.onclick = function () { _contShown += HIST_PAGE; renderContinue(); };
-    var rm = $('recent-more');
-    if (rm) rm.onclick = function () {
-      _recentShown += HIST_PAGE;
-      renderHistory($('recent-history'), _recentAll.slice(0, _recentShown), true);
-      show(rm, _recentAll.length > _recentShown);
-    };
     var hm = $('history-more');
     if (hm) hm.onclick = function () {
       _histShown += HIST_PAGE;
@@ -645,11 +688,7 @@ var OB_BOOKS = [{% for b in site.books %}{
       _contAll = (d.progress || []).filter(function (p) { return p.status === 'reading'; });
       _contKind = 'server'; _contShown = HIST_PAGE;
       renderContinue();
-    }).catch(function () {});
-    API.api('/api/history?limit=50').then(function (d) {
-      _recentAll = d.history || []; _recentShown = HIST_PAGE;
-      renderHistory($('recent-history'), _recentAll.slice(0, _recentShown), true);
-      show($('recent-more'), _recentAll.length > _recentShown);
+      if (_deepLinkHistory) scrollToHistoryHeading();
     }).catch(function () {});
   }
   function eventLabel(ev) {
@@ -668,6 +707,7 @@ var OB_BOOKS = [{% for b in site.books %}{
       _histAll = d.history || []; _histShown = HIST_PAGE;
       renderHistory($('history-list'), _histAll.slice(0, _histShown));
       show($('history-more'), _histAll.length > _histShown);
+      if (_deepLinkHistory) scrollToHistoryHeading();
     }).catch(function () {});
   }
   var _expandedShelves = {};

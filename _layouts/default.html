@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#17222d" id="ob-theme-color">
 <title>{% if page.title %}{{ page.title }} — {% endif %}Our Boighar | আমাদের বইঘর</title>
 <meta name="description" content="{{ page.description | default: site.description }}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@500;700&family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
   /* Guarded: if the Tailwind CDN ever fails, the theme/language/digit
@@ -21,12 +22,20 @@
     var t = null;
     try { t = localStorage.getItem('ob-theme'); } catch (e) {}
     if (t === 'dark' || (t === null && OB_DEFAULT_DARK)) document.documentElement.classList.add('dark');
+    /* theme-color: match the top bar so the status-bar area is the site
+       colour (dark #17222d / light #f6f7f8), never black — updated again
+       in setMode() whenever the user switches brightness */
+    var tc = document.querySelector('meta[name="theme-color"]');
+    if (tc) tc.setAttribute('content', document.documentElement.classList.contains('dark') ? '#17222d' : '#f6f7f8');
     var c = 'gold';
     try { c = localStorage.getItem('ob-color') || 'gold'; } catch (e) {}
     document.documentElement.setAttribute('data-color', c);
     var fs = 100;
     try { fs = parseInt(localStorage.getItem('ob-fontscale') || '100', 10) || 100; } catch (e) {}
     document.documentElement.style.fontSize = fs + '%';
+    var fset = 'bn';
+    try { fset = localStorage.getItem('ob-fontset') || 'bn'; } catch (e) {}
+    document.documentElement.setAttribute('data-fontset', fset);
     try { document.documentElement.lang = localStorage.getItem('ob-lang') || 'bn'; } catch (e) {}
   })();
   /* Category display names: categories are stored in English in each book's
@@ -43,10 +52,22 @@
 <style>
   body{font-family:'Hind Siliguri',system-ui,sans-serif}
   .serif{font-family:'Noto Serif Bengali',serif}
+  /* font sets (theme panel): bn = site default, en = Latin, ar = Arabic.
+     Typeface only — this does not change page direction. */
+  [data-fontset="en"] body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}
+  [data-fontset="en"] .serif{font-family:Georgia,'Times New Roman',serif}
+  [data-fontset="ar"] body{font-family:'Noto Naskh Arabic','Amiri',serif}
+  [data-fontset="ar"] .serif{font-family:'Amiri','Noto Naskh Arabic',serif}
   /* ---- xKAF-inspired tokens (own version: near-black primary, gold decoration) ---- */
   :root{--pagebg:#f9fafb;--topbar:#f6f7f8;--surface:#ffffff;--ink:#16191a;--muted:#5b5e60;--line:#e8eaeb;--navbg:#fefefe;--navpill:#e3e3e3;--gold:#c98500;--gold-soft:#f5efe1}
   .dark{--pagebg:#0c1621;--topbar:#17222d;--surface:#202b37;--ink:#e8ecef;--muted:#9aa7b4;--line:#2e3d4c;--navbg:#202b37;--navpill:#343e49;--gold:#bfab80;--gold-soft:#2a2417}
   body{background:var(--pagebg);color:var(--ink)}
+  /* fullscreen polish (round 4): the fullscreen element is <html> and its
+     backdrop defaults to black in Chrome — paint both with the page colour
+     so the top/status-bar area matches the site instead of going black */
+  html{background:var(--pagebg)}
+  html:fullscreen{background:var(--pagebg)}
+  :fullscreen::backdrop{background:var(--pagebg)}
   :root, [data-color="gold"]{--hero1:#3d2c0e;--hero2:#141007;--accent:#875627;--accent-bright:#d9b96a;--accent-soft:#f5efe1}
   [data-color="purple"]{--hero1:#33248f;--hero2:#171233;--accent:#e0521f;--accent-bright:#ff9e6e;--accent-soft:#fdeee6}
   [data-color="emerald"]{--hero1:#065f46;--hero2:#022c22;--accent:#c8501b;--accent-bright:#ffb37a;--accent-soft:#fdf0e4}
@@ -82,10 +103,6 @@
   .ob-check{accent-color:var(--accent)}
   .group:hover .ob-accent-hover{color:var(--accent)}
   @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important;scroll-behavior:auto!important}}
-  /* top pill tabs */
-  .ob-pilltab{display:inline-flex;align-items:center;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:8px 16px;font-weight:600;font-size:14px;white-space:nowrap;transition:background-color .2s,color .2s,border-color .2s}
-  .ob-pilltab.on{background:#16191a;color:#fff;border-color:#16191a}
-  .dark .ob-pilltab.on{background:#e8ecef;color:#16191a;border-color:#e8ecef}
   /* bottom nav */
   .ob-nav{background:var(--navbg);box-shadow:0 4px 16px rgba(0,0,0,.12);border:1px solid var(--line)}
   .ob-nav-item{color:var(--muted)}
@@ -100,6 +117,8 @@
   .dark .ob-seg button.on{background:#e8ecef;color:#16191a}
   .ob-fontbtn.on{background:#16191a;color:#fff;border-color:#16191a}
   .dark .ob-fontbtn.on{background:#e8ecef;color:#16191a;border-color:#e8ecef}
+  .ob-fontfam-btn.on{background:#16191a;color:#fff;border-color:#16191a}
+  .dark .ob-fontfam-btn.on{background:#e8ecef;color:#16191a;border-color:#e8ecef}
   .ob-phone{width:200px;height:300px;border-radius:20px;border:2px solid var(--line);background:var(--surface);box-shadow:0 4px 16px rgba(0,0,0,.12);margin:0 auto;padding:12px;display:flex;flex-direction:column;gap:8px;overflow:hidden;position:relative}
   .ob-dot{width:8px;height:8px;border-radius:999px;background:var(--line);transition:width .25s ease,background-color .25s ease}
   .ob-dot.on{width:22px;background:var(--gold)}
@@ -321,9 +340,20 @@
     <button class="ob-fontbtn flex-1 border rounded-[10px] py-2 text-sm font-bold" style="border-color:var(--line)" data-fontscale="120">120%</button>
     <button class="ob-fontbtn flex-1 border rounded-[10px] py-2 text-sm font-bold" style="border-color:var(--line)" data-fontscale="130">130%</button>
   </div>
+  <p class="text-sm font-bold mt-5 mb-2" style="color:var(--muted)" data-bn="ফন্ট" data-en="Font">ফন্ট</p>
+  <div class="flex gap-2">
+    <button class="ob-fontfam-btn flex-1 border rounded-[10px] py-2 text-sm font-bold" style="border-color:var(--line);font-family:'Hind Siliguri',system-ui,sans-serif" data-fontset="bn" data-bn="বাংলা" data-en="Bengali">বাংলা</button>
+    <button class="ob-fontfam-btn flex-1 border rounded-[10px] py-2 text-sm font-bold" style="border-color:var(--line);font-family:Georgia,serif" data-fontset="en" data-bn="English" data-en="English">English</button>
+    <button class="ob-fontfam-btn flex-1 border rounded-[10px] py-2 text-sm font-bold" style="border-color:var(--line);font-family:'Noto Naskh Arabic',serif" data-fontset="ar" data-bn="আরবি" data-en="Arabic">আরবি</button>
+  </div>
   <p class="text-sm font-bold mt-5 mb-2" style="color:var(--muted)" data-bn="পর্দা" data-en="Screen">পর্দা</p>
   <button id="fullscreen-toggle" class="ob-fontbtn w-full border rounded-[10px] py-2.5 text-sm font-bold flex items-center justify-center gap-2" style="border-color:var(--line)" aria-pressed="false"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-maximize"/></svg><span id="fullscreen-label" data-bn="পূর্ণ পর্দা" data-en="Fullscreen">পূর্ণ পর্দা</span></button>
 </div>
+
+<!-- FULLSCREEN RESTORE PILL (round 4) — shown when the user asked for
+     fullscreen but the browser refused the automatic restore on this page
+     load (fullscreen needs a user gesture); one tap restores it -->
+<button id="fs-restore-pill" class="fixed top-3 left-1/2 -translate-x-1/2 z-[80] hidden items-center gap-2 rounded-full px-4 py-2 text-sm font-bold ob-shadow" style="background:var(--surface);color:var(--ink);border:1px solid var(--line)" aria-hidden="true"><svg class="ob-ic ob-ic-sm" aria-hidden="true"><use href="#ob-ic-maximize"/></svg><span data-bn="ফুল স্ক্রিনে ফিরুন" data-en="Back to fullscreen">ফুল স্ক্রিনে ফিরুন</span></button>
 
 <!-- INTRO GUIDE (first visit) -->
 <div id="guide-scrim" class="fixed inset-0 bg-black/70 z-[60] opacity-0 pointer-events-none flex items-end sm:items-center justify-center">
@@ -389,6 +419,8 @@
   function setMode(dark){
     document.documentElement.classList.toggle('dark', dark);
     store('ob-theme', dark ? 'dark' : 'light');
+    var tc = document.querySelector('meta[name="theme-color"]');
+    if (tc) tc.setAttribute('content', dark ? '#17222d' : '#f6f7f8');
     var l = document.getElementById('mode-light'), d = document.getElementById('mode-dark');
     if (l) l.classList.toggle('on', !dark);
     if (d) d.classList.toggle('on', dark);
@@ -433,6 +465,23 @@
   });
   paintFontBtns();
 
+  /* font set (theme panel): Bengali / English / Arabic — like xKAF */
+  function paintFontSetBtns(){
+    var cur = read('ob-fontset') || 'bn';
+    Array.prototype.forEach.call(document.querySelectorAll('.ob-fontfam-btn'), function(b){
+      b.classList.toggle('on', b.getAttribute('data-fontset') === cur);
+    });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.ob-fontfam-btn'), function(b){
+    b.addEventListener('click', function(){
+      var v = b.getAttribute('data-fontset') || 'bn';
+      document.documentElement.setAttribute('data-fontset', v);
+      store('ob-fontset', v);
+      paintFontSetBtns();
+    });
+  });
+  paintFontSetBtns();
+
   /* fullscreen toggle (theme panel) — on Android Chrome this hides the
      browser UI for a full-screen reading view */
   var fsBtn = document.getElementById('fullscreen-toggle'),
@@ -456,8 +505,11 @@
     } else {
       fsBtn.addEventListener('click', function(){
         if (document.fullscreenElement) {
+          store('ob-fullscreen', '0');
           document.exitFullscreen();
         } else {
+          store('ob-fullscreen', '1');
+          fsKeepAwake();
           var p = document.documentElement.requestFullscreen();
           if (p && p.catch) p.catch(function(){});
         }
@@ -467,6 +519,59 @@
       paintFullscreen();
     }
   }
+
+  /* fullscreen persists across page changes (round 4) — the preference is
+     remembered in localStorage ('ob-fullscreen' = '1', written by the
+     toggle above); on every page load we try to re-enter fullscreen the
+     same way the reader does (documentElement + wake lock). Browsers
+     require a user gesture for fullscreen, so an automatic restore is
+     often refused — in that case a one-tap "ফুল স্ক্রিনে ফিরুন" pill
+     appears instead; tapping it restores fullscreen because the tap IS
+     the gesture. */
+  var fsPill = document.getElementById('fs-restore-pill');
+  var fsWakeLock = null;
+  function fsKeepAwake(){
+    if ('wakeLock' in navigator) {
+      navigator.wakeLock.request('screen').then(function(w){ fsWakeLock = w; }).catch(function(){});
+    }
+  }
+  document.addEventListener('visibilitychange', function(){
+    if (document.visibilityState === 'visible' && document.fullscreenElement) fsKeepAwake();
+  });
+  function fsShowPill(show){
+    if (!fsPill) return;
+    fsPill.classList.toggle('hidden', !show);
+    fsPill.classList.toggle('flex', show);
+    fsPill.setAttribute('aria-hidden', show ? 'false' : 'true');
+  }
+  function fsEnter(){
+    fsKeepAwake();
+    var p = document.documentElement.requestFullscreen();
+    if (p && p.catch) p.catch(function(){});
+    return p;
+  }
+  function fsTryRestore(){
+    if (!document.fullscreenEnabled) return;
+    if (read('ob-fullscreen') !== '1') return;
+    if (document.fullscreenElement) { fsShowPill(false); return; }
+    var p = fsEnter();
+    if (p && p.catch) p.catch(function(){ fsShowPill(true); });
+    /* some browsers neither resolve nor reject promptly: fall back to the
+       pill after a short delay if we are still not fullscreen */
+    setTimeout(function(){
+      if (!document.fullscreenElement && read('ob-fullscreen') === '1') fsShowPill(true);
+    }, 800);
+  }
+  document.addEventListener('fullscreenchange', function(){
+    if (document.fullscreenElement) { fsShowPill(false); fsKeepAwake(); }
+    else if (read('ob-fullscreen') === '1') fsShowPill(true);
+    paintFullscreen();
+  });
+  if (fsPill) fsPill.addEventListener('click', function(){
+    var p = fsEnter();
+    if (p && p.then) p.then(function(){ fsShowPill(false); }).catch(function(){});
+  });
+  fsTryRestore();
 
   /* theme panel */
   var panel = document.getElementById('theme-panel'), tscrim = document.getElementById('theme-scrim');

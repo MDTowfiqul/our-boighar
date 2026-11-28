@@ -535,8 +535,8 @@ layout: null
   document.addEventListener('visibilitychange', function(){ if(document.visibilityState === 'visible') keepAwake(); });
   document.getElementById('btn-fs').onclick = function(){
     keepAwake();
-    if(document.fullscreenElement) document.exitFullscreen().catch(function(){});
-    else document.documentElement.requestFullscreen().catch(function(){});
+    if(document.fullscreenElement){ document.exitFullscreen().catch(function(){}); try{ localStorage.setItem('ob-fullscreen','0'); }catch(e){} }
+    else{ document.documentElement.requestFullscreen().catch(function(){}); try{ localStorage.setItem('ob-fullscreen','1'); }catch(e){} }
   };
 
   /* settings wiring */
